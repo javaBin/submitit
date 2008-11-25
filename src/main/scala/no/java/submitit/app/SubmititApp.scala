@@ -1,14 +1,20 @@
 package no.java.submitit.app
 
-import no.java.submitit.app.pages.SubmitPage;
-import org.apache.wicket.protocol.http.WebApplication;
+import no.java.submitit.app.pages.SubmitPage
+import org.apache.wicket.protocol.http.WebApplication
+import org.apache.wicket.Request
+import org.apache.wicket.Response
+import org.apache.wicket.Session
 
 class SubmititApp extends WebApplication {
 
 
-    @Override
+  	override def newSession(request: Request, response: Response):State = {
+		new State(request)
+	}
+  
     def getHomePage() = {
-		classOf[SubmitPage];
+		classOf[SubmitPage]
 	}
 
 }
