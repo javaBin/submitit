@@ -79,6 +79,31 @@
 	<build>
 		<sourceDirectory>src/main/scala</sourceDirectory>
 		<testSourceDirectory>src/test/scala</testSourceDirectory>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>src/main/scala</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.scala</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+        		<directory>src/test/resources</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.scala</exclude>
+				</excludes>
+			</testResource>		
+		</testResources>
 		<plugins>
 			<plugin>
 				<groupId>org.scala-tools</groupId>
@@ -100,9 +125,10 @@
 				<artifactId>maven-jetty-plugin</artifactId>
 				<configuration>
 					<contextPath>/</contextPath>
-					<scanIntervalSeconds>5</scanIntervalSeconds>
+					<scanIntervalSeconds>0</scanIntervalSeconds>
 				</configuration>
 			</plugin>
+			<!-- 
 			<plugin>
 				<groupId>net.sf.alchim</groupId>
 				<artifactId>yuicompressor-maven-plugin</artifactId>
@@ -117,6 +143,7 @@
 					<nosuffix>true</nosuffix>
 				</configuration>
 			</plugin>
+			 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
