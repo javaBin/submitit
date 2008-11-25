@@ -1,0 +1,13 @@
+*.class
+target/*
+.classpath
+.project
+.manager
+*~
+build.xml
+manifest.mf
+nbproject
+reports
+catalog.xml
+TAGS
+.settings
