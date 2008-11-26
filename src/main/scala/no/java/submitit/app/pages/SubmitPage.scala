@@ -43,7 +43,7 @@ class SubmitPage extends LayoutPage {
     
   val properties = new ValueMap();
   
-  def password = properties.getString("password");
+  def password = getRequest.getParameter("password");
   
   add(new Form("inputForm") {
     
@@ -53,24 +53,25 @@ class SubmitPage extends LayoutPage {
     
     add(new Image("captchaImage", new CaptchaImageResource(imagePass)))
     
-    add(new RequiredTextField("password", new PropertyModel(properties, "password")) {
-      override def onComponentTag(tag: ComponentTag)
-      {
-        super.onComponentTag(tag)
-        // clear the field after each render
-        tag.put("value", "")
+    add(new TextField("password", new Model()))
+    
+    add(new Button("reviewButton"){
+      override def onSubmit() { 
+        if (imagePass != password) error("Wrong captcha password")
+        else setResponsePage(classOf[ReviewPage])
       }
     })
     
-    override def onSubmit() {
-      if (imagePass != password) {
-        error("Wrong captcha password");
-      }
-      else {
-        setResponsePage(classOf[ReviewPage])
+    val newCapButton = new Button("captchaButton"){
+      override def onSubmit()  {
+        setupCatcha
       }
     }
-    
-  })
+    add(newCapButton)
+    })
   
+  def setupCatcha {
+    setResponsePage(classOf[SubmitPage])
+  }
+    
 }
