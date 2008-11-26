@@ -12,5 +12,6 @@ class ReviewPage extends LayoutPage {
   add(new Label("title", p.title))
   add(new Label("theabstract", p.abstr))
   add(new PageLink("submitLink", classOf[ConfirmPage]))
+  add(new PageLink("editLink", classOf[SubmitPage]))
   
 }
