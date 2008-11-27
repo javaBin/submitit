@@ -26,7 +26,7 @@ class SubmitPage extends LayoutPage {
     }
     
     val num = randomInt(min, max)
-    val res = for(i <- 0 to 8) yield randomInt('a', 'z').asInstanceOf[Byte]
+    val res = for(i <- 0 to 5) yield randomInt('a', 'z').asInstanceOf[Byte]
     new String(res.toArray)
   }
   
@@ -41,24 +41,28 @@ class SubmitPage extends LayoutPage {
       (state.currentPresentation, false)
     } 
     
-  val properties = new ValueMap();
-  
   def password = getRequest.getParameter("password");
   
   add(new Form("inputForm") {
     
+    val verified = state.verifiedWithCaptha
     add(new TextField("title",  new PropertyModel(pres, "title")))
     add(new TextArea("theabstract",  new PropertyModel(pres, "abstr")))
     add(new FeedbackPanel("feedback"))
     
-    add(new Image("captchaImage", new CaptchaImageResource(imagePass)))
+    if (!verified) add(new Image("captchaImage", new CaptchaImageResource(imagePass)))
     
-    add(new TextField("password", new Model()))
+    add(new TextField("password", new Model()){
+      override def isVisible = !verified
+    })
     
     add(new Button("reviewButton"){
       override def onSubmit() { 
-        if (imagePass != password) error("Wrong captcha password")
-        else setResponsePage(classOf[ReviewPage])
+        if (!state.verifiedWithCaptha && imagePass != password) error("Wrong captcha password")
+        else  {
+          state.verifiedWithCaptha = true
+          setResponsePage(classOf[ReviewPage])
+        }
       }
     })
     

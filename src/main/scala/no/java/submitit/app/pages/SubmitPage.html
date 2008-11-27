@@ -15,16 +15,18 @@
 					<textarea rows="10" cols="30" wicket:id="theabstract"></textarea>
 					</li>
 				</ol>
+
+			<wicket:enclosure child="password">
 			<p>
                 <img wicket:id="captchaImage" />
             </p>
-            <p>
                 Please replicate the text you see above
                 <br />
                 <input wicket:id="password" type="text" size="40" />
-				<input type="submit" wicket:id="reviewButton" value="ReviewIT">
 				<input type="submit" wicket:id="captchaButton" value="Create new captcha">
+			</wicket:enclosure>
 
+			<input type="submit" wicket:id="reviewButton" value="ReviewIT">
 			</fieldset>
 
 			</form>

@@ -8,6 +8,8 @@ import no.java.submitit.model._
 class State(request: Request) extends WebSession(request) {
   
   var currentPresentation: Presentation = _
+  
+  var verifiedWithCaptha = false
 
 }
 
