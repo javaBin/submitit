@@ -9,8 +9,8 @@ import scala.xml.NodeSeq
 class Presentation {
   
   var title: String = ""
-  var speakers: List[Speaker] = Nil
   var abstr: String = ""
+  var speakers: List[Speaker] = Nil
   var outline: String = ""
   var description: String = ""
   var language: Language.Value = Norwegian
