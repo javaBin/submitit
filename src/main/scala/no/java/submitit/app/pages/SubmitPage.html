@@ -4,24 +4,69 @@
 
 	<form wicket:id="inputForm">
 	<div wicket:id="feedback"></div>
-	<ol>
-		<li><label>Title:</label> <input type="text" wicket:id="title" size="20"></li>
-		<li><label>Abstract:</label> <textarea rows="10" cols="30" wicket:id="theabstract"></textarea></li>
-	</ol>
-	<label>Language:</label>
-	<br />
-	<span wicket:id="language">
-	</span>
-	<br />
-	<label>Level:</label>
-	<br />
-	<span wicket:id="level">
-	</span>
+	<div class="row">
+		<div class="firstCol">
+			<label>Title:</label> 
+		</div>
+		<div class="secondCol">
+			<input type="text" wicket:id="title" size="104">
+		</div>
+	</div>
+	<div class="row">
+		<div class="firstCol">
+			<label>Abstract:</label>
+		</div> 
+		<div class="secondCol">
+			<textarea rows="10" cols="90" wicket:id="theabstract"></textarea>
+		</div>
+	</div>
+	<div class="row">
+		<div class="firstCol">
+			<label>Language:</label>
+		</div>
+		<div wicket:id="language" class="secondCol">
+		</div>
+	</div>
+	<div class="row">
+		<div class="firstCol">
+			<label>Level:</label>
+		</div>
+		<div wicket:id="level" class="secondCol">
+		</div>
+	</div>
 	
-	<br /><label>Duration:</label> <input type="text" wicket:id="duration" size="20">
-	<br /><label>Equipment:</label> <textarea rows="10" cols="30" wicket:id="equipment"></textarea>
-	<br /><label>Required experience:</label> <textarea rows="10" cols="30" wicket:id="requiredExperience"></textarea>
-	<br /><label>Expected audience:</label> <textarea rows="10" cols="30" wicket:id="expectedAudience"></textarea>
+	<div class="row">
+		<div class="firstCol">
+			<label>Duration:</label> 
+		</div>
+		<div class="secondCol">
+			<input type="text" wicket:id="duration" size="10">
+		</div>
+	</div>
+	<div class="row">
+		<div class="firstCol">
+			<label>Equipment:</label>
+		</div>
+		<div class="secondCol">
+		 	<textarea rows="10" cols="90" wicket:id="equipment"></textarea>
+		</div>
+	</div>
+	<div class="row">
+		<div class="firstCol">
+			<label>Required experience:</label>
+		</div>
+		<div class="secondCol">
+		 	<textarea rows="10" cols="90" wicket:id="requiredExperience"></textarea>
+		</div>
+	</div>
+	<div class="row">
+		<div class="firstCol">
+			<label>Expected audience:</label>
+		</div>
+		<div class="secondCol">
+		 	<textarea rows="10" cols="90" wicket:id="expectedAudience"></textarea>
+		 </div>
+	</div>
 	
 	<div wicket:id="speakers" />
 	<wicket:enclosure child="password">
@@ -29,7 +74,7 @@
         <br />
         Please replicate the text you see above (<a href="#" wicket:id="captchaButton">I cannot read this</a>)
         <br />
-		<input wicket:id="password" type="text" size="40" />
+		<input wicket:id="password" type="text" size="15" />
 	</wicket:enclosure> <br />
     <br />
     <br />

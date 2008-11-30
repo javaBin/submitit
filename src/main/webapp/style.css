@@ -27,7 +27,7 @@ p {
 /* Structure */
 
 #wrapper {
-	width:700px;
+	width:1024px;
 	margin:0 auto;
 	}
 #header {
@@ -133,3 +133,16 @@ h1 a:hover {
 
 .helpText {
 }
+
+.row {
+	margin-bottom: 3px;
+}
+
+.firstCol {
+	float: left;
+}
+
+.secondCol {
+	margin-left:120px;
+}
+

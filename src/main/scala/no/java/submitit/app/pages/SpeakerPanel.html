@@ -1,36 +1,37 @@
 <html xmlns:wicket="http://wicket.apache.org/">
 <wicket:panel>
-<br />
-<br />
-	<a href="#" wicket:id="newSpeaker">Add speaker</a>
-<br />
+	<div class="row">
+		<a href="#" wicket:id="newSpeaker">Add speaker</a>
+	</div>
 	<fieldset wicket:id="speakerList">
-	<div>
-	<span class="leadText">
-		<label for="speakerName">Speaker name: </label>
-	</span>
-	<span class="inputText">
-		<input wicket:id="speakerName" type="text" size="40" />
-	</span>
+	<div class="row">
+		<a href="#" wicket:id="remove">Remove this speaker</a>
 	</div>
-	<div>
-	<span class="leadText">
-		<label for="bio">Bio: </label>
-	</span>
-	<span class="inputText">
-		<textarea wicket:id="bio" cols="40" rows="10" ></textarea>
-	</span>
+	<div class="row">
+		<div class="firstCol">
+			<label for="speakerName">Speaker name: </label>
+		</div>	
+		<div class="secondCol">
+			<input wicket:id="speakerName" type="text" size="104" />
+		</div>
 	</div>
-	<div>
-	<span class="leadText">
-		<label for="email">Email: </label>
-	</span>
-	<span class="inputText">
-		<input wicket:id="email" type="text" size="40" />
-	</span>
+	<div class="row">
+		<div class="firstCol">
+			<label for="bio">Bio: </label>
+		</div>
+		<div class="secondCol">
+			<textarea wicket:id="bio" cols="90" rows="10" ></textarea>
+		</div>
+	</div>
+	<div class="row">
+		<div class="firstCol">
+			<label for="email">Email: </label>
+		</div>
+		<div class="secondCol">
+			<input wicket:id="email" type="text" size="104" />
+		</div>
 	</div>
 		
-		 <a href="#" wicket:id="remove">Remove this speaker</a>
 	</fieldset> 
 </wicket:panel>
 </html>
