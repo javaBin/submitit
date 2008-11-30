@@ -9,18 +9,12 @@ import org.apache.wicket.Session
 class SubmititApp extends WebApplication {
 
 
-  	override
-	def init() {
-		super.init();
+  	override def init() {
         mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
 	}
   
-  	override def newSession(request: Request, response: Response):State = {
-		new State(request)
-	}
+  	override def newSession(request: Request, response: Response):State = new State(request)
   
-    def getHomePage() = {
-		classOf[SubmitPage]
-	}
+    def getHomePage() = classOf[SubmitPage]
 
 }
