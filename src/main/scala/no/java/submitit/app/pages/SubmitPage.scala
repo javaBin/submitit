@@ -1,14 +1,12 @@
 package no.java.submitit.app.pages
 
-import org.apache.wicket.markup.html.form._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import org.apache.wicket.model._
 import no.java.submitit.model._
 import org.apache.wicket.PageParameters
 import org.apache.wicket.extensions.markup.html.captcha.CaptchaImageResource
 import org.apache.wicket.markup.ComponentTag
-import org.apache.wicket.markup.html.form.Form
-import org.apache.wicket.markup.html.form.RequiredTextField
+import org.apache.wicket.markup.html.form._
 import org.apache.wicket.markup.html.image.Image
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import org.apache.wicket.model.PropertyModel
@@ -21,9 +19,7 @@ class SubmitPage extends LayoutPage {
   val state = State.get
 
   def randomString(min: Int, max: Int) = {
-    def randomInt(min: Int, max: Int):Int = {
-      (Math.random * (max - min)).asInstanceOf[Int] + min
-    }
+    def randomInt(min: Int, max: Int):Int = (Math.random * (max - min)).asInstanceOf[Int] + min
     
     val num = randomInt(min, max)
     val res = for(i <- 0 to 5) yield randomInt('a', 'z').asInstanceOf[Byte]
@@ -35,7 +31,9 @@ class SubmitPage extends LayoutPage {
   
   val (pres, isNew) = 
     if (state.currentPresentation == null) {
-      state.currentPresentation = new Presentation
+      val p = new Presentation
+      p.init
+      state.currentPresentation = p
       (state.currentPresentation, true)
     } else {
       (state.currentPresentation, false)
@@ -49,6 +47,8 @@ class SubmitPage extends LayoutPage {
     add(new TextField("title",  new PropertyModel(pres, "title")))
     add(new TextArea("theabstract",  new PropertyModel(pres, "abstr")))
     add(new FeedbackPanel("feedback"))
+    
+    add(new SpeakerPanel(pres.speakers))
     
     if (!verified) add(new Image("captchaImage", new CaptchaImageResource(imagePass)))
     
@@ -72,7 +72,7 @@ class SubmitPage extends LayoutPage {
       }
     }
     add(newCapButton)
-    })
+  })
   
   def setupCatcha {
     setResponsePage(classOf[SubmitPage])

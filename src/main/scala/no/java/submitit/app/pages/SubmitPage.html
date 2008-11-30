@@ -2,34 +2,25 @@
 <wicket:extend>
 	<h2 align="left">Fill in you presentation details</h2>
 
-		<form wicket:id="inputForm">
-			<fieldset>
-			<div wicket:id="feedback"></div>
-			<ol>
-				<li>
-					<label for="kommune">Title:</label>
-					<input type="text" wicket:id="title" size="20" value="">
-				</li>
-				<li>	
-					<label for="kommune">Abstract:</label>
-					<textarea rows="10" cols="30" wicket:id="theabstract"></textarea>
-					</li>
-				</ol>
-
-			<wicket:enclosure child="password">
-			<p>
-                <img wicket:id="captchaImage" />
-            </p>
+	<form wicket:id="inputForm">
+	<div wicket:id="feedback"></div>
+	<ol>
+		<li><label for="kommune">Title:</label> <input type="text" wicket:id="title" size="20"></li>
+		<li><label for="kommune">Abstract:</label> <textarea rows="10" cols="30" wicket:id="theabstract"></textarea></li>
+	</ol>
+	
+	<div wicket:id="speakers" />
+	<wicket:enclosure child="password">
+		<p><img wicket:id="captchaImage" /></p>
                 Please replicate the text you see above
                 <br />
-                <input wicket:id="password" type="text" size="40" />
-				<input type="submit" wicket:id="captchaButton" value="Create new captcha">
-			</wicket:enclosure>
+		<input wicket:id="password" type="text" size="40" />
+		<input type="submit" wicket:id="captchaButton"
+			value="Create new captcha">
+	</wicket:enclosure> <br />
+	<input type="submit" wicket:id="reviewButton" value="ReviewIT">
 
-			<input type="submit" wicket:id="reviewButton" value="ReviewIT">
-			</fieldset>
-
-			</form>
+	</form>
 			&nbsp;
 </wicket:extend>
 </html>

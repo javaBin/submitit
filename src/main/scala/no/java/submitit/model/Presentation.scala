@@ -8,17 +8,38 @@ import scala.xml.NodeSeq
 
 class Presentation {
   
-	var title: String = ""
-	var speakers: List[Speaker] = Nil
-	var abstr: String = ""
-	var outline: String = ""
-	var description: String = ""
-	var language: Language.Value = Norwegian
-	var level: Level.Value = _
-	var duration: Int = _
-	var equipment: String = ""
-	var requiredExperience: String = ""
-	var expectedAudience: String = ""
+  var title: String = ""
+  var speakers: List[Speaker] = Nil
+  var abstr: String = ""
+  var outline: String = ""
+  var description: String = ""
+  var language: Language.Value = Norwegian
+  var level: Level.Value = _
+  var duration: Int = _
+  var equipment: String = ""
+  var requiredExperience: String = ""
+  var expectedAudience: String = ""
+ 
+  def init() {
+    addSpeaker
+  }
+  
+  def addSpeaker() {
+    speakers = new Speaker :: speakers
+  }
+  
+  def removeSpeaker(s: Speaker) {
+    speakers = removeSpeaker(s, speakers)
+  }
+  
+  private def removeSpeaker(s: Speaker, speakers: List[Speaker]): List[Speaker] = {
+    speakers match {
+      case speaker :: xs => { 
+        if (s == speaker) xs else speaker :: removeSpeaker(s, xs) 
+      }
+      case Nil => Nil
+    }
+  }
    
 }
 
