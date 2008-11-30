@@ -1,10 +1,37 @@
 <html xmlns:wicket="http://wicket.apache.org/">
 <wicket:panel>
-	<input type="submit" wicket:id="newSpeaker" value="Add another speaker" />
-	<div wicket:id="speakerList">
-		<label for="speakerName">Speaker name: </label><input wicket:id="speakerName" type="text" size="40" />
+<br />
+<br />
+	<a href="#" wicket:id="newSpeaker">Add speaker</a>
+<br />
+	<fieldset wicket:id="speakerList">
+	<div>
+	<span class="leadText">
+		<label for="speakerName">Speaker name: </label>
+	</span>
+	<span class="inputText">
+		<input wicket:id="speakerName" type="text" size="40" />
+	</span>
+	</div>
+	<div>
+	<span class="leadText">
+		<label for="bio">Bio: </label>
+	</span>
+	<span class="inputText">
+		<textarea wicket:id="bio" cols="40" rows="10" ></textarea>
+	</span>
+	</div>
+	<div>
+	<span class="leadText">
+		<label for="email">Email: </label>
+	</span>
+	<span class="inputText">
+		<input wicket:id="email" type="text" size="40" />
+	</span>
+	</div>
+		
 		 <a href="#" wicket:id="remove">Remove this speaker</a>
-	</div> 
+	</fieldset> 
 </wicket:panel>
 </html>
 

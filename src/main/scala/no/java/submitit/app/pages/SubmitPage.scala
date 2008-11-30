@@ -55,7 +55,7 @@ class SubmitPage extends LayoutPage {
       }
     })
     
-    val newCapButton = new Button("captchaButton"){
+    val newCapButton = new SubmitLink("captchaButton", this){
       override def onSubmit()  {
         setupCatcha
       }
