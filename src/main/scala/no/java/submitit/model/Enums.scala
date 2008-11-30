@@ -10,3 +10,4 @@ object Level extends Enumeration {
   val Intermediate = Value("Intermediate")
   val Advanced = Value("Advanced")
 }
+

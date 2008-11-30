@@ -14,8 +14,8 @@ class Presentation {
   var outline: String = ""
   var description: String = ""
   var language: Language.Value = Norwegian
-  var level: Level.Value = _
-  var duration: Int = _
+  var level: Level.Value = Beginner
+  var duration: Int = 60
   var equipment: String = ""
   var requiredExperience: String = ""
   var expectedAudience: String = ""
@@ -39,6 +39,19 @@ class Presentation {
       case Nil => Nil
     }
   }
+  
+  override def toString =
+    "title: " + title +
+      "\nspeakers " + speakers.mkString("(", "\n\t", ")") +
+      "\nabstract " + abstr +
+      "\noutline " + outline +
+      "\ndescription " + description +
+      "\nlanguage " + language +
+      "\nlevel " + level +
+      "\ndurationl " + duration +
+      "\nequipment " + equipment +
+      "\nrequiredExperience " + requiredExperience +
+      "\nexpectedAudience " + expectedAudience
    
 }
 

@@ -6,5 +6,10 @@ class Speaker {
   var email: String = _
   var bio: String = _
   var picture: Picture = _
+  
+  override def toString =
+    "name: " + name +
+    " email: " + email +
+    " bio: " + bio
 
 }

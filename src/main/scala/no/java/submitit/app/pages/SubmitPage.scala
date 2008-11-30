@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel
 import org.apache.wicket.model.PropertyModel
 import org.apache.wicket.util.value.ValueMap
 import no.java.submitit.app._
+import Implicits._
 
 
 class SubmitPage extends LayoutPage {
@@ -35,7 +36,20 @@ class SubmitPage extends LayoutPage {
     val verified = state.verifiedWithCaptha
     add(new TextField("title",  new PropertyModel(pres, "title")))
     add(new TextArea("theabstract",  new PropertyModel(pres, "abstr")))
+
+    add(new TextField("duration",  new PropertyModel(pres, "duration")))
+    add(new TextArea("equipment",  new PropertyModel(pres, "equipment")))
+    add(new TextArea("requiredExperience",  new PropertyModel(pres, "requiredExperience")))
+    add(new TextArea("expectedAudience",  new PropertyModel(pres, "expectedAudience")))
+    
     add(new FeedbackPanel("feedback"))
+    
+
+    val level = new RadioChoice("level", new PropertyModel(pres, "level"), Level.elements.toList)
+    val language = new RadioChoice("language", new PropertyModel(pres, "language"), Language.elements.toList)
+    
+    add(language)
+    add(level)
     
     add(new SpeakerPanel(pres.speakers, this))
     
@@ -49,8 +63,7 @@ class SubmitPage extends LayoutPage {
       override def onSubmit() { 
         if (!state.verifiedWithCaptha && State.get.captcha.imagePass != password) error("Wrong captcha password")
         else  {
-          state.verifiedWithCaptha = true
-          setResponsePage(classOf[ReviewPage])
+          handleSubmit
         }
       }
     })
@@ -61,7 +74,16 @@ class SubmitPage extends LayoutPage {
       }
     }
     add(newCapButton)
+    
+    def handleSubmit {
+      println(pres)
+      state.verifiedWithCaptha = true
+      setResponsePage(classOf[ReviewPage])
+    }
+    
+    
   })
+  
   
   def setupCatcha {
     state.resetCaptcha
