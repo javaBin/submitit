@@ -81,7 +81,6 @@ class SubmitPage extends LayoutPage {
       setResponsePage(classOf[ReviewPage])
     }
     
-    
   })
   
   

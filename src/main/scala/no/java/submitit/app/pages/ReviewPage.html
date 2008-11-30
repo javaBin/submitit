@@ -5,19 +5,53 @@
 	<p>
 	Please review before sending in.
 	</p>
+	<a href="#" wicket:id="submitLink">SubmitIT</a><br />
+	<a href="#" wicket:id="editLink">Edit submission</a>
 			<fieldset>
 			<ol>
 				<li>
-					<label for="kommune">Title:</label>
-					<label wicket:id="title" ></label>
+					<label>Title:</label>
+					<label wicket:id="title"></label>
 				</li>
 				<li>	
-					<label for="kommune">Abstract:</label>
-					<label wicket:id="theabstract"/>
-					</li>
+					<label>Abstract:</label>
+					<label wicket:id="abstract"></label>
+				</li>
+				<li>	
+					<label>Language:</label>
+					<label wicket:id="language"></label>
+				</li>
+				<li>	
+					<label>Level:</label>
+					<label wicket:id="level"></label>
+				</li>
+				<li>	
+					<label>Duration:</label>
+					<label wicket:id="duration"></label>
+				</li>
+				<li>	
+					<label>Equipment:</label>
+					<label wicket:id="equipment"></label>
+				</li>
+				<li>	
+					<label>Required experience:</label>
+					<label wicket:id="requiredExperience"></label>
+				</li>
+				<li>	
+					<label>Expected audience:</label>
+					<label wicket:id="expectedAudience"></label>
+				</li>
+				<li>	
+					<label>Description:</label>
+					<label wicket:id="description"></label>
+				</li>
+				<li wicket:id="speakers">	
+					<label>Name:</label>
+					<label wicket:id="name"></label>
+					<label>Email:</label>
+					<label wicket:id="email"></label>
+				</li>
 				</ol>
-				<a href="#" wicket:id="submitLink">SubmitIT</a><br />
-				<a href="#" wicket:id="editLink">Edit submission</a>
 			</fieldset>
 </wicket:extend>
 </html>
