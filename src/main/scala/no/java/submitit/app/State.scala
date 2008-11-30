@@ -10,6 +10,16 @@ class State(request: Request) extends WebSession(request) {
   var currentPresentation: Presentation = _
   
   var verifiedWithCaptha = false
+  
+  var captcha: Captcha = _
+
+  def setCaptchaIfNotSet() {
+    if (captcha == null) captcha = new Captcha
+  }
+  
+  def resetCaptcha() {
+    captcha = new Captcha
+  }
 
 }
 

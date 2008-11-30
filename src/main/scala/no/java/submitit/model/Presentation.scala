@@ -34,9 +34,7 @@ class Presentation {
   
   private def removeSpeaker(s: Speaker, speakers: List[Speaker]): List[Speaker] = {
     speakers match {
-      case speaker :: xs => { 
-        if (s == speaker) xs else speaker :: removeSpeaker(s, xs) 
-      }
+      case speaker :: xs => if (s == speaker) xs else speaker :: removeSpeaker(s, xs)
       case Nil => Nil
     }
   }

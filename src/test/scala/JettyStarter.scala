@@ -33,7 +33,7 @@ object JettyStarter {
 		  case e: Exception => {
 			e.printStackTrace();
 			System.exit(100);
-		}
+		  } 
 	}
   }
 }
