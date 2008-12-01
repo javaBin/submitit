@@ -8,6 +8,7 @@ import scala.xml.NodeSeq
 
 class Presentation {
   
+  var sessionId: String = _
   var title: String = ""
   var abstr: String = ""
   var speakers: List[Speaker] = Nil
