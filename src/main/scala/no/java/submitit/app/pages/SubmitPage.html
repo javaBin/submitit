@@ -1,9 +1,23 @@
 <html xmlns:wicket="http://wicket.apache.org/">
 <wicket:extend>
-	<h2 align="left">Fill in you presentation details</h2>
 
 	<form wicket:id="inputForm">
 	<div wicket:id="feedback"></div>
+	<div class="row">
+		<a href="#" wicket:id="reviewButton">ReviewIT</a> | <a href="helpIt" target="_blank">HelpMe</a>
+	</div>
+	<h2 align="left">Fill in you presentation details</h2>
+	<wicket:enclosure child="password">
+		<div class="row">
+			<img wicket:id="captchaImage" />
+		</div>
+		<div class="row">
+        	Please replicate the text you see above (<a href="#" wicket:id="captchaButton">I cannot read this</a>)
+		</div>
+		<div class="row">
+			<input wicket:id="password" type="text" size="15" />
+		</div>
+	</wicket:enclosure> <br />
 	<div class="row">
 		<div class="titleText">
 			<label>Title</label> 
@@ -69,19 +83,7 @@
 		 	<textarea rows="10" cols="124" wicket:id="expectedAudience"></textarea>
 		 </div>
 	</div>
-	
 	<div wicket:id="speakers" />
-	<wicket:enclosure child="password">
-		<img wicket:id="captchaImage" />
-        <br />
-        Please replicate the text you see above (<a href="#" wicket:id="captchaButton">I cannot read this</a>)
-        <br />
-		<input wicket:id="password" type="text" size="15" />
-	</wicket:enclosure> <br />
-    <br />
-    <br />
-	<input type="submit" wicket:id="reviewButton" value="ReviewIT">
-
 	</form>
 </wicket:extend>
 </html>

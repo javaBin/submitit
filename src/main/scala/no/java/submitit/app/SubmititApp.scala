@@ -11,6 +11,7 @@ class SubmititApp extends WebApplication {
 
   	override def init() {
         mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
+        mountBookmarkablePage("/helpIt", classOf[HelpPage]);
 	}
   
   	override def newSession(request: Request, response: Response):State = new State(request)
