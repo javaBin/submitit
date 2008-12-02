@@ -27,6 +27,7 @@ class ReviewPage extends LayoutPage {
       val speaker = item.getModelObject.asInstanceOf[Speaker]
       item.add(new Label("name", speaker.name))
       item.add(new Label("email", speaker.email))
+      item.add(new Label("bio", speaker.bio))
     }
   })
   
