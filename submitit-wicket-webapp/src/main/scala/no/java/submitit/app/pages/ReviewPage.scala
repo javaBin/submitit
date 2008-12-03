@@ -6,7 +6,7 @@ import org.apache.wicket.model._
 import org.apache.wicket.markup.html.link._
 import model._
 import widgets._
-import Implicits._
+import common.Implicits._
 import app.State
 
 class ReviewPage extends LayoutPage {
@@ -18,10 +18,9 @@ class ReviewPage extends LayoutPage {
   add(new Label("language", p.language.toString))
   add(new Label("level", p.level.toString))
   add(new Label("duration", p.duration.toString))
-  add(new Label("equipment", p.equipment))
-  add(new Label("requiredExperience", p.requiredExperience))
-  add(new Label("expectedAudience", p.expectedAudience))
-  add(new Label("description", p.description))
+  add(new WikiMarkupText("equipment", p.equipment))
+  add(new WikiMarkupText("requiredExperience", p.requiredExperience))
+  add(new WikiMarkupText("expectedAudience", p.expectedAudience))
   
   add(new ListView("speakers", p.speakers) {
     override def populateItem(item: ListItem) {
