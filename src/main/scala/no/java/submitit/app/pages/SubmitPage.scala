@@ -51,7 +51,7 @@ class SubmitPage extends LayoutPage {
     add(language)
     add(level)
     
-    add(new SpeakerPanel(pres.speakers, this))
+    add(new SpeakerPanel(pres))
     
     if (!verified) add(State.get.captcha.image)
     

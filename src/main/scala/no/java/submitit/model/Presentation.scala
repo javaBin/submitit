@@ -3,10 +3,11 @@ package no.java.submitit.model
 import Language._
 import Level._
 
+import _root_.java.io.Serializable
 import no.java.submitit.model._
 import scala.xml.NodeSeq
 
-class Presentation {
+class Presentation extends Serializable {
   
   var sessionId: String = _
   var title: String = ""
