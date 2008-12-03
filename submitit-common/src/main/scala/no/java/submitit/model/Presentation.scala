@@ -14,7 +14,6 @@ class Presentation extends Serializable {
   var abstr: String = ""
   var speakers: List[Speaker] = Nil
   var outline: String = ""
-  var description: String = ""
   var language: Language.Value = Norwegian
   var level: Level.Value = Beginner
   var duration: Int = 60
@@ -47,7 +46,6 @@ class Presentation extends Serializable {
       "\nspeakers " + speakers.mkString("(", "\n\t", ")") +
       "\nabstract " + abstr +
       "\noutline " + outline +
-      "\ndescription " + description +
       "\nlanguage " + language +
       "\nlevel " + level +
       "\ndurationl " + duration +
@@ -63,7 +61,6 @@ object Presentation {
             speakers: List[Speaker], 
             abstr: String, 
             outline: String, 
-            description: String, 
             language: Language.Value,
             level: Level.Value,
             duration: Int,
@@ -75,7 +72,6 @@ object Presentation {
 			    p.speakers = speakers
 			    p.abstr = abstr
 			    p.outline = outline
-			    p.description = description
 			    p.language = language
 			    p.level = level
 			    p.duration = duration

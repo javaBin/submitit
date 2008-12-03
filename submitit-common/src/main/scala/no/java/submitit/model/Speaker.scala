@@ -13,6 +13,24 @@ class Speaker {
     " email: " + email +
     " bio: " + bio
 
+  override def equals(other: Any): Boolean = {
+    other match {
+      case that: Speaker =>
+        (that canEqual this) && 
+          personId == that.personId && 
+          name == that.name && 
+          bio == that.bio
+      case _ => false
+    }
+  }
+  
+  def canEqual(other: Any): Boolean = {
+    other.isInstanceOf[Speaker]
+  }
+  
+  override def hashCode(): Int =
+    name.hashCode + 41 * bio.hashCode
+  
 }
 
 object Speaker {
