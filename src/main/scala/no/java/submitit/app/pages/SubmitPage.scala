@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.form._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import org.apache.wicket.model.PropertyModel
 import org.apache.wicket.util.value.ValueMap
+import org.apache.wicket.markup.html.link._
 import no.java.submitit.app._
 import Implicits._
 
@@ -44,7 +45,6 @@ class SubmitPage extends LayoutPage {
     
     add(new FeedbackPanel("feedback"))
     
-
     val level = new RadioChoice("level", new PropertyModel(pres, "level"), Level.elements.toList)
     val language = new RadioChoice("language", new PropertyModel(pres, "language"), Language.elements.toList)
     
@@ -59,7 +59,7 @@ class SubmitPage extends LayoutPage {
       override def isVisible = !verified
     })
     
-    add(new Button("reviewButton"){
+    add(new SubmitLink("reviewButton", this){
       override def onSubmit() { 
         if (!state.verifiedWithCaptha && State.get.captcha.imagePass != password) error("Wrong captcha password")
         else  {

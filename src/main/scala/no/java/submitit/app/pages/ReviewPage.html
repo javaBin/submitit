@@ -1,57 +1,81 @@
 <html xmlns:wicket="http://wicket.apache.org/">
 <wicket:extend>
 	<h2 align="left">Your presentation</h2>
-
-	<p>
-	Please review before sending in.
-	</p>
-	<a href="#" wicket:id="submitLink">SubmitIT</a><br />
+	<div class="row">Please review before sending in.</div>
+	<a href="#" wicket:id="submitLink">SubmitIT</a>
+	<br />
 	<a href="#" wicket:id="editLink">Edit submission</a>
-			<fieldset>
-			<ol>
-				<li>
-					<label>Title:</label>
-					<label wicket:id="title"></label>
-				</li>
-				<li>	
-					<label>Abstract:</label>
-					<label wicket:id="abstract"></label>
-				</li>
-				<li>	
-					<label>Language:</label>
-					<label wicket:id="language"></label>
-				</li>
-				<li>	
-					<label>Level:</label>
-					<label wicket:id="level"></label>
-				</li>
-				<li>	
-					<label>Duration:</label>
-					<label wicket:id="duration"></label>
-				</li>
-				<li>	
-					<label>Equipment:</label>
-					<label wicket:id="equipment"></label>
-				</li>
-				<li>	
-					<label>Required experience:</label>
-					<label wicket:id="requiredExperience"></label>
-				</li>
-				<li>	
-					<label>Expected audience:</label>
-					<label wicket:id="expectedAudience"></label>
-				</li>
-				<li>	
-					<label>Description:</label>
-					<label wicket:id="description"></label>
-				</li>
-				<li wicket:id="speakers">	
-					<label>Name:</label>
-					<label wicket:id="name"></label>
-					<label>Email:</label>
-					<label wicket:id="email"></label>
-				</li>
-				</ol>
-			</fieldset>
+	<fieldset>
+	<div class="row">
+	<div class="titleText"><label>Title</label></div>
+	<div class="inputField"><label wicket:id="title"></label></div>
+	</div>
+
+	<div class="row">
+	<div class="titleText"><label>Abstract</label></div>
+	<div class="inputField"><label wicket:id="abstract"></label></div>
+	</div>
+
+	<div class="row">
+	<div class="titleText"><label>Language</label></div>
+	<div class="inputField"><label wicket:id="language"></label></div>
+	</div>
+
+	<div class="row">
+	<div class="titleText"><label>Level</label></div>
+	<div class="inputField"><label wicket:id="level"></label></div>
+	</div>
+
+
+	<div class="row">
+	<div class="titleText"><label>Duration</label></div>
+	<div class="inputField"><label wicket:id="duration"></label></div>
+	</div>
+
+	<div class="row">
+	<div class="titleText"><label>Equipment</label></div>
+	<div class="inputField"><label wicket:id="equipment"></label></div>
+	</div>
+
+	<div class="row">
+	<div class="titleText"><label>Required experience</label></div>
+	<div class="inputField"><label wicket:id="requiredExperience"></label>
+	</div>
+	</div>
+
+
+	<div class="row">
+	<div class="titleText"><label>Expected audience</label></div>
+	<div class="inputField"><label wicket:id="expectedAudience"></label>
+	</div>
+	</div>
+
+	<div class="row">
+	<div class="titleText"><label>Description</label></div>
+	<div class="inputField"><label wicket:id="description"></label></div>
+	</div>
+
+
+	<h2>Speakers</h2>
+	<div wicket:id="speakers">
+	<fieldset>
+	<div class="row">
+	<div class="titleText"><label>Name</label></div>
+	<div class="inputField"><label wicket:id="name"></label></div>
+	</div>
+
+	<div class="row">
+	<div class="titleText"><label>Email</label></div>
+	<div class="inputField"><label wicket:id="email"></label></div>
+	</div>
+	
+	<div class="row">
+	<div class="titleText"><label>Bio</label></div>
+	<div class="inputField"><label wicket:id="bio"></label></div>
+	</div>
+	</fieldset>
+	</div>
+
+	</fieldset>
 </wicket:extend>
 </html>

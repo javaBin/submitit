@@ -5,6 +5,7 @@ import org.apache.wicket.markup.html.list._
 import org.apache.wicket.model._
 import org.apache.wicket.markup.html.link._
 import model._
+import widgets._
 import Implicits._
 import app.State
 
@@ -12,7 +13,7 @@ class ReviewPage extends LayoutPage {
   
   val p = State.get.currentPresentation
   add(new Label("title", p.title))
-  add(new Label("abstract", p.abstr))
+  add(new WikiMarkupText("abstract", p.abstr))
 
   add(new Label("language", p.language.toString))
   add(new Label("level", p.level.toString))
@@ -27,6 +28,7 @@ class ReviewPage extends LayoutPage {
       val speaker = item.getModelObject.asInstanceOf[Speaker]
       item.add(new Label("name", speaker.name))
       item.add(new Label("email", speaker.email))
+      item.add(new Label("bio", speaker.bio))
     }
   })
   

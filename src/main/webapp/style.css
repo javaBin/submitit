@@ -138,11 +138,20 @@ h1 a:hover {
 	margin-bottom: 3px;
 }
 
+.titleText {
+	font-size:medium;
+	font-weight: bold;
+}
+
+.inputField {
+	
+}
+
 .firstCol {
-	float: left;
+	float:left;
 }
 
 .secondCol {
-	margin-left:120px;
+	margin-left: 150px;
 }
 
