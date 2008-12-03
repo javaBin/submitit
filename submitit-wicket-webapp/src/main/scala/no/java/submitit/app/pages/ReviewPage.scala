@@ -6,7 +6,7 @@ import org.apache.wicket.model._
 import org.apache.wicket.markup.html.link._
 import model._
 import widgets._
-import Implicits._
+import common.Implicits._
 import app.State
 
 class ReviewPage extends LayoutPage {

@@ -1,4 +1,4 @@
-package no.java.submitit.app.pages
+package no.java.submitit.common
 
 object Implicits {
   

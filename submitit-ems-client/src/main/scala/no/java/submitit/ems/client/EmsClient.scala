@@ -1,16 +1,17 @@
 package no.java.submitit.ems.client
 
+import no.java.ems._
 import no.java.ems.client._
 import no.java.ems.domain.{Event,Session,Person,EmailAddress}
+import no.java.submitit.common.Implicits._
 import no.java.submitit.model._
-import no.java.submitit.app.pages.Implicits._
 import _root_.scala.collection.jcl.Conversions._
 
 class EmsClient(eventName: String, emsService: RestEmsService) {
   
   private val event = findOrCreateEvent("JavaZone 2009", emsService.getEvents().toList)
   
-  def savePresentation(presentation: Presentation) {
+  def savePresentation(presentation: Presentation): String = {
     presentation.speakers.foreach(speaker => 
       if (speaker.personId == null) findOrCreateContact(speaker))
     
@@ -18,6 +19,7 @@ class EmsClient(eventName: String, emsService: RestEmsService) {
     session.setEventId(event.getId())
     emsService.saveSession(session)
     presentation.sessionId = session.getId()
+    session.getId()
   }
   
   private def findOrCreateContact(speaker: Speaker) {
@@ -31,7 +33,7 @@ class EmsClient(eventName: String, emsService: RestEmsService) {
   private def findContactByEmail(email: String): Option[Person] = {
     emsService.getContacts().find(contact => 
       contact.getEmailAddresses.exists(adr => 
-        adr.getEmailAddress().equals(email)))
+        adr.getEmailAddress() == email))
   }
   
   private def createContact(speaker: Speaker): Person = {
@@ -53,8 +55,8 @@ class EmsClient(eventName: String, emsService: RestEmsService) {
     session.setSpeakers(presentation.speakers.map(speaker => convertSpeaker(speaker)))
     
     val language = presentation.language match {
-      case Language.Norwegian => new no.java.ems.domain.Language("no")
-      case Language.English => new no.java.ems.domain.Language("en")
+      case Language.Norwegian => new domain.Language("no")
+      case Language.English => new domain.Language("en")
     }
     val level = presentation.level match {
       case Level.Beginner => Session.Level.Introductory

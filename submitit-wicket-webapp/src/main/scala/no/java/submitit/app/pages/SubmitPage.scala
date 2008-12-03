@@ -11,7 +11,7 @@ import org.apache.wicket.model.PropertyModel
 import org.apache.wicket.util.value.ValueMap
 import org.apache.wicket.markup.html.link._
 import no.java.submitit.app._
-import Implicits._
+import common.Implicits._
 
 
 class SubmitPage extends LayoutPage {

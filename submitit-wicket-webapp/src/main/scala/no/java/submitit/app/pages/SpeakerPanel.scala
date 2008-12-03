@@ -7,7 +7,7 @@ import org.apache.wicket.markup.html.form._
 import org.apache.wicket.markup.html.list._
 import org.apache.wicket.model.PropertyModel
 import model._
-import Implicits._
+import common.Implicits._
 
 class SpeakerPanel(speakers: List[Speaker], f: Form) extends Panel("speakers") {
 
