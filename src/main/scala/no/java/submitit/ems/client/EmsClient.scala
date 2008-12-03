@@ -3,14 +3,12 @@ package no.java.submitit.ems.client
 import no.java.ems.client._
 import no.java.ems.domain.{Event,Session,Person,EmailAddress}
 import no.java.submitit.model._
+import no.java.submitit.app.pages.Implicits._
 import _root_.scala.collection.jcl.Conversions._
 
 class EmsClient(eventName: String, emsService: RestEmsService) {
   
   private val event = findOrCreateEvent("JavaZone 2009", emsService.getEvents().toList)
-  
-  implicit def listToJavaList[T](l: Seq[T]) = 
-    l.foldLeft(new _root_.java.util.ArrayList[T](l.size))((al, e) => {al.add(e); al})
   
   def savePresentation(presentation: Presentation) {
     presentation.speakers.foreach(speaker => 
