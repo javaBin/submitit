@@ -1,10 +1,11 @@
 <html xmlns:wicket="http://wicket.apache.org/">
 <wicket:extend>
+	<div class="row">
+	<a href="#" wicket:id="submitLink">SubmitIT</a> |
+	<a href="#" wicket:id="editLink">Edit submission</a>
+	</div>
 	<h2 align="left">Your presentation</h2>
 	<div class="row">Please review before sending in.</div>
-	<a href="#" wicket:id="submitLink">SubmitIT</a>
-	<br />
-	<a href="#" wicket:id="editLink">Edit submission</a>
 	<fieldset>
 	<div class="row">
 	<div class="titleText"><label>Title</label></div>
@@ -49,12 +50,6 @@
 	<div class="inputField"><label wicket:id="expectedAudience"></label>
 	</div>
 	</div>
-
-	<div class="row">
-	<div class="titleText"><label>Description</label></div>
-	<div class="inputField"><label wicket:id="description"></label></div>
-	</div>
-
 
 	<h2>Speakers</h2>
 	<div wicket:id="speakers">
