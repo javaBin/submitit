@@ -20,8 +20,8 @@ img {
 	border:0;
 	}
 p {
-	margin-bottom:20px;
-	}
+	margin-bottom:10px;
+}
 
 /* Structure */
 
@@ -154,6 +154,10 @@ h1 a:hover {
 	margin-left: 150px;
 }
 
-ol,ul {
-	padding-left: 21px;	
+ol {
+	margin-left: 21px;	
+}
+
+ul {
+	margin-left: 21px;	
 }
