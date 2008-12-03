@@ -29,7 +29,7 @@ class SpeakerPanel(speakers: List[Speaker], f: Form) extends Panel("speakers") {
       
       item.add(new SubmitLink("remove", f) {
         override def onSubmit {
-          State.get.currentPresentation.removeSpeaker(speaker)
+          State.get.currentPresentation.removeSpeaker(speaker) 
           setResponsePage(classOf[SubmitPage])
         }	
       })	

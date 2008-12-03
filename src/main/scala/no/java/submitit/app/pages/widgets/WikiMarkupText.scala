@@ -8,7 +8,7 @@ import scala.util.matching._
 class WikiMarkupText (id: String, label: String) extends Label(id) {
   
   setEscapeModelStrings(false)
-  val escaped = createMarkup(label)
+  val escaped = if (label != null) createMarkup(label) else null
   println(escaped)
   
   private def createMarkup(string: String) = applyRegexes(escapeMarkup(string).toString, WikiMarkupText.regexes)
