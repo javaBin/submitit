@@ -19,6 +19,10 @@ import common.Implicits._
 
 class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
   val that = this
+  
+  val supportedExtensions = List("jpg", "jpeg", "png", "gif")
+  val extensionRegex = ("""\.""" + supportedExtensions.mkString("(?:", "|", ")") + "$").r 
+  
 
   val model = new IModel {
     def getObject():_root_.java.util.List[_] = pres.speakers.reverse
@@ -44,14 +48,13 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
   class FileUploadForm(speaker: Speaker) extends Form("ajax-simpleUpload") {
     private val fileUploadField : FileUploadField = new FileUploadField("fileInput")
     
+    add(new Label("extension", supportedExtensions.mkString(", ")))
+    
     // set this form to multipart mode (allways needed for uploads!)
     setMultiPart(true);
 
     // Add one file input field
     add(fileUploadField);
-
-    // Set maximum size to 100K for demo purposes
-    setMaxSize(Bytes.kilobytes(500));
 
     override def onSubmit {
       val upload = fileUploadField.getFileUpload();
@@ -59,7 +62,12 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
           // Create a new file
           val fileName = upload.getClientFileName
           val bytes = upload.getBytes
-          speaker.picture = new Picture(bytes, fileName, upload.getContentType) 
+          println("aewfawe")
+          println(extensionRegex)
+          extensionRegex.findFirstIn(fileName) match {
+            case Some(n) => speaker.picture = new Picture(bytes, fileName, upload.getContentType)
+            case None => error(fileName + " has an unsupported file type")
+          }
       }
     }
   }
@@ -79,6 +87,7 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
       
       speakersForm.add(email)
       speakersForm.add(new TextArea("bio", new PropertyModel(speaker, "bio")))
+      
       item.add(new AjaxSubmitLink("remove", speakersForm) {
         override def onSubmit(target: AjaxRequestTarget, form: Form) {
           State.get.currentPresentation.removeSpeaker(speaker) 
@@ -92,8 +101,6 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
       val ajaxSimpleUploadForm = new FileUploadForm(speaker) 
       ajaxSimpleUploadForm.add(new UploadProgressBar("progress", ajaxSimpleUploadForm));
       item.add(ajaxSimpleUploadForm);
-      val uploadFeedback = new FeedbackPanel("uploadFeedback");
-      ajaxSimpleUploadForm.add(uploadFeedback);
       
       
       item.add(new Label("fileName", if (speaker.picture != null) speaker.picture.name else null) {

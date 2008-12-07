@@ -35,7 +35,7 @@
 		<form wicket:id="ajax-simpleUpload">
 			<div class="row">
 				<div class="titleText">
-		        	<label for="upload">File</label>
+		        	<label for="upload">Profile picture (max size 500KB). Supported types:&nbsp;</label><label wicket:id="extension"></label>.
 		        </div>
 		        <div class="inputField">
 			        <input wicket:id="fileInput" id="upload" type="file"/>
@@ -47,9 +47,6 @@
 			<div class="row">
 	   	    	<span wicket:id="progress">[[ajax upload progressbar]]</span>
 	   	    </div>
-			<div class="row">
- 				<span wicket:id="uploadFeedback"/>
-			</div>
 	    </form>
 	    <wicket:enclosure child="fileName">
 	    	<div class="row">

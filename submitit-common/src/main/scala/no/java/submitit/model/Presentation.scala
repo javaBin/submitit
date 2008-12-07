@@ -30,15 +30,7 @@ class Presentation extends Serializable {
   }
   
   def removeSpeaker(s: Speaker) {
-    speakers = removeSpeaker(s, speakers)
-    if(speakers.isEmpty) addSpeaker
-  }
-  
-  private def removeSpeaker(s: Speaker, speakers: List[Speaker]): List[Speaker] = {
-    speakers match {
-      case speaker :: xs => if (s == speaker) xs else speaker :: removeSpeaker(s, xs)
-      case Nil => Nil
-    }
+    speakers = speakers.remove(_ == s)
   }
   
   override def toString =

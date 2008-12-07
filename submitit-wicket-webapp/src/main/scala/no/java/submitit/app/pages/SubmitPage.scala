@@ -60,14 +60,17 @@ class SubmitPage extends LayoutPage {
       override def isVisible = !verified
     })
     
-    add(new SubmitLink("reviewButton", this){
+    private class ReviewLink(id: String, form: Form) extends SubmitLink(id, form){
       override def onSubmit() { 
         if (!state.verifiedWithCaptha &&captcha.imagePass != password) error("Wrong captcha password")
         else  {
           handleSubmit
         }
       }
-    })
+    }
+    
+    add(new ReviewLink("reviewButtonTop", this))
+    add(new ReviewLink("reviewButtonBottom", this))
     
     val newCapButton = new SubmitLink("captchaButton", this){
       override def onSubmit()  {

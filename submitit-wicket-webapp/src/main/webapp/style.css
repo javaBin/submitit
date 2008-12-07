@@ -137,6 +137,10 @@ h1 a:hover {
 	margin-bottom: 3px;
 }
 
+.bottomRow {
+	margin-top: 11px;
+}
+
 .titleText {
 	font-size:medium;
 	font-weight: bold;
@@ -160,4 +164,9 @@ ol {
 
 ul {
 	margin-left: 21px;	
+}
+
+.feedbackPanelERROR {
+	color:red;
+	font-weight:bold;
 }
