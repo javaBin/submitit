@@ -80,9 +80,14 @@ class SubmitPage extends LayoutPage {
     add(newCapButton)
     
     def handleSubmit {
-      println(pres)
-      state.verifiedWithCaptha = true
-      setResponsePage(classOf[ReviewPage])
+      // Some form validation
+      if(pres.speakers.size == 0) {
+        error("You must specify atleast one speaker")
+      } 
+      else {
+        state.verifiedWithCaptha = true
+        setResponsePage(classOf[ReviewPage])
+      }
     }
     
   })

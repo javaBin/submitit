@@ -35,15 +35,15 @@ class Presentation extends Serializable {
   
   override def toString =
     "title: " + title +
-      "\nspeakers " + speakers.mkString("(", "\n\t", ")") +
-      "\nabstract " + abstr +
-      "\noutline " + outline +
-      "\nlanguage " + language +
-      "\nlevel " + level +
-      "\ndurationl " + duration +
-      "\nequipment " + equipment +
-      "\nrequiredExperience " + requiredExperience +
-      "\nexpectedAudience " + expectedAudience
+      "\nspeakers: " + speakers.mkString("(\n", "\n\t", "\n)") +
+      "\nabstract: " + abstr +
+      "\noutline: " + outline +
+      "\nlanguage: " + language +
+      "\nlevel: " + level +
+      "\nduration: " + duration +
+      "\nequipment: " + equipment +
+      "\nrequiredExperience: " + requiredExperience +
+      "\nexpectedAudience: " + expectedAudience
    
 }
 

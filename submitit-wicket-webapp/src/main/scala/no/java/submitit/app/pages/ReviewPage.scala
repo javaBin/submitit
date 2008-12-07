@@ -30,9 +30,8 @@ class ReviewPage extends LayoutPage {
       item.add(new Label("name", speaker.name))
       item.add(new Label("email", speaker.email))
       item.add(new Label("bio", speaker.bio))
-      var img = (if (speaker.picture != null) new NonCachingImage("image", new ByteArrayResource(speaker.picture.contentType, speaker.picture.content))
+      item add (if (speaker.picture != null) new NonCachingImage("image", new ByteArrayResource(speaker.picture.contentType, speaker.picture.content))
                   else new Image("image", new ContextRelativeResource("images/question.jpeg")))
-      item.add(img)
     }
   })
   
