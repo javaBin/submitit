@@ -32,27 +32,25 @@
 			</div>
 		</form>
 		
-		<wicket:enclosure child="ajax-simpleUpload">
-			<form wicket:id="ajax-simpleUpload">
-				<div class="row">
-					<div class="titleText">
-			        	<label for="upload">File</label>
-			        </div>
-			        <div class="inputField">
-				        <input wicket:id="fileInput" id="upload" type="file"/>
-				    </div>
+		<form wicket:id="ajax-simpleUpload">
+			<div class="row">
+				<div class="titleText">
+		        	<label for="upload">File</label>
+		        </div>
+		        <div class="inputField">
+			        <input wicket:id="fileInput" id="upload" type="file"/>
 			    </div>
-				<div class="row">
-					<input type="submit" value="Upload!"/>
-		       	</div>
-				<div class="row">
-		   	    	<span wicket:id="progress">[[ajax upload progressbar]]</span>
-		   	    </div>
-				<div class="row">
-	 				<span wicket:id="uploadFeedback"/>
-				</div>
-		    </form>
-	    </wicket:enclosure>
+		    </div>
+			<div class="row">
+				<input type="submit" value="Upload!"/>
+	       	</div>
+			<div class="row">
+	   	    	<span wicket:id="progress">[[ajax upload progressbar]]</span>
+	   	    </div>
+			<div class="row">
+ 				<span wicket:id="uploadFeedback"/>
+			</div>
+	    </form>
 	    <wicket:enclosure child="fileName">
 	    	<div class="row">
 				<div class="titleText">

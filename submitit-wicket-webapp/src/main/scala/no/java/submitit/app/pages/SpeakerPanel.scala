@@ -59,11 +59,9 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
           // Create a new file
           val fileName = upload.getClientFileName
           val bytes = upload.getBytes
-          speaker.picture = new Picture(bytes, fileName)
+          speaker.picture = new Picture(bytes, fileName, upload.getContentType) 
       }
     }
-    override def isVisible = speaker.picture == null
-    
   }
   
   val speakersList = new ListView("speakerList", model) {

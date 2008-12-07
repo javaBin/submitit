@@ -1,5 +1,7 @@
 package no.java.submitit.app.pages
 
+import org.apache.wicket.markup.html.image._
+import org.apache.wicket.resource._
 import org.apache.wicket.markup.html.basic._
 import org.apache.wicket.markup.html.list._
 import org.apache.wicket.model._
@@ -22,12 +24,15 @@ class ReviewPage extends LayoutPage {
   add(new WikiMarkupText("requiredExperience", p.requiredExperience))
   add(new WikiMarkupText("expectedAudience", p.expectedAudience))
   
-  add(new ListView("speakers", p.speakers) {
+  add(new ListView("speakers", p.speakers.reverse) {
     override def populateItem(item: ListItem) {
       val speaker = item.getModelObject.asInstanceOf[Speaker]
       item.add(new Label("name", speaker.name))
       item.add(new Label("email", speaker.email))
       item.add(new Label("bio", speaker.bio))
+      var img = (if (speaker.picture != null) new NonCachingImage("image", new ByteArrayResource(speaker.picture.contentType, speaker.picture.content))
+                  else new Image("image", new ContextRelativeResource("images/question.jpeg")))
+      item.add(img)
     }
   })
   
