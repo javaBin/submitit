@@ -3,37 +3,66 @@
 	<div class="row">
 		<a href="#" wicket:id="newSpeaker">Add speaker</a>
 	</div>
-	<form wicket:id="speakersForm">
-		<fieldset wicket:id="speakerList">
-		<div class="row">
-			<a href="#" wicket:id="remove">Remove this	speaker</a>
-		</div>
-		<div class="row">
-			<div class="titleText">
-				<label for="speakerName">Speaker name</label>
+	<fieldset wicket:id="speakerList">
+		<legend><a href="#" wicket:id="remove">Remove this speaker</a></legend>
+		<form wicket:id="speakersForm">
+			<div class="row">
+				<div class="titleText">
+					<label for="speakerName">Speaker name</label>
+				</div>
+				<div class="inputField">
+					<input wicket:id="speakerName" type="text" size="143"/>
+				</div>
 			</div>
-			<div class="inputField">
-				<input wicket:id="speakerName" type="text" size="143"/>
+			<div class="row">
+				<div class="titleText">
+					<label for="bio">Bio</label>
+				</div>
+				<div class="inputField">
+					<textarea wicket:id="bio" cols="124" rows="10"></textarea>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="titleText">
-				<label for="bio">Bio</label>
+			<div class="row">
+				<div class="titleText">
+					<label for="email">Email</label>
+				</div>
+				<div class="inputField">
+					<input wicket:id="email" type="text" size="104"/>
+				</div>
 			</div>
-			<div class="inputField">
-				<textarea wicket:id="bio" cols="124" rows="10"></textarea>
-			</div>
-		</div>
-		<div class="row">
-			<div class="titleText">
-				<label for="email">Email</label>
-			</div>
-			<div class="inputField">
-				<input wicket:id="email" type="text" size="104"/>
-			</div>
-		</div>
-		</fieldset>
-	</form>
+		</form>
+		
+		<wicket:enclosure child="ajax-simpleUpload">
+			<form wicket:id="ajax-simpleUpload">
+				<div class="row">
+					<div class="titleText">
+			        	<label for="upload">File</label>
+			        </div>
+			        <div class="inputField">
+				        <input wicket:id="fileInput" id="upload" type="file"/>
+				    </div>
+			    </div>
+				<div class="row">
+					<input type="submit" value="Upload!"/>
+		       	</div>
+				<div class="row">
+		   	    	<span wicket:id="progress">[[ajax upload progressbar]]</span>
+		   	    </div>
+				<div class="row">
+	 				<span wicket:id="uploadFeedback"/>
+				</div>
+		    </form>
+	    </wicket:enclosure>
+	    <wicket:enclosure child="fileName">
+	    	<div class="row">
+				<div class="titleText">
+		        	<label for="upload">Uploaded file:</label>
+    				<label wicket:id="fileName"></label>
+		        </div>
+	    	</div>
+	    </wicket:enclosure>
+	</fieldset>
+    <form wicket:id="newSpeakerForm"></form>
 </wicket:panel>
 </html>
 

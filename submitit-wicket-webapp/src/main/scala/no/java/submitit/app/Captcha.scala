@@ -16,4 +16,6 @@ class Captcha {
   
   val image = new Image("captchaImage", new CaptchaImageResource(imagePass))
   
+  var password: String = _
+  
 }

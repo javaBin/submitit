@@ -18,6 +18,7 @@ class SubmitPage extends LayoutPage {
   
   val state = State.get
   state setCaptchaIfNotSet
+  val captcha = State.get.captcha
 
   /** Random captcha password to match against. */
   val (pres, isNew) = 
@@ -53,15 +54,15 @@ class SubmitPage extends LayoutPage {
     
     add(new SpeakerPanel(pres))
     
-    if (!verified) add(State.get.captcha.image)
+    if (!verified) add(captcha.image)
     
-    add(new TextField("password", new Model()){
+    add(new TextField("password", new PropertyModel(captcha, "password")){
       override def isVisible = !verified
     })
     
     add(new SubmitLink("reviewButton", this){
       override def onSubmit() { 
-        if (!state.verifiedWithCaptha && State.get.captcha.imagePass != password) error("Wrong captcha password")
+        if (!state.verifiedWithCaptha &&captcha.imagePass != password) error("Wrong captcha password")
         else  {
           handleSubmit
         }
