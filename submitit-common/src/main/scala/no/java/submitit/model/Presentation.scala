@@ -31,7 +31,6 @@ class Presentation extends Serializable {
   
   def removeSpeaker(s: Speaker) {
     speakers = removeSpeaker(s, speakers)
-    if(speakers.isEmpty) addSpeaker
   }
   
   private def removeSpeaker(s: Speaker, speakers: List[Speaker]): List[Speaker] = {
