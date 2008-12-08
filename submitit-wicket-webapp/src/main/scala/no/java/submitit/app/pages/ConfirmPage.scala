@@ -1,6 +1,7 @@
 package no.java.submitit.app.pages
 
 import org.apache.wicket.markup.html.WebPage
+import org.apache.wicket.markup.html.link._
 import no.java.submitit.model._
 import no.java.submitit.app.State
 import org.apache.wicket.markup.html.basic._
@@ -12,8 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 class ConfirmPage extends LayoutPage {
+  
+  val state = State.get
 
-  val pres = State.get.currentPresentation
+  val pres = state.currentPresentation
   val logger = LoggerFactory.getLogger(classOf[ConfirmPage])
   
   val presentation = pres.toString
@@ -26,5 +29,15 @@ class ConfirmPage extends LayoutPage {
   val url = "http://" + request.getServerName + ":" + request.getServerPort + request.getContextPath + "/"
   val uniqueId = 10
   add(new ExternalLink("confirmUrl", url + "lookupPresentation?id=" + uniqueId, url + "lookupPresentation?id=" + uniqueId))
+  
+  add(new Link("newPresentation") {
+    override def onClick {
+      // Reset state in case of a new registration, but preserve speakers
+      val p = new Presentation
+      p.speakers = pres.speakers
+      state.currentPresentation = p
+      setResponsePage(classOf[SubmitPage])
+    }
+  })
 
 }

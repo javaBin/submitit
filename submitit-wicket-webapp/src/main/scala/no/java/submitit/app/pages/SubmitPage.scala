@@ -82,7 +82,7 @@ class SubmitPage extends LayoutPage {
     def handleSubmit {
       // Some form validation
       if(pres.speakers.size == 0) {
-        error("You must specify atleast one speaker")
+        error("You must specify at least one speaker")
       } 
       else {
         state.verifiedWithCaptha = true
