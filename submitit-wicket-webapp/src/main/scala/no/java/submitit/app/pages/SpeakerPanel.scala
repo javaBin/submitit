@@ -21,7 +21,7 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
   val that = this
   
   val supportedExtensions = List("jpg", "jpeg", "png", "gif")
-  val extensionRegex = ("""\.""" + supportedExtensions.mkString("(?:", "|", ")") + "$").r 
+  val extensionRegex = ("""(?i)\.""" + supportedExtensions.mkString("(?:", "|", ")") + "$").r 
   
 
   val model = new IModel {
@@ -98,7 +98,6 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
       
       // Add upload form with ajax progress bar
       val ajaxSimpleUploadForm = new FileUploadForm(speaker) 
-      ajaxSimpleUploadForm.add(new UploadProgressBar("progress", ajaxSimpleUploadForm));
       item.add(ajaxSimpleUploadForm);
       
       
