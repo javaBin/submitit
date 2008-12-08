@@ -1,8 +1,5 @@
 <html xmlns:wicket="http://wicket.apache.org/">
 <wicket:panel>
-	<div class="row">
-		<a href="#" wicket:id="newSpeaker" class="inlineLink">Add speaker</a>
-	</div>
 	<fieldset wicket:id="speakerList">
 		<legend><a href="#" wicket:id="remove" class="inlineLink">Remove this speaker</a></legend>
 		<form wicket:id="speakersForm">
@@ -55,6 +52,9 @@
 	    </wicket:enclosure>
 	</fieldset>
     <form wicket:id="newSpeakerForm"></form>
+    <div class="row">
+		<a href="#" wicket:id="newSpeaker" class="inlineLink">Add speaker</a>
+	</div>
 </wicket:panel>
 </html>
 
