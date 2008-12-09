@@ -23,6 +23,6 @@ class SubmititApp extends WebApplication {
   
   	override def newSession(request: Request, response: Response):State = new State(request)
   
-    def getHomePage() = classOf[SubmitPage]
+    def getHomePage() = classOf[StartPage]
 
 }

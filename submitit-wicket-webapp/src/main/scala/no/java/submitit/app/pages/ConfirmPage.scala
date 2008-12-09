@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 class ConfirmPage extends LayoutPage {
   
   val state = State.get
+  state.lockPresentation = true
 
   val pres = state.currentPresentation
   val logger = LoggerFactory.getLogger(classOf[ConfirmPage])
@@ -30,15 +31,6 @@ class ConfirmPage extends LayoutPage {
   val uniqueId = 10
   add(new ExternalLink("confirmUrl", url + "lookupPresentation?id=" + uniqueId, url + "lookupPresentation?id=" + uniqueId))
   
-  add(new Link("newPresentation") {
-    override def onClick {
-      // Reset state in case of a new registration, but preserve speakers
-      val p = new Presentation
-      p.speakers = pres.speakers
-      state.currentPresentation = p
-      state.presentationFromServer = false
-      setResponsePage(classOf[SubmitPage])
-    }
-  })
+  add(new NewPresentationLink("newPresentation"))
 
 }

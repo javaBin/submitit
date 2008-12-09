@@ -1,12 +1,26 @@
 <html xmlns:wicket="http://wicket.apache.org/">
 <wicket:extend>
 	<div class="row">
-	<a href="#" wicket:id="editLink">Edit submission</a> |
-	<a href="#" wicket:id="submitLink">SubmitIT</a>
+		<wicket:enclosure child="locked">
+			<a href="#" wicket:id="editLink">Edit submission</a> |
+			<a href="#" wicket:id="submitLink">SubmitIT</a>
+		</wicket:enclosure>
 	</div>
 	<h2 align="left">Your presentation</h2>
-	<div class="row">Please review before sending in.</div>
+	<wicket:enclosure child="locked">
+		<div class="row">Please review before sending in.</div>
+	</wicket:enclosure>
+	<wicket:enclosure child="unlocked">
+		<div class="row">
+			<div class="row">If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a> </div>
+		</div>
+		<div class="row">
+			<a href="#" wicket:id="newPresentation">Create a new presentation submission</a>
+		</div>
+	</wicket:enclosure>
 	<fieldset>
+	<input type="hidden" wicket:id="unlocked"></input>
+	<input type="hidden" wicket:id="locked"></input>
 	<div class="row">
 	<div class="titleText"><label>Title</label></div>
 	<div class="inputField"><label wicket:id="title"></label></div>

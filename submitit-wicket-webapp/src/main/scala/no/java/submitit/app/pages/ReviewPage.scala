@@ -1,5 +1,6 @@
 package no.java.submitit.app.pages
 
+import org.apache.wicket.markup.html.form.HiddenField
 import org.apache.wicket.markup.html.image._
 import org.apache.wicket.resource._
 import org.apache.wicket.markup.html.basic._
@@ -16,7 +17,15 @@ class ReviewPage extends LayoutPage {
   val p = State.get.currentPresentation
   add(new Label("title", p.title))
   add(new WikiMarkupText("abstract", p.abstr))
-
+  add(new HiddenField("locked") {
+    override def isVisible = !State.get.lockPresentation
+  })
+  add(new HiddenField("unlocked") {
+    override def isVisible = State.get.lockPresentation
+  })
+  
+  add(new NewPresentationLink("newPresentation"))
+  
   add(new Label("language", p.language.toString))
   add(new Label("level", p.level.toString))
   add(new Label("duration", p.duration.toString))

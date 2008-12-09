@@ -9,7 +9,7 @@ class State(request: Request) extends WebSession(request) {
   
   var captcha: Captcha = _
   var verifiedWithCaptha = false
-  var presentationFromServer = false
+  var lockPresentation = false
   
   private var presentation: Presentation = _
   

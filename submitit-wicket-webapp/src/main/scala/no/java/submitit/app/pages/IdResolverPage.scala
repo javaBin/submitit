@@ -13,7 +13,7 @@ class IdResolverPage extends LayoutPage {
 
   // TODO fetch presentation
   val presentation: Presentation = state.currentPresentation
-  State.get.presentationFromServer = true
+  State.get.lockPresentation = true
   State.get.currentPresentation = presentation
   
   val (text, doRedirect) = if(id == null) ("you must supply and id", false) else if (presentation == null) ("not a valid key", false) else ("Redirecting", true) 
