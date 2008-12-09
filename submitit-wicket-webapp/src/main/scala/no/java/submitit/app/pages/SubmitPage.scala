@@ -30,29 +30,23 @@ class SubmitPage extends LayoutPage {
     } else {
       (state.currentPresentation, false)
     } 
+  
     
   def password = getRequest.getParameter("password");
   
-  add(new Form("inputForm") {
+  add(new Form("inputForm") with EasyForm {
     
     val verified = state.verifiedWithCaptha
-    add(new TextField("title",  new PropertyModel(pres, "title")))
-    add(new TextArea("theabstract",  new PropertyModel(pres, "abstr")))
-
-    add(new TextField("duration",  new PropertyModel(pres, "duration")))
-    add(new TextArea("equipment",  new PropertyModel(pres, "equipment")))
-    add(new TextArea("requiredExperience",  new PropertyModel(pres, "requiredExperience")))
-    add(new TextArea("expectedAudience",  new PropertyModel(pres, "expectedAudience")))
     
     add(new FeedbackPanel("feedback"))
-    
-    val level = new RadioChoice("level", new PropertyModel(pres, "level"), Level.elements.toList)
-    val language = new RadioChoice("language", new PropertyModel(pres, "language"), Language.elements.toList)
-    
-    add(language)
-    add(level)
-    
-    add(new SpeakerPanel(pres))
+    addPropTF("title", pres, "title")
+    addPropTA("theabstract", pres, "abstr")
+    addPropTF("duration", pres, "duration")
+    addPropTA("equipment",pres, "equipment")
+    addPropTA("requiredExperience", pres, "requiredExperience")
+    addPropTA("expectedAudience", pres, "expectedAudience")
+    addPropRC("level", pres, "level", Level.elements.toList)
+    addPropRC("language", pres, "language", Language.elements.toList)
     
     if (!verified) add(captcha.image)
     
@@ -62,29 +56,36 @@ class SubmitPage extends LayoutPage {
     
     private class ReviewLink(id: String, form: Form) extends SubmitLink(id, form){
       override def onSubmit() { 
-        if (!state.verifiedWithCaptha &&captcha.imagePass != password) error("Wrong captcha password")
-        else  {
           handleSubmit
-        }
       }
     }
     
     add(new ReviewLink("reviewButtonTop", this))
     add(new ReviewLink("reviewButtonBottom", this))
     
-    val newCapButton = new SubmitLink("captchaButton", this){
+    add(new SubmitLink("captchaButton", this){
       override def onSubmit()  {
         setupCatcha
       }
-    }
-    add(newCapButton)
+    })
     
-    def handleSubmit {
+    add(new SpeakerPanel(pres))
+    
+    def handleSubmit() {
       // Some form validation
-      if(pres.speakers.size == 0) {
-        error("You must specify at least one speaker")
-      } 
-      else {
+      if (!state.verifiedWithCaptha && captcha.imagePass != password) error("Wrong captcha password")
+      
+      required(pres.speakers, "You must specify at least one speaker")
+      required(pres.title, "You must specify a title")
+      required(pres.abstr, "You must specify an abstract")
+      
+      pres.speakers.foreach(sp => {
+        required(sp.name, "You must specify an a name")
+        required(sp.email, "You must specify an email")
+        required(sp.bio, "You must specify an bio")
+      })
+      
+      if(!hasErrorMessage) {
         state.verifiedWithCaptha = true
         setResponsePage(classOf[ReviewPage])
       }
@@ -92,7 +93,7 @@ class SubmitPage extends LayoutPage {
     
   })
   
-  
+
   def setupCatcha {
     state.resetCaptcha
     setResponsePage(classOf[SubmitPage])

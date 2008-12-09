@@ -108,9 +108,6 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
   }	
   
 
-  
-
-  
   setOutputMarkupId(true)
 
   add(speakersList)
