@@ -36,6 +36,7 @@ class ConfirmPage extends LayoutPage {
       val p = new Presentation
       p.speakers = pres.speakers
       state.currentPresentation = p
+      state.presentationFromServer = false
       setResponsePage(classOf[SubmitPage])
     }
   })

@@ -17,21 +17,17 @@ import common.Implicits._
 class SubmitPage extends LayoutPage {
   
   val state = State.get
+  if (state.presentationFromServer) redirectToReview
+  
+  def redirectToReview() {
+    setResponsePage(classOf[ReviewPage])
+  }
+  
   state setCaptchaIfNotSet
   val captcha = State.get.captcha
 
-  /** Random captcha password to match against. */
-  val (pres, isNew) = 
-    if (state.currentPresentation == null) {
-      val p = new Presentation
-      p.init
-      state.currentPresentation = p
-      (state.currentPresentation, true)
-    } else {
-      (state.currentPresentation, false)
-    } 
+  val pres = state.currentPresentation
   
-    
   def password = getRequest.getParameter("password");
   
   add(new Form("inputForm") with EasyForm {
@@ -65,7 +61,8 @@ class SubmitPage extends LayoutPage {
     
     add(new SubmitLink("captchaButton", this){
       override def onSubmit()  {
-        setupCatcha
+        state.resetCaptcha()
+        setResponsePage(classOf[SubmitPage])
       }
     })
     
@@ -87,16 +84,9 @@ class SubmitPage extends LayoutPage {
       
       if(!hasErrorMessage) {
         state.verifiedWithCaptha = true
-        setResponsePage(classOf[ReviewPage])
+        redirectToReview()
       }
     }
-    
   })
-  
-
-  def setupCatcha {
-    state.resetCaptcha
-    setResponsePage(classOf[SubmitPage])
-  }
     
 }

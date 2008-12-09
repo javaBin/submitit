@@ -7,11 +7,24 @@ import no.java.submitit.model._
 
 class State(request: Request) extends WebSession(request) {
   
-  var currentPresentation: Presentation = _
-  
-  var verifiedWithCaptha = false
-  
   var captcha: Captcha = _
+  var verifiedWithCaptha = false
+  var presentationFromServer = false
+  
+  private var presentation: Presentation = _
+  
+  def currentPresentation = {
+    if (presentation != null) presentation
+    else {
+      presentation = new Presentation
+      presentation.init
+      presentation
+    }
+   }
+  
+  def currentPresentation_=(currentPresentation: Presentation) {
+    presentation = currentPresentation
+  }
 
   def setCaptchaIfNotSet() {
     if (captcha == null) captcha = new Captcha
@@ -20,7 +33,7 @@ class State(request: Request) extends WebSession(request) {
   def resetCaptcha() {
     captcha = new Captcha
   }
-
+  
 }
 
 object State{
