@@ -1,5 +1,1 @@
-We are currently developing a Scala-Lift application called SubmitIT, see (fredriv/submitit). Awesome learning Lift. We are kind of in a hurry for a deadline, hence we have prepared an version in wicket.
-
-Hopefully we will be able to use the Lift app, but if not, this is the fallback.
-
-This is Wicket with Scala. Awesome combination! :)
+This is the submission app for JavaZone presentation. Written i Scala and Wicket, awesome combination! :)
