@@ -1,7 +1,7 @@
 package no.java.submitit.ems
 
 import no.java.ems.client._
-import no.java.ems.domain.{Event,Session,Person,EmailAddress}
+import no.java.ems.domain.{Event,Session,Person,EmailAddress,Binary}
 import _root_.scala.collection.jcl.Conversions._
 import common.Implicits._
 import common._
@@ -16,8 +16,12 @@ class EmsClient(eventName: String, serverUrl: String) extends BackendClient {
   val event = findOrCreateEvent("JavaZone 2009", emsService.getEvents().toList)
   
   def savePresentation(presentation: Presentation): String = {
-    presentation.speakers.foreach(speaker => 
-      if (speaker.personId == null) findOrCreateContact(speaker))
+    presentation.speakers.foreach(speaker => {
+      if (speaker.personId == null) findOrCreateContact(speaker)
+      
+      val picture = speaker.picture
+      if (picture != null && picture.id == null) savePicture(picture)
+    })
     
     val session = converter.toSession(presentation)
     session.setEventId(event.getId())
@@ -49,6 +53,12 @@ class EmsClient(eventName: String, serverUrl: String) extends BackendClient {
     val person = converter.toPerson(speaker)
     emsService.saveContact(person)
     person
+  }
+  
+  private def savePicture(picture: Picture) {
+    val photo = converter.toPhoto(picture)
+    val result = emsService.saveBinary(photo)
+    picture.id = result.getId
   }
   
   private def findOrCreateEvent(name: String, events: List[Event]): Event = {

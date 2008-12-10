@@ -1,7 +1,7 @@
 package no.java.submitit.ems
 
 import no.java.ems._
-import no.java.ems.domain.{Event,Session,Person,EmailAddress}
+import no.java.ems.domain.{Event,Session,Person,EmailAddress,Binary,ByteArrayBinary}
 import _root_.scala.collection.jcl.Conversions._
 import common.Implicits._
 import model._
@@ -77,7 +77,7 @@ class EmsConverter {
   def toEmsSpeaker(speaker: Speaker): no.java.ems.domain.Speaker = {
     val result = new no.java.ems.domain.Speaker(speaker.personId, speaker.name)
     result.setDescription(speaker.bio)
-    // TODO set picture
+    result.setPhoto(toPhoto(speaker.picture))
     result
   }
   
@@ -86,7 +86,26 @@ class EmsConverter {
     result.personId = speaker.getPersonId
     result.name = speaker.getName
     result.bio = speaker.getDescription
+    result.picture = toPicture(speaker.getPhoto)
     result
   }
-    
+
+  def toPhoto(picture: Picture): Binary = {
+    if (picture != null) {
+      new ByteArrayBinary(picture.id, picture.name, picture.contentType, picture.content)
+    } else {
+      null
+    }
+  }
+  
+  def toPicture(photo: Binary): Picture = {
+    if (photo != null) {
+      val content = new Array[Byte](photo.getSize.toInt)
+      photo.getDataStream.read(content)
+      new Picture(photo.getId, content, photo.getFileName, photo.getMimeType)
+    } else {
+      null
+    }
+  }
+  
 }
