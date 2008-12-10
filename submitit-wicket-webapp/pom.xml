@@ -21,6 +21,10 @@
       <artifactId>submitit-common</artifactId>
     </dependency>
     <dependency>
+      <groupId>no.java.submitit</groupId>
+      <artifactId>submitit-ems-client</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-library</artifactId>
     </dependency>

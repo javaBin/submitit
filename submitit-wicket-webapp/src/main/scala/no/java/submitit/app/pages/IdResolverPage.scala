@@ -1,6 +1,7 @@
 package no.java.submitit.app.pages
 
 import org.apache.wicket.markup.html.WebPage
+import no.java.submitit.common._
 import no.java.submitit.model._
 import no.java.submitit.app.State
 import org.apache.wicket.markup.html.basic._
@@ -11,8 +12,9 @@ class IdResolverPage extends LayoutPage {
   val state = State.get
   val id = getRequest.getParameter("id")
 
-  // TODO fetch presentation
-  val presentation: Presentation = state.currentPresentation
+  val backendClient = state.backendClient
+
+  val presentation: Presentation = backendClient.loadPresentation(id)
   State.get.lockPresentation = true
   State.get.currentPresentation = presentation
   

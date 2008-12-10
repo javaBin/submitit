@@ -4,9 +4,12 @@ import no.java.ems.client._
 import no.java.ems.domain.{Event,Session,Person,EmailAddress}
 import _root_.scala.collection.jcl.Conversions._
 import common.Implicits._
+import common._
 import model._
 
-class EmsClient(eventName: String, emsService: RestEmsService) {
+class EmsClient(eventName: String, serverUrl: String) extends BackendClient {
+  
+  val emsService = new RestEmsService(serverUrl)
   
   val converter = new EmsConverter
   
@@ -21,6 +24,11 @@ class EmsClient(eventName: String, emsService: RestEmsService) {
     emsService.saveSession(session)
     presentation.sessionId = session.getId()
     session.getId()
+  }
+  
+  def loadPresentation(id: String): Presentation = {
+    val session = emsService.getSession(id)
+    converter.toPresentation(session)
   }
   
   private def findOrCreateContact(speaker: Speaker) {
