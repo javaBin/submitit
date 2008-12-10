@@ -24,11 +24,13 @@
       <url>http://scala-tools.org/repo-snapshots</url>
       <snapshots/>
     </repository>
+<!--
     <repository>
       <id>javabin.repo</id>
       <name>javaBin Smia</name>
       <url>http://smia.java.no/maven/repo/release</url>
     </repository>
+-->
   </repositories>
 
   <pluginRepositories>
@@ -70,6 +72,11 @@
 	<groupId>org.apache.wicket</groupId>
 	<artifactId>wicket-extensions</artifactId>
 	<version>1.3.5</version>
+      </dependency>		
+      <dependency>
+	<groupId>javax.mail</groupId>
+	<artifactId>mail</artifactId>
+	<version>1.4.1</version>
       </dependency>		
       <dependency>
 	<groupId>org.slf4j</groupId>
