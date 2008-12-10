@@ -6,6 +6,8 @@ import _root_.scala.collection.jcl.Conversions._
 import common.Implicits._
 import model._
 
+import scala.xml.XML
+
 class EmsConverter {
 
   def toPerson(speaker: Speaker): Person = {
@@ -20,10 +22,14 @@ class EmsConverter {
     session.setId(presentation.sessionId)
     session.setBody(presentation.abstr)
 
-    session.setNotes(encodeSessionData(presentation.outline,
-                                       presentation.equipment, 
-                                       presentation.requiredExperience, 
-                                       presentation.expectedAudience))
+    def notes = <notes>
+    <outline>{presentation.outline}</outline>
+    <equipment>{presentation.equipment}</equipment>
+    <experience>{presentation.requiredExperience}</experience>
+    <audience>{presentation.expectedAudience}</audience>
+    </notes>
+    
+    session.setNotes(notes.toString)
     
     session.setSpeakers(presentation.speakers.map(speaker => toEmsSpeaker(speaker)))
     
@@ -47,11 +53,13 @@ class EmsConverter {
     pres.abstr = session.getBody
     pres.speakers = session.getSpeakers.toList.map(speaker => fromEmsSpeaker(speaker))
     
-    val decodeSessionData(outline, equipment, experience, audience) = session.getNotes
-    pres.outline = outline
-    pres.equipment = equipment
-    pres.requiredExperience = experience
-    pres.expectedAudience = audience
+    /* Handle any text before and after XML in notes-field */
+    val notes = XML.loadString("<wrap>" + session.getNotes + "</wrap>") \ "notes"
+    
+    pres.outline = (notes \ "outline").text
+    pres.equipment = (notes \ "equipment").text
+    pres.requiredExperience = (notes \ "experience").text
+    pres.expectedAudience = (notes \ "audience").text
     
     pres.language = session.getLanguage.getIsoCode match {
       case "no" => Language.Norwegian
@@ -80,17 +88,5 @@ class EmsConverter {
     result.bio = speaker.getDescription
     result
   }
-
-  val decodeSessionData = """(?sm)(?:^h2\. Outline
-\s*(.*?))?\s*(?:^h2\. Equipment
-\s*(.*?))?\s*(?:^h2\. Required experience
-\s*(.*?))?\s*(?:^h2\. Expected audience
-\s*(.*?))?""".r
-
-  def encodeSessionData(outline: String, equipment: String, experience: String, audience: String): String = 
-    "h2. Outline\n\n" + outline + "\n\n" +
-    "h2. Equipment\n\n" + equipment + "\n\n" +
-    "h2. Required experience\n\n" + experience + "\n\n" +
-    "h2. Expected audience\n\n" + audience
     
 }

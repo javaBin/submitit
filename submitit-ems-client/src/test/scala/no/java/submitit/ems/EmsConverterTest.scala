@@ -67,10 +67,10 @@ dictumst. Vestibulum rhoncus semper justo.""",
   }
   
   def testConvertPresentation() {
-    def session = converter toSession presentation
-    def result = converter toPresentation session
-    
-    System.err.println(result)
+    val session = converter toSession presentation
+    /* Add some text before and after XML in notes-field */
+    session.setNotes("foo" + session.getNotes + "bar")
+    val result = converter toPresentation session
     
     assertEquals(presentation.sessionId, result.sessionId)
     assertEquals(presentation.title, result.title)
