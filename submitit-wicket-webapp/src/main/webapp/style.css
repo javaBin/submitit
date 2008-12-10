@@ -104,7 +104,7 @@ h1 a:hover {
 
 #content a {
 	color:#222222;
-	text-decoration:none;
+	text-decoration:underline;
 	font-weight:bold;
 	}
 #content a:hover {
@@ -143,6 +143,7 @@ h1 a:hover {
 .titleText {
 	font-size:medium;
 	font-weight: bold;
+	background: #E0E0E0;
 }
 
 .inputField {
