@@ -133,7 +133,7 @@ h1 a:hover {
 }
 
 .row {
-	margin-bottom: 3px;
+	margin-bottom: 5px;
 }
 
 .bottomRow {
@@ -146,10 +146,22 @@ h1 a:hover {
 	background: #E0E0E0;
 }
 
+.inputArea {
+	width:75em;	
+}
+
 .inputField {
+	width:75em;
+}
+
+.choices {
 	
 }
 
+.shortInputField {
+	width:14em;	
+}
+	
 .firstCol {
 	float:left;
 }

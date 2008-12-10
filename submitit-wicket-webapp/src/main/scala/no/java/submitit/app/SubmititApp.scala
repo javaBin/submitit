@@ -13,7 +13,8 @@ import org.apache.wicket.Session
 
 class SubmititApp extends WebApplication {
 
-  def backendClient = new EmsClient("JavaZone 2009", "http://localhost:3000/ems")
+  //def backendClient = new EmsClient("JavaZone 2009", "http://localhost:3000/ems")
+  val backendClient = new submitit.common.BackendClientMock
   
   	override def init() {
         mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);

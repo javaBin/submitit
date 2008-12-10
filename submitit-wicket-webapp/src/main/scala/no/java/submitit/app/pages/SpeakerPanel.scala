@@ -78,6 +78,8 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
       item.setOutputMarkupId(true)
       item.add(speakersForm)
       
+      item.add(new Label("speakerNumber", (item.getIndex + 1).toString))
+      
       val speaker = item.getModelObject.asInstanceOf[Speaker]
       speakersForm.add(new TextField("speakerName", new PropertyModel(speaker, "name")))
       

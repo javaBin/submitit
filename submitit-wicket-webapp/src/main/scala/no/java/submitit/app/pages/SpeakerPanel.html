@@ -1,31 +1,30 @@
 <html xmlns:wicket="http://wicket.apache.org/">
 <wicket:panel>
 	<fieldset wicket:id="speakerList">
-		<legend><a href="#" wicket:id="remove" class="inlineLink">Remove this speaker</a></legend>
+		<legend>Speaker <label wicket:id="speakerNumber"></label></legend>
+		<div class="row">
+		</div>		
+		<div class="row">
+			<a href="#" wicket:id="remove" class="inlineLink">Remove this speaker</a>
+		</div>
 		<form wicket:id="speakersForm">
 			<div class="row">
 				<div class="titleText">
 					<label for="speakerName">Speaker name *</label>
 				</div>
-				<div class="inputField">
-					<input wicket:id="speakerName" type="text" size="143"/>
-				</div>
+				<input wicket:id="speakerName" type="text" class="inputField"/>
 			</div>
 			<div class="row">
 				<div class="titleText">
 					<label for="bio">Bio *</label>
 				</div>
-				<div class="inputField">
-					<textarea wicket:id="bio" cols="124" rows="10"></textarea>
-				</div>
+				<textarea wicket:id="bio" class="inputArea" rows="10"></textarea>
 			</div>
 			<div class="row">
 				<div class="titleText">
 					<label for="email">Email *</label>
 				</div>
-				<div class="inputField">
-					<input wicket:id="email" type="text" size="104"/>
-				</div>
+				<input wicket:id="email" type="text" class="inputField"/>
 			</div>
 		</form>
 		
@@ -34,9 +33,7 @@
 				<div class="titleText">
 		        	<label for="upload">Profile picture (max 500KB). Supported types:&nbsp;</label><label wicket:id="extension"></label>.
 		        </div>
-		        <div class="inputField">
-			        <input wicket:id="fileInput" id="upload" type="file"/>
-			    </div>
+		        <input wicket:id="fileInput" id="upload" type="file"/>
 		    </div>
 			<div class="row">
 				<input type="submit" value="Upload!"/>
