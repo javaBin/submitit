@@ -8,6 +8,7 @@
 	<div class="row">
 		<div wicket:id="feedback"></div>
 	</div>
+	<center><div wicket:id="modal"></div></center>
 	<h2 align="left">Fill in you presentation details</h2>
 	<wicket:enclosure child="password">
 		<div class="row">
@@ -57,7 +58,7 @@
 	</div>
 	<div class="row">
 		<div class="titleText">
-			<label>Outline</label>
+			<label>Outline</label> <a href="#" wicket:id="outlineHelp"><img height="16px" src="images/questionmark.gif"/></a>
 		</div>
 	 	<textarea class="inputArea" rows="10" wicket:id="outline"></textarea>
 	</div>
@@ -75,7 +76,7 @@
 	</div>
 	<div class="row">
 		<div class="titleText">
-			<label>Expected audience</label>
+			<label>Expected audience</label> <a href="#" wicket:id="expectedHelp"><img height="16px" src="images/questionmark.gif"/></a>
 		</div>
 	 	<textarea class="inputArea" rows="10" wicket:id="expectedAudience"></textarea>
 	</div>

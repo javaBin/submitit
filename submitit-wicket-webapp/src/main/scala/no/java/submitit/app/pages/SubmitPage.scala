@@ -9,6 +9,9 @@ import org.apache.wicket.markup.html.form._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import org.apache.wicket.model.PropertyModel
 import org.apache.wicket.util.value.ValueMap
+import org.apache.wicket.ajax.markup.html._
+import org.apache.wicket.ajax._
+import org.apache.wicket.extensions.ajax.markup.html.modal._
 import org.apache.wicket.markup.html.link._
 import no.java.submitit.app._
 import common.Implicits._
@@ -56,6 +59,24 @@ class SubmitPage extends LayoutPage {
           handleSubmit
       }
     }
+    
+
+    
+    val modal1 = new ModalWindow("modal")
+    add(modal1);
+    
+   private class HelpLink(id: String) extends AjaxLink(id){
+      override def onClick(target: AjaxRequestTarget) { 
+         modal1.setContent(new HelpPopupPanel(id, modal1.getContentId()))
+         modal1.setTitle("Help information");
+         modal1.show(target)
+      }
+    }
+
+    
+   
+    add(new HelpLink("outlineHelp"))
+    add(new HelpLink("expectedHelp"))
     
     add(new ReviewLink("reviewButtonTop", this))
     add(new ReviewLink("reviewButtonBottom", this))
