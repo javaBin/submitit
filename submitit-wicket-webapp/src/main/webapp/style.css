@@ -178,6 +178,10 @@ ul {
 	margin-left: 21px;	
 }
 
+.helpImg {
+	height:16px;
+}
+
 .feedbackPanelERROR {
 	color:red;
 	font-weight:bold;

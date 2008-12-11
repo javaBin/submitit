@@ -60,23 +60,8 @@ class SubmitPage extends LayoutPage {
       }
     }
     
-
-    
-    val modal1 = new ModalWindow("modal")
-    add(modal1);
-    
-   private class HelpLink(id: String) extends AjaxLink(id){
-      override def onClick(target: AjaxRequestTarget) { 
-         modal1.setContent(new HelpPopupPanel(id, modal1.getContentId()))
-         modal1.setTitle("Help information");
-         modal1.show(target)
-      }
-    }
-
-    
-   
-    add(new HelpLink("outlineHelp"))
-    add(new HelpLink("expectedHelp"))
+    addHelpLink("outlineHelp")
+    addHelpLink("expectedHelp")
     
     add(new ReviewLink("reviewButtonTop", this))
     add(new ReviewLink("reviewButtonBottom", this))

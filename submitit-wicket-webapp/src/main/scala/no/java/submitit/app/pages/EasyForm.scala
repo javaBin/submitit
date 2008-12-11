@@ -2,6 +2,12 @@ package no.java.submitit.app.pages
 
 import org.apache.wicket.markup.html.form._
 import org.apache.wicket.model.PropertyModel
+import org.apache.wicket.extensions.ajax.markup.html.modal._
+import org.apache.wicket.ajax.markup.html.form._
+import org.apache.wicket.ajax.markup.html._
+import org.apache.wicket.ajax._
+import org.apache.wicket.ajax.form._
+import org.apache.wicket.markup.html.form._
 
 trait EasyForm extends org.apache.wicket.MarkupContainer  {
   
@@ -28,5 +34,25 @@ trait EasyForm extends org.apache.wicket.MarkupContainer  {
   }
   
   private def pm(any: Any, propertyName: String) = new PropertyModel(any, propertyName)
+  
+  
+  private var modalWindow: ModalWindow = _
+  
+  def addHelpLink(id: String) {
+    add(new HelpLink(id))
+  }
+  
+  
+  private class HelpLink(id: String) extends AjaxLink(id){
+    if(modalWindow == null) {
+      modalWindow = new ModalWindow("modal")
+      EasyForm.this.add(modalWindow);
+    }
+    override def onClick(target: AjaxRequestTarget) {
+      modalWindow.setContent(new HelpPopupPanel(id, modalWindow.getContentId()))
+      modalWindow.setTitle("Help");
+      modalWindow.show(target)
+    }
+  }
   
 }

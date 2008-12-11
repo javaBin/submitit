@@ -73,7 +73,7 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
   
   val speakersList = new ListView("speakerList", model) {
     override def populateItem(item: ListItem) {
-      val speakersForm = new Form("speakersForm")
+      val speakersForm = new Form("speakersForm") with EasyForm
       speakersForm.setOutputMarkupId(true)
       item.setOutputMarkupId(true)
       item.add(speakersForm)
@@ -87,7 +87,9 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
       email.add(RfcCompliantEmailAddressValidator.getInstance())
       
       speakersForm.add(email)
+      speakersForm.addHelpLink("emailHelp")
       speakersForm.add(new TextArea("bio", new PropertyModel(speaker, "bio")))
+      speakersForm.addHelpLink("bioHelp")
       
       item.add(new AjaxSubmitLink("remove", speakersForm) {
         override def onSubmit(target: AjaxRequestTarget, form: Form) {

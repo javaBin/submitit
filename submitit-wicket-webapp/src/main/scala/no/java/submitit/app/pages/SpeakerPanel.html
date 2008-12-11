@@ -8,6 +8,7 @@
 			<a href="#" wicket:id="remove" class="inlineLink">Remove this speaker</a>
 		</div>
 		<form wicket:id="speakersForm">
+			<div wicket:id="modal"></div>
 			<div class="row">
 				<div class="titleText">
 					<label for="speakerName">Speaker name *</label>
@@ -16,13 +17,13 @@
 			</div>
 			<div class="row">
 				<div class="titleText">
-					<label for="bio">Bio *</label>
+					<label for="bio">Bio *</label> <a href="#" wicket:id="bioHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
 				</div>
 				<textarea wicket:id="bio" class="inputArea" rows="10"></textarea>
 			</div>
 			<div class="row">
 				<div class="titleText">
-					<label for="email">Email *</label>
+					<label for="email">Email *</label> <a href="#" wicket:id="emailHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
 				</div>
 				<input wicket:id="email" type="text" class="inputField"/>
 			</div>
