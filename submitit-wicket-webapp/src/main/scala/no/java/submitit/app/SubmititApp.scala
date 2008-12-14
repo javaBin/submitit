@@ -55,6 +55,8 @@ object SubmititApp {
     case None => null
   }
   
+  def boolSetting(key: String) = _root_.java.lang.Boolean.parseBoolean(getSetting(key))
+  
   def authenticates(password: Object) = adminPass == password
   
 }

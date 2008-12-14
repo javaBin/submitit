@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 class ConfirmPage extends LayoutPage {
   
   val state = State.get
-  state.lockPresentation = true
+  state.fromServer = true
 
   val backendClient = state.backendClient
   
@@ -42,7 +42,7 @@ class ConfirmPage extends LayoutPage {
   
   add(new NewPresentationLink("newPresentation"))
 
-  sendConfirmationMail(pres, url)
+  if(SubmititApp.boolSetting("sendEmail")) sendConfirmationMail(pres, url)
   
   def sendConfirmationMail(pres: Presentation, url: String) {
     val props = new Properties

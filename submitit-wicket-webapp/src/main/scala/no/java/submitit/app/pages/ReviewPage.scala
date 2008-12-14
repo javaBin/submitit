@@ -17,11 +17,13 @@ class ReviewPage extends LayoutPage {
   val p = State.get.currentPresentation
   add(new Label("title", p.title))
   add(new WikiMarkupText("abstract", p.abstr))
+  
+  val editAllowed = SubmititApp.boolSetting("globalEditAllowed")
   add(new HiddenField("locked") {
-    override def isVisible = !State.get.lockPresentation
+    override def isVisible = !State().lockPresentation
   })
   add(new HiddenField("unlocked") {
-    override def isVisible = State.get.lockPresentation
+    override def isVisible = State().lockPresentation
   })
   
   add(new NewPresentationLink("newPresentation"))

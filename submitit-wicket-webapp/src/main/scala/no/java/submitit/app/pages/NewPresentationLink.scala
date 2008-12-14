@@ -12,7 +12,7 @@ class NewPresentationLink(id: String) extends Link(id) {
       val p = new Presentation
       p.speakers = state.currentPresentation.speakers
       state.currentPresentation = p
-      state.lockPresentation = false
+      state.fromServer = false
       setResponsePage(classOf[SubmitPage])
     }
   

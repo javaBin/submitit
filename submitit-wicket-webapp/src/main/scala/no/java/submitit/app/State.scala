@@ -10,7 +10,10 @@ class State(request: Request, val backendClient: BackendClient) extends WebSessi
   
   var captcha: Captcha = _
   var verifiedWithCaptha = false
-  var lockPresentation = false
+  var fromServer = false
+
+  def lockPresentation = fromServer && !SubmititApp.boolSetting("globalEditAllowed")
+  
   
   private var presentation: Presentation = _
   
