@@ -62,6 +62,7 @@ class SubmitPage extends LayoutPage {
     
     addHelpLink("outlineHelp")
     addHelpLink("expectedHelp")
+    addHelpLink("durationHelp")
     
     add(new ReviewLink("reviewButtonTop", this))
     add(new ReviewLink("reviewButtonBottom", this))
@@ -82,6 +83,7 @@ class SubmitPage extends LayoutPage {
       required(pres.speakers, "You must specify at least one speaker")
       required(pres.title, "You must specify a title")
       required(pres.abstr, "You must specify an abstract")
+      if(pres.duration > 60) error("Max duration is 60 minutes")
       
       pres.speakers.foreach(sp => {
         required(sp.name, "You must specify an a name")
