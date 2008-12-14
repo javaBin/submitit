@@ -10,16 +10,20 @@ import javax.servlet.http.HttpServletRequest
 import org.apache.wicket.Request
 import org.apache.wicket.Response
 import org.apache.wicket.Session
+import _root_.java.util.Properties
 
 class SubmititApp extends WebApplication {
 
   //def backendClient = new EmsClient("JavaZone 2009", "http://localhost:3000/ems")
   val backendClient = new submitit.common.BackendClientMock
   
+  
+  
   	override def init() {
         mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
         mountBookmarkablePage("/helpIt", classOf[HelpPage]);
         getApplicationSettings.setDefaultMaximumUploadSize(Bytes.kilobytes(500))
+        SubmititApp.props = utils.PropertyLoader.loadRessource("submitit.properties")
 	}
    
     override def newWebRequest(servletRequest: HttpServletRequest) = new UploadWebRequest(servletRequest)
@@ -28,4 +32,12 @@ class SubmititApp extends WebApplication {
   
     def getHomePage() = classOf[StartPage]
 
+}
+
+object SubmititApp {
+  
+  private var props: Properties = _
+  
+  def getSetting(key: String) = props getProperty key
+  
 }
