@@ -50,7 +50,10 @@ object SubmititApp {
   var props: Map[String, String] = _
   private var adminPass: String = _
   
-  def getSetting(key: String) = props get key
+  def getSetting(key: String) = props get key match {
+    case Some(s) => s
+    case None => null
+  }
   
   def authenticates(password: Object) = adminPass == password
   

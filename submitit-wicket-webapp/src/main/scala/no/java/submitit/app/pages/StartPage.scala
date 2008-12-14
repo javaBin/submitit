@@ -1,13 +1,21 @@
 package no.java.submitit.app.pages
 
+import org.apache.wicket.markup.html.basic._
 
-class StartPage extends org.apache.wicket.markup.html.WebPage {
+class StartPage extends LayoutPage {
   
-  if(State.get.lockPresentation) {
-    setResponsePage(classOf[ReviewPage])
+  val submitAllowed = SubmititApp.getSetting("submitAllowed")
+  if (_root_.java.lang.Boolean.parseBoolean(submitAllowed)) {
+    
+    if(State.get.lockPresentation) {
+      setResponsePage(classOf[ReviewPage])
+    }
+    else {
+      setResponsePage(classOf[SubmitPage])
+    }
   }
   else {
-    setResponsePage(classOf[SubmitPage])
+    add(new Label("info", SubmititApp.getSetting("submitNotAllowedMsg")))
   }
 
 }

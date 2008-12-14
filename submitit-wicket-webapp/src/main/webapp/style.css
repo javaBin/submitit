@@ -46,6 +46,7 @@ p {
 	background-repeat:no-repeat;
 	background-position:top center;
 	padding:10px 5px;
+	min-height: 20em;
 	}
 #footer {
 	text-align:right;
