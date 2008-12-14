@@ -41,4 +41,6 @@ object State{
   
   def get = Session.get().asInstanceOf[State]
   
+  def apply() = get
+  
 }

@@ -1,6 +1,6 @@
 package no.java.submitit.app
 
-import no.java.submitit.ems._
+// import no.java.submitit.ems._
 import no.java.submitit.app.pages._
 import org.apache.wicket.util.lang.Bytes
 import org.apache.wicket.protocol.http.WebApplication
@@ -22,8 +22,19 @@ class SubmititApp extends WebApplication {
   	override def init() {
         mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
         mountBookmarkablePage("/helpIt", classOf[HelpPage]);
+        mountBookmarkablePage("99792226-admin-login-99792226", classOf[admin.AdminLogin])
         getApplicationSettings.setDefaultMaximumUploadSize(Bytes.kilobytes(500))
-        SubmititApp.props = utils.PropertyLoader.loadRessource("submitit.properties")
+        
+        val props = utils.PropertyLoader.loadRessource("submitit.properties")
+        SubmititApp.adminPass = props.remove("adminPassPhrase").asInstanceOf[String]
+        
+        val elems = props.keys
+        var theMap = Map[String, String]()
+        for (i <- 0 to props.size() - 1) {
+          val e = elems.nextElement.asInstanceOf[String]
+          theMap = theMap + (e -> props.getProperty(e).asInstanceOf[String])
+        }
+        SubmititApp.props = theMap
 	}
    
     override def newWebRequest(servletRequest: HttpServletRequest) = new UploadWebRequest(servletRequest)
@@ -36,8 +47,11 @@ class SubmititApp extends WebApplication {
 
 object SubmititApp {
   
-  private var props: Properties = _
+  var props: Map[String, String] = _
+  private var adminPass: String = _
   
-  def getSetting(key: String) = props getProperty key
+  def getSetting(key: String) = props get key
+  
+  def authenticates(password: Object) = adminPass == password
   
 }
