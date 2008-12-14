@@ -11,7 +11,8 @@ class Speaker {
   override def toString =
     "name: " + name +
     " email: " + email +
-    " bio: " + bio
+    " bio: " + bio +
+    " picture: " + (if (picture != null) picture.name else "")
 
   override def equals(other: Any): Boolean = {
     other match {
