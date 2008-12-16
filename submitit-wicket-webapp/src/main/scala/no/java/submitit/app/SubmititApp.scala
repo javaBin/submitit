@@ -1,5 +1,6 @@
 package no.java.submitit.app
 
+import no.java.submitit.common._
 import no.java.submitit.ems._
 import no.java.submitit.app.pages._
 import org.apache.wicket.util.lang.Bytes
@@ -14,13 +15,7 @@ import _root_.java.util.Properties
 
 class SubmititApp extends WebApplication {
 
-  val emsUrl = SubmititApp.getSetting("emsUrl")
-  val username = SubmititApp.getSetting("emsUser")
-  val password = SubmititApp.getSetting("emsPwd")
-  
-  val backendClient = 
-    if (emsUrl != "") new EmsClient("JavaZone 2009", emsUrl, username, password)
-    else new submitit.common.BackendClientMock
+  var backendClient: BackendClient = _
   
   override def init() {
     mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
@@ -38,6 +33,14 @@ class SubmititApp extends WebApplication {
       theMap = theMap + (e -> props.getProperty(e).asInstanceOf[String])
     }
     SubmititApp.props = theMap
+    
+    val emsUrl = SubmititApp.getSetting("emsUrl")
+    val username = SubmititApp.getSetting("emsUser")
+    val password = SubmititApp.getSetting("emsPwd")
+  
+    backendClient = 
+      if (emsUrl != "") new EmsClient("JavaZone 2009", emsUrl, username, password)
+      else new submitit.common.BackendClientMock
   }
   
   override def newWebRequest(servletRequest: HttpServletRequest) = new UploadWebRequest(servletRequest)
