@@ -41,7 +41,7 @@ class ReviewPage extends LayoutPage {
       val speaker = item.getModelObject.asInstanceOf[Speaker]
       item.add(new Label("name", speaker.name))
       item.add(new Label("email", speaker.email))
-      item.add(new Label("bio", speaker.bio))
+      item.add(new WikiMarkupText("bio", speaker.bio))
       item add (if (speaker.picture != null) new NonCachingImage("image", new ByteArrayResource(speaker.picture.contentType, speaker.picture.content))
                   else new Image("image", new ContextRelativeResource("images/question.jpeg")))
     }
