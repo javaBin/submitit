@@ -7,9 +7,14 @@ import common.Implicits._
 import common._
 import model._
 
-class EmsClient(eventName: String, serverUrl: String) extends BackendClient {
+class EmsClient(eventName: String, serverUrl: String, username: String, password: String) extends BackendClient {
   
+  def isSet(s: String) = s != null && !s.trim.isEmpty
+    
   val emsService = new RestEmsService(serverUrl)
+  if (isSet(username) || isSet(password)) {
+    emsService.setCredentials(username, password)
+  }
   
   val converter = new EmsConverter
   

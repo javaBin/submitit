@@ -11,8 +11,10 @@ class BackendClientMock extends BackendClient {
   val presentations = Map.empty[String, Presentation]
   
   def savePresentation(pres: Presentation): String = {
-    pres.sessionId = nextId.toString
-    nextId = nextId + 1
+    if (pres.sessionId == null) {
+      pres.sessionId = nextId.toString
+      nextId = nextId + 1
+    }
     presentations(pres.sessionId) = pres
     pres.sessionId
   }

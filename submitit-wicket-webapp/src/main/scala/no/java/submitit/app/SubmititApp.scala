@@ -1,6 +1,6 @@
 package no.java.submitit.app
 
-// import no.java.submitit.ems._
+import no.java.submitit.ems._
 import no.java.submitit.app.pages._
 import org.apache.wicket.util.lang.Bytes
 import org.apache.wicket.protocol.http.WebApplication
@@ -14,34 +14,37 @@ import _root_.java.util.Properties
 
 class SubmititApp extends WebApplication {
 
-  //def backendClient = new EmsClient("JavaZone 2009", "http://localhost:3000/ems")
-  val backendClient = new submitit.common.BackendClientMock
+  val emsUrl = SubmititApp.getSetting("emsUrl")
+  val username = SubmititApp.getSetting("emsUser")
+  val password = SubmititApp.getSetting("emsPwd")
   
+  val backendClient = 
+    if (emsUrl != "") new EmsClient("JavaZone 2009", emsUrl, username, password)
+    else new submitit.common.BackendClientMock
   
+  override def init() {
+    mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
+    mountBookmarkablePage("/helpIt", classOf[HelpPage]);
+    mountBookmarkablePage("99792226-admin-login-99792226", classOf[admin.AdminLogin])
+    getApplicationSettings.setDefaultMaximumUploadSize(Bytes.kilobytes(500))
+    
+    val props = utils.PropertyLoader.loadRessource("submitit.properties")
+    SubmititApp.adminPass = props.remove("adminPassPhrase").asInstanceOf[String]
+    
+    val elems = props.keys
+    var theMap = Map[String, String]()
+    for (i <- 0 to props.size() - 1) {
+      val e = elems.nextElement.asInstanceOf[String]
+      theMap = theMap + (e -> props.getProperty(e).asInstanceOf[String])
+    }
+    SubmititApp.props = theMap
+  }
   
-  	override def init() {
-        mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
-        mountBookmarkablePage("/helpIt", classOf[HelpPage]);
-        mountBookmarkablePage("99792226-admin-login-99792226", classOf[admin.AdminLogin])
-        getApplicationSettings.setDefaultMaximumUploadSize(Bytes.kilobytes(500))
-        
-        val props = utils.PropertyLoader.loadRessource("submitit.properties")
-        SubmititApp.adminPass = props.remove("adminPassPhrase").asInstanceOf[String]
-        
-        val elems = props.keys
-        var theMap = Map[String, String]()
-        for (i <- 0 to props.size() - 1) {
-          val e = elems.nextElement.asInstanceOf[String]
-          theMap = theMap + (e -> props.getProperty(e).asInstanceOf[String])
-        }
-        SubmititApp.props = theMap
-	}
-   
-    override def newWebRequest(servletRequest: HttpServletRequest) = new UploadWebRequest(servletRequest)
+  override def newWebRequest(servletRequest: HttpServletRequest) = new UploadWebRequest(servletRequest)
   
-  	override def newSession(request: Request, response: Response):State = new State(request, backendClient)
+  override def newSession(request: Request, response: Response):State = new State(request, backendClient)
   
-    def getHomePage() = classOf[StartPage]
+  def getHomePage() = classOf[StartPage]
 
 }
 
