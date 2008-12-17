@@ -1,5 +1,6 @@
 package no.java.submitit.ems
 
+import no.java.ems.domain.Session
 import junit.framework._
 import Assert._
 import model._
@@ -70,10 +71,9 @@ dictumst. Vestibulum rhoncus semper justo.""",
   }
   
   def testConvertPresentation() {
-    val session = converter toSession presentation
-    /* Add some text before and after XML in notes-field */
-    session.setNotes("foo" + session.getNotes + "bar")
-    val result = converter toPresentation session
+    val session = new Session()
+    converter.updateSession(presentation, session)
+    val result = converter.toPresentation(session)
     
     assertEquals(presentation.sessionId, result.sessionId)
     assertEquals(presentation.title, result.title)
