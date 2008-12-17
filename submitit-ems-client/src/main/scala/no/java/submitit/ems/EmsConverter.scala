@@ -17,9 +17,8 @@ class EmsConverter {
     person
   }
   
-  def toSession(presentation: Presentation): Session = {
-    val session = new Session(presentation.title)
-    session.setId(presentation.sessionId)
+  def updateSession(presentation: Presentation, session: Session) {
+    session.setTitle(presentation.title)
     session.setBody(presentation.abstr)
 
     def notes = <notes>
@@ -45,7 +44,6 @@ class EmsConverter {
     }
     session.setLanguage(language)
     session.setLevel(level)
-    session
   }
   
   def toPresentation(session: Session): Presentation = {
