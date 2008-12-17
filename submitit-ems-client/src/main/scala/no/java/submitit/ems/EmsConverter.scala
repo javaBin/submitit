@@ -23,10 +23,11 @@ class EmsConverter {
     session.setBody(presentation.abstr)
 
     def notes = <notes>
+    <summary>{presentation.summary}</summary>
     <outline>{presentation.outline}</outline>
     <equipment>{presentation.equipment}</equipment>
-    <experience>{presentation.requiredExperience}</experience>
     <audience>{presentation.expectedAudience}</audience>
+    <feedback>{presentation.feedback}</feedback>
     </notes>
     
     session.setNotes(notes.toString)
@@ -56,10 +57,11 @@ class EmsConverter {
     /* Handle any text before and after XML in notes-field */
     val notes = XML.loadString("<wrap>" + session.getNotes + "</wrap>") \ "notes"
     
+    pres.summary = (notes \ "summary").text
     pres.outline = (notes \ "outline").text
     pres.equipment = (notes \ "equipment").text
-    pres.requiredExperience = (notes \ "experience").text
     pres.expectedAudience = (notes \ "audience").text
+    pres.feedback = (notes \ "feedback").text
     
     pres.language = session.getLanguage.getIsoCode match {
       case "no" => Language.Norwegian
