@@ -22,6 +22,10 @@ class EmsConverterTest extends TestCase("EMS converter") {
   val speakers = speaker1 :: speaker2 :: speaker3 :: Nil
   val presentation = Presentation("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras pellentesque.", 
                                       speakers, 
+                                                                            """Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+Ut tortor quam, semper in, aliquet ac, posuere ac, leo.
+Phasellus justo lectus, interdum eu, molestie vel, rutrum vel,
+enim.""",
                                       """Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
 Ut tortor quam, semper in, aliquet ac, posuere ac, leo.
 Phasellus justo lectus, interdum eu, molestie vel, rutrum vel,
@@ -46,7 +50,6 @@ dictumst. Vestibulum rhoncus semper justo.""",
                                       Level.Intermediate, 
                                       60, 
                                       "equipment", 
-                                      "required experience", 
                                       "expected audience")
 
   speaker1.personId = "id1"
@@ -74,6 +77,7 @@ dictumst. Vestibulum rhoncus semper justo.""",
     
     assertEquals(presentation.sessionId, result.sessionId)
     assertEquals(presentation.title, result.title)
+    assertEquals(presentation.summary, result.summary)
     assertEquals(presentation.abstr, result.abstr)
     assertEquals(presentation.speakers, result.speakers)
     assertEquals(presentation.outline, result.outline)
@@ -81,7 +85,6 @@ dictumst. Vestibulum rhoncus semper justo.""",
     assertEquals(presentation.level, result.level)
     assertEquals(presentation.duration, result.duration)
     assertEquals(presentation.equipment, result.equipment)
-    assertEquals(presentation.requiredExperience, result.requiredExperience)
     assertEquals(presentation.expectedAudience, result.expectedAudience)
   }
   
