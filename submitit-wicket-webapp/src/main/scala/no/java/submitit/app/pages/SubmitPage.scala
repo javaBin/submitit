@@ -39,11 +39,11 @@ class SubmitPage extends LayoutPage {
     
     add(new FeedbackPanel("feedback"))
     addPropTF("title", pres, "title")
+    addPropTA("summary", pres, "summary")
     addPropTA("theabstract", pres, "abstr")
     addPropTF("duration", pres, "duration")
     addPropTA("outline", pres, "outline")
     addPropTA("equipment", pres, "equipment")
-    addPropTA("requiredExperience", pres, "requiredExperience")
     addPropTA("expectedAudience", pres, "expectedAudience")
     addPropRC("level", pres, "level", Level.elements.toList)
     addPropRC("language", pres, "language", Language.elements.toList)
