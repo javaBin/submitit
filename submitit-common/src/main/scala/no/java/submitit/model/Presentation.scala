@@ -11,6 +11,7 @@ class Presentation extends Serializable {
   
   var sessionId: String = _
   var title: String = ""
+  var summary: String = ""
   var abstr: String = ""
   var speakers: List[Speaker] = Nil
   var outline: String = ""
@@ -18,8 +19,8 @@ class Presentation extends Serializable {
   var level: Level.Value = Beginner
   var duration: Int = 60
   var equipment: String = ""
-  var requiredExperience: String = ""
   var expectedAudience: String = ""
+  var feedback: String = _
  
   def init() {
     addSpeaker
@@ -42,32 +43,33 @@ class Presentation extends Serializable {
   
   override def toString =
     "title: " + title +
-      "\nabstract: " + abstr +
-      "\noutline: " + outline +
-      "\nlanguage: " + language +
-      "\nlevel: " + level +
-      "\nduration: " + duration +
-      "\nequipment: " + equipment +
-      "\nrequiredExperience: " + requiredExperience +
-      "\nexpectedAudience: " + expectedAudience +
-      "\nspeakers: " + speakers.mkString("(\n", "\n\t", "\n)")
+    "\nabstract: " + abstr +
+    "\nsummary: " + summary +
+    "\noutline: " + outline +
+    "\nlanguage: " + language +
+    "\nlevel: " + level +
+    "\nduration: " + duration +
+    "\nequipment: " + equipment +
+    "\nexpectedAudience: " + expectedAudience +
+    "\nspeakers: " + speakers.mkString("(\n", "\n\t", "\n)")
    
 }
 
 object Presentation {
 
   def apply(title: String, 
-            speakers: List[Speaker], 
+            speakers: List[Speaker],
+            summary: String,
             abstr: String, 
             outline: String, 
             language: Language.Value,
             level: Level.Value,
             duration: Int,
             equipment: String,
-            requiredExperience: String,
             expectedAudience: String): Presentation = {
 			    val p = new Presentation
 			    p.title = title
+			    p.summary = summary
 			    p.speakers = speakers
 			    p.abstr = abstr
 			    p.outline = outline
@@ -75,7 +77,6 @@ object Presentation {
 			    p.level = level
 			    p.duration = duration
 			    p.equipment = equipment
-			    p.requiredExperience = requiredExperience
 			    p.expectedAudience = expectedAudience
 			    p
             }
