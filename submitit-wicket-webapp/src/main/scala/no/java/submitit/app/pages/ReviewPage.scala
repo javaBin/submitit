@@ -16,6 +16,7 @@ class ReviewPage extends LayoutPage {
   
   val p = State.get.currentPresentation
   add(new Label("title", p.title))
+  add(new MultiLineLabel("summary", p.summary))
   add(new WikiMarkupText("abstract", p.abstr))
   
   val editAllowed = SubmititApp.boolSetting("globalEditAllowed")
