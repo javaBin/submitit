@@ -33,7 +33,6 @@ class ReviewPage extends LayoutPage {
   add(new Label("duration", p.duration.toString))
   add(new WikiMarkupText("outline", p.outline))
   add(new WikiMarkupText("equipment", p.equipment))
-  add(new WikiMarkupText("requiredExperience", p.requiredExperience))
   add(new WikiMarkupText("expectedAudience", p.expectedAudience))
   
   add(new ListView("speakers", p.speakers.reverse) {
