@@ -24,13 +24,11 @@
       <url>http://scala-tools.org/repo-snapshots</url>
       <snapshots/>
     </repository>
-<!--
     <repository>
       <id>javabin.repo</id>
       <name>javaBin Smia</name>
       <url>http://smia.java.no/maven/repo/release</url>
     </repository>
--->
   </repositories>
 
   <pluginRepositories>
@@ -56,7 +54,7 @@
       <dependency>
 	<groupId>no.java.ems</groupId>
 	<artifactId>ems-client</artifactId>
-	<version>1.0</version>
+	<version>1.0.1-SNAPSHOT</version>
       </dependency>
       <dependency>
 	<groupId>org.scala-lang</groupId>
