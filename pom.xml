@@ -24,13 +24,11 @@
       <url>http://scala-tools.org/repo-snapshots</url>
       <snapshots/>
     </repository>
-<!--
     <repository>
       <id>javabin.repo</id>
       <name>javaBin Smia</name>
       <url>http://smia.java.no/maven/repo/release</url>
     </repository>
--->
   </repositories>
 
   <pluginRepositories>
