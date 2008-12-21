@@ -88,6 +88,7 @@ class SubmitPage(pres: Presentation) extends LayoutPage {
       required(pres.speakers, "You must specify at least one speaker")
       required(pres.title, "You must specify a title")
       required(pres.abstr, "You must specify an abstract")
+      required(pres.summary, "You must specify highlights")
       
       pres.speakers.foreach(sp => {
         required(sp.name, "You must specify speaker name")

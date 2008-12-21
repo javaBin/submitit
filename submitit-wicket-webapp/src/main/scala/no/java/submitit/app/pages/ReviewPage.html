@@ -1,24 +1,24 @@
 <html xmlns:wicket="http://wicket.apache.org/">
 <wicket:extend>
-	<div class="linkRow">
-		<wicket:enclosure child="locked">
+	<wicket:enclosure child="locked">
+		<div class="linkRow">
 			<a href="#" wicket:id="editLink">Edit presentation</a> |
 			<a href="#" wicket:id="submitLink">Submit presentation</a>
-		</wicket:enclosure>
-	</div>
+		</div>
+	</wicket:enclosure>
+	<wicket:enclosure child="unlocked">
+		<div class="linkRow">
+			<a href="#" wicket:id="newPresentation">Create a new submission</a>
+		</div>
+		<div class="row">
+			<div class="row">If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a> </div>
+		</div>
+	</wicket:enclosure>
 	<h2 align="left">Your presentation</h2>
 	<wicket:enclosure child="locked">
 		<div class="row">Please review before sending in.</div>
 		<div class="infoText">
 			Your presentation has not yet been submittet. Please review, and press the "Submit presentation" when you are ready.
-		</div>
-	</wicket:enclosure>
-	<wicket:enclosure child="unlocked">
-		<div class="row">
-			<div class="row">If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a> </div>
-		</div>
-		<div class="row">
-			<a href="#" wicket:id="newPresentation">Create a new presentation submission</a>
 		</div>
 	</wicket:enclosure>
 	<fieldset>

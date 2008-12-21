@@ -39,6 +39,13 @@ class ConfirmPage(pres: Presentation) extends LayoutPage {
   add(new ExternalLink("confirmUrl", url, url))
   
   add(new NewPresentationLink("newPresentation"))
+  add(new Link("toJavaZone"){
+    override def onClick {
+      setRedirect(false)
+      getResponse.redirect("http://www.javazone.no")
+      State().invalidateNow
+    }
+  })
 
   if(SubmititApp.boolSetting("sendEmailBoolean")) sendConfirmationMail(pres, url)
   
