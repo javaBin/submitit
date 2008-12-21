@@ -14,10 +14,6 @@ import app.State
 
 class ReviewPage(p: Presentation) extends LayoutPage {
   
-  add(new Label("title", p.title))
-  add(new MultiLineLabel("summary", p.summary))
-  add(new WikiMarkupText("abstract", p.abstr))
-  
   val editAllowed = SubmititApp.boolSetting("globalEditAllowedBoolean")
   add(new HiddenField("locked") {
     override def isVisible = !State().lockPresentation
@@ -28,6 +24,9 @@ class ReviewPage(p: Presentation) extends LayoutPage {
   
   add(new NewPresentationLink("newPresentation"))
   
+  add(new Label("title", p.title))
+  add(new WikiMarkupText("summary", p.summary))
+  add(new WikiMarkupText("abstract", p.abstr))
   add(new Label("language", p.language.toString))
   add(new Label("level", p.level.toString))
   add(new Label("duration", p.duration.toString))

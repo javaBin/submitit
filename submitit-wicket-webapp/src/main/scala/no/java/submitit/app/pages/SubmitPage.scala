@@ -58,15 +58,15 @@ class SubmitPage(pres: Presentation) extends LayoutPage {
       }
     }
     
-    addHelpLink("outlineHelp")
-    addHelpLink("expectedAudienceHelp")
-    addHelpLink("durationHelp")
-    addHelpLink("titleHelp")
-    addHelpLink("abstractHelp")
-    addHelpLink("levelHelp")
-    addHelpLink("languageHelp")
-    addHelpLink("speakersHelp")
-    addHelpLink("highlightHelp")
+    addHelpLink("outlineHelp", true)
+    addHelpLink("expectedAudienceHelp", true)
+    addHelpLink("durationHelp", false)
+    addHelpLink("titleHelp", false)
+    addHelpLink("abstractHelp", true)
+    addHelpLink("levelHelp", false)
+    addHelpLink("languageHelp", false)
+    addHelpLink("speakersHelp", false)
+    addHelpLink("highlightHelp", true)
     
     add(new ReviewLink("reviewButtonTop", this))
     add(new ReviewLink("reviewButtonBottom", this))
@@ -90,9 +90,9 @@ class SubmitPage(pres: Presentation) extends LayoutPage {
       required(pres.abstr, "You must specify an abstract")
       
       pres.speakers.foreach(sp => {
-        required(sp.name, "You must specify an a name")
+        required(sp.name, "You must specify speaker name")
         required(sp.email, "You must specify an email")
-        required(sp.bio, "You must specify an bio")
+        required(sp.bio, "You must specify speaker's profile")
       })
       
       if(!hasErrorMessage) {

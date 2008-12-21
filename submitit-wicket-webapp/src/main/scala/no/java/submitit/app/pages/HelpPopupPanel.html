@@ -1,3 +1,11 @@
+<html xmlns:wicket="http://wicket.apache.org/">
 <wicket:panel>
+	<input type="hidden" wicket:id="showWikiMarkup"></input>
 	<label wicket:id=content"></label>
+	<wicket:enclosure child="showWikiMarkup">
+		<br/>
+		<br/>
+		<wicket:message key="wikiHelp"/>
+	</wicket:enclosure>
 </wicket:panel>
+</html>

@@ -88,7 +88,7 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
       
       speakersForm.add(email)
       speakersForm.addPropTA("bio", speaker, "bio")
-      speakersForm.addHelpLink("speakersProfileHelp")
+      speakersForm.addHelpLink("speakersProfileHelp", true)
       
       item.add(new AjaxSubmitLink("remove", speakersForm) {
         override def onSubmit(target: AjaxRequestTarget, form: Form) {
