@@ -1,6 +1,7 @@
 package no.java.submitit.app.pages
 
 import org.apache.wicket.markup.html.form._
+import org.apache.wicket.markup.html.basic._
 import org.apache.wicket.model.PropertyModel
 import org.apache.wicket.extensions.ajax.markup.html.modal._
 import org.apache.wicket.ajax.markup.html.form._
@@ -31,6 +32,10 @@ trait EasyForm extends org.apache.wicket.MarkupContainer  {
     
   def addPropRC(id: String, any: Any, propertyName: String, choices: _root_.java.util.List[_]) {
     add(new RadioChoice(id, pm(any, propertyName), choices))
+  }
+  
+  def addPropLabel(id: String, any: Any, propertyName: String) {
+    add(new Label(id, pm(any, propertyName)))
   }
   
   private def pm(any: Any, propertyName: String) = new PropertyModel(any, propertyName)

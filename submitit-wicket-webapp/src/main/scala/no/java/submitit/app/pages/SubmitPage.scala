@@ -41,7 +41,7 @@ class SubmitPage extends LayoutPage {
     addPropTF("title", pres, "title")
     addPropTA("summary", pres, "summary")
     addPropTA("theabstract", pres, "abstr")
-    addPropTF("duration", pres, "duration")
+    addPropLabel("duration", pres, "duration")
     addPropTA("outline", pres, "outline")
     addPropTA("equipment", pres, "equipment")
     addPropTA("expectedAudience", pres, "expectedAudience")
@@ -61,8 +61,14 @@ class SubmitPage extends LayoutPage {
     }
     
     addHelpLink("outlineHelp")
-    addHelpLink("expectedHelp")
+    addHelpLink("expectedAudienceHelp")
     addHelpLink("durationHelp")
+    addHelpLink("titleHelp")
+    addHelpLink("abstractHelp")
+    addHelpLink("levelHelp")
+    addHelpLink("languageHelp")
+    addHelpLink("speakersHelp")
+    addHelpLink("highlightHelp")
     
     add(new ReviewLink("reviewButtonTop", this))
     add(new ReviewLink("reviewButtonBottom", this))

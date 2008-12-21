@@ -21,6 +21,7 @@ img {
 	}
 p {
 	margin-bottom:10px;
+	margin-top:3px;
 }
 
 /* Structure */
@@ -156,6 +157,12 @@ h1 a:hover {
 
 .inputArea {
 	width:75em;	
+	height:10em;
+}
+
+.smallInputArea {
+	height:4em;
+	width:75em;		
 }
 
 .inputField {
