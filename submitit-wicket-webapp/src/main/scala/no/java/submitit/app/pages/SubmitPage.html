@@ -5,11 +5,15 @@
 	<div class="linkRow">
 		<a href="#" wicket:id="reviewButtonTop">Review presentation</a> | <a href="helpIt" target="_blank">Help</a>
 	</div>
+	<div wicket:id="modal"></div>
+	<h2 align="left">Fill in you presentation details</h2>
 	<div class="row">
 		<div wicket:id="feedback"></div>
 	</div>
-	<div wicket:id="modal"></div>
-	<h2 align="left">Fill in you presentation details</h2>
+	<div class="infoText">
+		For information click the help link, or press question mark with each field.<br>
+		You may review you submission, without actually submitting by pressing the "Review presentation" link.
+	</div>
 	<wicket:enclosure child="password">
 		<div class="row">
 			<img wicket:id="captchaImage" />
@@ -18,7 +22,7 @@
         	Please replicate the text you see above (<a href="#" wicket:id="captchaButton">I cannot read this</a>)
 		</div>
 		<div class="row">
-			<input wicket:id="password" type="text" size="15" />
+			<input wicket:id="password" type="text" class="captchaField"/>
 		</div>
 	</wicket:enclosure> <br />
 	
@@ -26,7 +30,7 @@
 		<div class="titleText">
 			<label>Title *</label> <a href="#" wicket:id="titleHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
 		</div>
-		<input type="text" class="inputField" wicket:id="title" size="143">
+		<input type="text" class="inputField" wicket:id="title">
 	</div>
 	<div class="row">
 		<div class="titleText">

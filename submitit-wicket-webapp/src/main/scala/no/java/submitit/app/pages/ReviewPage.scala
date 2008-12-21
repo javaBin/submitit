@@ -12,14 +12,13 @@ import widgets._
 import common.Implicits._
 import app.State
 
-class ReviewPage extends LayoutPage {
+class ReviewPage(p: Presentation) extends LayoutPage {
   
-  val p = State.get.currentPresentation
   add(new Label("title", p.title))
   add(new MultiLineLabel("summary", p.summary))
   add(new WikiMarkupText("abstract", p.abstr))
   
-  val editAllowed = SubmititApp.boolSetting("globalEditAllowed")
+  val editAllowed = SubmititApp.boolSetting("globalEditAllowedBoolean")
   add(new HiddenField("locked") {
     override def isVisible = !State().lockPresentation
   })
@@ -47,7 +46,7 @@ class ReviewPage extends LayoutPage {
     }
   })
   
-  add(new PageLink("submitLink", classOf[ConfirmPage]))
-  add(new PageLink("editLink", classOf[SubmitPage]))
+  add(new PageLink("submitLink", new LazyPageLink(new ConfirmPage(p), classOf[ConfirmPage])))
+  add(new PageLink("editLink",  new LazyPageLink(new SubmitPage(p), classOf[SubmitPage])))
   
 }

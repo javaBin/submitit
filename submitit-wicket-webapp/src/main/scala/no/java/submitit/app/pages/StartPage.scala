@@ -4,17 +4,19 @@ import org.apache.wicket.markup.html.basic._
 
 class StartPage extends LayoutPage {
   
-  if (SubmititApp.boolSetting("submitAllowed")) {
+  if (SubmititApp.boolSetting("submitAllowedBoolean")) {
     
     if(State.get.lockPresentation) {
-      setResponsePage(classOf[ReviewPage])
+      setResponsePage(new ReviewPage(State().currentPresentation))
     }
     else {
-      setResponsePage(classOf[SubmitPage])
+      setResponsePage(new SubmitPage(State().currentPresentation))
     }
   }
   else {
-    add(new Label("info", SubmititApp.getSetting("submitNotAllowedMsg")))
+    val res = new Label("info", SubmititApp.getSetting("submitNotAllowedHtml"))
+    res.setEscapeModelStrings(false)
+    add(res)
   }
 
 }

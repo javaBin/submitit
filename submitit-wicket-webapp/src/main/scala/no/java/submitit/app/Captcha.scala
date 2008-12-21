@@ -8,7 +8,8 @@ class Captcha {
   def randomString() = {
     def randomInt(min: Int, max: Int):Int = (Math.random * (max - min)).asInstanceOf[Int] + min
     
-    val res = for(i <- 0 to 1) yield randomInt('a', 'z').asInstanceOf[Byte]
+    val captchaLength = SubmititApp.intSetting("captchaLengthInt") - 1 
+    val res = for(i <- 0 to captchaLength) yield randomInt('a', 'z').asInstanceOf[Byte]
     new String(res.toArray)
   }
   

@@ -20,7 +20,7 @@ class SubmititApp extends WebApplication {
   override def init() {
     mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
     mountBookmarkablePage("/helpIt", classOf[HelpPage]);
-    mountBookmarkablePage("99792226-admin-login-99792226", classOf[admin.AdminLogin])
+    mountBookmarkablePage("/admin-login", classOf[admin.AdminLogin])
     getApplicationSettings.setDefaultMaximumUploadSize(Bytes.kilobytes(500))
     
     val props = utils.PropertyLoader.loadRessource("submitit.properties")
@@ -60,6 +60,8 @@ object SubmititApp {
     case Some(s) => s
     case None => null
   }
+  
+  def intSetting(key: String) = getSetting(key).toInt
   
   def boolSetting(key: String) = _root_.java.lang.Boolean.parseBoolean(getSetting(key))
   

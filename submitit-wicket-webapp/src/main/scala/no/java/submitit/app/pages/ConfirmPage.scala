@@ -16,14 +16,13 @@ import javax.mail.internet.MimeMessage
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class ConfirmPage extends LayoutPage {
-  
+class ConfirmPage(pres: Presentation) extends LayoutPage {
+
   val state = State.get
   state.fromServer = true
 
   val backendClient = state.backendClient
   
-  val pres = state.currentPresentation
   val logger = LoggerFactory.getLogger(classOf[ConfirmPage])
   
   val presentation = pres.toString
@@ -34,15 +33,14 @@ class ConfirmPage extends LayoutPage {
   val uniqueId = backendClient.savePresentation(pres)
   
   val request = getRequest.asInstanceOf[ServletWebRequest].getHttpServletRequest
-  val url = "http://" + request.getServerName + ":" + 
-    request.getServerPort + request.getContextPath + 
-    "/lookupPresentation?id=" + uniqueId
+  def getPortURL = if (request.getServerPort == 80) "" else ":" + request.getServerPort 
+  val url = "http://" + request.getServerName + getPortURL + request.getContextPath + "/lookupPresentation?id=" + uniqueId
   
   add(new ExternalLink("confirmUrl", url, url))
   
   add(new NewPresentationLink("newPresentation"))
 
-  if(SubmititApp.boolSetting("sendEmail")) sendConfirmationMail(pres, url)
+  if(SubmititApp.boolSetting("sendEmailBoolean")) sendConfirmationMail(pres, url)
   
   def sendConfirmationMail(pres: Presentation, url: String) {
     val props = new Properties

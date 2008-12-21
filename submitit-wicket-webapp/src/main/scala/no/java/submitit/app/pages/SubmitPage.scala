@@ -17,20 +17,18 @@ import no.java.submitit.app._
 import common.Implicits._
 
 
-class SubmitPage extends LayoutPage {
+class SubmitPage(pres: Presentation) extends LayoutPage {
   
   val state = State()
   if (state.lockPresentation) throw new SecurityException("Not allowed to get to this point when submission is locked")
   
   def redirectToReview() {
-    setResponsePage(classOf[ReviewPage])
+    setResponsePage(new ReviewPage(state.currentPresentation))
   }
   
   state setCaptchaIfNotSet
   val captcha = State.get.captcha
 
-  val pres = state.currentPresentation
-  
   def password = getRequest.getParameter("password");
   
   add(new Form("inputForm") with EasyForm {
@@ -76,7 +74,7 @@ class SubmitPage extends LayoutPage {
     add(new SubmitLink("captchaButton", this){
       override def onSubmit()  {
         state.resetCaptcha()
-        setResponsePage(classOf[SubmitPage])
+        setResponsePage(new SubmitPage(pres))
       }
     })
     
@@ -86,10 +84,10 @@ class SubmitPage extends LayoutPage {
       // Some form validation
       if (!state.verifiedWithCaptha && captcha.imagePass != password) error("Wrong captcha password")
       
+      
       required(pres.speakers, "You must specify at least one speaker")
       required(pres.title, "You must specify a title")
       required(pres.abstr, "You must specify an abstract")
-      if(pres.duration > 60) error("Max duration is 60 minutes")
       
       pres.speakers.foreach(sp => {
         required(sp.name, "You must specify an a name")
