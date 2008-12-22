@@ -62,7 +62,6 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
           // Create a new file
           val fileName = upload.getClientFileName
           val bytes = upload.getBytes
-          println(extensionRegex)
           extensionRegex.findFirstIn(fileName) match {
             case Some(n) => speaker.picture = new Picture(bytes, fileName, upload.getContentType)
             case None => error(fileName + " has an unsupported file type")

@@ -224,3 +224,12 @@ ul {
 	color:red;
 	font-weight:bold;
 }
+
+.paragraph {
+	margin-bottom: 1em;
+}
+
+.heading-1 {
+	font-size:medium;
+	margin-bottom:0.5em;
+}

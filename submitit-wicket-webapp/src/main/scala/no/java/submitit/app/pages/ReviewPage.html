@@ -10,15 +10,15 @@
 		<div class="linkRow">
 			<a href="#" wicket:id="newPresentation">Create a new submission</a>
 		</div>
-		<div class="row">
-			<div class="row">If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a> </div>
+		<div class="infoText">
+			<label wicket:id="viewSubmittedMsg"></label>
 		</div>
 	</wicket:enclosure>
 	<h2 align="left">Your presentation</h2>
 	<wicket:enclosure child="locked">
 		<div class="row">Please review before sending in.</div>
 		<div class="infoText">
-			Your presentation has not yet been submittet. Please review, and press the "Submit presentation" when you are ready.
+			<label wicket:id="reviewBeforeSubmitMsg"></label>
 		</div>
 	</wicket:enclosure>
 	<fieldset>

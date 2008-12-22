@@ -24,6 +24,9 @@ class ReviewPage(p: Presentation) extends LayoutPage {
   
   add(new NewPresentationLink("newPresentation"))
   
+  add(new HtmlLabel("reviewBeforeSubmitMsg", SubmititApp.getSetting("reviewPageBeforeSubmitHtml")))
+  add(new HtmlLabel("viewSubmittedMsg", SubmititApp.getSetting("reviewPageViewSubmittedHthml")))
+  
   add(new Label("title", p.title))
   add(new WikiMarkupText("summary", p.summary))
   add(new WikiMarkupText("abstract", p.abstr))

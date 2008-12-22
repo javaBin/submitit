@@ -14,9 +14,18 @@ class IdResolverPage extends LayoutPage {
 
   val backendClient = state.backendClient
 
-  val presentation: Presentation = backendClient.loadPresentation(id)
-  State.get.fromServer = true 
-  State.get.currentPresentation = presentation
+  
+  val presentation: Presentation =
+    try {
+       backendClient.loadPresentation(id)
+    }
+  catch {
+    case x => null
+  }
+  if(presentation != null) {
+    State.get.fromServer = true 
+    State.get.currentPresentation = presentation
+  }
   
   val (text, doRedirect) = if(id == null) ("you must supply and id", false) else if (presentation == null) ("not a valid key", false) else ("Redirecting", true) 
   add(new Label("identified", text))

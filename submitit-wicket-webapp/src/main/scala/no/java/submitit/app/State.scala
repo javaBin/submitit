@@ -16,7 +16,6 @@ class State(request: Request, val backendClient: BackendClient) extends WebSessi
   def fromServer = f
   
   def fromServer_=(from: Boolean) {
-    println(from)
     f = from
   }
   

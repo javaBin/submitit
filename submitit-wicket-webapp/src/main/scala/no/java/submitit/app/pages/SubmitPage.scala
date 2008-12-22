@@ -1,6 +1,7 @@
 package no.java.submitit.app.pages
 
 import org.apache.wicket.markup.html.panel.FeedbackPanel
+import org.apache.wicket.markup.html.basic._
 import org.apache.wicket.model._
 import no.java.submitit.model._
 import org.apache.wicket.PageParameters
@@ -36,6 +37,7 @@ class SubmitPage(pres: Presentation) extends LayoutPage {
     val verified = state.verifiedWithCaptha
     
     add(new FeedbackPanel("feedback"))
+    add(new widgets.HtmlLabel("infoText", SubmititApp.getSetting("editPageInfoTextHtml")))
     addPropTF("title", pres, "title")
     addPropTA("summary", pres, "summary")
     addPropTA("theabstract", pres, "abstr")
