@@ -15,7 +15,14 @@ import _root_.java.util.Properties
 
 class SubmititApp extends WebApplication {
 
-  var backendClient: BackendClient = _
+  def backendClient: BackendClient = {
+    val emsUrl = SubmititApp.getSetting("emsUrl")
+    val username = SubmititApp.getSetting("emsUser")
+    val password = SubmititApp.getSetting("emsPwd")
+  
+    if (emsUrl != "") new EmsClient("JavaZone 2009", emsUrl, username, password)
+    else new submitit.common.BackendClientMock
+  }
   
   override def init() {
     mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
@@ -23,8 +30,10 @@ class SubmititApp extends WebApplication {
     mountBookmarkablePage("/admin-login", classOf[admin.AdminLogin])
     getApplicationSettings.setDefaultMaximumUploadSize(Bytes.kilobytes(500))
     
-    val props = utils.PropertyLoader.loadRessource("submitit.properties")
-    SubmititApp.adminPass = props.remove("adminPassPhrase").asInstanceOf[String]
+    SubmititApp.propertyFileName = System.getProperty("submitit.properties")
+    if (SubmititApp.propertyFileName == null) throw new Exception("""you must specify submitit.properties as a Java system property. F.ex "mvn jetty:run -Dsubmitit.properties=src/main/resources/submitit.properties".""")
+    val props = utils.PropertyLoader.loadRessource(SubmititApp.propertyFileName)
+    SubmititApp.adminPass = props.remove(SubmititApp.adminPassPhrase).asInstanceOf[String]
     
     val elems = props.keys
     var theMap = Map[String, String]()
@@ -32,15 +41,7 @@ class SubmititApp extends WebApplication {
       val e = elems.nextElement.asInstanceOf[String]
       theMap = theMap + (e -> props.getProperty(e).asInstanceOf[String])
     }
-    SubmititApp.props = theMap
-    
-    val emsUrl = SubmititApp.getSetting("emsUrl")
-    val username = SubmititApp.getSetting("emsUser")
-    val password = SubmititApp.getSetting("emsPwd")
-  
-    backendClient = 
-      if (emsUrl != "") new EmsClient("JavaZone 2009", emsUrl, username, password)
-      else new submitit.common.BackendClientMock
+    SubmititApp.properties = theMap
   }
   
   override def newWebRequest(servletRequest: HttpServletRequest) = new UploadWebRequest(servletRequest)
@@ -53,8 +54,18 @@ class SubmititApp extends WebApplication {
 
 object SubmititApp {
   
-  var props: Map[String, String] = _
+  val adminPassPhrase = "adminPassPhrase"
+  
+  private var properties: Map[String, String] = _
   private var adminPass: String = _
+  private var propertyFileName: String = _
+
+  def props = properties
+  
+  def props_=(props: Map[String, String]) {
+    this.properties = props
+    utils.PropertyLoader.writeResource(adminPass, propertyFileName, properties)
+  }
   
   def getSetting(key: String) = props get key match {
     case Some(s) => s

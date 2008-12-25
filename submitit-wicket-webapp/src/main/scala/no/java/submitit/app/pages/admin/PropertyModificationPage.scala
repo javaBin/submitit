@@ -24,7 +24,7 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
           val values = item.getModelObject.asInstanceOf[(String, String)]
           val element = new Element(values._1, values._2)
           item.add(new Label("key", new PropertyModel(element, "key")))
-          item.add(new TextArea("value", new PropertyModel(element, "value")))
+          item.add(new TextField("value", new PropertyModel(element, "value")))
           list = element :: list
         }
       }
@@ -41,6 +41,7 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
   
   add(createForm)  
   add(new FeedbackPanel("feedback"))
+  println("aowefaøoweifawoøiefj")
   
 }
 
