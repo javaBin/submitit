@@ -41,7 +41,6 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
   
   add(createForm)  
   add(new FeedbackPanel("feedback"))
-  println("aowefaøoweifawoøiefj")
   
 }
 

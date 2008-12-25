@@ -31,8 +31,8 @@ class SubmititApp extends WebApplication {
     getApplicationSettings.setDefaultMaximumUploadSize(Bytes.kilobytes(500))
     
     SubmititApp.propertyFileName = System.getProperty("submitit.properties")
-    if (SubmititApp.propertyFileName == null) throw new Exception("""you must specify submitit.properties as a Java system property. F.ex "mvn jetty:run -Dsubmitit.properties=src/main/resources/submitit.properties".""")
-    val props = utils.PropertyLoader.loadRessource(SubmititApp.propertyFileName)
+    if (SubmititApp.propertyFileName == null) throw new Exception("""You must specify location of submitit.properties. E.g. "mvn jetty:run -Dsubmitit.properties=src/main/resources/submitit.properties".""")
+    val props = utils.PropertyIOUtils.loadRessource(SubmititApp.propertyFileName)
     SubmititApp.adminPass = props.remove(SubmititApp.adminPassPhrase).asInstanceOf[String]
     
     val elems = props.keys
@@ -64,7 +64,7 @@ object SubmititApp {
   
   def props_=(props: Map[String, String]) {
     this.properties = props
-    utils.PropertyLoader.writeResource(adminPass, propertyFileName, properties)
+    utils.PropertyIOUtils.writeResource(adminPass, propertyFileName, properties)
   }
   
   def getSetting(key: String) = props get key match {
