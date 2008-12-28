@@ -12,24 +12,10 @@ import org.apache.wicket.Request
 import org.apache.wicket.Response
 import org.apache.wicket.Session
 import _root_.java.util.Properties
+import org.apache.wicket.Application._
 
 class SubmititApp extends WebApplication {
-
-  def backendClient: BackendClient = {
-    val emsUrl = SubmititApp.getSetting("emsUrl")
-    val username = SubmititApp.getSetting("emsUser")
-    val password = SubmititApp.getSetting("emsPwd")
   
-    if (emsUrl != "") new EmsClient("JavaZone 2009", emsUrl, username, password)
-    else new submitit.common.BackendClientMock
-  }
-  
-  override def init() {
-    mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
-    mountBookmarkablePage("/helpIt", classOf[HelpPage]);
-    mountBookmarkablePage("/admin-login", classOf[admin.AdminLogin])
-    getApplicationSettings.setDefaultMaximumUploadSize(Bytes.kilobytes(500))
-    
     SubmititApp.propertyFileName = System.getProperty("submitit.properties")
     if (SubmititApp.propertyFileName == null) throw new Exception("""You must specify location of submitit.properties. E.g. "mvn jetty:run -Dsubmitit.properties=src/main/resources/submitit.properties".""")
     val props = utils.PropertyIOUtils.loadRessource(SubmititApp.propertyFileName)
@@ -42,6 +28,27 @@ class SubmititApp extends WebApplication {
       theMap = theMap + (e -> props.getProperty(e).asInstanceOf[String])
     }
     SubmititApp.properties = theMap
+  
+
+  private def backendClient: BackendClient = {
+    val emsUrl = SubmititApp.getSetting("emsUrl")
+    val username = SubmititApp.getSetting("emsUser")
+    val password = SubmititApp.getSetting("emsPwd")
+  
+    if (emsUrl != "") new EmsClient("JavaZone 2009", emsUrl, username, password)
+    else new submitit.common.BackendClientMock
+  }
+  
+  override def init() {
+    mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
+    mountBookmarkablePage("/helpIt", classOf[HelpPage]);
+    mountBookmarkablePage("/admin-login", classOf[admin.AdminLogin])
+    getApplicationSettings.setDefaultMaximumUploadSize(Bytes.kilobytes(500))    
+  }
+  
+  override def getConfigurationType = {
+    val Some(production) = SubmititApp.properties.get("wicketProdutionModeInit") 
+    if (production.toBoolean) DEPLOYMENT else DEVELOPMENT 
   }
   
   override def newWebRequest(servletRequest: HttpServletRequest) = new UploadWebRequest(servletRequest)
