@@ -11,7 +11,9 @@
 
   <properties>
     <scala.version>2.7.2</scala.version>
+    <scala-plugin.version>2.8</scala-plugin.version>
     <ems.version>1.0</ems.version>
+    <jetty.version>6.1.9</jetty.version>
   </properties>
 
   <repositories>
@@ -53,12 +55,12 @@
       <dependency>
         <groupId>no.java.submitit</groupId>
         <artifactId>submitit-common</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>no.java.submitit</groupId>
         <artifactId>submitit-ems-client</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>no.java.ems</groupId>
@@ -104,24 +106,37 @@
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>3.8.1</version>
-        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.mortbay.jetty</groupId>
         <artifactId>jetty</artifactId>
-        <version>6.1.9</version>
+        <version>${jetty.version}</version>
         <scope>provided</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
 
   <build>
+    <plugins>
+      <plugin>
+        <groupId>org.scala-tools</groupId>
+        <artifactId>maven-scala-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>maven-jetty-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+      </plugin>
+    </plugins>
     <pluginManagement>
       <plugins>
         <plugin>
           <groupId>org.scala-tools</groupId>
           <artifactId>maven-scala-plugin</artifactId>
-          <version>2.8</version>
+          <version>${scala-plugin.version}</version>
           <executions>
             <execution>
               <goals>
@@ -137,14 +152,13 @@
         <plugin>
           <groupId>org.mortbay.jetty</groupId>
           <artifactId>maven-jetty-plugin</artifactId>
-          <version>6.1.9</version>
+          <version>${jetty.version}</version>
           <configuration>
             <contextPath>/</contextPath>
             <scanIntervalSeconds>0</scanIntervalSeconds>
           </configuration>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-eclipse-plugin</artifactId>
           <configuration>
             <downloadSources>true</downloadSources>
@@ -163,21 +177,6 @@
             </buildcommands>
           </configuration>
         </plugin>
-        <plugin>
-          <groupId>org.scala-tools</groupId>
-          <artifactId>maven-scala-plugin</artifactId>
-          <executions>
-            <execution>
-              <goals>
-                <goal>compile</goal>
-                <goal>testCompile</goal>
-              </goals>
-            </execution>
-          </executions>
-          <configuration>
-            <scalaVersion>${scala.version}</scalaVersion>
-          </configuration>
-        </plugin>
       </plugins>
     </pluginManagement>
   </build>
@@ -193,6 +192,7 @@
       <plugin>
         <groupId>org.scala-tools</groupId>
         <artifactId>maven-scala-plugin</artifactId>
+        <version>${scala-plugin.version}</version>
       </plugin>
     </plugins>
   </reporting>
