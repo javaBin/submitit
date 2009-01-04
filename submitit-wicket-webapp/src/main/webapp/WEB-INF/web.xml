@@ -12,6 +12,14 @@
 			<param-name>applicationClassName</param-name>
 			<param-value>no.java.submitit.app.SubmititApp</param-value>
 		</init-param>
+    <init-param>
+      <param-name>submitit.properties</param-name>
+      <param-value>src/main/resources/submitit.properties</param-value>
+    </init-param>
+    <init-param>
+      <param-name>wicket.configuration</param-name>
+      <param-value>development</param-value>
+    </init-param>
 	</filter>
 
 	<filter-mapping>
