@@ -17,7 +17,7 @@ import org.apache.wicket.Application._
 class SubmititApp extends WebApplication {
 
   override def init() {
-    SubmititApp.propertyFileName = super.getInitParameter("submitit.properties")
+    SubmititApp.propertyFileName = super.getServletContext.getInitParameter("submitit.properties")
     if (SubmititApp.propertyFileName == null) throw new Exception("""You must specify "submitit.properties" as a init parameter.""")
     val props = utils.PropertyIOUtils.loadRessource(SubmititApp.propertyFileName)
     SubmititApp.adminPass = props.remove(SubmititApp.adminPassPhrase).asInstanceOf[String]
