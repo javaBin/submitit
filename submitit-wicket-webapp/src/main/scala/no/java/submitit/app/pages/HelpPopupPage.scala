@@ -7,10 +7,15 @@ import org.apache.wicket.ajax.markup.html._
 import org.apache.wicket.ajax._
 import org.apache.wicket.extensions.ajax.markup.html.modal._
 import org.apache.wicket.markup.html.panel._
+import org.apache.wicket.markup.html.form.HiddenField
   
 
-class HelpPopupPanel(resourceKey: String, id: String) extends Panel(id) {
+class HelpPopupPanel(resourceKey: String, id: String, supportsMarkup: Boolean) extends Panel(id) {
   
+  
+  add(new HiddenField("showWikiMarkup") {
+    override def isVisible = supportsMarkup
+  })
   
   val htmlContent = getLocalizer.getString(resourceKey, this)
 

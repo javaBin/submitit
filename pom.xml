@@ -56,6 +56,11 @@
 	<artifactId>ems-client</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
       </dependency>
+    <dependency>
+      <groupId>no.java.ems</groupId>
+      <artifactId>ems-wiki</artifactId>
+	  <version>1.0</version>
+    </dependency>
       <dependency>
 	<groupId>org.scala-lang</groupId>
 	<artifactId>scala-library</artifactId>

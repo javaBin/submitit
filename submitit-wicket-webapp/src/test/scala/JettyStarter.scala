@@ -5,35 +5,37 @@ import org.mortbay.jetty.webapp.WebAppContext;
 
 object JettyStarter {
 
-	def main(args: Array[String]) {
-		val server = new Server();
-		val connector = new SocketConnector();
-		// Set some timeout options to make debugging easier.
-		connector.setMaxIdleTime(1000 * 60 * 60);
-		connector.setSoLingerTime(-1);
-		connector.setPort(8040);
-		server.setConnectors(Array(connector));
-
-		val bb = new WebAppContext();
-		bb.setServer(server);
-		bb.setContextPath("/submitit");
-		bb.setWar("src/main/webapp");
+  def main(args: Array[String]) {
+    val server = new Server();
+    val connector = new SocketConnector();
+    // Set some timeout options to make debugging easier.
+    connector.setMaxIdleTime(1000 * 60 * 60);
+    connector.setSoLingerTime(-1);
+    connector.setPort(8040);
+    server.setConnectors(Array(connector));
+  
+    val bb = new WebAppContext();
+    bb.setServer(server);
+    bb.setContextPath("/submitit");
+    bb.setWar("src/main/webapp");
+    
+    System.setProperty("submitit.properties", "src/main/resources/submitit.properties")
 	
-		server.addHandler(bb);
-
-		try {
-			System.out.println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
-			server.start();
-			while (System.in.available() == 0) {
-				Thread.sleep(5000); 
-			}
-			server.stop();
-			server.join();
-		} catch {
-		  case e: Exception => {
-			e.printStackTrace();
-			System.exit(100);
-		  } 
-	}
+    server.addHandler(bb);
+    
+    try {
+      System.out.println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
+      server.start();
+      while (System.in.available() == 0) {
+        Thread.sleep(5000); 
+      }
+      server.stop();
+      server.join();
+    } catch {
+      case e: Exception => {
+        e.printStackTrace();
+        System.exit(100);
+      } 
+    }
   }
 }

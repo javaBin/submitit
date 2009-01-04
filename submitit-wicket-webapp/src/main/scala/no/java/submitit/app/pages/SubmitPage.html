@@ -5,11 +5,14 @@
 	<div class="linkRow">
 		<a href="#" wicket:id="reviewButtonTop">Review presentation</a> | <a href="helpIt" target="_blank">Help</a>
 	</div>
+	<div wicket:id="modal"></div>
+	<h2 align="left">Fill in you presentation details</h2>
 	<div class="row">
 		<div wicket:id="feedback"></div>
 	</div>
-	<div wicket:id="modal"></div>
-	<h2 align="left">Fill in you presentation details</h2>
+	<div class="infoText">
+		<label wicket:id="infoText"></label>
+	</div>
 	<wicket:enclosure child="password">
 		<div class="row">
 			<img wicket:id="captchaImage" />
@@ -18,39 +21,39 @@
         	Please replicate the text you see above (<a href="#" wicket:id="captchaButton">I cannot read this</a>)
 		</div>
 		<div class="row">
-			<input wicket:id="password" type="text" size="15" />
+			<input wicket:id="password" type="text" class="captchaField"/>
 		</div>
 	</wicket:enclosure> <br />
 	
 	<div class="row">
 		<div class="titleText">
-			<label>Title *</label> 
+			<label>Title *</label> <a href="#" wicket:id="titleHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
 		</div>
-		<input type="text" class="inputField" wicket:id="title" size="143">
+		<input type="text" class="inputField" wicket:id="title">
 	</div>
 	<div class="row">
 		<div class="titleText">
-			<label>Highlight Summary *</label>
+			<label>Highlight Summary *</label> <a href="#" wicket:id="highlightHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
 		</div> 
-		<textarea class="inputArea" rows="10" wicket:id="summary"></textarea>
+		<textarea class="smallInputArea" wicket:id="summary"></textarea>
 	</div>
 	<div class="row">
 		<div class="titleText">
-			<label>Abstract *</label>
+			<label>Abstract *</label> <a href="#" wicket:id="abstractHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
 		</div> 
-		<textarea class="inputArea" rows="10" wicket:id="theabstract"></textarea>
+		<textarea class="inputArea" wicket:id="theabstract"></textarea>
 	</div>
 	<div class="row">
 		<div class="firstCol">
 			<div class="titleText">
-				<label>Language</label>
+				<label>Language</label> <a href="#" wicket:id="languageHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
 			</div>
 			<div wicket:id="language" class="choices">
 			</div>
 		</div>
 		<div class="secondCol">
 			<div class="titleText">
-				<label>Level</label>
+				<label>Level</label> <a href="#" wicket:id="levelHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
 			</div>
 			<div wicket:id="level" class="choices">
 			</div>
@@ -58,30 +61,31 @@
 	</div>
 	<div class="row">
 			<div class="titleText">
-				<label>Duration in minutes</label> <a href="#" wicket:id="durationHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
+				<label>Duration</label> <a href="#" wicket:id="durationHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
 			</div>
-			<input type="text" class="shortInputField" wicket:id="duration" size="10">
+			<label wicket:id="duration"></label>&nbsp;minutes
 	</div>
 	<div class="row">
 		<div class="titleText">
 			<label>Outline</label> <a href="#" wicket:id="outlineHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
 		</div>
-	 	<textarea class="inputArea" rows="10" wicket:id="outline"></textarea>
+	 	<textarea class="inputArea" wicket:id="outline"></textarea>
 	</div>
 	<div class="row">
 		<div class="titleText">
 			<label>Equipment</label>
 		</div>
-	 	<textarea class="inputArea" rows="10" wicket:id="equipment"></textarea>
+		<wicket:message key="equipmentHelp"/>
+	 	<textarea class="smallInputArea" wicket:id="equipment"></textarea>
 	</div>
 	<div class="row">
 		<div class="titleText">
-			<label>Expected audience</label> <a href="#" wicket:id="expectedHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
+			<label>Expected audience</label> <a href="#" wicket:id="expectedAudienceHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
 		</div>
-	 	<textarea class="inputArea" rows="10" wicket:id="expectedAudience"></textarea>
+	 	<textarea class="inputArea" wicket:id="expectedAudience"></textarea>
 	</div>
 	<div class="row">
-		<h2>Speakers</h2>
+		<h2>Speakers <a href="#" wicket:id="speakersHelp"><img class="helpImg" src="images/questionmark.gif"/></a></h2>
 	</div>
 	<div wicket:id="speakers" />
 	<div class="bottomRow">

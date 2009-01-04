@@ -1,6 +1,7 @@
 package no.java.submitit.app.pages
 
 import org.apache.wicket.markup.html.panel.FeedbackPanel
+import org.apache.wicket.markup.html.basic._
 import org.apache.wicket.model._
 import no.java.submitit.model._
 import org.apache.wicket.PageParameters
@@ -17,20 +18,18 @@ import no.java.submitit.app._
 import common.Implicits._
 
 
-class SubmitPage extends LayoutPage {
+class SubmitPage(pres: Presentation) extends LayoutPage {
   
   val state = State()
   if (state.lockPresentation) throw new SecurityException("Not allowed to get to this point when submission is locked")
   
   def redirectToReview() {
-    setResponsePage(classOf[ReviewPage])
+    setResponsePage(new ReviewPage(state.currentPresentation))
   }
   
   state setCaptchaIfNotSet
   val captcha = State.get.captcha
 
-  val pres = state.currentPresentation
-  
   def password = getRequest.getParameter("password");
   
   add(new Form("inputForm") with EasyForm {
@@ -38,10 +37,11 @@ class SubmitPage extends LayoutPage {
     val verified = state.verifiedWithCaptha
     
     add(new FeedbackPanel("feedback"))
+    add(new widgets.HtmlLabel("infoText", SubmititApp.getSetting("editPageInfoTextHtml")))
     addPropTF("title", pres, "title")
     addPropTA("summary", pres, "summary")
     addPropTA("theabstract", pres, "abstr")
-    addPropTF("duration", pres, "duration")
+    addPropLabel("duration", pres, "duration")
     addPropTA("outline", pres, "outline")
     addPropTA("equipment", pres, "equipment")
     addPropTA("expectedAudience", pres, "expectedAudience")
@@ -60,9 +60,15 @@ class SubmitPage extends LayoutPage {
       }
     }
     
-    addHelpLink("outlineHelp")
-    addHelpLink("expectedHelp")
-    addHelpLink("durationHelp")
+    addHelpLink("outlineHelp", true)
+    addHelpLink("expectedAudienceHelp", true)
+    addHelpLink("durationHelp", false)
+    addHelpLink("titleHelp", false)
+    addHelpLink("abstractHelp", true)
+    addHelpLink("levelHelp", false)
+    addHelpLink("languageHelp", false)
+    addHelpLink("speakersHelp", false)
+    addHelpLink("highlightHelp", true)
     
     add(new ReviewLink("reviewButtonTop", this))
     add(new ReviewLink("reviewButtonBottom", this))
@@ -70,7 +76,7 @@ class SubmitPage extends LayoutPage {
     add(new SubmitLink("captchaButton", this){
       override def onSubmit()  {
         state.resetCaptcha()
-        setResponsePage(classOf[SubmitPage])
+        setResponsePage(new SubmitPage(pres))
       }
     })
     
@@ -80,15 +86,16 @@ class SubmitPage extends LayoutPage {
       // Some form validation
       if (!state.verifiedWithCaptha && captcha.imagePass != password) error("Wrong captcha password")
       
+      
       required(pres.speakers, "You must specify at least one speaker")
       required(pres.title, "You must specify a title")
       required(pres.abstr, "You must specify an abstract")
-      if(pres.duration > 60) error("Max duration is 60 minutes")
+      required(pres.summary, "You must specify highlights")
       
       pres.speakers.foreach(sp => {
-        required(sp.name, "You must specify an a name")
+        required(sp.name, "You must specify speaker name")
         required(sp.email, "You must specify an email")
-        required(sp.bio, "You must specify an bio")
+        required(sp.bio, "You must specify speaker's profile")
       })
       
       if(!hasErrorMessage) {

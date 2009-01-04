@@ -1,21 +1,24 @@
 <html xmlns:wicket="http://wicket.apache.org/">
 <wicket:extend>
-	<div class="linkRow">
-		<wicket:enclosure child="locked">
+	<wicket:enclosure child="locked">
+		<div class="linkRow">
 			<a href="#" wicket:id="editLink">Edit presentation</a> |
 			<a href="#" wicket:id="submitLink">Submit presentation</a>
-		</wicket:enclosure>
-	</div>
+		</div>
+	</wicket:enclosure>
+	<wicket:enclosure child="unlocked">
+		<div class="linkRow">
+			<a href="#" wicket:id="newPresentation">Create a new submission</a>
+		</div>
+		<div class="infoText">
+			<label wicket:id="viewSubmittedMsg"></label>
+		</div>
+	</wicket:enclosure>
 	<h2 align="left">Your presentation</h2>
 	<wicket:enclosure child="locked">
 		<div class="row">Please review before sending in.</div>
-	</wicket:enclosure>
-	<wicket:enclosure child="unlocked">
-		<div class="row">
-			<div class="row">If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a> </div>
-		</div>
-		<div class="row">
-			<a href="#" wicket:id="newPresentation">Create a new presentation submission</a>
+		<div class="infoText">
+			<label wicket:id="reviewBeforeSubmitMsg"></label>
 		</div>
 	</wicket:enclosure>
 	<fieldset>
@@ -23,48 +26,48 @@
 	<input type="hidden" wicket:id="locked"></input>
 	<div class="row">
 	<div class="titleText"><label>Title</label></div>
-	<div class="inputField"><label wicket:id="title"></label></div>
+	<div class="reviewField"><label wicket:id="title"></label></div>
 	</div>
 
 	<div class="row">
 	<div class="titleText"><label>Highlight Summary</label></div>
-	<div class="inputField"><label wicket:id="summary"></label></div>
+	<div class="reviewField"><label wicket:id="summary"></label></div>
 	</div>
 
 	<div class="row">
 	<div class="titleText"><label>Abstract</label></div>
-	<div class="inputField"><label wicket:id="abstract"></label></div>
+	<div class="reviewField"><label wicket:id="abstract"></label></div>
 	</div>
 
 	<div class="row">
 	<div class="titleText"><label>Language</label></div>
-	<div class="inputField"><label wicket:id="language"></label></div>
+	<div class="reviewField"><label wicket:id="language"></label></div>
 	</div>
 
 	<div class="row">
 	<div class="titleText"><label>Level</label></div>
-	<div class="inputField"><label wicket:id="level"></label></div>
+	<div class="reviewField"><label wicket:id="level"></label></div>
 	</div>
 
 
 	<div class="row">
 	<div class="titleText"><label>Duration</label></div>
-	<div class="inputField"><label wicket:id="duration"></label> minutes</div>
+	<div class="reviewField"><label wicket:id="duration"></label> minutes</div>
 	</div>
 
 	<div class="row">
 	<div class="titleText"><label>Outline</label></div>
-	<div class="inputField"><label wicket:id="outline"></label></div>
+	<div class="reviewField"><label wicket:id="outline"></label></div>
 	</div>
 
 	<div class="row">
 	<div class="titleText"><label>Equipment</label></div>
-	<div class="inputField"><label wicket:id="equipment"></label></div>
+	<div class="reviewField"><label wicket:id="equipment"></label></div>
 	</div>
 
 	<div class="row">
 	<div class="titleText"><label>Expected audience</label></div>
-	<div class="inputField"><label wicket:id="expectedAudience"></label>
+	<div class="reviewField"><label wicket:id="expectedAudience"></label>
 	</div>
 	</div>
 
@@ -73,21 +76,21 @@
 	<fieldset>
 	<div class="row">
 	<div class="titleText"><label>Name</label></div>
-	<div class="inputField"><label wicket:id="name"></label></div>
+	<div class="reviewField"><label wicket:id="name"></label></div>
 	</div>
 
 	<div class="row">
 	<div class="titleText"><label>Email</label></div>
-	<div class="inputField"><label wicket:id="email"></label></div>
+	<div class="reviewField"><label wicket:id="email"></label></div>
 	</div>
 	
 	<div class="row">
 	<div class="titleText"><label>Bio</label></div>
-	<div class="inputField"><label wicket:id="bio"></label></div>
+	<div class="reviewField"><label wicket:id="bio"></label></div>
 	</div>
 	<div class="row">
 	<div class="titleText"><label>Picture</label></div>
-	<div class="inputField"><img wicket:id="image"></img></div>
+	<div class="reviewField"><img wicket:id="image"></img></div>
 	</div>
 	</fieldset>
 	</div>

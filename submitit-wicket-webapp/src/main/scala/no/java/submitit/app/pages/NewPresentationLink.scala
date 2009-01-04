@@ -13,7 +13,7 @@ class NewPresentationLink(id: String) extends Link(id) {
       p.speakers = state.currentPresentation.speakers
       state.currentPresentation = p
       state.fromServer = false
-      setResponsePage(classOf[SubmitPage])
+      setResponsePage(new SubmitPage(p))
     }
   
 }

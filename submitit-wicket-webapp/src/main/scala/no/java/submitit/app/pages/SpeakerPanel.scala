@@ -62,7 +62,6 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
           // Create a new file
           val fileName = upload.getClientFileName
           val bytes = upload.getBytes
-          println(extensionRegex)
           extensionRegex.findFirstIn(fileName) match {
             case Some(n) => speaker.picture = new Picture(bytes, fileName, upload.getContentType)
             case None => error(fileName + " has an unsupported file type")
@@ -87,9 +86,8 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
       email.add(RfcCompliantEmailAddressValidator.getInstance())
       
       speakersForm.add(email)
-      speakersForm.addHelpLink("emailHelp")
-      speakersForm.add(new TextArea("bio", new PropertyModel(speaker, "bio")))
-      speakersForm.addHelpLink("bioHelp")
+      speakersForm.addPropTA("bio", speaker, "bio")
+      speakersForm.addHelpLink("speakersProfileHelp", true)
       
       item.add(new AjaxSubmitLink("remove", speakersForm) {
         override def onSubmit(target: AjaxRequestTarget, form: Form) {
