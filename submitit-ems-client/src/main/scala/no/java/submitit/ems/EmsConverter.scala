@@ -44,6 +44,7 @@ class EmsConverter {
   
   def toPresentation(session: Session): Presentation = {
     val pres = new Presentation()
+    pres.sessionId = session.getId
     pres.title = session.getTitle
     pres.abstr = session.getBody
     pres.speakers = session.getSpeakers.toList.map(speaker => fromEmsSpeaker(speaker))
