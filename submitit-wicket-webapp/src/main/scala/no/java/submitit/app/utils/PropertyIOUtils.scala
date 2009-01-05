@@ -7,7 +7,7 @@ object PropertyIOUtils extends IOUtils {
 	
   def loadRessource(resourceName: String) = {
     val file = new File(resourceName)
-    using(new BufferedReader(new FileReader(file))) { stream =>
+    using(new BufferedInputStream(new FileInputStream(file))) { stream =>
       val p = new Properties();
       p.load(stream);
       p
