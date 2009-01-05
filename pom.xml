@@ -10,6 +10,7 @@
 
   <properties>
     <scala.version>2.7.2</scala.version>
+    <ems.version>1.0</ems.version>
   </properties>
 
   <repositories>
@@ -54,12 +55,12 @@
       <dependency>
 	<groupId>no.java.ems</groupId>
 	<artifactId>ems-client</artifactId>
-	<version>1.0</version>
+	<version>${ems.version}</version>
       </dependency>
     <dependency>
       <groupId>no.java.ems</groupId>
       <artifactId>ems-wiki</artifactId>
-	  <version>1.0</version>
+	  <version>${ems.version}</version>
     </dependency>
       <dependency>
 	<groupId>org.scala-lang</groupId>
