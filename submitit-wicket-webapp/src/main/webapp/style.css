@@ -234,3 +234,7 @@ ul {
 	font-size:medium;
 	margin-bottom:0.5em;
 }
+
+.bioImage {
+	max-width: 1005px;	
+}
