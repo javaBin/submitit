@@ -9,7 +9,7 @@
   <inceptionYear>2008</inceptionYear>
 
   <properties>
-    <scala.version>2.7.2</scala.version>
+    <scala.version>2.7.3</scala.version>
     <ems.version>1.0</ems.version>
   </properties>
 
