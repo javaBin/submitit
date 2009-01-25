@@ -10,7 +10,7 @@
 
   <properties>
     <scala.version>2.7.3</scala.version>
-    <ems.version>1.0</ems.version>
+    <ems.version>1.0.1-SNAPSHOT</ems.version>
   </properties>
 
   <repositories>
@@ -29,6 +29,11 @@
       <id>javabin.repo</id>
       <name>javaBin Smia</name>
       <url>http://smia.java.no/maven/repo/release</url>
+    </repository>
+    <repository>
+      <id>javabin.repo.snapshot</id>
+      <name>javaBin Smia snapshot</name>
+      <url>http://smia.java.no/maven/repo/snapshot</url>
     </repository>
   </repositories>
 

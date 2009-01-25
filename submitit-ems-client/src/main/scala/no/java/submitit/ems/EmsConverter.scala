@@ -19,17 +19,13 @@ class EmsConverter {
   
   def updateSession(presentation: Presentation, session: Session) {
     session.setTitle(presentation.title)
+    session.setLead(presentation.summary)
     session.setBody(presentation.abstr)
 
-    def notes = <notes>
-    <summary>{presentation.summary}</summary>
-    <outline>{presentation.outline}</outline>
-    <equipment>{presentation.equipment}</equipment>
-    <audience>{presentation.expectedAudience}</audience>
-    <feedback>{presentation.feedback}</feedback>
-    </notes>
-    
-    session.setNotes(notes.toString)
+    session.setOutline(presentation.outline)
+    session.setEquipment(presentation.equipment)
+    session.setExpectedAudience(presentation.expectedAudience)
+    session.setFeedback(presentation.feedback)
     
     session.setSpeakers(presentation.speakers.map(speaker => toEmsSpeaker(speaker)))
     
@@ -53,14 +49,11 @@ class EmsConverter {
     pres.abstr = session.getBody
     pres.speakers = session.getSpeakers.toList.map(speaker => fromEmsSpeaker(speaker))
     
-    /* Handle any text before and after XML in notes-field */
-    val notes = XML.loadString("<wrap>" + session.getNotes + "</wrap>") \ "notes"
-    
-    pres.summary = (notes \ "summary").text
-    pres.outline = (notes \ "outline").text
-    pres.equipment = (notes \ "equipment").text
-    pres.expectedAudience = (notes \ "audience").text
-    pres.feedback = (notes \ "feedback").text
+    pres.summary = session.getLead
+    pres.outline = session.getOutline
+    pres.equipment = session.getEquipment
+    pres.expectedAudience = session.getExpectedAudience
+    pres.feedback = session.getFeedback
     
     pres.language = session.getLanguage.getIsoCode match {
       case "no" => Language.Norwegian
