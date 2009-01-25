@@ -11,3 +11,6 @@ reports
 catalog.xml
 TAGS
 .settings
+*.iws
+*.ipr
+*.iml

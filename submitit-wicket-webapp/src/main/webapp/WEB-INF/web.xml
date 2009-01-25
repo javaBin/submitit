@@ -23,4 +23,13 @@
 		<session-timeout>120</session-timeout>
 	</session-config>
 
+  <context-param>
+    <param-name>submitit.properties</param-name>
+    <param-value>src/main/resources/submitit.properties</param-value>
+  </context-param>
+  <context-param>
+    <param-name>wicket.configuration</param-name>
+    <param-value>development</param-value>
+  </context-param>
+
 </web-app>

@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <parent>
     <artifactId>wicket-submitit</artifactId>
@@ -10,7 +11,6 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>no.java.submitit</groupId>
   <artifactId>submitit-common</artifactId>
-  <version>1.0-SNAPSHOT</version>
   <name>submitit-common</name>
   <inceptionYear>2008</inceptionYear>
 
@@ -31,38 +31,28 @@
     <testSourceDirectory>src/test/scala</testSourceDirectory>
     <resources>
       <resource>
-	<directory>src/main/resources</directory>
+        <directory>src/main/resources</directory>
       </resource>
       <resource>
-	<directory>src/main/scala</directory>
-	<includes>
-	  <include>**</include>
-	</includes>
-	<excludes>
-	  <exclude>**/*.scala</exclude>
-	</excludes>
+        <directory>src/main/scala</directory>
+        <includes>
+          <include>**</include>
+        </includes>
+        <excludes>
+          <exclude>**/*.scala</exclude>
+        </excludes>
       </resource>
     </resources>
     <testResources>
       <testResource>
-	<directory>src/test/resources</directory>
-	<includes>
-	  <include>**</include>
-	</includes>
-	<excludes>
-	  <exclude>**/*.scala</exclude>
-	</excludes>
-      </testResource>		
+        <directory>src/test/resources</directory>
+        <includes>
+          <include>**</include>
+        </includes>
+        <excludes>
+          <exclude>**/*.scala</exclude>
+        </excludes>
+      </testResource>
     </testResources>
-    <plugins>
-      <plugin>
-	<groupId>org.scala-tools</groupId>
-	<artifactId>maven-scala-plugin</artifactId>
-      </plugin>
-      <plugin>
-	<groupId>org.apache.maven.plugins</groupId>
-	<artifactId>maven-eclipse-plugin</artifactId>
-      </plugin>
-    </plugins>
   </build>
 </project>

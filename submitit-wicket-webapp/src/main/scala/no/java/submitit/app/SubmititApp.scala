@@ -15,12 +15,13 @@ import _root_.java.util.Properties
 import org.apache.wicket.Application._
 
 class SubmititApp extends WebApplication {
-  
-    SubmititApp.propertyFileName = System.getProperty("submitit.properties")
-    if (SubmititApp.propertyFileName == null) throw new Exception("""You must specify location of submitit.properties. E.g. "mvn jetty:run -Dsubmitit.properties=src/main/resources/submitit.properties".""")
+
+  override def init() {
+    SubmititApp.propertyFileName = super.getServletContext.getInitParameter("submitit.properties")
+    if (SubmititApp.propertyFileName == null) throw new Exception("""You must specify "submitit.properties" as a init parameter.""")
     val props = utils.PropertyIOUtils.loadRessource(SubmititApp.propertyFileName)
     SubmititApp.adminPass = props.remove(SubmititApp.adminPassPhrase).asInstanceOf[String]
-    
+
     val elems = props.keys
     var theMap = Map[String, String]()
     for (i <- 0 to props.size() - 1) {
@@ -28,7 +29,12 @@ class SubmititApp extends WebApplication {
       theMap = theMap + (e -> props.getProperty(e).asInstanceOf[String])
     }
     SubmititApp.properties = theMap
-  
+
+    mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
+    mountBookmarkablePage("/helpIt", classOf[HelpPage]);
+    mountBookmarkablePage("/admin-login", classOf[admin.AdminLogin])
+    getApplicationSettings.setDefaultMaximumUploadSize(Bytes.kilobytes(500))
+  }
 
   private def backendClient: BackendClient = {
     val emsUrl = SubmititApp.getSetting("emsUrl")
@@ -38,19 +44,7 @@ class SubmititApp extends WebApplication {
     if (emsUrl != "") new EmsClient("JavaZone 2009", emsUrl, username, password)
     else new submitit.common.BackendClientMock
   }
-  
-  override def init() {
-    mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
-    mountBookmarkablePage("/helpIt", classOf[HelpPage]);
-    mountBookmarkablePage("/admin-login", classOf[admin.AdminLogin])
-    getApplicationSettings.setDefaultMaximumUploadSize(Bytes.kilobytes(500))    
-  }
-  
-  override def getConfigurationType = {
-    val Some(production) = SubmititApp.properties.get("wicketProdutionModeInit") 
-    if (production.toBoolean) DEPLOYMENT else DEVELOPMENT 
-  }
-  
+
   override def newWebRequest(servletRequest: HttpServletRequest) = new UploadWebRequest(servletRequest)
   
   override def newSession(request: Request, response: Response):State = new State(request, backendClient)
