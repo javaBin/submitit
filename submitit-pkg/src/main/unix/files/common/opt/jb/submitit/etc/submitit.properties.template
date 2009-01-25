@@ -1,0 +1,16 @@
+# This is used as a passphrase for the admin console in the app
+adminPassPhrase=r
+globalEditAllowedBoolean=false
+submitAllowedBoolean=true
+submitNotAllowedHtml=Call for papers is currently not open.
+sendEmailBoolean=false
+emsUser=
+emsPwd=
+emsUrl=
+captchaLengthInt=3
+editPageInfoTextHtml=For information click the help link, or press question mark with each field.<br>\
+  You may review you submission, without actually submitting by pressing the "Review presentation" link.
+reviewPageBeforeSubmitHtml=Your presentation has not yet been submittet. Please review, and press the "Submit presentation" link when you are ready.
+reviewPageViewSubmittedHthml=If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a>
+headerText=Submit your JavaZone 2009 presentation
+wicketProdutionModeInit=true
