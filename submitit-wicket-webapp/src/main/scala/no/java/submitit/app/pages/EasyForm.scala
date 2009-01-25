@@ -12,7 +12,7 @@ import org.apache.wicket.markup.html.form._
 
 trait EasyForm extends org.apache.wicket.MarkupContainer  {
   
-  val requiredText = """\s*\S{2}""".r
+  def requiredText = """\s*\S{2}""".r
   
   def required(value: String, errorMsg: String) {
     if (value == null || requiredText.findFirstIn(value) == None) error(errorMsg)
