@@ -21,6 +21,9 @@ class SubmititApp extends WebApplication {
     if (SubmititApp.propertyFileName == null) throw new Exception("""You must specify "submitit.properties" as a init parameter.""")
     val props = utils.PropertyIOUtils.loadRessource(SubmititApp.propertyFileName)
     SubmititApp.adminPass = props.remove(SubmititApp.adminPassPhrase).asInstanceOf[String]
+    SubmititApp.emsUrl = props.remove(SubmititApp.emsUrlKey).asInstanceOf[String]
+    SubmititApp.emsUsername = props.remove(SubmititApp.emsUsernameKey).asInstanceOf[String]
+    SubmititApp.emsPwd = props.remove(SubmititApp.emsPwdKey).asInstanceOf[String]
 
     val elems = props.keys
     var theMap = Map[String, String]()
@@ -37,11 +40,7 @@ class SubmititApp extends WebApplication {
   }
 
   private def backendClient: BackendClient = {
-    val emsUrl = SubmititApp.getSetting("emsUrl")
-    val username = SubmititApp.getSetting("emsUser")
-    val password = SubmititApp.getSetting("emsPwd")
-  
-    if (emsUrl != "") new EmsClient("JavaZone 2009", emsUrl, username, password)
+    if (SubmititApp.emsUrl != "") new EmsClient("JavaZone 2009", SubmititApp.emsUrl, SubmititApp.emsUsername, SubmititApp.emsPwd)
     else new submitit.common.BackendClientMock
   }
 
@@ -55,17 +54,28 @@ class SubmititApp extends WebApplication {
 
 object SubmititApp {
   
-  val adminPassPhrase = "adminPassPhrase"
+  private val adminPassPhrase = "adminPassPhrase"
+  private val emsUrlKey = "emsUrl"
+  private val emsUsernameKey = "emsUser"
+  private val emsPwdKey = "emsPwd"
   
   private var properties: Map[String, String] = _
   private var adminPass: String = _
+  private var emsUrl: String = _
+  private var emsUsername : String = _
+  private var emsPwd: String = _
   private var propertyFileName: String = _
 
   def props = properties
   
   def props_=(props: Map[String, String]) {
     this.properties = props
-    utils.PropertyIOUtils.writeResource(adminPass, propertyFileName, properties)
+    val map = props + 
+      (adminPassPhrase -> adminPass) + 
+      (emsUrlKey -> emsUrl) + 
+      (emsUsernameKey -> emsUsername) +
+      (emsPwdKey -> emsPwd)
+    utils.PropertyIOUtils.writeResource(propertyFileName, map)
   }
   
   def getSetting(key: String) = props get key match {
