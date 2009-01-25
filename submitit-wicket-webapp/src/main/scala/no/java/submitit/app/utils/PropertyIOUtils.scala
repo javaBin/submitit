@@ -14,9 +14,9 @@ object PropertyIOUtils extends IOUtils {
     }
   }
   
-  def writeResource(passPhrase: String, fileName: String, props: Map[String, String]) {
+  def writeResource(fileName: String, props: Map[String, String]) {
     val file = new File(fileName)
-    val transformed = (SubmititApp.adminPassPhrase + "=" + passPhrase) :: props.map(tuple => tuple._1 + "=" + emptyForNull(tuple._2)).toList
+    val transformed = props.map(tuple => tuple._1 + "=" + emptyForNull(tuple._2)).toList
     val propertyString = transformed.mkString("", "\n", "")
     using(new BufferedWriter(new FileWriter(file))) { stream =>
       propertyString.foreach(stream.write(_))
