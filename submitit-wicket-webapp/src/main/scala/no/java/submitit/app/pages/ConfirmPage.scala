@@ -18,23 +18,23 @@ import org.slf4j.LoggerFactory;
 
 class ConfirmPage(pres: Presentation) extends LayoutPage {
 
-  val state = State.get
+  def state = State.get
   state.fromServer = true
 
-  val backendClient = state.backendClient
-  
   val logger = LoggerFactory.getLogger(classOf[ConfirmPage])
   
   val presentation = pres.toString
   logger.info(presentation)
   
   add(new MultiLineLabel("pres", presentation))
-  
-  val uniqueId = backendClient.savePresentation(pres)
-  
-  val request = getRequest.asInstanceOf[ServletWebRequest].getHttpServletRequest
-  def getPortURL = if (request.getServerPort == 80) "" else ":" + request.getServerPort 
-  val url = "http://" + request.getServerName + getPortURL + request.getContextPath + "/lookupPresentation?id=" + uniqueId
+
+  val url = {
+    val backendClient = state.backendClient
+    val uniqueId = backendClient.savePresentation(pres)
+    val request = getRequest.asInstanceOf[ServletWebRequest].getHttpServletRequest
+    val getPortURL = if (request.getServerPort == 80) "" else ":" + request.getServerPort 
+    "http://" + request.getServerName + getPortURL + request.getContextPath + "/lookupPresentation?id=" + uniqueId
+  }
   
   add(new ExternalLink("confirmUrl", url, url))
   

@@ -28,7 +28,7 @@ class SubmitPage(pres: Presentation) extends LayoutPage {
   }
   
   state setCaptchaIfNotSet
-  val captcha = State.get.captcha
+  def captcha = State.get.captcha
 
   def password = getRequest.getParameter("password");
   

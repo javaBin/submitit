@@ -24,7 +24,7 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
   def extensionRegex = ("""(?i)\.""" + supportedExtensions.mkString("(?:", "|", ")") + "$").r 
   
 
-  val model = new IModel {
+  def model = new IModel {
     def getObject():_root_.java.util.List[_] = pres.speakers.reverse
     def setObject(obj: Object) {}
     def detach() {}

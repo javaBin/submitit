@@ -9,19 +9,17 @@ import org.apache.wicket.markup.html.basic._
 
 class IdResolverPage extends LayoutPage {
 
-  val state = State.get
   val id = getRequest.getParameter("id")
 
-  val backendClient = state.backendClient
-
-  
   val presentation: Presentation =
     try {
-       backendClient.loadPresentation(id)
+      val backendClient = State.get.backendClient
+      backendClient.loadPresentation(id)
     }
   catch {
     case x => null
   }
+  
   if(presentation != null) {
     State.get.fromServer = true 
     State.get.currentPresentation = presentation

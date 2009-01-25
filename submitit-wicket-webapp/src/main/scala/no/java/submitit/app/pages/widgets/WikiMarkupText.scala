@@ -8,10 +8,9 @@ import _root_.no.java.ems.wiki._
 
 class WikiMarkupText (id: String, label: String) extends Label(id) {
   
+  def wikiEngine = new DefaultWikiEngine(new DefaultHtmlWikiSink())
   
-  val wikiEngine = new DefaultWikiEngine(new DefaultHtmlWikiSink())
-  
-  val result = 
+  def result = 
     if(label != null) {
       wikiEngine.transform(escapeMarkup(label).toString)
       wikiEngine.getSink.toString
