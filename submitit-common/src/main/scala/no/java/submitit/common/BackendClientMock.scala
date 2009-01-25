@@ -1,10 +1,12 @@
 package no.java.submitit.common
 
+import _root_.java.io.Serializable
+
 import scala.collection.mutable.Map
 
 import no.java.submitit.model.Presentation
 
-class BackendClientMock extends BackendClient {
+class BackendClientMock extends BackendClient with Serializable {
 
   var nextId = 1
   

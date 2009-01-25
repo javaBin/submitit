@@ -2,21 +2,23 @@ package no.java.submitit.ems
 
 import no.java.ems.client._
 import no.java.ems.domain.{Event,Session,Person,EmailAddress,Binary}
+import _root_.java.io.Serializable
 import _root_.scala.collection.jcl.Conversions._
 import common.Implicits._
 import common._
 import model._
 
-class EmsClient(eventName: String, serverUrl: String, username: String, password: String) extends BackendClient {
+class EmsClient(eventName: String, serverUrl: String, username: String, password: String) extends BackendClient with Serializable {
   
   def isSet(s: String) = s != null && !s.trim.isEmpty
     
-  val emsService = new RestEmsService(serverUrl)
+  def emsService = new RestEmsService(serverUrl)
+  
   if (isSet(username) || isSet(password)) {
     emsService.setCredentials(username, password)
   }
   
-  val converter = new EmsConverter
+  def converter = new EmsConverter
   
   val event = findOrCreateEvent("JavaZone 2009", emsService.getEvents().toList)
   

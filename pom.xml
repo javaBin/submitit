@@ -13,7 +13,7 @@
     <scala.version>2.7.3</scala.version>
     <scala-plugin.version>2.8</scala-plugin.version>
     <ems.version>1.1-SNAPSHOT</ems.version>
-    <jetty.version>6.1.9</jetty.version>
+    <jetty.version>6.1.14</jetty.version>
   </properties>
 
   <repositories>
