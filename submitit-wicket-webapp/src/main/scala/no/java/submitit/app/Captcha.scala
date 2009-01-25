@@ -1,9 +1,11 @@
 package no.java.submitit.app
 
+import _root_.java.io.Serializable
+
 import org.apache.wicket.extensions.markup.html.captcha.CaptchaImageResource
 import org.apache.wicket.markup.html.image.Image
 
-class Captcha {
+class Captcha extends Serializable {
 
   def randomString() = {
     def randomInt(min: Int, max: Int):Int = (Math.random * (max - min)).asInstanceOf[Int] + min
