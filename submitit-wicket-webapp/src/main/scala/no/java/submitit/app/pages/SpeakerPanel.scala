@@ -21,7 +21,7 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
   val that = this
   
   val supportedExtensions = List("jpg", "jpeg", "png", "gif")
-  val extensionRegex = ("""(?i)\.""" + supportedExtensions.mkString("(?:", "|", ")") + "$").r 
+  def extensionRegex = ("""(?i)\.""" + supportedExtensions.mkString("(?:", "|", ")") + "$").r 
   
 
   val model = new IModel {
