@@ -1,6 +1,8 @@
 package no.java.submitit.model
 
-class Speaker {
+import _root_.java.io.Serializable
+
+class Speaker extends Serializable {
   
   var personId: String = _
   var name: String = _
