@@ -71,7 +71,6 @@ class SubmitPage(pres: Presentation) extends LayoutPage {
     addHelpLink("highlightHelp", true)
     
     add(new ReviewLink("reviewButtonTop", this))
-    add(new ReviewLink("reviewButtonBottom", this))
     
     add(new SubmitLink("captchaButton", this){
       override def onSubmit()  {
