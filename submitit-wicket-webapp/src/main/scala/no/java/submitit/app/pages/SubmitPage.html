@@ -10,11 +10,15 @@
 	<div class="infoText">
 		<label wicket:id="infoText"></label>
 	</div>
-	<h2 align="left">Fill in you presentation details</h2>
+	<h2 align="left">Fill in your presentation details</h2>
 	<div class="row">
 		<div wicket:id="feedback"></div>
 	</div>
 	<wicket:enclosure child="password">
+		<div class="titleText">
+			<label>Captcha *</label>
+		</div>
+		<div class="row" />
 		<div class="row">
 			<img wicket:id="captchaImage" />
 		</div>
