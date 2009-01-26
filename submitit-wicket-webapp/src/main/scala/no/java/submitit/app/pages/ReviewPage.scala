@@ -15,17 +15,25 @@ import app.State
 class ReviewPage(p: Presentation) extends LayoutPage {
   
   val editAllowed = SubmititApp.boolSetting("globalEditAllowedBoolean")
-  add(new HiddenField("locked") {
-    override def isVisible = !State().lockPresentation
+  add(new HiddenField("new") {
+    override def isVisible = State().isNew
   })
-  add(new HiddenField("unlocked") {
-    override def isVisible = State().lockPresentation
+  add(new HiddenField("notNewModifyAllowed") {
+    override def isVisible = State().notNewModifyAllowed
+  })
+  add(new HiddenField("submitNotAllowed") {
+    override def isVisible = !State().submitAllowed
+  })
+  add(new HiddenField("notNewModifyNotAllowedNewAllowed") {
+    override def isVisible = State().notNewModifyNotAllowedNewAllowed
   })
   
   add(new NewPresentationLink("newPresentation"))
   
   add(new HtmlLabel("reviewBeforeSubmitMsg", SubmititApp.getSetting("reviewPageBeforeSubmitHtml")))
-  add(new HtmlLabel("viewSubmittedMsg", SubmititApp.getSetting("reviewPageViewSubmittedHthml")))
+  add(new HtmlLabel("viewSubmittedMsg1", SubmititApp.getSetting("reviewPageViewSubmittedHthml")))
+  add(new HtmlLabel("viewSubmittedMsg2", SubmititApp.getSetting("reviewPageViewSubmittedChangeAllowedHthml")))
+  add(new HtmlLabel("viewSubmittedMsg3", SubmititApp.getSetting("reviewPageViewSubmittedHthml")))
   
   add(new Label("title", p.title))
   add(new WikiMarkupText("summary", p.summary))

@@ -1,29 +1,49 @@
 <html xmlns:wicket="http://wicket.apache.org/">
 <wicket:extend>
-	<wicket:enclosure child="locked">
+	<wicket:enclosure child="new">
 		<div class="linkRow">
 			<a href="#" wicket:id="editLink">Edit presentation</a> |
 			<a href="#" wicket:id="submitLink">Submit presentation</a>
 		</div>
 	</wicket:enclosure>
-	<wicket:enclosure child="unlocked">
+	<wicket:enclosure child="submitNotAllowed">
+		<div class="linkRow">
+			&nbsp;
+		</div>
+		<div class="infoText">
+			<label wicket:id="viewSubmittedMsg1"></label>
+		</div>
+	</wicket:enclosure>
+	<wicket:enclosure child="notNewModifyAllowed">
+		<div class="linkRow">
+			<a href="#" wicket:id="editLink">Edit presentation</a> |
+			<a href="#" wicket:id="submitLink">Submit updated presentation</a> |
+			<a href="#" wicket:id="newPresentation">Create a new submission</a> 
+		</div>
+		<div class="infoText">
+			<label wicket:id="viewSubmittedMsg2"></label>
+		</div>
+	</wicket:enclosure>
+	<wicket:enclosure child="notNewModifyNotAllowedNewAllowed">
 		<div class="linkRow">
 			<a href="#" wicket:id="newPresentation">Create a new submission</a>
 		</div>
 		<div class="infoText">
-			<label wicket:id="viewSubmittedMsg"></label>
+			<label wicket:id="viewSubmittedMsg3"></label>
 		</div>
-	</wicket:enclosure>
+	</wicket:enclosure>	
 	<h2 align="left">Your presentation</h2>
-	<wicket:enclosure child="locked">
+	<wicket:enclosure child="new">
 		<div class="row">Please review before sending in.</div>
 		<div class="infoText">
 			<label wicket:id="reviewBeforeSubmitMsg"></label>
 		</div>
 	</wicket:enclosure>
 	<fieldset>
-	<input type="hidden" wicket:id="unlocked"></input>
-	<input type="hidden" wicket:id="locked"></input>
+	<input type="hidden" wicket:id="new"></input>
+	<input type="hidden" wicket:id="notNewModifyAllowed"></input>
+	<input type="hidden" wicket:id="submitNotAllowed"></input>
+	<input type="hidden" wicket:id="notNewModifyNotAllowedNewAllowed"></input>
 	<div class="row">
 	<div class="titleText"><label>Title</label></div>
 	<div class="reviewField"><label wicket:id="title"></label></div>

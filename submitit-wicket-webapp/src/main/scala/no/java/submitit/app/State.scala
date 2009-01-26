@@ -19,7 +19,15 @@ class State(request: Request, val backendClient: BackendClient) extends WebSessi
     f = from
   }
   
-  def lockPresentation = f && !SubmititApp.boolSetting("globalEditAllowedBoolean")
+  def isNew = submitAllowed && !fromServer
+  
+  def notNewModifyAllowed = !isNew && submitAllowed && SubmititApp.boolSetting("globalEditAllowedBoolean")
+  
+  def submitAllowed = SubmititApp.boolSetting("submitAllowedBoolean")
+  
+  def currentPresentationSubmitAllowed = submitAllowed && (isNew || notNewModifyAllowed)
+  
+  def notNewModifyNotAllowedNewAllowed = !isNew && !notNewModifyAllowed && SubmititApp.boolSetting("submitAllowedBoolean")
   
   private var presentation: Presentation = _
   

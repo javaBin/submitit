@@ -6,11 +6,11 @@ class StartPage extends LayoutPage {
   
   if (SubmititApp.boolSetting("submitAllowedBoolean")) {
     
-    if(State.get.lockPresentation) {
-      setResponsePage(new ReviewPage(State().currentPresentation))
+    if(State.get.isNew) {
+      setResponsePage(new SubmitPage(State().currentPresentation))
     }
     else {
-      setResponsePage(new SubmitPage(State().currentPresentation))
+      setResponsePage(new ReviewPage(State().currentPresentation))
     }
   }
   else {

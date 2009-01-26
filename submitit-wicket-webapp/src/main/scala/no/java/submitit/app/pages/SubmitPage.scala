@@ -21,7 +21,7 @@ import common.Implicits._
 class SubmitPage(pres: Presentation) extends LayoutPage {
   
   val state = State()
-  if (state.lockPresentation) throw new SecurityException("Not allowed to get to this point when submission is locked")
+  if (!state.currentPresentationSubmitAllowed) throw new SecurityException("Not allowed to get to this point when submission is locked")
   
   def redirectToReview() {
     setResponsePage(new ReviewPage(state.currentPresentation))
