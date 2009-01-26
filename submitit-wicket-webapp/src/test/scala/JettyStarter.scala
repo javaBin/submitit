@@ -11,12 +11,12 @@ object JettyStarter {
     // Set some timeout options to make debugging easier.
     connector.setMaxIdleTime(1000 * 60 * 60);
     connector.setSoLingerTime(-1);
-    connector.setPort(8040);
+    connector.setPort(8080);
     server.setConnectors(Array(connector));
   
     val bb = new WebAppContext();
     bb.setServer(server);
-    bb.setContextPath("/submitit");
+    bb.setContextPath("/");
     bb.setWar("src/main/webapp");
     
     System.setProperty("submitit.properties", "src/main/resources/submitit.properties")
