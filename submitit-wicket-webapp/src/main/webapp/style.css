@@ -187,7 +187,16 @@ h1 a:hover {
 	border:1px solid blue;
 	font-size:medium;
 	margin-bottom:11px;
-	margin-top:11px;
+}
+
+.infoHeader {
+	background:#3A8CBD;
+	border:1px solid blue;
+	border-bottom: 0px;
+	font-size:medium;
+	font-weight: bold;
+	margin-bottom:0px;
+	margin-top:0px;
 }
 
 .captchaField {
