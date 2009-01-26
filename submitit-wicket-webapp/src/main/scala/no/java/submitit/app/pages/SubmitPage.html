@@ -8,9 +8,9 @@
 	<div wicket:id="modal"></div>
 	<div class="infoHeader">Please read this before you begin</div>
 	<div class="infoText">
-		<label wicket:id="infoText"></label>
+		<div wicket:id="infoText"></div>
 	</div>
-	<h2 align="left">Fill in your presentation details</h2>
+	<h2>Fill in your presentation details</h2>
 	<div class="row">
 		<div wicket:id="feedback"></div>
 	</div>
@@ -20,7 +20,7 @@
 		</div>
 		<div class="row" />
 		<div class="row">
-			<img wicket:id="captchaImage" />
+			<img wicket:id="captchaImage">
 		</div>
 		<div class="row">
         	Please replicate the text you see above (<a href="#" wicket:id="captchaButton">I cannot read this</a>)
@@ -28,49 +28,48 @@
 		<div class="row">
 			<input wicket:id="password" type="text" class="captchaField"/>
 		</div>
-	</wicket:enclosure> <br />
-	
+	</wicket:enclosure> 
 	<div class="row">
 		<div class="titleText">
-			<label>Title *</label> <a href="#" wicket:id="titleHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
+			<label>Title *</label> <a href="#" wicket:id="titleHelp"><img class="helpImg" src="images/questionmark.gif"></a>
 		</div>
 		<input type="text" class="inputField" wicket:id="title">
 	</div>
 	<div class="row">
 		<div class="titleText">
-			<label>Highlight Summary *</label> <a href="#" wicket:id="highlightHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
+			<label>Highlight Summary *</label> <a href="#" wicket:id="highlightHelp"><img class="helpImg" src="images/questionmark.gif"></a>
 		</div> 
 		<textarea class="smallInputArea" wicket:id="summary"></textarea>
 	</div>
 	<div class="row">
 		<div class="titleText">
-			<label>Abstract *</label> <a href="#" wicket:id="abstractHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
+			<label>Abstract *</label> <a href="#" wicket:id="abstractHelp"><img class="helpImg" src="images/questionmark.gif"></a>
 		</div> 
 		<textarea class="inputArea" wicket:id="theabstract"></textarea>
 	</div>
 	<div class="row">
 		<div class="titleText">
-			<label>Language</label> <a href="#" wicket:id="languageHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
+			<label>Language</label> <a href="#" wicket:id="languageHelp"><img class="helpImg" src="images/questionmark.gif"></a>
 		</div>
 		<div wicket:id="language" class="choices">
 		</div>
 	</div>
 	<div class="row">
 		<div class="titleText">
-			<label>Level</label> <a href="#" wicket:id="levelHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
+			<label>Level</label> <a href="#" wicket:id="levelHelp"><img class="helpImg" src="images/questionmark.gif"></a>
 		</div>
 		<div wicket:id="level" class="choices">
 		</div>
 	</div>
 	<div class="row">
 			<div class="titleText">
-				<label>Duration</label> <a href="#" wicket:id="durationHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
+				<label>Duration</label> <a href="#" wicket:id="durationHelp"><img class="helpImg" src="images/questionmark.gif"></a>
 			</div>
 			<label wicket:id="duration"></label>&nbsp;minutes
 	</div>
 	<div class="row">
 		<div class="titleText">
-			<label>Outline</label> <a href="#" wicket:id="outlineHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
+			<label>Outline</label> <a href="#" wicket:id="outlineHelp"><img class="helpImg" src="images/questionmark.gif"></a>
 		</div>
 	 	<textarea class="inputArea" wicket:id="outline"></textarea>
 	</div>
@@ -83,12 +82,12 @@
 	</div>
 	<div class="row">
 		<div class="titleText">
-			<label>Expected audience</label> <a href="#" wicket:id="expectedAudienceHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
+			<label>Expected audience</label> <a href="#" wicket:id="expectedAudienceHelp"><img class="helpImg" src="images/questionmark.gif"></a>
 		</div>
 	 	<textarea class="inputArea" wicket:id="expectedAudience"></textarea>
 	</div>
 	<div class="row">
-		<h2>Speakers <a href="#" wicket:id="speakersHelp"><img class="helpImg" src="images/questionmark.gif"/></a></h2>
+		<h2>Speakers <a href="#" wicket:id="speakersHelp"><img class="helpImg" src="images/questionmark.gif"></a></h2>
 	</div>
 	<div wicket:id="speakers" />
 	<div class="bottomRow">

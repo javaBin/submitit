@@ -1,6 +1,6 @@
 <html xmlns:wicket="http://wicket.apache.org/">
 <wicket:panel>
-	<fieldset wicket:id="speakerList">
+	<fieldset wicket:id="speakerList" class="speakerElement">
 		<legend>Speaker <label wicket:id="speakerNumber"></label></legend>
 		<div class="row">
 		</div>		
@@ -11,19 +11,19 @@
 			<div wicket:id="modal"></div>
 			<div class="row">
 				<div class="titleText">
-					<label for="speakerName">Speaker name *</label>
+					<label>Speaker name *</label>
 				</div>
 				<input wicket:id="speakerName" type="text" class="inputField"/>
 			</div>
 			<div class="row">
 				<div class="titleText">
-					<label for="bio">Speaker's profile *</label> <a href="#" wicket:id="speakersProfileHelp"><img class="helpImg" src="images/questionmark.gif"/></a>
+					<label>Speaker's profile *</label> <a href="#" wicket:id="speakersProfileHelp"><img class="helpImg" src="images/questionmark.gif"></a>
 				</div>
 				<textarea wicket:id="bio" class="inputArea" ></textarea>
 			</div>
 			<div class="row">
 				<div class="titleText">
-					<label for="email">Email *</label>
+					<label>Email *</label>
 				</div>
 				<input wicket:id="email" type="text" class="inputField"/>
 			</div>
@@ -32,18 +32,18 @@
 		<form wicket:id="ajax-simpleUpload">
 			<div class="row">
 				<div class="titleText">
-		        	<label for="upload">Profile picture (max 500KB). Supported types:&nbsp;</label><label wicket:id="extension"></label>.
+		        	<label>Profile picture (max 500KB). Supported types:&nbsp;</label><label wicket:id="extension"></label>.
 		        </div>
 		        <input wicket:id="fileInput" id="upload" type="file"/>
 		    </div>
 			<div class="row">
-				<input type="submit" value="Upload!"/>
+				<input type="submit" value="Upload picture"/>
 	       	</div>
 	    </form>
 	    <wicket:enclosure child="fileName">
 	    	<div class="row">
-				<div class="titleText">
-		        	<label for="upload">Uploaded file:</label>
+				<div class="uploadedFileText">
+		        	<label>Uploaded file:</label>
     				<label wicket:id="fileName"></label>
 		        </div>
 	    	</div>
