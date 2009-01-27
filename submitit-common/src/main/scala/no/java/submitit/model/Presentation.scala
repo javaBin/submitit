@@ -15,8 +15,9 @@ class Presentation extends Serializable {
   var abstr: String = ""
   var speakers: List[Speaker] = Nil
   var outline: String = ""
-  var language: Language.Value = Norwegian
-  var level: Level.Value = Beginner
+  var language: Language.Value = Language.Norwegian
+  var level: Level.Value = Level.Beginner
+  var format: PresentationFormat.Value = PresentationFormat.Presentation
   var duration: Int = 60
   var equipment: String = ""
   var expectedAudience: String = ""
@@ -64,6 +65,7 @@ object Presentation {
             outline: String, 
             language: Language.Value,
             level: Level.Value,
+            format: PresentationFormat.Value,
             duration: Int,
             equipment: String,
             expectedAudience: String): Presentation = {
@@ -75,6 +77,7 @@ object Presentation {
 			    p.outline = outline
 			    p.language = language
 			    p.level = level
+			    p.format = format
 			    p.duration = duration
 			    p.equipment = equipment
 			    p.expectedAudience = expectedAudience

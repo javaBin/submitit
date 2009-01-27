@@ -49,6 +49,7 @@ dictumst. Vestibulum rhoncus semper justo.""",
 * amet""", 
                                       Language.English, 
                                       Level.Intermediate, 
+                                      PresentationFormat.Presentation,
                                       60, 
                                       "equipment", 
                                       "expected audience")
@@ -83,6 +84,7 @@ dictumst. Vestibulum rhoncus semper justo.""",
     assertEquals(presentation.outline, result.outline)
     assertEquals(presentation.language, result.language)
     assertEquals(presentation.level, result.level)
+    assertEquals(presentation.format, result.format)
     assertEquals(presentation.duration, result.duration)
     assertEquals(presentation.equipment, result.equipment)
     assertEquals(presentation.expectedAudience, result.expectedAudience)

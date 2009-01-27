@@ -11,3 +11,7 @@ object Level extends Enumeration {
   val Advanced = Value("Advanced")
 }
 
+object PresentationFormat extends Enumeration {
+  val Presentation = Value("Presentation")
+  val LightningTalk = Value("Lightning talk")
+}
