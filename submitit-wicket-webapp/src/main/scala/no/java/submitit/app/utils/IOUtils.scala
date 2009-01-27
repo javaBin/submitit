@@ -12,7 +12,7 @@ trait IOUtils {
         try {
           closeable.close()
         } catch {
-          case e => println("Exception on close " + e.toString)
+          case e => Console.err.println("Exception on close " + e.toString)
         }
   }	
   

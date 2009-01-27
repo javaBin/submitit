@@ -18,6 +18,5 @@ class WikiMarkupText (id: String, label: String) extends Label(id) {
 
   setEscapeModelStrings(false)
   setModel(new Model(result))
-  println(result)
 
 }

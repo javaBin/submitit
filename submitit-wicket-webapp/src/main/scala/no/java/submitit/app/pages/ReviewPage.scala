@@ -56,7 +56,15 @@ class ReviewPage(p: Presentation) extends LayoutPage {
     }
   })
   
-  add(new PageLink("submitLink", new LazyPageLink(new ConfirmPage(p), classOf[ConfirmPage])))
-  add(new PageLink("editLink",  new LazyPageLink(new SubmitPage(p), classOf[SubmitPage])))
+  
+  add(new PageLink("submitLink", new IPageLink {
+    def getPage = new ConfirmPage(p)
+    def getPageIdentity = classOf[ConfirmPage]
+  }))
+      
+  add(new PageLink("editLink",new IPageLink {
+    def getPage = new SubmitPage(p)
+    def getPageIdentity = classOf[SubmitPage]
+  }))    
   
 }
