@@ -21,7 +21,7 @@ class ConfirmPage(pres: Presentation) extends LayoutPage {
   def state = State.get
   state.fromServer = true
 
-  val logger = LoggerFactory.getLogger(classOf[ConfirmPage])
+  def logger = LoggerFactory.getLogger(classOf[ConfirmPage])
   
   val presentation = pres.toString
   logger.info(presentation)
