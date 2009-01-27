@@ -18,15 +18,19 @@ class Presentation extends Serializable {
   var language: Language.Value = Language.Norwegian
   var level: Level.Value = Level.Beginner
   var format: PresentationFormat.Value = PresentationFormat.Presentation
-  var duration: Int = 60
   var equipment: String = ""
   var expectedAudience: String = ""
   var feedback: String = _
- 
+
+  def duration: Int = format match {
+    case PresentationFormat.Presentation => 60
+    case PresentationFormat.LightningTalk => 15
+  }
+  
   def init() {
     addSpeaker
   }
-  
+
   def addSpeaker() {
     speakers = new Speaker :: speakers
   }
@@ -41,7 +45,7 @@ class Presentation extends Serializable {
       case Nil => Nil
     }
   }
-  
+
   override def toString =
     "title: " + title +
     "\nabstract: " + abstr +
@@ -66,7 +70,6 @@ object Presentation {
             language: Language.Value,
             level: Level.Value,
             format: PresentationFormat.Value,
-            duration: Int,
             equipment: String,
             expectedAudience: String): Presentation = {
 			    val p = new Presentation
@@ -78,7 +81,6 @@ object Presentation {
 			    p.language = language
 			    p.level = level
 			    p.format = format
-			    p.duration = duration
 			    p.equipment = equipment
 			    p.expectedAudience = expectedAudience
 			    p

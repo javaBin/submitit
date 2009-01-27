@@ -38,8 +38,13 @@ class EmsConverter {
       case Level.Intermediate => Session.Level.Intermediate
       case Level.Advanced => Session.Level.Advanced
     }
+    val format = presentation.format match {
+      case PresentationFormat.Presentation => Session.Format.Presentation
+      case PresentationFormat.LightningTalk => Session.Format.Quickie
+    }
     session.setLanguage(language)
     session.setLevel(level)
+    session.setFormat(format)
   }
   
   def toPresentation(session: Session): Presentation = {
@@ -64,7 +69,11 @@ class EmsConverter {
       case Session.Level.Intermediate => Level.Intermediate
       case Session.Level.Advanced => Level.Advanced
     }
-    
+    pres.format = session.getFormat match {
+      case Session.Format.Presentation => PresentationFormat.Presentation
+      case Session.Format.Quickie => PresentationFormat.LightningTalk
+      case _ => error("Unhandled session format: " + session.getFormat)
+    }
     pres
   }
   

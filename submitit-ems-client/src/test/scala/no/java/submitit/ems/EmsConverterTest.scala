@@ -49,8 +49,7 @@ dictumst. Vestibulum rhoncus semper justo.""",
 * amet""", 
                                       Language.English, 
                                       Level.Intermediate, 
-                                      PresentationFormat.Presentation,
-                                      60, 
+                                      PresentationFormat.LightningTalk,
                                       "equipment", 
                                       "expected audience")
 
