@@ -41,12 +41,12 @@ class SubmitPage(pres: Presentation) extends LayoutPage {
     addPropTF("title", pres, "title")
     addPropTA("summary", pres, "summary")
     addPropTA("theabstract", pres, "abstr")
-    addPropLabel("duration", pres, "duration")
     addPropTA("outline", pres, "outline")
     addPropTA("equipment", pres, "equipment")
     addPropTA("expectedAudience", pres, "expectedAudience")
     addPropRC("level", pres, "level", Level.elements.toList)
     addPropRC("language", pres, "language", Language.elements.toList)
+    addPropRC("format", pres, "format", PresentationFormat.elements.toList)
     
     if (!verified) add(captcha.image)
     
@@ -62,7 +62,7 @@ class SubmitPage(pres: Presentation) extends LayoutPage {
     
     addHelpLink("outlineHelp", true)
     addHelpLink("expectedAudienceHelp", true)
-    addHelpLink("durationHelp", false)
+    addHelpLink("formatHelp", false)
     addHelpLink("titleHelp", false)
     addHelpLink("abstractHelp", true)
     addHelpLink("levelHelp", false)

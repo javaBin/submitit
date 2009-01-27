@@ -28,7 +28,14 @@
 		<div class="row">
 			<input wicket:id="password" type="text" class="captchaField"/>
 		</div>
-	</wicket:enclosure> 
+	</wicket:enclosure>
+	<div class="row">
+		<div class="titleText">
+			<label>Presentation format</label> <a href="#" wicket:id="formatHelp"><img class="helpImg" src="images/questionmark.gif"></a>
+		</div>
+		<div wicket:id="format" class="choices">
+		</div>
+	</div>
 	<div class="row">
 		<div class="titleText">
 			<label>Title *</label> <a href="#" wicket:id="titleHelp"><img class="helpImg" src="images/questionmark.gif"></a>
@@ -60,12 +67,6 @@
 		</div>
 		<div wicket:id="level" class="choices">
 		</div>
-	</div>
-	<div class="row">
-			<div class="titleText">
-				<label>Duration</label> <a href="#" wicket:id="durationHelp"><img class="helpImg" src="images/questionmark.gif"></a>
-			</div>
-			<label wicket:id="duration"></label>&nbsp;minutes
 	</div>
 	<div class="row">
 		<div class="titleText">

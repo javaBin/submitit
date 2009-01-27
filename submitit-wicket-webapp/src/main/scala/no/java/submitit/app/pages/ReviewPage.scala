@@ -40,7 +40,7 @@ class ReviewPage(p: Presentation) extends LayoutPage {
   add(new WikiMarkupText("abstract", p.abstr))
   add(new Label("language", p.language.toString))
   add(new Label("level", p.level.toString))
-  add(new Label("duration", p.duration.toString))
+  add(new Label("format", p.format.toString))
   add(new WikiMarkupText("outline", p.outline))
   add(new WikiMarkupText("equipment", p.equipment))
   add(new WikiMarkupText("expectedAudience", p.expectedAudience))

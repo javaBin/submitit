@@ -44,6 +44,12 @@
 	<input type="hidden" wicket:id="notNewModifyAllowed"></input>
 	<input type="hidden" wicket:id="submitNotAllowed"></input>
 	<input type="hidden" wicket:id="notNewModifyNotAllowedNewAllowed"></input>
+	
+	<div class="row">
+	<div class="titleText"><label>Presentation format</label></div>
+	<div class="reviewField"><label wicket:id="format"></label></div>
+	</div>
+	
 	<div class="row">
 	<div class="titleText"><label>Title</label></div>
 	<div class="reviewField"><label wicket:id="title"></label></div>
@@ -69,12 +75,6 @@
 	<div class="reviewField"><label wicket:id="level"></label></div>
 	</div>
 
-
-	<div class="row">
-	<div class="titleText"><label>Duration</label></div>
-	<div class="reviewField"><label wicket:id="duration"></label> minutes</div>
-	</div>
-
 	<div class="row">
 	<div class="titleText"><label>Outline</label></div>
 	<div class="reviewField"><label wicket:id="outline"></label></div>
@@ -87,8 +87,7 @@
 
 	<div class="row">
 	<div class="titleText"><label>Expected audience</label></div>
-	<div class="reviewField"><label wicket:id="expectedAudience"></label>
-	</div>
+	<div class="reviewField"><label wicket:id="expectedAudience"></label></div>
 	</div>
 
 	<h2>Speakers</h2>
