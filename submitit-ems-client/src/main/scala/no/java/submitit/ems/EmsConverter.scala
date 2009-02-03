@@ -2,6 +2,7 @@ package no.java.submitit.ems
 
 import no.java.ems._
 import no.java.ems.domain.{Event,Session,Person,EmailAddress,Binary,ByteArrayBinary}
+import _root_.java.io.InputStream
 import _root_.scala.collection.jcl.Conversions._
 import common.Implicits._
 import model._
@@ -104,11 +105,17 @@ class EmsConverter {
   def toPicture(photo: Binary): Picture = {
     if (photo != null) {
       val content = new Array[Byte](photo.getSize.toInt)
-      photo.getDataStream.read(content)
+      read(0, photo.getDataStream, content)
       new Picture(photo.getId, content, photo.getFileName, photo.getMimeType)
     } else {
       null
     }
   }
-  
+
+  def read(ofs: Int, is: InputStream, content: Array[Byte]): Unit = {
+    val len = is.read(content, ofs, content.length - ofs)
+    if (len != -1)
+      read(ofs + len, is, content)
+  }
 }
+
