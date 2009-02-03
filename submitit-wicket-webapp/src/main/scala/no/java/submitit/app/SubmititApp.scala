@@ -40,7 +40,7 @@ class SubmititApp extends WebApplication {
   }
 
   private def backendClient: BackendClient = {
-    if (SubmititApp.emsUrl != "") new EmsClient("JavaZone 2009", SubmititApp.emsUrl, SubmititApp.emsUsername, SubmititApp.emsPwd)
+    if (SubmititApp.emsUrl != "") new EmsClient(SubmititApp.getSetting("eventName"), SubmititApp.emsUrl, SubmititApp.emsUsername, SubmititApp.emsPwd)
     else new submitit.common.BackendClientMock
   }
 

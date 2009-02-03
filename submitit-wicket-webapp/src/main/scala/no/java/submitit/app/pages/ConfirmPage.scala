@@ -47,11 +47,11 @@ class ConfirmPage(pres: Presentation) extends LayoutPage {
     }
   })
 
-  if(SubmititApp.boolSetting("sendEmailBoolean")) sendConfirmationMail(pres, url)
+  if (SubmititApp.getSetting("smtpHost") != null) sendConfirmationMail(pres, url)
   
   def sendConfirmationMail(pres: Presentation, url: String) {
     val props = new Properties
-    props.put("mail.smtp.host", "smtp")
+    props.put("mail.smtp.host", SubmititApp.getSetting("smtpHost"))
     props.put("mail.from", "program@java.no")
     val session = Session.getInstance(props, null)
     
