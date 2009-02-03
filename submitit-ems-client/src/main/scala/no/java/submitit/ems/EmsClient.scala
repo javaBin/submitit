@@ -38,13 +38,20 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
   }
   
   def loadPresentation(id: String): Presentation = {
-    val session = emsService.getSession(id)
-    val presentation = converter.toPresentation(session)
-    presentation.speakers.foreach(speaker => {
-      val person = emsService.getContact(speaker.personId)
-      speaker.email = person.getEmailAddresses.toList.head.getEmailAddress 
-    })
-    presentation
+    // Workaround for authorization problems...
+    val sessions = emsService.getSessions(event.getId)
+    val res = sessions.find(session => session.getId == id)
+    res match {
+      case Some(session) => {
+        val presentation = converter.toPresentation(session)
+        presentation.speakers.foreach(speaker => {
+          val person = emsService.getContact(speaker.personId)
+          speaker.email = person.getEmailAddresses.toList.head.getEmailAddress 
+        })
+        presentation
+      }
+      case None => null
+    }
   }
   
   private def updateOrCreateSession(presentation: Presentation): Presentation = {
@@ -64,7 +71,10 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
     if (speaker.personId != null) emsService.getContact(speaker.personId)
     else findContactByEmail(speaker.email) match {
       case Some(person) => person
-      case None => createContact(speaker)
+      case None => findContactByName(speaker.name) match {
+        case Some(person) => person
+        case None => createContact(speaker)
+      }
     }
   }
   
@@ -72,6 +82,11 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
     emsService.getContacts().find(contact => 
       contact.getEmailAddresses.exists(adr => 
         adr.getEmailAddress() == email))
+  }
+  
+  private def findContactByName(name: String): Option[Person] = {
+    // TODO
+    None
   }
 
   private def updateDefaultEmail(person: Person, email: String) {
