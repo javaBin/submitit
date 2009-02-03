@@ -12,10 +12,12 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
   
   def isSet(s: String) = s != null && !s.trim.isEmpty
     
-  def emsService = new RestEmsService(serverUrl)
-  
-  if (isSet(username) || isSet(password)) {
-    emsService.setCredentials(username, password)
+  def emsService = {
+    val service = new RestEmsService(serverUrl)
+    if (isSet(username) || isSet(password)) {
+      service.setCredentials(username, password)
+    }
+    service
   }
   
   def converter = new EmsConverter
