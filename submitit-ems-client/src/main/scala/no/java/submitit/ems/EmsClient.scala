@@ -38,10 +38,7 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
   }
   
   def loadPresentation(id: String): Presentation = {
-    // Workaround for authorization problems...
-    val sessions = emsService.getSessions(event.getId)
-    val res = sessions.find(session => session.getId == id)
-    res match {
+    getSession(id) match {
       case Some(session) => {
         val presentation = converter.toPresentation(session)
         presentation.speakers.foreach(speaker => {
@@ -54,11 +51,20 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
     }
   }
   
+  private def getSession(id: String): Option[Session] = {
+    // Workaround for authorization problems...
+    val sessions = emsService.getSessions(event.getId)
+    sessions.find(session => session.getId == id)
+  }
+  
   private def updateOrCreateSession(presentation: Presentation): Presentation = {
     val session = 
       if (presentation.sessionId == null) new Session()
-      else emsService.getSession(presentation.sessionId) 
-
+      else getSession(presentation.sessionId) match {
+        case Some(session) => session
+        case None => error("Unknown session " + presentation.sessionId)
+      } 
+    
     session.setEventId(event.getId)
     converter.updateSession(presentation, session)
     emsService.saveSession(session)
