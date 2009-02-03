@@ -6,16 +6,15 @@ Website:	http://www.ginger-ninja.net/
 /* Misc. */
 
 * {
-	margin:0;
 	padding:0;
 	}
 body {
 	font-family:Trebuchet MS, Arial, Helvetica, sans-serif;
 	font-size:12px;
-	background-color:#393939;
-	margin:25px 0 4px 0;
+	background-color:#C0C0C0;
+	margin:0 auto;
 	color:#222222;
-	}
+}
 img {
 	border:0;
 	}
@@ -27,16 +26,25 @@ p {
 /* Structure */
 
 #wrapper {
-	width:1024px;
+	width:1000px;
 	margin:0 auto;
 	}
+
 #header {
-	height:100px;
-	line-height:100px;
-	background-image:url(images/bg-header.gif);
-	background-repeat:no-repeat;
-	padding-left:15px;
-	}
+	background:transparent url(images/gradient_top.gif) repeat-x scroll center top;
+	border-bottom:10px solid #5D6A70;
+	height:102px !important;
+	padding-top:18px;
+}
+
+.frame {
+	background:transparent url(images/bg_all.gif) repeat-y scroll 0 0;
+	padding-left:55px;
+	padding-right:55px;
+	width:1000px !important;
+	margin:0 auto;
+}
+
 #navigation {
 	float:right;
 	margin-right:15px;
@@ -49,14 +57,11 @@ p {
 	padding:10px 5px;
 	min-height: 20em;
 	}
-#footer {
+#footer2 {
 	text-align:right;
-	background-image:url(images/bg-footer.gif);
-	background-repeat:no-repeat;
-	background-position:top center;
-	line-height:24px;
-	color:#efefef;
-	}
+	width: 1000px;
+	margin:0 auto;
+}
 
 /* Navigation */
 
@@ -92,7 +97,15 @@ h1 {
 	font-size:30px;
 	font-weight:normal;
 	letter-spacing:-1px;
-	color:#FFFFFF;
+	color:#000000;
+}
+
+.headerTitle {
+	text-align:right;
+	top:-67px;
+	width:96%;
+	position:relative;
+	font-size:x-large;
 }
 
 /* Link Colors */
@@ -115,13 +128,30 @@ h1 a:hover {
 	text-decoration:underline;
 	}
 
-#footer a {
-	color:#ffffff;
+#footer2 a {
+	color:#000000;
 	text-decoration:none;
-	border-bottom:1px dotted #ffffff;
+	border-bottom:1px dotted #000000;
 	}
-#footer a:hover {
+#footer2 a:hover {
 	color:#ffffff;
+}
+
+#footer {
+	font-family:Helvetica,Arial,Verdana,Sans-serif;
+	background:transparent url(images/bg_footer.gif) repeat-x scroll 0 0;
+	font-size:11px;
+	height:28px !important;
+	padding-top:10px;
+	text-align:center;
+	font-size:12px;
+	font-weight:bold;
+}
+
+#footer img {
+	margin-bottom:3px;
+	margin-left:25px;
+	margin-right:25px;
 }
 
 .leadText {

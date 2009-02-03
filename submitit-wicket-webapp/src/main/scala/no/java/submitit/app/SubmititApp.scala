@@ -34,7 +34,7 @@ class SubmititApp extends WebApplication {
     SubmititApp.properties = theMap
 
     mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
-    mountBookmarkablePage("/helpIt", classOf[HelpPage]);
+    mountBookmarkablePage("/helpit", classOf[HelpPage]);
     mountBookmarkablePage("/admin-login", classOf[admin.AdminLogin])
     getApplicationSettings.setDefaultMaximumUploadSize(Bytes.kilobytes(500))
   }
