@@ -41,7 +41,7 @@ class SubmititApp extends WebApplication {
 
   private def backendClient: BackendClient = {
     if (SubmititApp.emsUrl != null) new EmsClient(SubmititApp.getSetting("eventName"), SubmititApp.emsUrl, SubmititApp.emsUsername, SubmititApp.emsPwd)
-    else new submitit.common.BackendClientMock
+    else submitit.common.BackendClientMock
   }
 
   override def newWebRequest(servletRequest: HttpServletRequest) = new UploadWebRequest(servletRequest)

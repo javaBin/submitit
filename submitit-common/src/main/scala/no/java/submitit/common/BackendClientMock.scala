@@ -6,7 +6,7 @@ import scala.collection.mutable.Map
 
 import no.java.submitit.model.Presentation
 
-class BackendClientMock extends BackendClient with Serializable {
+object BackendClientMock extends BackendClient with Serializable {
 
   var nextId = 1
   
