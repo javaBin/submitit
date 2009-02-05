@@ -10,6 +10,7 @@
 		<div class="linkRow">
 			&nbsp;
 		</div>
+		<div class="infoHeader">Please read this</div>
 		<div class="infoText">
 			<label wicket:id="viewSubmittedMsg1"></label>
 		</div>
@@ -20,6 +21,7 @@
 			<a href="#" wicket:id="submitLink">Submit updated presentation</a> |
 			<a href="#" wicket:id="newPresentation">Create a new submission</a> 
 		</div>
+		<div class="infoHeader">Please read this</div>
 		<div class="infoText">
 			<label wicket:id="viewSubmittedMsg2"></label>
 		</div>
@@ -28,17 +30,18 @@
 		<div class="linkRow">
 			<a href="#" wicket:id="newPresentation">Create a new submission</a>
 		</div>
+		<div class="infoHeader">Please read this</div>
 		<div class="infoText">
 			<label wicket:id="viewSubmittedMsg3"></label>
 		</div>
 	</wicket:enclosure>	
-	<h2 align="left">Your presentation</h2>
 	<wicket:enclosure child="new">
-		<div class="row">Please review before sending in.</div>
+		<div class="infoHeader">Please read this</div>
 		<div class="infoText">
 			<label wicket:id="reviewBeforeSubmitMsg"></label>
 		</div>
 	</wicket:enclosure>
+	<h2 align="left">Your presentation</h2>
 	<fieldset>
 	<input type="hidden" wicket:id="new"></input>
 	<input type="hidden" wicket:id="notNewModifyAllowed"></input>
