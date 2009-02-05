@@ -52,7 +52,8 @@ class ConfirmPage(pres: Presentation) extends LayoutPage {
   def sendConfirmationMail(pres: Presentation, url: String) {
     val props = new Properties
     props.put("mail.smtp.host", SubmititApp.getSetting("smtpHost"))
-    props.put("mail.from", "program@java.no")
+    
+    props.put("mail.from", SubmititApp.getOfficialEmail)
     val session = Session.getInstance(props, null)
     
     val msg = new MimeMessage(session)
@@ -60,6 +61,8 @@ class ConfirmPage(pres: Presentation) extends LayoutPage {
     pres.speakers.foreach(speaker => 
       msg.addRecipients(Message.RecipientType.TO, speaker.email)
     )
+    
+    SubmititApp.getBccEmailList.foreach(msg.addRecipients(Message.RecipientType.BCC, _))
     msg.setSubject("Confirmation of JavaZone 2009 submission \"" + pres.title + "\"")
     msg.setSentDate(new Date)
     msg.setText("Thank you for submitting your presentation titled \"" + pres.title + "\"!\n\n" +

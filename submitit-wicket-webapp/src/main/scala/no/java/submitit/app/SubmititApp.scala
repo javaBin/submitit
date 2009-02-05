@@ -86,6 +86,17 @@ object SubmititApp {
     case _ => null
   }
   
+  def getBccEmailList = {
+    getSetting("emailBccCommaSeparatedList") match {
+      case null => new Array[String](0)
+      case email => email.split(",")
+    }
+  }
+  
+  def getOfficialEmail = {
+    getSetting("officialEmailReplyTo")
+  }
+  
   def intSetting(key: String) = getSetting(key).toInt
   
   def boolSetting(key: String) = _root_.java.lang.Boolean.parseBoolean(getSetting(key))
