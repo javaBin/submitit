@@ -20,10 +20,10 @@ class SubmititApp extends WebApplication {
     SubmititApp.propertyFileName = super.getServletContext.getInitParameter("submitit.properties")
     if (SubmititApp.propertyFileName == null) throw new Exception("""You must specify "submitit.properties" as a init parameter.""")
     val props = utils.PropertyIOUtils.loadRessource(SubmititApp.propertyFileName)
-    SubmititApp.adminPass = props.remove(SubmititApp.adminPassPhrase).asInstanceOf[String]
-    SubmititApp.emsUrl = props.remove(SubmititApp.emsUrlKey).asInstanceOf[String]
-    SubmititApp.emsUsername = props.remove(SubmititApp.emsUsernameKey).asInstanceOf[String]
-    SubmititApp.emsPwd = props.remove(SubmititApp.emsPwdKey).asInstanceOf[String]
+    SubmititApp.adminPass = this nullOnEmptyString props.remove(SubmititApp.adminPassPhrase).asInstanceOf[String]
+    SubmititApp.emsUrl = this nullOnEmptyString props.remove(SubmititApp.emsUrlKey).asInstanceOf[String]
+    SubmititApp.emsUsername = this nullOnEmptyString props.remove(SubmititApp.emsUsernameKey).asInstanceOf[String]
+    SubmititApp.emsPwd = this nullOnEmptyString props.remove(SubmititApp.emsPwdKey).asInstanceOf[String]
 
     val elems = props.keys
     var theMap = Map[String, String]()
@@ -40,7 +40,7 @@ class SubmititApp extends WebApplication {
   }
 
   private def backendClient: BackendClient = {
-    if (SubmititApp.emsUrl != "") new EmsClient(SubmititApp.getSetting("eventName"), SubmititApp.emsUrl, SubmititApp.emsUsername, SubmititApp.emsPwd)
+    if (SubmititApp.emsUrl != null) new EmsClient(SubmititApp.getSetting("eventName"), SubmititApp.emsUrl, SubmititApp.emsUsername, SubmititApp.emsPwd)
     else new submitit.common.BackendClientMock
   }
 
@@ -49,6 +49,8 @@ class SubmititApp extends WebApplication {
   override def newSession(request: Request, response: Response):State = new State(request, backendClient)
   
   def getHomePage() = classOf[StartPage]
+  
+  private def nullOnEmptyString(s: String) = if (s.trim != "") s else null
 
 }
 
@@ -79,8 +81,9 @@ object SubmititApp {
   }
   
   def getSetting(key: String) = props get key match {
-    case Some(s) => s
+    case Some(s) if s != "" => s
     case None => null
+    case _ => null
   }
   
   def intSetting(key: String) = getSetting(key).toInt

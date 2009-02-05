@@ -1,4 +1,4 @@
-package no.java.submitit.app.utils
+package no.java.submitit.common
 
 trait IOUtils {
 

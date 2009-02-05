@@ -5,11 +5,12 @@ import no.java.ems.domain.{Event,Session,Person,EmailAddress,Binary,ByteArrayBin
 import _root_.java.io.InputStream
 import _root_.scala.collection.jcl.Conversions._
 import common.Implicits._
+import common.IOUtils
 import model._
 
 import scala.xml.XML
 
-class EmsConverter {
+class EmsConverter extends IOUtils {
 
   def toPerson(speaker: Speaker): Person = {
     val person = new Person(speaker.name)
@@ -105,7 +106,11 @@ class EmsConverter {
   def toPicture(photo: Binary): Picture = {
     if (photo != null) {
       val content = new Array[Byte](photo.getSize.toInt)
-      read(0, photo.getDataStream, content)
+      
+      using(photo.getDataStream) { 
+        stream => read(0, stream, content)
+      }git
+
       new Picture(photo.getId, content, photo.getFileName, photo.getMimeType)
     } else {
       null
