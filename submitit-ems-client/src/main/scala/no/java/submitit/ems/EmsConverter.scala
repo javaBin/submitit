@@ -109,7 +109,7 @@ class EmsConverter extends IOUtils {
       
       using(photo.getDataStream) { 
         stream => read(0, stream, content)
-      }git
+      }
 
       new Picture(photo.getId, content, photo.getFileName, photo.getMimeType)
     } else {
