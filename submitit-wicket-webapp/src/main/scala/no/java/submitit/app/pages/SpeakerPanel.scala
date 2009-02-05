@@ -2,7 +2,6 @@ package no.java.submitit.app.pages
 
 import org.apache.wicket.markup.html.panel._
 import org.apache.wicket.markup.html.basic._
-import org.apache.wicket.extensions.validation.validator.RfcCompliantEmailAddressValidator
 import org.apache.wicket.markup.html.form.upload._
 import org.apache.wicket.util.lang._
 import org.apache.wicket.util.file._
@@ -81,7 +80,6 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
       speakersForm.add(new TextField("speakerName", new PropertyModel(speaker, "name")))
       
       val email = new TextField("email", new PropertyModel(speaker, "email"))
-      email.add(RfcCompliantEmailAddressValidator.getInstance())
       
       speakersForm.add(email)
       speakersForm.addPropTA("bio", speaker, "bio")

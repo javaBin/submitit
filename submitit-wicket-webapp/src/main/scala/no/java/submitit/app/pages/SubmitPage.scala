@@ -1,6 +1,7 @@
 package no.java.submitit.app.pages
 
 import org.apache.wicket.markup.html.panel.FeedbackPanel
+import org.apache.wicket.extensions.validation.validator.RfcCompliantEmailAddressValidator
 import org.apache.wicket.markup.html.basic._
 import org.apache.wicket.model._
 import no.java.submitit.model._
@@ -85,7 +86,7 @@ class SubmitPage(pres: Presentation) extends LayoutPage {
       // Some form validation
       if (!state.verifiedWithCaptha && captcha.imagePass != password) error("Wrong captcha password")
       
-      
+      val emailValidator = RfcCompliantEmailAddressValidator.getInstance().getPattern.matcher("")
       required(pres.speakers, "You must specify at least one speaker")
       required(pres.title, "You must specify a title")
       required(pres.abstr, "You must specify an abstract")
@@ -95,6 +96,7 @@ class SubmitPage(pres: Presentation) extends LayoutPage {
         required(sp.name, "You must specify speaker name")
         required(sp.email, "You must specify an email")
         required(sp.bio, "You must specify speaker's profile")
+        if (sp.email != null && !emailValidator.reset(sp.email).matches) error("'" + sp.email + "' is not valid email")
       })
       
       if(!hasErrorMessage) {
