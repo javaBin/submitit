@@ -22,7 +22,7 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
   
   def converter = new EmsConverter
   
-  val event = findOrCreateEvent(eventName, emsService.getEvents().toList)
+  lazy val event = findOrCreateEvent(eventName, emsService.getEvents().toList)
   
   def savePresentation(presentation: Presentation): String = {
     presentation.speakers.foreach(speaker => {

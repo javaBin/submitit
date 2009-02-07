@@ -13,6 +13,7 @@ import org.apache.wicket.Response
 import org.apache.wicket.Session
 import _root_.java.util.Properties
 import org.apache.wicket.Application._
+import org.apache.wicket.settings.IExceptionSettings
 
 class SubmititApp extends WebApplication {
 
@@ -37,6 +38,8 @@ class SubmititApp extends WebApplication {
     mountBookmarkablePage("/helpit", classOf[HelpPage]);
     mountBookmarkablePage("/admin-login", classOf[admin.AdminLogin])
     getApplicationSettings.setDefaultMaximumUploadSize(Bytes.kilobytes(500))
+    getApplicationSettings().setInternalErrorPage(classOf[ErrorPage]);
+    getExceptionSettings().setUnexpectedExceptionDisplay(IExceptionSettings.SHOW_INTERNAL_ERROR_PAGE);
   }
 
   private def backendClient: BackendClient = {
@@ -51,7 +54,13 @@ class SubmititApp extends WebApplication {
   def getHomePage() = classOf[StartPage]
   
   private def nullOnEmptyString(s: String) = if (s.trim != "") s else null
+  
+  override def newRequestCycle(request: Request, response: Response) = new MyRequestCycle(this, request.asInstanceOf[WebRequest], response)
 
+}
+
+class MyRequestCycle(application: WebApplication, request: WebRequest, response: Response) extends org.apache.wicket.protocol.http.WebRequestCycle(application, request, response) {
+	override def onRuntimeException(cause: org.apache.wicket.Page, e: RuntimeException) = new ErrorPage(State().currentPresentation, e)
 }
 
 object SubmititApp {

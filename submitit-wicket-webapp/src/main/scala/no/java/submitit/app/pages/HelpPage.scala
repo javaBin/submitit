@@ -4,6 +4,14 @@ import org.apache.wicket.markup.html.link.ExternalLink
 
 class HelpPage extends LayoutPage {
 
-  add(new ExternalLink("officialEmail", "mailto:" + SubmititApp.getOfficialEmail, SubmititApp.getOfficialEmail))
+  OfficialEmailLink.addLink(this)
+  
+}
+
+object OfficialEmailLink {
+  
+  def addLink(page: org.apache.wicket.Page) {
+    page.add(new ExternalLink("officialEmail", "mailto:" + SubmititApp.getOfficialEmail, SubmititApp.getOfficialEmail))
+  }
   
 }
