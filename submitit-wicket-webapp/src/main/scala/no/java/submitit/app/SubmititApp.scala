@@ -38,8 +38,6 @@ class SubmititApp extends WebApplication {
     mountBookmarkablePage("/helpit", classOf[HelpPage]);
     mountBookmarkablePage("/admin-login", classOf[admin.AdminLogin])
     getApplicationSettings.setDefaultMaximumUploadSize(Bytes.kilobytes(500))
-    getApplicationSettings().setInternalErrorPage(classOf[ErrorPage]);
-    getExceptionSettings().setUnexpectedExceptionDisplay(IExceptionSettings.SHOW_INTERNAL_ERROR_PAGE);
   }
 
   private def backendClient: BackendClient = {
