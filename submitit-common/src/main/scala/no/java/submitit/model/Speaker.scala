@@ -11,10 +11,10 @@ class Speaker extends Serializable {
   var picture: Picture = _
   
   override def toString =
-    "name: " + name +
-    " email: " + email +
-    " bio: " + bio +
-    " picture: " + (if (picture != null) picture.name else "")
+    "Name: " + name +
+    "\nE-mail: " + email +
+    "\nSpeaker's profile:\n" + bio +
+    "\n\nPicture name: " + (if (picture != null) picture.name else "")
 
   override def equals(other: Any): Boolean = {
     other match {

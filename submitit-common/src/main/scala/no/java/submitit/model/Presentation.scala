@@ -47,17 +47,19 @@ class Presentation extends Serializable {
   }
 
   override def toString =
-    "format: " + format +
-    "\ntitle: " + title +
-    "\nabstract: " + abstr +
-    "\nsummary: " + summary +
-    "\noutline: " + outline +
-    "\nlanguage: " + language +
-    "\nlevel: " + level +
-    "\nequipment: " + equipment +
-    "\nexpectedAudience: " + expectedAudience +
-    "\nspeakers: " + speakers.mkString("(\n", "\n\t", "\n)")
-   
+    "Format: " + format +
+    "\nTitle: " + title +
+    "\n\nAbstract:\n" + abstr +
+    "\n\nSummary:\n" + summary +
+    "\n\nOutline:\n" + toNonNullString(outline) +
+    "\n\nLanguage: " + language +
+    "\nLevel: " + level +
+    "\nEquipment:\n" + toNonNullString(equipment) +
+    "\n\nExpected audience:\n" + toNonNullString(expectedAudience) +
+    "\n\nSpeakers:\n\n" + speakers.mkString("", "\n\n", "")
+
+  def toNonNullString(s: String) = if (s != null) s else ""
+  
 }
 
 object Presentation {
