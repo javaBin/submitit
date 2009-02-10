@@ -31,9 +31,7 @@ class ConfirmPage(pres: Presentation) extends LayoutPage {
   val url = {
     val backendClient = state.backendClient
     val uniqueId = backendClient.savePresentation(pres)
-    val request = getRequest.asInstanceOf[ServletWebRequest].getHttpServletRequest
-    val getPortURL = if (request.getServerPort == 80) "" else ":" + request.getServerPort 
-    "http://" + request.getServerName + getPortURL + request.getContextPath + "/lookupPresentation?id=" + uniqueId
+    "http://" + SubmititApp.getSetting("submititBaseUrl") + "/lookupPresentation?id=" + uniqueId
   }
   
   add(new ExternalLink("confirmUrl", url, url))

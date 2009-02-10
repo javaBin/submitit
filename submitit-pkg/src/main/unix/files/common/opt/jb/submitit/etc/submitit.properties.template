@@ -16,3 +16,4 @@ headerText=Submit your JavaZone 2009 presentation
 smtpHost=
 emailBccCommaSeparatedList=program@java.no
 officialEmailReplyTo=program@java.no
+submititBaseUrl=http://www.java.no/submitit
