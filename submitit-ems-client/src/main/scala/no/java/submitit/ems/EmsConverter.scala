@@ -8,10 +8,14 @@ import common.Implicits._
 import common.IOUtils
 import model._
 
+import org.slf4j.{Logger,LoggerFactory};
+
 import scala.xml.XML
 
 class EmsConverter extends IOUtils {
 
+  def logger = LoggerFactory.getLogger(classOf[EmsConverter])
+    
   def toPerson(speaker: Speaker): Person = {
     val person = new Person(speaker.name)
     person.setDescription(speaker.bio)
@@ -34,15 +38,18 @@ class EmsConverter extends IOUtils {
     val language = presentation.language match {
       case Language.Norwegian => new domain.Language("no")
       case Language.English => new domain.Language("en")
+      case l => unknownEnumValue(l, new domain.Language("no"))
     }
     val level = presentation.level match {
       case Level.Beginner => Session.Level.Introductory
       case Level.Intermediate => Session.Level.Intermediate
       case Level.Advanced => Session.Level.Advanced
+      case l => unknownEnumValue(l, Session.Level.Introductory)
     }
     val format = presentation.format match {
       case PresentationFormat.Presentation => Session.Format.Presentation
       case PresentationFormat.LightningTalk => Session.Format.Quickie
+      case l => unknownEnumValue(l, Session.Format.Presentation)
     }
     session.setLanguage(language)
     session.setLevel(level)
@@ -65,16 +72,18 @@ class EmsConverter extends IOUtils {
     pres.language = session.getLanguage.getIsoCode match {
       case "no" => Language.Norwegian
       case "en" => Language.English
+      case l => unknownEnumValue(l, Language.Norwegian)
     }
     pres.level = session.getLevel match {
       case Session.Level.Introductory => Level.Beginner
       case Session.Level.Intermediate => Level.Intermediate
       case Session.Level.Advanced => Level.Advanced
+      case l => unknownEnumValue(l, Level.Intermediate)
     }
     pres.format = session.getFormat match {
       case Session.Format.Presentation => PresentationFormat.Presentation
       case Session.Format.Quickie => PresentationFormat.LightningTalk
-      case _ => error("Unhandled session format: " + session.getFormat)
+      case l => unknownEnumValue(l, PresentationFormat.Presentation)
     }
     pres
   }
@@ -117,10 +126,16 @@ class EmsConverter extends IOUtils {
     }
   }
 
-  def read(ofs: Int, is: InputStream, content: Array[Byte]): Unit = {
+  private def read(ofs: Int, is: InputStream, content: Array[Byte]): Unit = {
     val len = is.read(content, ofs, content.length - ofs)
     if (len != -1)
       read(ofs + len, is, content)
   }
+
+  private def unknownEnumValue[T](v: Any, r: T): T = {
+    logger.error("Unknown enum value '" + v + "', defaulting to '" + r + "'")  
+    r
+  }
+
 }
 
