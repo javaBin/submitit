@@ -63,12 +63,14 @@ class ConfirmPage(pres: Presentation) extends LayoutPage {
     )
     
     SubmititApp.getBccEmailList.foreach(msg.addRecipients(Message.RecipientType.BCC, _))
-    msg.setSubject("Confirmation of JavaZone 2009 submission \"" + pres.title + "\"")
+    msg.setSubject("Confirmation of your JavaZone 2009 submission \"" + pres.title + "\"")
     msg.setSentDate(new Date)
-    msg.setText("Thank you for submitting your presentation titled \"" + pres.title + "\"!\n\n" +
-                  "You can access the submitted presentation at " + url + "\n\n\n" +
-                  "JavaZone Programme Committee\n\n\n\n" +
-    "The following has been registered:\n" + pres)
+    msg.setText("Thank you for submitting your presentation titled \"" + pres.title + "\".\n\n" +
+                "You can access the submitted presentation at " + url + "\n\n\n" +
+                "Best regards,\n\n" +
+                "JavaZone Programme Committee\n" +
+                SubmititApp.getOfficialEmail + "\n\n\n\n" +
+                "The following has been registered:\n\n" + pres)
     
     Transport.send(msg)
   }
