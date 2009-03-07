@@ -58,7 +58,11 @@ class SubmititApp extends WebApplication {
 }
 
 class MyRequestCycle(application: WebApplication, request: WebRequest, response: Response) extends org.apache.wicket.protocol.http.WebRequestCycle(application, request, response) {
-	override def onRuntimeException(cause: org.apache.wicket.Page, e: RuntimeException) = new ErrorPage(State().currentPresentation, e)
+  override def onRuntimeException(cause: org.apache.wicket.Page, e: RuntimeException) = {
+    if ("deployment" == getApplication.getConfigurationType)
+      new ErrorPage(State().currentPresentation, e)
+    else super.onRuntimeException(cause, e)
+  }
 }
 
 object SubmititApp {

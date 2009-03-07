@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<!-- This file is only used to shut up the web server at startup. Check out log4j-prod.xml and log4j-test.xml for actual log setup. -->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+
+ 	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p %c{1} %d{HH:mm:ss} - %m%n" />
+		</layout>
+	</appender>
+ 
+	<category name="org">
+		<level value="WARN" />
+		<appender-ref ref="console" />
+	</category>
+
+ 	<root>
+		<priority value="INFO" />
+	</root>
+
+</log4j:configuration>
