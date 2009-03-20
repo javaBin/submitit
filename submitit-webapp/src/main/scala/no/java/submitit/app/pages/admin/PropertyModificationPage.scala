@@ -7,10 +7,11 @@ import org.apache.wicket.markup.html.list._
 import common.Implicits._
 import scala.collection.jcl.Conversions._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
+import _root_.java.io.Serializable
 
 class PropertyModificationPage(it: Boolean) extends LayoutPage {
   
-  class Element(var key: String, var value: String) {
+  class Element(var key: String, var value: String) extends Serializable {
     override def toString = key + " " + value
   }
   
