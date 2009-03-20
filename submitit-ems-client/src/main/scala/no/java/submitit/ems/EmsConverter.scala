@@ -7,12 +7,13 @@ import _root_.scala.collection.jcl.Conversions._
 import common.Implicits._
 import common.IOUtils
 import model._
+import common.IOUtils._
 
 import org.slf4j.{Logger,LoggerFactory};
 
 import scala.xml.XML
 
-class EmsConverter extends IOUtils {
+class EmsConverter {
 
   def logger = LoggerFactory.getLogger(classOf[EmsConverter])
     
@@ -124,7 +125,7 @@ class EmsConverter extends IOUtils {
     if (photo != null) {
       val content = new Array[Byte](photo.getSize.toInt)
       
-      using(photo.getDataStream) { 
+      usingIS(photo.getDataStream) { 
         stream => read(0, stream, content)
       }
 
