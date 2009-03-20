@@ -48,6 +48,15 @@
 	<input type="hidden" wicket:id="submitNotAllowed"></input>
 	<input type="hidden" wicket:id="notNewModifyNotAllowedNewAllowed"></input>
 	
+	<wicket:enclosure child="feedback">
+	<div class="row">
+		<div class="infoHeader">Feedback from the Programme Committee</div>
+		<div class="infoText">
+			<label wicket:id="feedback"></label>
+		</div>		
+	</div>
+	</wicket:enclosure>
+	
 	<div class="row">
 	<div class="titleText"><label>Presentation format</label></div>
 	<div class="reviewField"><label wicket:id="format"></label></div>
