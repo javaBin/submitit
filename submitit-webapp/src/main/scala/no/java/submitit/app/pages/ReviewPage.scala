@@ -38,10 +38,15 @@ class ReviewPage(p: Presentation) extends LayoutPage {
   add(new HtmlLabel("viewSubmittedMsg1", SubmititApp.getSetting("reviewPageViewSubmittedHthml")))
   add(new HtmlLabel("viewSubmittedMsg2", SubmititApp.getSetting("reviewPageViewSubmittedChangeAllowedHthml")))
   add(new HtmlLabel("viewSubmittedMsg3", SubmititApp.getSetting("reviewPageViewSubmittedHthml")))
-  add(new MultiLineLabel("feedback", p.feedback) {
-    override def isVisible = p.feedback != null && p.feedback != ""
+  
+  val feedback = if(p.status != Status.NotApproved) p.feedback else SubmititApp.getSetting("feedbackRejected")
+  
+  add(new MultiLineLabel("feedback", feedback) {
+    override def isVisible = feedback != null && feedback != ""
   })
 
+  
+  
   add(new Label("title", p.title))
   add(new WikiMarkupText("summary", p.summary))
   add(new WikiMarkupText("abstract", p.abstr))
