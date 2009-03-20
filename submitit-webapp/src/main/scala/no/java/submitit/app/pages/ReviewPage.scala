@@ -7,13 +7,17 @@ import org.apache.wicket.markup.html.basic._
 import org.apache.wicket.markup.html.list._
 import org.apache.wicket.model._
 import org.apache.wicket.markup.html.link._
+import org.apache.wicket.util.lang.Bytes
 import model._
 import widgets._
 import common.Implicits._
+import org.apache.wicket.markup.html.panel.FeedbackPanel
 import app.State
 
 class ReviewPage(p: Presentation) extends LayoutPage {
   
+  
+  val supportedExtensions = List("pdf, ppt, key, odp")
   val editAllowed = SubmititApp.boolSetting("globalEditAllowedBoolean")
   add(new HiddenField("new") {
     override def isVisible = State().isNew
@@ -33,6 +37,8 @@ class ReviewPage(p: Presentation) extends LayoutPage {
   
   add(new Label("status", presentationMsg))
   add(new NewPresentationLink("newPresentation"))
+  add(new FeedbackPanel("feedbackPanel"))
+
   
   add(new HtmlLabel("reviewBeforeSubmitMsg", SubmititApp.getSetting("reviewPageBeforeSubmitHtml")))
   add(new HtmlLabel("viewSubmittedMsg1", SubmititApp.getSetting("reviewPageViewSubmittedHthml")))
@@ -44,8 +50,17 @@ class ReviewPage(p: Presentation) extends LayoutPage {
   add(new MultiLineLabel("feedback", feedback) {
     override def isVisible = feedback != null && feedback != ""
   })
-
   
+
+  val uploadForm = new FileUploadForm("extension", supportedExtensions) {
+    override def onSubmit {
+      // what to do??
+      info("Thank you for uploading your slides")
+    }
+    override def isVisible = SubmititApp.boolSetting("allowSlideUploadBoolen") && p.status == Status.Approved
+  }
+  uploadForm.setMaxSize(Bytes.megabytes(2))
+  add(uploadForm)
   
   add(new Label("title", p.title))
   add(new WikiMarkupText("summary", p.summary))

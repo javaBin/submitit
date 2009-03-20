@@ -16,6 +16,10 @@
 		<level value="WARN" />
 		<appender-ref ref="console" />
 	</category>
+	<category name="no">
+		<level value="INFO" />
+		<appender-ref ref="console" />
+	</category>
 
  	<root>
 		<priority value="INFO" />

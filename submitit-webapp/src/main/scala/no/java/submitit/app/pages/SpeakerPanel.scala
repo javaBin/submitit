@@ -44,31 +44,6 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
   
 
   
-  class FileUploadForm(speaker: Speaker) extends Form("ajax-simpleUpload") {
-    private val fileUploadField : FileUploadField = new FileUploadField("fileInput")
-    
-    add(new Label("extension", supportedExtensions.mkString(", ")))
-    
-    // set this form to multipart mode (allways needed for uploads!)
-    setMultiPart(true);
-
-    // Add one file input field
-    add(fileUploadField);
-
-    override def onSubmit {
-      val upload = fileUploadField.getFileUpload();
-      if (upload != null) {
-          // Create a new file
-          val fileName = upload.getClientFileName
-          val bytes = upload.getBytes
-          extensionRegex.findFirstIn(fileName) match {
-            case Some(n) => speaker.picture = new Picture(bytes, fileName, upload.getContentType)
-            case None => error(fileName + " has an unsupported file type")
-          }
-      }
-    }
-  }
-  
   val speakersList = new ListView("speakerList", model) {
     override def populateItem(item: ListItem) {
       val speakersForm = new Form("speakersForm") with EasyForm
@@ -95,9 +70,22 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
       
       
       // Add upload form with ajax progress bar
-      val ajaxSimpleUploadForm = new FileUploadForm(speaker) 
-      item.add(ajaxSimpleUploadForm);
+      val uploadForm = new FileUploadForm("extension", supportedExtensions) {
       
+        override def onSubmit {
+          val upload = fileUploadField.getFileUpload();
+          if (upload != null) {
+            // Create a new file
+            val fileName = upload.getClientFileName
+            val bytes = upload.getBytes
+            extensionRegex.findFirstIn(fileName) match {
+              case Some(n) => speaker.picture = new Picture(bytes, fileName, upload.getContentType)
+              case None => error(fileName + " has an unsupported file type")
+            }
+          }
+        }
+      }
+      item.add(uploadForm);
       
       item.add(new Label("fileName", if (speaker.picture != null) speaker.picture.name else null) {
         override def isVisible = speaker.picture != null

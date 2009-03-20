@@ -41,7 +41,26 @@
 			<label wicket:id="reviewBeforeSubmitMsg"></label>
 		</div>
 	</wicket:enclosure>
+	<div class="row">
+		<div wicket:id="feedbackPanel"></div>
+	</div>	
 	<h2 align="left">Presentation status: <label wicket:id="status"></label></h2>
+	
+	<wicket:enclosure child="simpleUpload">
+		<form wicket:id="simpleUpload"">
+			<div class="row">
+				<div class="titleText">
+		        	<label>Upload your slides (max 2MB). Supported file types:&nbsp;</label><label wicket:id="extension"></label>.
+		        </div>
+		        <input wicket:id="fileInput" id="upload" type="file"/>
+		    </div>
+			<div class="row">
+				<input type="submit" value="Upload slides"/>
+	       	</div>
+	    </form>
+	</wicket:enclosure>
+	
+	
 	<fieldset>
 	<input type="hidden" wicket:id="new"></input>
 	<input type="hidden" wicket:id="notNewModifyAllowed"></input>
