@@ -189,8 +189,8 @@
 
   <modules>
     <module>submitit-common</module>
-    <module>submitit-wicket-webapp</module>
     <module>submitit-ems-client</module>
+    <module>submitit-webapp</module>
   </modules>
 
   <reporting>
