@@ -16,3 +16,10 @@ object PresentationFormat extends Enumeration {
   val LightningTalk = Value("Lightning talk")
 }
 
+
+object Status extends Enumeration {
+  val Pending = Value("Pending")
+  val Approved = Value("Approved")
+  val NotApproved = Value("Not approved")
+}
+

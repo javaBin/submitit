@@ -51,6 +51,7 @@ class EmsConverter extends IOUtils {
       case PresentationFormat.LightningTalk => Session.Format.Quickie
       case l => unknownEnumValue(l, Session.Format.Presentation)
     }
+    
     session.setLanguage(language)
     session.setLevel(level)
     session.setFormat(format)
@@ -85,6 +86,13 @@ class EmsConverter extends IOUtils {
       case Session.Format.Quickie => PresentationFormat.LightningTalk
       case l => unknownEnumValue(l, PresentationFormat.Presentation)
     }
+    pres.status = session.getState match {
+      case Session.State.Approved => Status.Approved
+      case Session.State.Pending => Status.Pending
+      case Session.State.Rejected => Status.NotApproved
+      case l => unknownEnumValue(l, Status.Pending)
+    }
+    
     pres
   }
   

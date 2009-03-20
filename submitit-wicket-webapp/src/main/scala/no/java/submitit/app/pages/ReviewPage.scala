@@ -28,6 +28,10 @@ class ReviewPage(p: Presentation) extends LayoutPage {
     override def isVisible = State().notNewModifyNotAllowedNewAllowed
   })
   
+  val presentationMsg = if (State().isNew) "Not submittet"
+                        else p.status.toString
+  
+  add(new Label("status", presentationMsg))
   add(new NewPresentationLink("newPresentation"))
   
   add(new HtmlLabel("reviewBeforeSubmitMsg", SubmititApp.getSetting("reviewPageBeforeSubmitHtml")))

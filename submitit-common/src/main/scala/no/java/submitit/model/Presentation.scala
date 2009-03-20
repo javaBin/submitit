@@ -21,6 +21,7 @@ class Presentation extends Serializable {
   var equipment: String = ""
   var expectedAudience: String = ""
   var feedback: String = _
+  var status: Status.Value = Status.Pending
 
   def duration: Int = format match {
     case PresentationFormat.Presentation => 60
