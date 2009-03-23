@@ -32,7 +32,7 @@ class ReviewPage(p: Presentation) extends LayoutPage {
     override def isVisible = State().notNewModifyNotAllowedNewAllowed
   })
   
-  val presentationMsg = if (State().isNew) "Not submittet"
+  val presentationMsg = if (State().isNew) "Not submitted"
                         else p.status.toString
   
   add(new Label("status", presentationMsg))
