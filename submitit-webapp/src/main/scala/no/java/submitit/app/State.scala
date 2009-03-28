@@ -43,6 +43,23 @@ class State(request: Request, val backendClient: BackendClient) extends WebSessi
   def currentPresentation_=(currentPresentation: Presentation) {
     presentation = currentPresentation
   }
+  
+  def createNewPresentation = {
+    if (presentation != null) {
+      // Reset state in case of a new registration, but preserve speakers
+      val p = new Presentation
+      p.speakers = presentation.speakers
+      presentation = p
+      fromServer = false
+      presentation
+    }
+    else {
+      presentation = new Presentation
+      presentation.init
+      presentation
+    }
+    
+  }
 
   def setCaptchaIfNotSet() {
     if (captcha == null) captcha = new Captcha

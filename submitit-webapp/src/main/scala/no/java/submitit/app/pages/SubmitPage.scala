@@ -21,8 +21,15 @@ import common.Implicits._
 
 class SubmitPage(pres: Presentation) extends LayoutPage {
   
+  private var specialInvite = false
+  
+  def this(pres: Presentation, specialInvite: Boolean) {
+    this(pres)
+    this.specialInvite = specialInvite
+  }
+  
   val state = State()
-  if (!state.currentPresentationSubmitAllowed) throw new SecurityException("Not allowed to get to this point when submission is locked")
+  if (!specialInvite && !state.currentPresentationSubmitAllowed) throw new SecurityException("Not allowed to get to this point when submission is locked")
   
   def redirectToReview() {
     setResponsePage(new ReviewPage(state.currentPresentation))
