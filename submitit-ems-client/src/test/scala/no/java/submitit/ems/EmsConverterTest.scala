@@ -1,6 +1,5 @@
 package no.java.submitit.ems
 
-import no.java.ems.domain.Session
 import junit.framework._
 import Assert._
 import model._

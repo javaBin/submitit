@@ -1,28 +1,35 @@
 package no.java.submitit.ems
 
-import no.java.ems.client._
-import no.java.ems.domain.{Event,Session,Person,EmailAddress,Binary}
 import _root_.java.io.Serializable
 import _root_.scala.collection.jcl.Conversions._
 import common.Implicits._
 import common._
 import model._
+import xml._
+import scala.scalanet.http._
+import scala.scalanet.http.Implicits._
 
 class EmsClient(eventName: String, serverUrl: String, username: String, password: String) extends BackendClient with Serializable {
   
   def isSet(s: String) = s != null && !s.trim.isEmpty
-    
-  def emsService = {
-    val service = new RestEmsService(serverUrl)
-    if (isSet(username) || isSet(password)) {
-      service.setCredentials(username, password)
-    }
-    service
-  }
-  
+      
   def converter = new EmsConverter
   
-  lazy val event = findOrCreateEvent(eventName, emsService.getEvents().toList)
+  lazy val event = findOrCreateEvent
+  
+  def findOrCreateEvent = {
+    
+    HTTP.start(serverUrl, { (http: HTTP) =>
+      findEventInXML(XML.load(http.get("1/events").body.stream))
+    })
+  }
+  
+  def findEventInXML(doc: Node) =
+    (doc \\"event").find(event => event \ "name" == eventName) match {
+      case Some(event) => (event \ "id" \ "_").toString
+      case None => ""
+    }
+  
   
   def savePresentation(presentation: Presentation): String = {
     presentation.speakers.foreach(speaker => {
@@ -37,6 +44,7 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
     updateOrCreateSession(presentation).sessionId
   }
   
+  /*
   def loadPresentation(id: String): Presentation = {
     getSession(id) match {
       case Some(session) => {
@@ -130,5 +138,6 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
     emsService.saveEvent(event)
     event
   }
+  */
   
 }
