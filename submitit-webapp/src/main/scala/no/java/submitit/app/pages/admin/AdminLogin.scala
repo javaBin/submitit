@@ -5,10 +5,12 @@ import org.apache.wicket.model._
 
 class AdminLogin extends LayoutPage {
 
-  add(new LoginPanel("login", { passPhrase =>
-    val authenticated = SubmititApp.authenticates(passPhrase)
-    if (authenticated) {
-      setResponsePage(new PropertyModificationPage(true))
+  add(new LoginPanel("login", new LoginHandler {
+    def onLogin(pwd: String) {
+      val authenticated = SubmititApp.authenticates(pwd)
+      if (authenticated) {
+        setResponsePage(new PropertyModificationPage(true))
+      }
     }
   }))
 
