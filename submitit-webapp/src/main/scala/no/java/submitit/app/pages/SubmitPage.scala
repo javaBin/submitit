@@ -19,13 +19,11 @@ import no.java.submitit.app._
 import common.Implicits._
 
 
-class SubmitPage(pres: Presentation) extends LayoutPage {
+class SubmitPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
   
-  private var specialInvite = false
   
-  def this(pres: Presentation, specialInvite: Boolean) {
-    this(pres)
-    this.specialInvite = specialInvite
+  def this(pres: Presentation) {
+    this(pres, false)
   }
   
   val state = State()

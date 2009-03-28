@@ -6,18 +6,18 @@ import no.java.submitit.model.Presentation
 
 class InvitationPage extends LayoutPage {
   
-  setVersioned(false)
+  override def isVersioned = false
   
-   add(new LoginPanel("login", handleLogin))
-   
-   def handleLogin(passPhrase: String) {
-     if(passPhrase != SubmititApp.getSetting("passPhraseSubmitSpecualURL")) {
-       error("Incorrect password")
-     }
-     else {
-       State().verifiedWithCaptha = true
-       setResponsePage(new SubmitPage(State().createNewPresentation, true))
-     }
-   }
+  add(new LoginPanel("login", handleLogin))
+  
+  def handleLogin(passPhrase: String) {
+    if(passPhrase != SubmititApp.getSetting("passPhraseSubmitSpecualURL")) {
+      error("Incorrect password")
+    }	
+    else {
+      State().verifiedWithCaptha = true
+      setResponsePage(new SubmitPage(State().createNewPresentation, true))
+    }
+  }
 
 }

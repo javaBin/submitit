@@ -5,12 +5,15 @@ import org.apache.wicket.markup.html.panel._
 import org.apache.wicket.model._
 
 class LoginPanel(id: String, afterSubmit: String => Unit) extends Panel(id) {
+  
+  override def isVersioned = false
+  
   add(new FeedbackPanel("feedback"))
-  setVersioned(false)
 
   add(new Form("loginForm") {
     
-    setVersioned(false)
+    override def isVersioned = false
+
     val passModel = new Model
     add(new PasswordTextField("passPhrase", passModel))
     
