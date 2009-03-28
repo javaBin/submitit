@@ -56,7 +56,12 @@
     </dependency>
   </dependencies>
   <dependencyManagement>
-    <dependencies>
+    <dependencies>    
+      <dependency>
+        <groupId>no.scala.scalanet</groupId>
+        <artifactId>scalanet</artifactId>
+        <version>0.1-SNAPSHOT</version>
+      </dependency>	
       <dependency>
         <groupId>no.java.submitit</groupId>
         <artifactId>submitit-common</artifactId>
