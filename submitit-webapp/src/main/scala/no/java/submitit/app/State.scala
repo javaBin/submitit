@@ -11,6 +11,8 @@ class State(request: Request, val backendClient: BackendClient) extends WebSessi
   var captcha: Captcha = _
   var verifiedWithCaptha = false
   
+  var invitation = false
+  
   private var f = false
   
   def fromServer = f
@@ -23,7 +25,7 @@ class State(request: Request, val backendClient: BackendClient) extends WebSessi
   
   def notNewModifyAllowed = !isNew && submitAllowed && SubmititApp.boolSetting("globalEditAllowedBoolean")
   
-  def submitAllowed = SubmititApp.boolSetting("submitAllowedBoolean")
+  def submitAllowed = invitation || SubmititApp.boolSetting("submitAllowedBoolean")
   
   def currentPresentationSubmitAllowed = submitAllowed && (isNew || notNewModifyAllowed)
   
