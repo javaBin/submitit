@@ -59,7 +59,11 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
   
   private def updateOrCreateSession(presentation: Presentation): Presentation = {
     val session = 
-      if (presentation.sessionId == null) new Session()
+      if (presentation.sessionId == null) {	
+        val s = new Session()
+        s.getTags.add("fra_submitit")
+        s
+      }
       else getSession(presentation.sessionId) match {
         case Some(session) => session
         case None => error("Unknown session " + presentation.sessionId)
