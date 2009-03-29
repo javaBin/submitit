@@ -1,6 +1,11 @@
 package no.java.submitit.ems
 
-class EmsClientTest {
+import junit.framework._
+import Assert._
+import model._
+
+
+class EmsClientTest extends TestCase("EMS XML testing") {
 
   val xml = <ns2:events xmlns:ns2="http://xmlns.java.no/ems/external/1">
 	<event>
@@ -43,8 +48,7 @@ class EmsClientTest {
 		<tags />
 	</event>
 	<event>
-		<id>b582a071-d4c2-4a48-ac66-812a5ef94c1b
-		</id>
+		<id>b582a071-d4c2-4a48-ac66-812a5ef94c1b</id>
 		<name>JavaZone 2009</name>
 		<tags />
 	</event>
@@ -84,6 +88,12 @@ class EmsClientTest {
 </ns2:events>
   
   
+    
+  def testGetSessionId() {
+    val client = new EmsClient("JavaZone 2009", null, null, null)
+    assertEquals("b582a071-d4c2-4a48-ac66-812a5ef94c1b", client.findEventInXML(xml))
+    
+  }
   
   
 }

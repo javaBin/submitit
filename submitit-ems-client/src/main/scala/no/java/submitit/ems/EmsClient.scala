@@ -6,8 +6,8 @@ import common.Implicits._
 import common._
 import model._
 import xml._
-import scala.scalanet.http._
-import scala.scalanet.http.Implicits._
+import _root_.no.scala.scalanet.http._
+import _root_.no.scala.scalanet.http.Implicits._
 
 class EmsClient(eventName: String, serverUrl: String, username: String, password: String) extends BackendClient with Serializable {
   
@@ -19,18 +19,27 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
   
   def findOrCreateEvent = {
     
-    HTTP.start(serverUrl, { (http: HTTP) =>
+    HTTP.start(serverUrl) { (http: HTTP) =>
       findEventInXML(XML.load(http.get("1/events").body.stream))
-    })
+    }
   }
   
   def findEventInXML(doc: Node) =
     (doc \\"event").find(event => event \ "name" == eventName) match {
-      case Some(event) => (event \ "id" \ "_").toString
+      case Some(event) => (event \\ "id").text
       case None => ""
     }
   
   
+  def savePresentation(presentation: Presentation): String = {
+    ""
+  }
+  
+  def loadPresentation(id: String): Presentation = {
+    error("Not implemented yet")
+  }
+  
+   /*
   def savePresentation(presentation: Presentation): String = {
     presentation.speakers.foreach(speaker => {
       val person = findOrCreateContact(speaker)
@@ -44,7 +53,7 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
     updateOrCreateSession(presentation).sessionId
   }
   
-  /*
+ 
   def loadPresentation(id: String): Presentation = {
     getSession(id) match {
       case Some(session) => {

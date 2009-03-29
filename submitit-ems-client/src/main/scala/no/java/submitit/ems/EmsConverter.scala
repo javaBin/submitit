@@ -1,7 +1,5 @@
 package no.java.submitit.ems
 
-import no.java.ems._
-import no.java.ems.domain.{Event,Session,Person,EmailAddress,Binary,ByteArrayBinary}
 import _root_.java.io.InputStream
 import _root_.scala.collection.jcl.Conversions._
 import common.Implicits._
@@ -11,10 +9,12 @@ import common.IOUtils._
 
 import org.slf4j.{Logger,LoggerFactory};
 
-import scala.xml.XML
+import xml.XML
 
 class EmsConverter {
 
+  
+  /*
   def logger = LoggerFactory.getLogger(classOf[EmsConverter])
     
   def toPerson(speaker: Speaker): Person = {
@@ -146,5 +146,6 @@ class EmsConverter {
     r
   }
 
+  */
 }
 
