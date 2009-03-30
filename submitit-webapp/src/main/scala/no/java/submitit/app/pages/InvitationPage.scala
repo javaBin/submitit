@@ -9,7 +9,7 @@ class InvitationPage extends LayoutPage {
   add(new LoginPanel("login", new LoginHandler {
     
     def onLogin(pwd: String) {
-      if(pwd != SubmititApp.getSetting("passPhraseSubmitSpecualURL")) {
+      if(pwd != SubmititApp.getSetting("passPhraseSubmitSpecialURL")) {
         error("Incorrect password")
       }	
       else {
