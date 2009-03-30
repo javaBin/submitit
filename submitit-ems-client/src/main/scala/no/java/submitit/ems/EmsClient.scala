@@ -78,7 +78,7 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
     val session = 
       if (presentation.sessionId == null) {	
         val s = new Session()
-        s.getTags.add("fra_submitit")
+        s.addTags("fra_submitit" :: Nil)
         s
       }
       else getSession(presentation.sessionId) match {
