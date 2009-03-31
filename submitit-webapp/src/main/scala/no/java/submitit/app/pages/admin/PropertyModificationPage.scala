@@ -5,7 +5,7 @@ import org.apache.wicket.markup.html.basic._
 import org.apache.wicket.model._
 import org.apache.wicket.markup.html.list._
 import common.Implicits._
-import scala.collection.jcl.Conversions._
+import collection.jcl.Conversions._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import _root_.java.io.Serializable
 

@@ -12,7 +12,6 @@
 
   <artifactId>submitit-ems-client</artifactId>
   <name>submitit-ems-client</name>
-  <inceptionYear>2008</inceptionYear>
 
   <dependencies>
     <dependency>
@@ -30,6 +29,11 @@
       <dependency>
         <groupId>no.scala.scalanet</groupId>
         <artifactId>scalanet</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.scala-tools.testing</groupId>
+         <artifactId>scalatest</artifactId>
+         <scope>test</scope>
       </dependency>
   </dependencies>
 

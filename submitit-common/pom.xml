@@ -12,7 +12,6 @@
   <groupId>no.java.submitit</groupId>
   <artifactId>submitit-common</artifactId>
   <name>submitit-common</name>
-  <inceptionYear>2008</inceptionYear>
 
   <dependencies>
     <dependency>

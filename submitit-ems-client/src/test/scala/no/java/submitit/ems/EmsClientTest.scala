@@ -92,6 +92,7 @@ class EmsClientTest extends TestCase("EMS XML testing") {
   def testGetSessionId() {
     val client = new EmsClient("JavaZone 2009", null, null, null)
     assertEquals("b582a071-d4c2-4a48-ac66-812a5ef94c1b", client.findEventInXML(xml))
+
     
   }
   

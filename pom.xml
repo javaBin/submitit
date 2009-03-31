@@ -74,11 +74,6 @@
       </dependency>
       <dependency>
         <groupId>no.java.ems</groupId>
-        <artifactId>ems-client</artifactId>
-        <version>${ems.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>no.java.ems</groupId>
         <artifactId>ems-wiki</artifactId>
         <version>${ems.version}</version>
       </dependency>
@@ -122,6 +117,11 @@
         <artifactId>jetty</artifactId>
         <version>${jetty.version}</version>
         <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.scala-tools.testing</groupId>
+         <artifactId>scalatest</artifactId>
+         <version>0.9.5</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
