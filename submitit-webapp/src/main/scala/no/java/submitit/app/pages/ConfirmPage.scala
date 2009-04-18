@@ -12,6 +12,7 @@ import _root_.java.util.{Date,Properties}
 import javax.servlet.http.HttpServletRequest
 import javax.mail.{Message,Session,Transport}
 import javax.mail.internet.MimeMessage
+import org.apache.wicket.markup.html.form.HiddenField
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,10 @@ class ConfirmPage(pres: Presentation) extends LayoutPage {
   
   val presentation = pres.toString
   logger.info(presentation)
+  
+  add(new HiddenField("showNewLink") {
+	  override def isVisible = !State().isNew && State().submitAllowed
+  })
   
   add(new MultiLineLabel("pres", presentation))
 

@@ -24,7 +24,7 @@ class SubmitPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage 
   def this(pres: Presentation) {
     this(pres, false)
   }
-  
+
   if (!specialInvite && !State().currentPresentationSubmitAllowed) throw new SecurityException("Not allowed to get to this point when submission is locked")
   
   def redirectToReview() {

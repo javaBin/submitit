@@ -18,31 +18,37 @@ class ReviewPage(p: Presentation) extends LayoutPage {
   
   val supportedExtensions = List("pdf, ppt, key, odp")
   val editAllowed = SubmititApp.boolSetting("globalEditAllowedBoolean")
-  add(new HiddenField("new") {
-    override def isVisible = State().isNew
-  })
-  add(new HiddenField("notNewModifyAllowed") {
-    override def isVisible = State().notNewModifyAllowed
-  })
-  add(new HiddenField("submitNotAllowed") {
-    override def isVisible = !State().submitAllowed
-  })
-  add(new HiddenField("notNewModifyNotAllowedNewAllowed") {
-    override def isVisible = State().notNewModifyNotAllowedNewAllowed
+  
+  println(State().isNew || editAllowed)
+  add(new HiddenField("showEditLink") {
+	  override def isVisible = State().isNew || editAllowed
   })
   
-  val presentationMsg = if (State().isNew) "Not submitted"
+  add(new HiddenField("showSubmitLink") {
+    override def isVisible = State().isNew
+  })
+
+  add(new HiddenField("showSubmitUpdatedLink") {
+	  override def isVisible = !State().isNew && editAllowed
+  })
+
+  add(new HiddenField("showNewLink") {
+	  override def isVisible = !State().isNew && State().submitAllowed
+  })
+
+  
+  val presentationMsg = if (!State().fromServer) "Not submitted"
                         else p.status.toString
   
   add(new Label("status", presentationMsg))
   add(new NewPresentationLink("newPresentation"))
-  add(new FeedbackPanel("feedbackPanel"))
 
-  
-  add(new HtmlLabel("reviewBeforeSubmitMsg", SubmititApp.getSetting("reviewPageBeforeSubmitHtml")))
-  add(new HtmlLabel("viewSubmittedMsg1", SubmititApp.getSetting("reviewPageViewSubmittedHthml")))
-  add(new HtmlLabel("viewSubmittedMsg2", SubmititApp.getSetting("reviewPageViewSubmittedChangeAllowedHthml")))
-  add(new HtmlLabel("viewSubmittedMsg3", SubmititApp.getSetting("reviewPageViewSubmittedHthml")))
+  val msg = if (State().isNew) SubmititApp.getSetting("reviewPageBeforeSubmitHtml")
+  	else if (!State().isNew && !editAllowed) SubmititApp.getSetting("reviewPageViewSubmittedHthml")
+  	else if (!State().isNew && editAllowed) SubmititApp.getSetting("reviewPageViewSubmittedChangeAllowedHthml")
+  	else SubmititApp.getSetting("reviewPageViewSubmittedHthml")
+
+  add(new HtmlLabel("viewMessage", msg))
   
   val feedback = if(p.status != Status.NotApproved) p.feedback else SubmititApp.getSetting("feedbackRejected")
   
