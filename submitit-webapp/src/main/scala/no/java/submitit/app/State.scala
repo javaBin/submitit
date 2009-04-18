@@ -23,10 +23,10 @@ class State(request: Request, val backendClient: BackendClient) extends WebSessi
   
   def isNew = submitAllowed && !fromServer
   
-  def notNewModifyAllowed = !isNew && submitAllowed && SubmititApp.boolSetting("globalEditAllowedBoolean")
+  def notNewModifyAllowed = !isNew && SubmititApp.boolSetting("globalEditAllowedBoolean")
   
   def submitAllowed = invitation || SubmititApp.boolSetting("submitAllowedBoolean")
-  
+
   def currentPresentationSubmitAllowed = submitAllowed && (isNew || notNewModifyAllowed)
   
   def notNewModifyNotAllowedNewAllowed = !isNew && !notNewModifyAllowed && SubmititApp.boolSetting("submitAllowedBoolean")
@@ -73,10 +73,8 @@ class State(request: Request, val backendClient: BackendClient) extends WebSessi
   
 }
 
-object State{
+object State {
   
-  def get = Session.get().asInstanceOf[State]
-  
-  def apply() = get
+  def apply() = Session.get().asInstanceOf[State]
   
 }

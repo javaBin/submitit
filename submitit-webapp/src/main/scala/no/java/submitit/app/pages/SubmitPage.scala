@@ -21,26 +21,24 @@ import common.Implicits._
 
 class SubmitPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
   
-  
   def this(pres: Presentation) {
     this(pres, false)
   }
   
-  val state = State()
-  if (!specialInvite && !state.currentPresentationSubmitAllowed) throw new SecurityException("Not allowed to get to this point when submission is locked")
+  if (!specialInvite && !State().currentPresentationSubmitAllowed) throw new SecurityException("Not allowed to get to this point when submission is locked")
   
   def redirectToReview() {
-    setResponsePage(new ReviewPage(state.currentPresentation))
+    setResponsePage(new ReviewPage(State().currentPresentation))
   }
   
-  state setCaptchaIfNotSet
-  def captcha = State.get.captcha
+  State() setCaptchaIfNotSet
+  def captcha = State().captcha
 
   def password = getRequest.getParameter("password");
   
   add(new Form("inputForm") with EasyForm {
     
-    val verified = state.verifiedWithCaptha
+    val verified = State().verifiedWithCaptha
     
     add(new FeedbackPanel("feedback"))
     add(new widgets.HtmlLabel("infoText", SubmititApp.getSetting("editPageInfoTextHtml")))
@@ -80,7 +78,7 @@ class SubmitPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage 
     
     add(new SubmitLink("captchaButton", this){
       override def onSubmit()  {
-        state.resetCaptcha()
+        State().resetCaptcha()
         setResponsePage(new SubmitPage(pres))
       }
     })
@@ -89,7 +87,7 @@ class SubmitPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage 
     
     def handleSubmit() {
       // Some form validation
-      if (!state.verifiedWithCaptha && captcha.imagePass != password) error("Wrong captcha password")
+      if (!State().verifiedWithCaptha && captcha.imagePass != password) error("Wrong captcha password")
       
       val emailValidator = RfcCompliantEmailAddressValidator.getInstance().getPattern.matcher("")
       required(pres.speakers, "You must specify at least one speaker")
@@ -105,7 +103,7 @@ class SubmitPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage 
       })
       
       if(!hasErrorMessage) {
-        state.verifiedWithCaptha = true
+        State().verifiedWithCaptha = true
         redirectToReview()
       }
     }

@@ -18,8 +18,7 @@ import org.slf4j.LoggerFactory;
 
 class ConfirmPage(pres: Presentation) extends LayoutPage {
 
-  def state = State.get
-  state.fromServer = true
+  State().fromServer = true
 
   def logger = LoggerFactory.getLogger(classOf[ConfirmPage])
   
@@ -29,7 +28,7 @@ class ConfirmPage(pres: Presentation) extends LayoutPage {
   add(new MultiLineLabel("pres", presentation))
 
   val url = {
-    val backendClient = state.backendClient
+    val backendClient = State().backendClient
     val uniqueId = backendClient.savePresentation(pres)
     SubmititApp.getSetting("submititBaseUrl") + "/lookupPresentation?id=" + uniqueId
   }

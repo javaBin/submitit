@@ -16,7 +16,6 @@ import app.State
 
 class ReviewPage(p: Presentation) extends LayoutPage {
   
-  
   val supportedExtensions = List("pdf, ppt, key, odp")
   val editAllowed = SubmititApp.boolSetting("globalEditAllowedBoolean")
   add(new HiddenField("new") {
