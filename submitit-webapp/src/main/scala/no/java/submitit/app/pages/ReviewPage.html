@@ -1,49 +1,26 @@
 <html xmlns:wicket="http://wicket.apache.org/">
 <wicket:extend>
-	<wicket:enclosure child="new">
-		<div class="linkRow">
-			<a href="#" wicket:id="editLink">Edit presentation</a> |
-			<a href="#" wicket:id="submitLink">Submit presentation</a>
-		</div>
-	</wicket:enclosure>
-	<wicket:enclosure child="submitNotAllowed">
-		<div class="linkRow">
-			&nbsp;
-		</div>
-		<div class="infoHeader">Please read this</div>
-		<div class="infoText">
-			<label wicket:id="viewSubmittedMsg1"></label>
-		</div>
-	</wicket:enclosure>
-	<wicket:enclosure child="notNewModifyAllowed">
-		<div class="linkRow">
-			<a href="#" wicket:id="editLink">Edit presentation</a> |
-			<a href="#" wicket:id="submitLink">Submit updated presentation</a> |
-			<a href="#" wicket:id="newPresentation">Create a new submission</a> 
-		</div>
-		<div class="infoHeader">Please read this</div>
-		<div class="infoText">
-			<label wicket:id="viewSubmittedMsg2"></label>
-		</div>
-	</wicket:enclosure>
-	<wicket:enclosure child="notNewModifyNotAllowedNewAllowed">
-		<div class="linkRow">
-			<a href="#" wicket:id="newPresentation">Create a new submission</a>
-		</div>
-		<div class="infoHeader">Please read this</div>
-		<div class="infoText">
-			<label wicket:id="viewSubmittedMsg3"></label>
-		</div>
-	</wicket:enclosure>	
-	<wicket:enclosure child="new">
-		<div class="infoHeader">Please read this</div>
-		<div class="infoText">
-			<label wicket:id="reviewBeforeSubmitMsg"></label>
-		</div>
-	</wicket:enclosure>
-	<div class="row">
-		<div wicket:id="feedbackPanel"></div>
-	</div>	
+
+	<div class="linkRow">
+		<wicket:enclosure child="showEditLink">
+			<a href="#" wicket:id="editLink">Edit presentation</a>&nbsp;
+		</wicket:enclosure>
+		<wicket:enclosure child="showSubmitLink">
+			&nbsp;<a href="#" wicket:id="submitLink">Submit presentation</a>
+		</wicket:enclosure>
+		<wicket:enclosure child="showSubmitUpdatedLink">
+			&nbsp;<a href="#" wicket:id="submitLink">Submit updated presentation</a>
+		</wicket:enclosure>
+		<wicket:enclosure child="showNewLink">
+			&nbsp;<a href="#" wicket:id="newPresentation">Create a new submission</a>
+		</wicket:enclosure>&nbsp;
+	</div>
+
+	<div class="infoText">
+		<div class="infoHeader">Please read this</div>	
+		<label wicket:id="viewMessage"></label>
+	</div>
+	 
 	<h2 align="left">Presentation status: <label wicket:id="status"></label></h2>
 	
 	<wicket:enclosure child="simpleUpload">
@@ -62,10 +39,10 @@
 	
 	
 	<fieldset>
-	<input type="hidden" wicket:id="new"></input>
-	<input type="hidden" wicket:id="notNewModifyAllowed"></input>
-	<input type="hidden" wicket:id="submitNotAllowed"></input>
-	<input type="hidden" wicket:id="notNewModifyNotAllowedNewAllowed"></input>
+	<input type="hidden" wicket:id="showSubmitLink"></input>
+	<input type="hidden" wicket:id="showEditLink"></input>
+	<input type="hidden" wicket:id="showSubmitUpdatedLink"></input>
+	<input type="hidden" wicket:id="showNewLink"></input>
 	
 	<wicket:enclosure child="feedback">
 	<div class="row">

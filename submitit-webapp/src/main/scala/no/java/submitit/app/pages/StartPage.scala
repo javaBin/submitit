@@ -6,7 +6,7 @@ class StartPage extends LayoutPage {
   
   if (SubmititApp.boolSetting("submitAllowedBoolean")) {
     
-    if(State.get.isNew) {
+    if(State().isNew) {
       setResponsePage(new SubmitPage(State().currentPresentation))
     }
     else {

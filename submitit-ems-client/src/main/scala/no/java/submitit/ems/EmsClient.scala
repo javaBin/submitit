@@ -95,7 +95,7 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
   }
   
   private def findOrCreateContact(speaker: Speaker): Person = {
-    if (speaker.personId != null) emsService.getContact(speaker.personId)
+    if (speaker.personId != null) findContactById(speaker)
     else findContactByEmail(speaker.email) match {
       case Some(person) => person
       case None => findContactByName(speaker.name) match {
@@ -104,11 +104,25 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
       }
     }
   }
+
+  /**
+   * User may have modified speaker form (renamed speaker and given a new email addresse, which would be a new speaker.
+   * However the speaker would have the same id because of the way the form is created. Must handle this and
+   * create a new speaker if speaker email and name does not match.
+   */
+  private def findContactById(speaker: Speaker): Person = {
+    val contact = emsService.getContact(speaker.personId)
+    if(emailMatches(contact, speaker.email) || contact.getName == speaker.name) contact
+    else createContact(speaker)
+  }
+
+  private def emailMatches(contact: Person, email: String) = {
+      contact.getEmailAddresses.exists(adr =>
+        adr.getEmailAddress() == email)
+  }
   
   private def findContactByEmail(email: String): Option[Person] = {
-    emsService.getContacts().find(contact => 
-      contact.getEmailAddresses.exists(adr => 
-        adr.getEmailAddress() == email))
+    emsService.getContacts().find(emailMatches(_, email))
   }
   
   private def findContactByName(name: String): Option[Person] = {
