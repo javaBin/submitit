@@ -17,7 +17,6 @@ import model._
 import common.Implicits._
 
 class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
-  val that = this
   
   val supportedExtensions = List("jpg", "jpeg", "png", "gif")
   def extensionRegex = ("""(?i)\.""" + supportedExtensions.mkString("(?:", "|", ")") + "$").r 
@@ -37,8 +36,8 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
   add(new AjaxSubmitLink("newSpeaker", newSpeakerForm) {
     override def onSubmit(target: AjaxRequestTarget, form: Form) {
       State().currentPresentation.addSpeaker()
-      target.addComponent(that)
-      target.appendJavascript("new Effect.Highlight($('" + that.getMarkupId() + "'));");
+      target.addComponent(SpeakerPanel.this)
+      target.appendJavascript("new Effect.Highlight($('" + SpeakerPanel.this.getMarkupId() + "'));");
     }
   })
   

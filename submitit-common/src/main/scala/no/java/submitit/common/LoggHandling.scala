@@ -13,7 +13,7 @@ trait LoggHandling {
 	private def createLogger = LoggerFactory.getLogger(getClass)
  
 	private def readResolve = {
-		createLogger; 
+		log = createLogger; 
 		this
 	}
  
