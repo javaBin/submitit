@@ -67,6 +67,11 @@
        <version>0.9.5</version>
 	   <scope>test</scope>
     </dependency>
+ 	<dependency>
+        <groupId>org.scala-lang</groupId>
+        <artifactId>scala-library</artifactId>
+        <version>${scala.version}</version>
+      </dependency>
   </dependencies>
   <dependencyManagement>
     <dependencies>    
