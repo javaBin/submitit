@@ -14,15 +14,10 @@ import javax.mail.{Message,Session,Transport}
 import javax.mail.internet.MimeMessage
 import org.apache.wicket.markup.html.form.HiddenField
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-class ConfirmPage(pres: Presentation) extends LayoutPage {
+class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
 
   State().fromServer = true
 
-  def logger = LoggerFactory.getLogger(classOf[ConfirmPage])
-  
   val presentation = pres.toString
   logger.info(presentation)
   

@@ -6,13 +6,8 @@ import no.java.submitit.model._
 import no.java.submitit.app.State
 import org.apache.wicket.markup.html.basic._
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-class IdResolverPage extends LayoutPage {
+class IdResolverPage extends LayoutPage with LoggHandling {
   
-  def logger = LoggerFactory.getLogger(classOf[IdResolverPage])
-
   val id = getRequest.getParameter("id")
 
   val presentation: Presentation =
