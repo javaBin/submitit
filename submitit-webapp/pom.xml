@@ -30,10 +30,6 @@
       <artifactId>ems-wiki</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.scala-lang</groupId>
-      <artifactId>scala-library</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.apache.wicket</groupId>
       <artifactId>wicket</artifactId>
     </dependency>
