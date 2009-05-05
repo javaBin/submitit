@@ -1,11 +1,8 @@
 package no.java.submitit.app.pages
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import common.LoggHandling
 
-class ErrorPage(pres: model.Presentation, e: Exception) extends LayoutPage {
-  
-  def logger = LoggerFactory.getLogger(classOf[ConfirmPage])
+class ErrorPage(pres: model.Presentation, e: Exception) extends LayoutPage with LoggHandling {
   
   logger.error("Exception has occured", e)
   

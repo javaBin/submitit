@@ -5,17 +5,14 @@ import no.java.ems.domain.{Event,Session,Person,EmailAddress,Binary,ByteArrayBin
 import _root_.java.io.InputStream
 import _root_.scala.collection.jcl.Conversions._
 import common.Implicits._
-import common.IOUtils
+import common.{IOUtils, LoggHandling}
 import model._
 import common.IOUtils._
 
-import org.slf4j.{Logger,LoggerFactory};
-
 import scala.xml.XML
 
-class EmsConverter {
+class EmsConverter extends LoggHandling {
 
-  def logger = LoggerFactory.getLogger(classOf[EmsConverter])
     
   def toPerson(speaker: Speaker): Person = {
     val person = new Person(speaker.name)
