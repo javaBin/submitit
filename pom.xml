@@ -47,7 +47,7 @@
       <url>http://scala-tools.org/repo-releases</url>
     </pluginRepository>
   </pluginRepositories>
-
+ 
   <dependencies>
     <dependency>
       <groupId>junit</groupId>

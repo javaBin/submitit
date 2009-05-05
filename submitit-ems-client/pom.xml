@@ -12,7 +12,7 @@
 
   <artifactId>submitit-ems-client</artifactId>
   <name>submitit-ems-client</name>
-
+ 
   <dependencies>
     <dependency>
       <groupId>no.java.submitit</groupId>
