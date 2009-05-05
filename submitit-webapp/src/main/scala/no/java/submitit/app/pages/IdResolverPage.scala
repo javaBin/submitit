@@ -6,8 +6,12 @@ import no.java.submitit.model._
 import no.java.submitit.app.State
 import org.apache.wicket.markup.html.basic._
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class IdResolverPage extends LayoutPage {
+  
+  def logger = LoggerFactory.getLogger(classOf[IdResolverPage])
 
   val id = getRequest.getParameter("id")
 
@@ -17,7 +21,11 @@ class IdResolverPage extends LayoutPage {
       backendClient.loadPresentation(id)
     }
   catch {
-    case x => null
+    case x => {
+      logger.warn("Got exception when trying to retrieve session with id: '" + id + "' from EMS", x)
+      null
+    }
+    
   }
   
   if(presentation != null) {
