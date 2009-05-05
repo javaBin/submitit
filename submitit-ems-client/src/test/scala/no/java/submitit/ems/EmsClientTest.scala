@@ -1,7 +1,5 @@
 package no.java.submitit.ems
 
-import junit.framework._
-import Assert._
 import model._
 import org.scalatest._
 import com.jteigen.scalatest.JUnit4Runner
@@ -95,8 +93,6 @@ class EmsClientTest extends FunSuite {
   test("get session id from xml") {
     val client = new EmsClient("JavaZone 2009", null, null, null)
     assert("b582a071-d4c2-4a48-ac66-812a5ef94c1b" === client.findEventInXML(xml))
-
-    
   }
   
   

@@ -7,17 +7,27 @@ import common.{IOUtils, LoggHandling}
 import model._
 import common.IOUtils._
 
-import xml.XML
+import xml._
 
 class EmsConverter extends LoggHandling {
 
-  /*    
-  def toPerson(speaker: Speaker): Person = {
-    val person = new Person(speaker.name)
-    person.setDescription(speaker.bio)
-    person.setEmailAddresses(new EmailAddress(speaker.email) :: Nil)
-    person
-  }
+    
+  def toEmsPerson(speaker: Speaker, orgXml: Node): Node = 
+    <person>
+			{findValue(orgXml, "uuid")}
+			{findValue(orgXml, "url")}
+			{findValue(orgXml, "name")}
+			{findValue(orgXml, "description")}
+			{findValue(orgXml, "language")}
+			{findValue(orgXml, "email-addresses")}
+			{findValue(orgXml, "tags")}
+			</person>
+
+   
+  private def findValue(orgXml: Node, nodeValue: String) =  (orgXml \\ nodeValue)
+  
+    
+  /* 
   
   def updateSession(presentation: Presentation, session: Session) {
     session.setTitle(presentation.title)

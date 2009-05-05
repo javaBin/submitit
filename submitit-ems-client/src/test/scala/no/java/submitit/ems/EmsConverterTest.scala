@@ -1,22 +1,47 @@
 package no.java.submitit.ems
 
-import junit.framework._
-import Assert._
 import model._
 
-object EmsConverterTest {
-  def suite: Test = new TestSuite(classOf[EmsConverterTest])
-  
-  def main(args: Array[String]) {
-    junit.textui.TestRunner.run(suite)
-  }
-}
+import org.scalatest._
+import org.scalatest.matchers.ShouldMatchers._
+import com.jteigen.scalatest.JUnit4Runner
+import org.junit.runner.RunWith
 
-class EmsConverterTest extends TestCase("EMS converter") {
+@RunWith(classOf[JUnit4Runner])
+class EmsConverterTest extends FunSuite {
   
-  def testConvertPresentation() {
-    
+  val original = 
+        <person>
+			<uuid>theId</uuid>
+			<url>
+			bogusurl
+			</url>
+			<name>Alf Støyle</name>
+			<description/>
+			<language>no</language>
+			<email-addresses>
+			<email-address>b@a.no</email-address>
+			<email-address>a@b.no</email-address>
+			</email-addresses>
+			<tags>
+			<tag>1tag</tag>
+			<tag>2tag</tag>
+			</tags>
+			</person>
+
+  test("convert person") {
+    val converter = new EmsConverter
+    val res = converter.toEmsPerson(new Speaker, original)
+    println(res)
+    val txt = res.text
+    //txt should include ("theId")
+    txt should include ("bogusurl")
+    txt should include ("1tag")
+    txt should include ("2tag")
+    txt should include ("b@a.no")
+    txt should include ("a@b.no")
   }
+    
   /*
 
   val converter = new EmsConverter
