@@ -7,7 +7,7 @@ import _root_.java.io.Serializable
 import no.java.submitit.model._
 import scala.xml.NodeSeq
 
-class Presentation extends Serializable {
+class Presentation extends Serializable with EmsId {
   
   var sessionId: String = _
   var title: String = ""
