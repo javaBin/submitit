@@ -13,6 +13,9 @@ class EmsConverter extends LoggHandling {
 
   def toEmsSession(presentation: Presentation, orgXml: Node): Node = {
 			val g = orgXml.child.map { element => element match {
+        case <title>{title}</title> =>  <title>{presentation.title}</title>
+        case <format>{_}</format> => <format>{convertFormat(presentation.format)}</format>
+        case <level>{_}</level> => <level>{convertLevel(presentation.level)}</level>
 				case s => s
 				}
 			}
@@ -39,10 +42,21 @@ class EmsConverter extends LoggHandling {
       case s => null
 	  	}	
 	  }
-  
-    
-  /* 
-  
+
+
+  private def convertLevel(level: Level.Value) = level match {
+    case Level.Advanced => "Advanced"
+    case Level.Intermediate => "Intermediate"
+    case Level.Beginner => "Introductory"
+  }
+
+  private def convertFormat(format: PresentationFormat.Value) = format match {
+    case PresentationFormat.Presentation => "Presentation"
+    case PresentationFormat.LightningTalk => "Quickie"
+  }
+
+  /*
+
   def updateSession(presentation: Presentation, session: Session) {
     session.setTitle(presentation.title)
     session.setLead(presentation.summary)
@@ -52,9 +66,9 @@ class EmsConverter extends LoggHandling {
     session.setEquipment(presentation.equipment)
     session.setExpectedAudience(presentation.expectedAudience)
     session.setFeedback(presentation.feedback)
-    
+
     session.setSpeakers(presentation.speakers.map(speaker => toEmsSpeaker(speaker)))
-    
+
     val language = presentation.language match {
       case Language.Norwegian => new domain.Language("no")
       case Language.English => new domain.Language("en")
@@ -71,25 +85,25 @@ class EmsConverter extends LoggHandling {
       case PresentationFormat.LightningTalk => Session.Format.Quickie
       case l => unknownEnumValue(l, Session.Format.Presentation)
     }
-    
+
     session.setLanguage(language)
     session.setLevel(level)
     session.setFormat(format)
   }
-  
+
   def toPresentation(session: Session): Presentation = {
     val pres = new Presentation()
     pres.sessionId = session.getId
     pres.title = session.getTitle
     pres.abstr = session.getBody
     pres.speakers = session.getSpeakers.toList.map(speaker => fromEmsSpeaker(speaker))
-    
+
     pres.summary = session.getLead
     pres.outline = session.getOutline
     pres.equipment = session.getEquipment
     pres.expectedAudience = session.getExpectedAudience
     pres.feedback = session.getFeedback
-    
+
     pres.language = session.getLanguage.getIsoCode match {
       case "no" => Language.Norwegian
       case "en" => Language.English
@@ -112,17 +126,17 @@ class EmsConverter extends LoggHandling {
       case Session.State.Rejected => Status.NotApproved
       case l => unknownEnumValue(l, Status.Pending)
     }
-    
+
     pres
   }
-  
+
   def toEmsSpeaker(speaker: Speaker): no.java.ems.domain.Speaker = {
     val result = new no.java.ems.domain.Speaker(speaker.personId, speaker.name)
     result.setDescription(speaker.bio)
     result.setPhoto(toPhoto(speaker.picture))
     result
   }
-  
+
   def fromEmsSpeaker(speaker: no.java.ems.domain.Speaker): Speaker = {
     val result = new Speaker
     result.personId = speaker.getPersonId
@@ -139,12 +153,12 @@ class EmsConverter extends LoggHandling {
       null
     }
   }
-  
+
   def toPicture(photo: Binary): Picture = {
     if (photo != null) {
       val content = new Array[Byte](photo.getSize.toInt)
-      
-      usingIS(photo.getDataStream) { 
+
+      usingIS(photo.getDataStream) {
         stream => read(0, stream, content)
       }
 
@@ -161,7 +175,7 @@ class EmsConverter extends LoggHandling {
   }
 
   private def unknownEnumValue[T](v: Any, r: T): T = {
-    logger.error("Unknown enum value '" + v + "', defaulting to '" + r + "'")  
+    logger.error("Unknown enum value '" + v + "', defaulting to '" + r + "'")
     r
   }
 

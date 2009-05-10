@@ -49,6 +49,7 @@ class EmsConverterTest extends FunSuite {
 
   test("convert session") {
     val p = new Presentation
+    p.format = PresentationFormat.LightningTalk
     val res = converter.toEmsSession(p, session)
     println(res)
   }
