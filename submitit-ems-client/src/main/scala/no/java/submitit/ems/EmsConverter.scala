@@ -11,20 +11,34 @@ import xml._
 
 class EmsConverter extends LoggHandling {
 
-    
-  def toEmsPerson(speaker: Speaker, orgXml: Node): Node = 
-    <person>
-			{findValue(orgXml, "uuid")}
-			{findValue(orgXml, "url")}
-			{findValue(orgXml, "name")}
-			{findValue(orgXml, "description")}
-			{findValue(orgXml, "language")}
-			{findValue(orgXml, "email-addresses")}
-			{findValue(orgXml, "tags")}
-			</person>
+  def toEmsSession(presentation: Presentation, orgXml: Node): Node = {
+			val g = orgXml.child.map { element => element match {
+				case s => s
+				}
+			}
+			<ns2:session xmlns:ns2="http://xmlns.java.no/ems/external/1">{g}</ns2:session>
+  }
 
-   
-  private def findValue(orgXml: Node, nodeValue: String) =  (orgXml \\ nodeValue)
+    
+	def toEmsPerson(speaker: Speaker, orgXml: Node): Node = {
+			val g = orgXml.child.map { element => element match {
+				case <name>{theName}</name> => <name>{speaker.name}</name>
+				case <description>{theName}</description> => <description>{speaker.bio}</description>
+				case <description/> => <description>{speaker.bio}</description>
+				case <email-addresses>{addresses @ _ *}</email-addresses> => <email-addresses>{handleAdresses(speaker, addresses)}</email-addresses>
+				case s => s
+				}
+			}
+			<person>{g}</person>
+		} 
+ 
+	
+	private def handleAdresses(speaker: Speaker, nodeSeq: NodeSeq) =
+	   <email-address>{speaker.email}</email-address> ++ nodeSeq.map { _ match {
+      case <email-address>{email}</email-address> if email != speaker.email => <email-address>{email}</email-address>         
+      case s => null
+	  	}	
+	  }
   
     
   /* 

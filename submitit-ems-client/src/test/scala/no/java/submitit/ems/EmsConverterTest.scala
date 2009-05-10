@@ -29,9 +29,13 @@ class EmsConverterTest extends FunSuite {
 			</tags>
 			</person>
 
+  val converter = new EmsConverter
+
   test("convert person") {
-    val converter = new EmsConverter
-    val res = converter.toEmsPerson(new Speaker, original)
+    val s = new Speaker
+    s.name = "Fredrik"
+    s.email = "firstEmail"
+    val res = converter.toEmsPerson(s, original)
     println(res)
     val txt = res.text
     //txt should include ("theId")
@@ -40,8 +44,53 @@ class EmsConverterTest extends FunSuite {
     txt should include ("2tag")
     txt should include ("b@a.no")
     txt should include ("a@b.no")
+    txt should include ("firstEmail")
   }
-    
+
+  test("convert session") {
+    val p = new Presentation
+    val res = converter.toEmsSession(p, session)
+    println(res)
+  }
+
+
+val session = <ns2:session xmlns:ns2="http://xmlns.java.no/ems/external/1">
+	<uuid>06aaec74-0a6d-4745-9b24-db43d01</uuid>
+	<url>http://127.0.0.1:8040/ems-server/1/events/b582a071-d4c2-4a48-ac66-812a5ef94c1b/sessions/06aaec74-db43d0189d0d/b582a071-d</url>
+	<event-id>b582a071-d4c2-4a48-ac66-812a5ef94c1b</event-id>
+	<title>Going wild</title>
+	<state>Pending</state>
+	<format>Presentation</format>
+	<language>en</language>
+	<level>Intermediate</level>
+	<body>&#13;
+* Bladiip &#13;
+&#13;
+Bladi</body>
+	<tags>
+		<tag/>
+	</tags>
+	<keywords>
+		<keyword/>
+	</keywords>
+	<speakers>
+		<name>Person 1</name>
+		<person-uuid>d1a04765-2882-4c56-9821-9ff74e4788</person-uuid>
+		<description>Desc 2</description>
+	</speakers>
+	<speakers>
+		<name>Person 2</name>
+		<person-uuid>d3818bda-eaa3-410b-b159-ef9aa31</person-uuid>
+		<description>Desc2</description>
+	</speakers>
+	<published>false</published>
+	<expected-audience>This session is geared towards engineering and technical management staff who are lead open source projects and are looking for ways to create, leverage and grow their community of open source contributors. Basic knowledge of open source practices and engineering management is required.</expected-audience>
+</ns2:session>
+
+
+
+
+
   /*
 
   val converter = new EmsConverter
