@@ -102,7 +102,8 @@ Bladi</body>
     assert(<body>{p.abstr}</body> === getXmlNode(res, "body"))
 
     //assert(<lead>{p.summary}</lead> === getXmlNode(res, "lead"))
-    //assert(<body>{p.equipment}</body> === getXmlNode(res, "equipment"))
+    assert(<expected-audience>{p.expectedAudience}</expected-audience> === getXmlNode(res, "expected-audience"))
+    // TODO what when element is not present... assert(<expected-audience>{p.equipment}</expected-audience> === getXmlNode(res, "expected-audience"))
     assert(<language>no</language> === getXmlNode(res, "language"))
     assert(<title>{p.title}</title> === getXmlNode(res, "title"))
 

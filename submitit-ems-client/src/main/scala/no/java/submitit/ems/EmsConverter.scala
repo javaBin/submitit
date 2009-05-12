@@ -18,10 +18,18 @@ class EmsConverter extends LoggHandling {
         case <level>{_*}</level> => <level>{convertLevel(presentation.level)}</level>
         case <language>{_*}</language> => <language>{convertLanguage(presentation.language)}</language>
         case <body>{_*}</body> => <body>{presentation.abstr}</body>
+        case <expected-audience>{_*}</expected-audience> => <expected-audience>{presentation.expectedAudience}</expected-audience>
+        case <equipment>{_*}</equipment> => <equipment>{presentation.equipment}</equipment>
+        case <speakers>{speakers @ _*}</speakers> => <speakers>{convertSpeakers(presentation.speakers, speakers)}</speakers>
 				case n => n
 				}
 			}
 			<ns2:session xmlns:ns2="http://xmlns.java.no/ems/external/1">{g}</ns2:session>
+  }
+
+  private def convertSpeakers(speakers: List[Speaker], nodeSeq: NodeSeq) = {
+
+    //val speaker = speakers.find(_.originalId)
   }
 
     
