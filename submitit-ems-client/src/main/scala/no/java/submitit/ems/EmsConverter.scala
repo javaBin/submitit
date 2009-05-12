@@ -13,10 +13,12 @@ class EmsConverter extends LoggHandling {
 
   def toEmsSession(presentation: Presentation, orgXml: Node): Node = {
 			val g = orgXml.child.map { element => element match {
-        case <title>{title}</title> =>  <title>{presentation.title}</title>
-        case <format>{_}</format> => <format>{convertFormat(presentation.format)}</format>
-        case <level>{_}</level> => <level>{convertLevel(presentation.level)}</level>
-				case s => s
+        case <title>{_*}</title> => <title>{presentation.title}</title>
+        case <format>{_*}</format> => <format>{convertFormat(presentation.format)}</format>
+        case <level>{_*}</level> => <level>{convertLevel(presentation.level)}</level>
+        case <language>{_*}</language> => <language>{convertLanguage(presentation.language)}</language>
+        case <body>{_*}</body> => <body>{presentation.abstr}</body>
+				case n => n
 				}
 			}
 			<ns2:session xmlns:ns2="http://xmlns.java.no/ems/external/1">{g}</ns2:session>
@@ -25,11 +27,10 @@ class EmsConverter extends LoggHandling {
     
 	def toEmsPerson(speaker: Speaker, orgXml: Node): Node = {
 			val g = orgXml.child.map { element => element match {
-				case <name>{theName}</name> => <name>{speaker.name}</name>
-				case <description>{theName}</description> => <description>{speaker.bio}</description>
-				case <description/> => <description>{speaker.bio}</description>
-				case <email-addresses>{addresses @ _ *}</email-addresses> => <email-addresses>{handleAdresses(speaker, addresses)}</email-addresses>
-				case s => s
+				case <name>{_*}</name> => <name>{speaker.name}</name>
+				case <description>{_*}</description> => <description>{speaker.bio}</description>
+				case <email-addresses>{addresses @ _*}</email-addresses> => <email-addresses>{handleAdresses(speaker, addresses)}</email-addresses>
+				case n => n
 				}
 			}
 			<person>{g}</person>
@@ -53,6 +54,11 @@ class EmsConverter extends LoggHandling {
   private def convertFormat(format: PresentationFormat.Value) = format match {
     case PresentationFormat.Presentation => "Presentation"
     case PresentationFormat.LightningTalk => "Quickie"
+  }
+
+  private def convertLanguage(format: Language.Value) = format match {
+    case Language.Norwegian => "no"
+    case Language.English => "en"
   }
 
   /*

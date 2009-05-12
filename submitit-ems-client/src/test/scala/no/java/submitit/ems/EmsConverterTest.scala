@@ -7,15 +7,15 @@ import org.scalatest.matchers.ShouldMatchers._
 import com.jteigen.scalatest.JUnit4Runner
 import org.junit.runner.RunWith
 
+import xml.Node
+
 @RunWith(classOf[JUnit4Runner])
 class EmsConverterTest extends FunSuite {
   
   val original = 
         <person>
 			<uuid>theId</uuid>
-			<url>
-			bogusurl
-			</url>
+			<url>bogusurl</url>
 			<name>Alf Støyle</name>
 			<description/>
 			<language>no</language>
@@ -31,31 +31,27 @@ class EmsConverterTest extends FunSuite {
 
   val converter = new EmsConverter
 
+  private def getXmlNode(node: Node, name: String, order: Int) = (node \\ name)(order)
+  private def getXmlNode(node: Node, name: String): Node = getXmlNode(node, name, 0)
+
   test("convert person") {
     val s = new Speaker
     s.name = "Fredrik"
     s.email = "firstEmail"
+
     val res = converter.toEmsPerson(s, original)
-    println(res)
-    val txt = res.text
-    //txt should include ("theId")
-    txt should include ("bogusurl")
-    txt should include ("1tag")
-    txt should include ("2tag")
-    txt should include ("b@a.no")
-    txt should include ("a@b.no")
-    txt should include ("firstEmail")
-  }
 
-  test("convert session") {
-    val p = new Presentation
-    p.format = PresentationFormat.LightningTalk
-    val res = converter.toEmsSession(p, session)
-    println(res)
+    assert(<url>bogusurl</url> === getXmlNode(res, "url"))
+    assert(<tag>1tag</tag> === getXmlNode(res, "tag"))
+    assert(<tag>2tag</tag> === getXmlNode(res, "tag", 1))
+    assert(<email-address>firstEmail</email-address> === getXmlNode(res, "email-address"))
+    assert(<email-address>b@a.no</email-address> === getXmlNode(res, "email-address", 1))
+    assert(<email-address>a@b.no</email-address> === getXmlNode(res, "email-address", 2))
   }
 
 
-val session = <ns2:session xmlns:ns2="http://xmlns.java.no/ems/external/1">
+
+  val session = <ns2:session xmlns:ns2="http://xmlns.java.no/ems/external/1">
 	<uuid>06aaec74-0a6d-4745-9b24-db43d01</uuid>
 	<url>http://127.0.0.1:8040/ems-server/1/events/b582a071-d4c2-4a48-ac66-812a5ef94c1b/sessions/06aaec74-db43d0189d0d/b582a071-d</url>
 	<event-id>b582a071-d4c2-4a48-ac66-812a5ef94c1b</event-id>
@@ -89,6 +85,28 @@ Bladi</body>
 </ns2:session>
 
 
+
+  test("convert session") {
+    val p = new Presentation
+    p.format = PresentationFormat.LightningTalk
+    p.summary="Summary"
+    p.outline = "theOutline"
+    p.abstr = "abstract<level>lw</level>"
+    p.equipment = "equi"
+    p.language = Language.Norwegian
+    p.title = "the title"
+    
+    val res = converter.toEmsSession(p, session)
+
+    assert(<format>Quickie</format> === getXmlNode(res, "format"))
+    assert(<body>{p.abstr}</body> === getXmlNode(res, "body"))
+
+    //assert(<lead>{p.summary}</lead> === getXmlNode(res, "lead"))
+    //assert(<body>{p.equipment}</body> === getXmlNode(res, "equipment"))
+    assert(<language>no</language> === getXmlNode(res, "language"))
+    assert(<title>{p.title}</title> === getXmlNode(res, "title"))
+
+  }
 
 
 
