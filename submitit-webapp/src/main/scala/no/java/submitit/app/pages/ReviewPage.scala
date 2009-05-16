@@ -49,7 +49,12 @@ class ReviewPage(p: Presentation) extends LayoutPage {
 
   add(new HtmlLabel("viewMessage", msg))
 
-  val feedback = if(p.status == Status.NotApproved && SubmititApp.boolSetting("showSpecialMessageOnRejectBoolean")) SubmititApp.getSetting("feedbackRejected") else p.feedback
+  val feedback = if(p.status == Status.NotApproved && 
+                   SubmititApp.boolSetting("showSpecialMessageOnRejectBoolean") &&
+  								 !(SubmititApp.boolSetting("allowIndidualFeedbackOnRejectBoolean") && p.feedback != null)) { 
+    							    SubmititApp.getSetting("feedbackRejected")
+               	 }
+                 else p.feedback
   
   add(new MultiLineLabel("feedback", feedback) {
     override def isVisible = SubmititApp.boolSetting("showFeedbackBoolean") && feedback != null && feedback != ""
