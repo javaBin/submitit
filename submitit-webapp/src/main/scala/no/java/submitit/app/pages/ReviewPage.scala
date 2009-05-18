@@ -19,7 +19,6 @@ class ReviewPage(p: Presentation) extends LayoutPage {
   val supportedExtensions = List("pdf, ppt, key, odp")
   val editAllowed = SubmititApp.boolSetting("globalEditAllowedBoolean")
   
-  println(State().isNew || editAllowed)
   add(new HiddenField("showEditLink") {
 	  override def isVisible = State().isNew || editAllowed
   })
@@ -49,11 +48,16 @@ class ReviewPage(p: Presentation) extends LayoutPage {
   	else SubmititApp.getSetting("reviewPageViewSubmittedHthml")
 
   add(new HtmlLabel("viewMessage", msg))
-  
-  val feedback = if(p.status != Status.NotApproved) p.feedback else SubmititApp.getSetting("feedbackRejected")
+
+  val feedback = if(p.status == Status.NotApproved && 
+                   SubmititApp.boolSetting("showSpecialMessageOnRejectBoolean") &&
+  								 !(SubmititApp.boolSetting("allowIndidualFeedbackOnRejectBoolean") && p.feedback != null)) { 
+    							    SubmititApp.getSetting("feedbackRejected")
+               	 }
+                 else p.feedback
   
   add(new MultiLineLabel("feedback", feedback) {
-    override def isVisible = feedback != null && feedback != ""
+    override def isVisible = SubmititApp.boolSetting("showFeedbackBoolean") && feedback != null && feedback != ""
   })
   
 
