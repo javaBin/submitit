@@ -37,7 +37,7 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
     updateOrCreateSession(presentation).sessionId
   }
   
-  def loadPresentation(id: String): Presentation = {
+  def loadPresentation(id: String): Option[Presentation] = {
     getSession(id) match {
       case Some(session) => {
         val presentation = converter.toPresentation(session)
@@ -45,9 +45,9 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
           val person = emsService.getContact(speaker.personId)
           speaker.email = person.getEmailAddresses.toList.head.getEmailAddress 
         })
-        presentation
+        Some(presentation)
       }
-      case None => null
+      case None => None
     }
   }
   

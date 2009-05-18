@@ -6,6 +6,6 @@ trait BackendClient {
 
   def savePresentation(presentation: Presentation): String
   
-  def loadPresentation(id: String): Presentation
+  def loadPresentation(id: String): Option[Presentation]
   
 }

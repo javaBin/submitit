@@ -13,8 +13,11 @@ class IdResolverPage extends LayoutPage with LoggHandling {
 
   val (presentation, infoMessage) =
     try {
-      if(id == null || id == "") (None, "You must supply an id")
-      else (Some(State().backendClient.loadPresentation(id)), "")
+      if(id == null || id == "") (None, "Not a valid url. This has been logged.")
+      else State().backendClient.loadPresentation(id) match {
+        case Some(pres) => (Some(pres), "")
+        case None => (None, "Not a valid key! Attempt to fetch a presentation with this key has been logged.")
+      }
     }
     catch {
       case x => {
@@ -29,8 +32,8 @@ class IdResolverPage extends LayoutPage with LoggHandling {
   presentation match {
     case Some(pres) => {
       State().fromServer = true
-      State().currentPresentation = presentation.get
-      setResponsePage(new ReviewPage(presentation.get))
+      State().currentPresentation = pres
+      setResponsePage(new ReviewPage(pres))
     }
     case None => {
       add(new Label("identified", new Model(infoMessage)))
