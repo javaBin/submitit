@@ -21,8 +21,8 @@ object BackendClientMock extends BackendClient with Serializable {
     pres.sessionId
   }
   
-  def loadPresentation(id: String): Presentation = {
-    presentations(id)
+  def loadPresentation(id: String): Option[Presentation] = {
+    presentations.get(id)
   }
   
 }
