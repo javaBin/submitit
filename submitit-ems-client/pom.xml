@@ -6,7 +6,7 @@
   <parent>
     <artifactId>wicket-submitit</artifactId>
     <groupId>no.java.submitit</groupId>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.0.5</version>
   </parent>
 
   <artifactId>submitit-ems-client</artifactId>
