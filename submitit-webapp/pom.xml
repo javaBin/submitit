@@ -4,13 +4,12 @@
   <parent>
     <artifactId>wicket-submitit</artifactId>
     <groupId>no.java.submitit</groupId>
-    <version>1.0.5</version>
+    <version>1.0.5-SNAPSHOT</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>no.java.submitit</groupId>
   <artifactId>submitit-webapp</artifactId>
-  <version>1.0.5</version>
   <packaging>war</packaging>
   <name>submitit-webapp</name>
   <inceptionYear>2008</inceptionYear>
