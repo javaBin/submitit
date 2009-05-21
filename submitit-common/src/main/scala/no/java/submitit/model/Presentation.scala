@@ -68,19 +68,50 @@ class Presentation extends Serializable with EmsId {
     <uuid>{this.originalId}</uuid>
     <event-id>{eventId}</event-id>
 	  <title>{title}</title>
+	  <state />
 	  <format>{PresentationFormat.toEmsValue(format)}</format>
-	  <level>{Level.toEmsValue(level)}</level>
 	  <language>{Language.toEmsValue(language)}</language>
+	  <level>{Level.toEmsValue(level)}</level>
 	  <body>{abstr}</body>
     <tags />
     <keywords/>
-	  <expected-audience>{expectedAudience}</expected-audience>
 	  <equipment>{equipment}</equipment>
-	  speakers.map(x => x.toSessionSpeakerXML)
+	  {speakers.map(x => x.toSessionSpeakerXML)}
     <published />
     <expected-audience>{expectedAudience}</expected-audience>
 	  </ns2:session>
   }
+  
+  def setEmailsForSpeakers(persons: List[Speaker]) {
+    speakers.foreach{sp =>
+      								sp.email = persons.find(person => sp.originalId == person.originalId) match {
+      								  case Some(person) => person.email
+      								  case None => null 
+      								}
+    								}
+  }
 
 }
-                   
+
+object Presentation {
+  
+	def toPresentation(xml: Node) = {
+		val p = new Presentation
+		xml.child.foreach {_ match {
+	 		  case <uuid>{originalId}</uuid> => p.originalId = originalId.text
+				case <title>{title}</title> => p.title = title.text
+				case <state></state> =>
+				case <format>{format}</format> => p.format = PresentationFormat.fromEmsValue(format.text)
+				case <language>{language}</language> => p.language = Language.fromEmsValue(language.text)
+				case <level>{level}</level >=> p.level = Level.fromEmsValue(level.text)
+				case <body>{abstr}</body> => p.abstr = abstr.text
+				case <equipment>{equipment}</equipment> => p.equipment = equipment.text
+				case <speakers>{speakerDetails @ _*}</speakers> => p.speakers = Speaker.fromSpeakerXML(speakerDetails) :: p.speakers
+				case <expected-audience>{expectedAudience}</expected-audience> => p.expectedAudience = expectedAudience.text
+				case _ => 
+			}
+		}
+		p
+	  
+	}
+}
