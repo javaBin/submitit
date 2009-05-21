@@ -2,6 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>no.java.portal</groupId>
+    <artifactId>portal</artifactId>
+    <version>4</version>
+  </parent>
   <groupId>no.java.submitit</groupId>
   <artifactId>wicket-submitit</artifactId>
   <version>1.0-SNAPSHOT</version>
@@ -21,23 +26,35 @@
       <id>scala-tools.org</id>
       <name>Scala-Tools Maven2 Repository</name>
       <url>http://scala-tools.org/repo-releases</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </repository>
+    <!-- Alf: remove this if it is not used - Trygve
     <repository>
       <id>scala-tools.org.snapshots</id>
       <name>Scala-Tools Maven2 Repository for Snapshots</name>
       <url>http://scala-tools.org/repo-snapshots</url>
-      <snapshots/>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
     </repository>
+    -->
     <repository>
-      <id>javabin.repo</id>
+      <id>javabin-release</id>
       <name>javaBin Smia</name>
       <url>http://smia.java.no/maven/repo/release</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </repository>
+<!--
     <repository>
-      <id>javabin.repo.snapshot</id>
+      <id>javabin-snapshot</id>
       <name>javaBin Smia snapshot</name>
       <url>http://smia.java.no/maven/repo/snapshot</url>
     </repository>
+-->
   </repositories>
 
   <pluginRepositories>
