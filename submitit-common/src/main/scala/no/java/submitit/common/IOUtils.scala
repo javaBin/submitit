@@ -2,7 +2,7 @@ package no.java.submitit.common
 
 import _root_.java.io.InputStream
 
-object IOUtils {
+object IOUtils extends LoggHandling {
 
   def using[T, C <: { def close() }]
            (closeable: C)
@@ -31,7 +31,7 @@ object IOUtils {
         try {
           closeable.close()
         } catch {
-          case e => Console.err.println("Exception on close " + e.toString)
+          case e => logger.error("Exception on close " + e.toString)
         }
   }
   
