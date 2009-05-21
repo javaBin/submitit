@@ -16,34 +16,47 @@ class Speaker extends Serializable with EmsId {
     "\nSpeaker's profile:\n" + bio +
     "\n\nPicture name: " + (if (picture != null) picture.name else "")
 
-  override def equals(other: Any): Boolean = {
-    other match {
-      case that: Speaker =>
-        (that canEqual this) && 
-          personId == that.personId && 
-          name == that.name && 
-          bio == that.bio
-      case _ => false
-    }
-  }
-  
-  def canEqual(other: Any): Boolean = {
-    other.isInstanceOf[Speaker]
-  }
-  
-  override def hashCode(): Int =
-    name.hashCode + 41 * bio.hashCode
-  
+  def toPersonXml(language: Language.Value) =
+      <person>
+			<uuid>{originalId}</uuid>
+			<url/>
+			<name>{name}</name>
+			<description>{bio}</description>
+			<language>{Language.toEmsValue(language)}</language>
+			<email-addresses>
+			<email-address>{this.email}</email-address>
+			</email-addresses>
+			<tags />
+			</person>
+
+  def toSessionSpeakerXML = 
+      <speakers>
+      <name>{this.name}</name>
+      <person-uuid>{this.originalId}</person-uuid>
+      <description>{this.bio}</description>
+      </speakers>
+
 }
+
+import xml._ 
 
 object Speaker {
   
-  def apply(name: String, email: String, bio: String, picture: Picture): Speaker = {
-    val s = new Speaker()
-    s.name = name
-    s.email = email
-    s.bio = bio
-    s.picture = picture
-    s
-  }
+	def fromPersonXML(personXML: Node) = {
+		val speaker = new Speaker
+	  personXML.child foreach {_ match {
+	  	case <uuid>{originalId}</uuid> => speaker.originalId = originalId.text
+	  	case <name>{name}</name> => speaker.name = name.text
+	  	case <description>{bio}</description> => speaker.bio = bio.text
+	  	case <email-addresses>{addresses @ _*}</email-addresses> => speaker.email = extractFirstEmail(addresses)
+	  	case _ =>  
+	   }
+		}
+   speaker
+   }
+
+	private def extractFirstEmail(xml: NodeSeq) = (xml \\ "email-address").firstOption.getOrElse(<n></n>).text
+ 
 }
+  
+

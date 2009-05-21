@@ -5,7 +5,7 @@ import Level._
 
 import _root_.java.io.Serializable
 import no.java.submitit.model._
-import scala.xml.NodeSeq
+import xml._
 
 class Presentation extends Serializable with EmsId {
   
@@ -60,33 +60,14 @@ class Presentation extends Serializable with EmsId {
     "\n\nSpeakers:\n\n" + speakers.mkString("", "\n\n", "")
 
   def toNonNullString(s: String) = if (s != null) s else ""
+
+
+  def toXML = {
+
+
+  }
+
+
   
-}
-
-object Presentation {
-
-  def apply(title: String, 
-            speakers: List[Speaker],
-            summary: String,
-            abstr: String, 
-            outline: String, 
-            language: Language.Value,
-            level: Level.Value,
-            format: PresentationFormat.Value,
-            equipment: String,
-            expectedAudience: String): Presentation = {
-			    val p = new Presentation
-			    p.title = title
-			    p.summary = summary
-			    p.speakers = speakers
-			    p.abstr = abstr
-			    p.outline = outline
-			    p.language = language
-			    p.level = level
-			    p.format = format
-			    p.equipment = equipment
-			    p.expectedAudience = expectedAudience
-			    p
-            }
 }
                    
