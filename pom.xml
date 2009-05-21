@@ -229,7 +229,7 @@
   </reporting>
 
   <scm>
-    <developerConnection>scm:git:git://github.com/stoyle/wicket-submitit.git</developerConnection>
+    <developerConnection>scm:git:git@github.com:stoyle/wicket-submitit.git</developerConnection>
     <connection>scm:git:git://github.com/stoyle/wicket-submitit.git</connection>
   </scm>
 
