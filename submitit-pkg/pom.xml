@@ -29,26 +29,30 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>unix-maven-plugin</artifactId>
-        <version>1.0-alpha-1</version>
+        <version>1.0-alpha-3</version>
         <extensions>true</extensions>
         <configuration>
           <contact>javaBin drift</contact>
           <contactEmail>drift@java.no</contactEmail>
           <defaults>
-            <fileUser>javabin</fileUser>
-            <fileGroup>javabin</fileGroup>
-            <directoryUser>javabin</directoryUser>
-            <directoryGroup>javabin</directoryGroup>
+            <fileAttributes>
+              <user>javabin</user>
+              <group>javabin</group>
+            </fileAttributes>
+            <directoryAttributes>
+              <user>javabin</user>
+              <group>javabin</group>
+            </directoryAttributes>
           </defaults>
           <assembly>
-            <copy>
+            <copy-artifact>
               <artifact>no.java.submitit:submitit-webapp:war</artifact>
               <toFile>/opt/jb/submitit/submitit.war</toFile>
-            </copy>
-            <copy>
-              <path>src/main/unix/files/common/opt/jb</path>
-              <toDir>/opt/jb</toDir>
-            </copy>
+            </copy-artifact>
+            <copy-directory>
+              <from>src/main/unix/files/common/opt/jb</from>
+              <to>/opt/jb</to>
+            </copy-directory>
             <mkdirs>
               <paths>
                 <path>/opt/jb/submitit</path>
