@@ -6,6 +6,7 @@ import com.jteigen.scalatest.JUnit4Runner
 import org.junit.runner.RunWith
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FunSuite
+import xml.Utility.trim
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,7 +25,7 @@ class ModelTranformTesting extends FunSuite with ShouldMatchers{
   speaker.bio = "bio"
   speaker.originalId = "theId"
   
-  val personXML =
+  val personXML = trim {
       <person>
 			<uuid>theId</uuid>
 			<url/>
@@ -36,8 +37,9 @@ class ModelTranformTesting extends FunSuite with ShouldMatchers{
 			</email-addresses>
 			<tags />
 			</person>
+   }
    
-	val personWithMultipeEmailXML =
+	val personWithMultipeEmailXML = trim {
 			<person>
 			<uuid>theId</uuid>
 			<url/>
@@ -51,13 +53,15 @@ class ModelTranformTesting extends FunSuite with ShouldMatchers{
 			</email-addresses>
 			<tags />
 			</person>
+   }
 			
-   val speakerXML =
+   val speakerXML = trim {
       <speakers>
       <name>Alf</name>
       <person-uuid>theId</person-uuid>
       <description>bio</description>
       </speakers>
+   }
 
   test("Tranform speaker to person xml") {
     assert(personXML === speaker.toPersonXml(Language.English))
@@ -76,6 +80,41 @@ class ModelTranformTesting extends FunSuite with ShouldMatchers{
     assert(speaker.name === res.name)
     assert(speaker.email === res.email)
   }
+  
+  
+  val session = trim { 
+    <ns2:session xmlns:ns2="http://xmlns.java.no/ems/external/1">
+		<uuid>eventid</uuid>
+		<event-id>sessionId</event-id>
+		<title>Going wild</title>
+		<state>Pending</state>
+		<format>Presentation</format>
+		<language>en</language>
+		<level>Intermediate</level>
+		<body></body>
+		<tags />
+		<keywords />
+		speakerXML
+		speakerXML
+		<published />
+		<expected-audience>This session is geared towards engineering and technical management staff who are lead open source projects and are looking for ways to create, leverage and grow their community of open source contributors. Basic knowledge of open source practices and engineering management is required.</expected-audience>
+		</ns2:session>
+  }
+  
+	val p = new Presentation
+	p.title = "Going wild"
+	p.originalId = "sessionId"
+	p.title = "Going wild"
+	p.title = "Going wild"
+	p.title = "Going wild"
+ 
+   test("transform presentation to ems xml") {
+     // Not finished, still want to test
+     assert(session != p.toXML("sessionId"))
+   }
+  
+  
+  
 
 }
 

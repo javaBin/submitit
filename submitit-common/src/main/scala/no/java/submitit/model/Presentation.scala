@@ -6,6 +6,7 @@ import Level._
 import _root_.java.io.Serializable
 import no.java.submitit.model._
 import xml._
+import xml.Utility.trim
 
 class Presentation extends Serializable with EmsId {
   
@@ -62,12 +63,24 @@ class Presentation extends Serializable with EmsId {
   def toNonNullString(s: String) = if (s != null) s else ""
 
 
-  def toXML = {
-
-
+  def toXML(eventId: String) = trim {
+  	<ns2:session xmlns:ns2="http://xmlns.java.no/ems/external/1">
+    <uuid>{this.originalId}</uuid>
+    <event-id>{eventId}</event-id>
+	  <title>{title}</title>
+	  <format>{PresentationFormat.toEmsValue(format)}</format>
+	  <level>{Level.toEmsValue(level)}</level>
+	  <language>{Language.toEmsValue(language)}</language>
+	  <body>{abstr}</body>
+    <tags />
+    <keywords/>
+	  <expected-audience>{expectedAudience}</expected-audience>
+	  <equipment>{equipment}</equipment>
+	  speakers.map(x => x.toSessionSpeakerXML)
+    <published />
+    <expected-audience>{expectedAudience}</expected-audience>
+	  </ns2:session>
   }
 
-
-  
 }
                    

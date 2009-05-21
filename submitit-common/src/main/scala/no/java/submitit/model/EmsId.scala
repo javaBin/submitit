@@ -18,6 +18,4 @@ trait EmsId {
   
     override def hashCode(): Int = originalId.hashCode + 41
   
-
-  
 }

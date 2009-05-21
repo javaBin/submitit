@@ -1,6 +1,7 @@
 package no.java.submitit.model
 
 import _root_.java.io.Serializable
+import xml.Utility.trim
 
 class Speaker extends Serializable with EmsId {
   
@@ -16,7 +17,7 @@ class Speaker extends Serializable with EmsId {
     "\nSpeaker's profile:\n" + bio +
     "\n\nPicture name: " + (if (picture != null) picture.name else "")
 
-  def toPersonXml(language: Language.Value) =
+  def toPersonXml(language: Language.Value) = trim {
       <person>
 			<uuid>{originalId}</uuid>
 			<url/>
@@ -28,13 +29,15 @@ class Speaker extends Serializable with EmsId {
 			</email-addresses>
 			<tags />
 			</person>
+   }
 
-  def toSessionSpeakerXML = 
+  def toSessionSpeakerXML = trim { 
       <speakers>
       <name>{this.name}</name>
       <person-uuid>{this.originalId}</person-uuid>
       <description>{this.bio}</description>
       </speakers>
+  }
 
 }
 
