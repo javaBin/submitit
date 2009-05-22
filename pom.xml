@@ -29,16 +29,6 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
-    <!-- Alf: remove this if it is not used - Trygve
-    <repository>
-      <id>scala-tools.org.snapshots</id>
-      <name>Scala-Tools Maven2 Repository for Snapshots</name>
-      <url>http://scala-tools.org/repo-snapshots</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </repository>
-    -->
     <repository>
       <id>javabin-release</id>
       <name>javaBin Smia</name>
