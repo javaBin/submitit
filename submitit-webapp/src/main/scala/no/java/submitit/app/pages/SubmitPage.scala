@@ -83,7 +83,7 @@ class SubmitPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage 
       }
     })
     
-    add(new SpeakerPanel(pres))
+    add(new panels.SpeakerPanel(pres))
     
     def handleSubmit() {
       // Some form validation

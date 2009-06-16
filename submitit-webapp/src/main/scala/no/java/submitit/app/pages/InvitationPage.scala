@@ -6,7 +6,7 @@ import no.java.submitit.model.Presentation
 
 class InvitationPage extends LayoutPage {
   
-  add(new LoginPanel("login", new LoginHandler {
+  add(new panels.LoginPanel("login", new LoginHandler {
     
     def onLogin(pwd: String) {
       if(pwd != SubmititApp.getSetting("passPhraseSubmitSpecialURL")) {
