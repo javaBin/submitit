@@ -12,6 +12,7 @@ import model._
 import widgets._
 import common.Implicits._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
+import org.apache.wicket.markup.html.form.Form
 import app.State
 
 class ReviewPage(p: Presentation) extends LayoutPage {
@@ -34,8 +35,17 @@ class ReviewPage(p: Presentation) extends LayoutPage {
   add(new HiddenField("showNewLink") {
 	  override def isVisible = !State().isNew && State().submitAllowed
   })
+  
+  add(new HiddenField("showTags") {
+  	override def isVisible = SubmititApp.boolSetting("showUserSelectedKeywords") && !State().isNew
+  })
 
-  add(new panels.TagsPanel("tags", p))
+  add(new Form("saveTagsForm"){
+    add(new panels.TagsPanel("tags", p))
+    override def onSubmit {
+    	println(p.keywords)
+    }
+  })
   
   val statusMsg = if (!State().fromServer) "Not submitted"
                   else if (!SubmititApp.boolSetting("showActualStatusInReviewPageBoolean")) Status.Pending.toString

@@ -37,16 +37,24 @@
 	    </form>
 	</wicket:enclosure>
 	
-	<wicket:enclosure child="tags">
-		<div wicket:id="tags" class="row"></div>
+	<wicket:enclosure child="showTags">
+		<form wicket:id="saveTagsForm"">
+			<div wicket:id="tags" class="row"></div>
+			<div class="row">
+				<input type="submit" value="Update tags"/>
+	       	</div>
+		</form>
+		<br>
+		<br>
 	</wicket:enclosure>
 	
 	
-	<fieldset>
+	<fieldset class="clearBoth">
 	<input type="hidden" wicket:id="showSubmitLink"/>
 	<input type="hidden" wicket:id="showEditLink"/>
 	<input type="hidden" wicket:id="showSubmitUpdatedLink"/>
 	<input type="hidden" wicket:id="showNewLink"/>
+	<input type="hidden" wicket:id="showTags"/>
 	
 	<wicket:enclosure child="feedback">
 	<div class="row">

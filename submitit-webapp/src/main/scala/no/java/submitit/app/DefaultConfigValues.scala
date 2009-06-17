@@ -28,7 +28,7 @@ private[app] object DefaultConfigValues {
 		"showSpecialMessageOnRejectBoolean" -> "false",
 		"allowIndidualFeedbackOnRejectBoolean" -> "false",
 		"showActualStatusInReviewPageBoolean" -> "false",
-		"userSelectedKeywords" -> "Keyword1, Keyword2, Keyword1, Keyword2, Keyword1, Keyword2 , Keyword1, Keyword2, Keyword1, Keyword2",
+		"userSelectedKeywords" -> "Keyword1, Keyword2, Keyword3, Keyword4, Keyword5, Keyword6 , Keyword7, Keyword 8, Keyword 9, Keyword 10",
 		"showUserSelectedKeywords" -> "true"
   )
 

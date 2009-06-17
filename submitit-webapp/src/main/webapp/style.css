@@ -295,3 +295,12 @@ ul {
 	border: 1px solid;
 	
 }
+
+.tagsDivs {
+	float: left;
+	padding-right:21px;
+}
+
+.clearBoth {
+	clear: both;	
+}

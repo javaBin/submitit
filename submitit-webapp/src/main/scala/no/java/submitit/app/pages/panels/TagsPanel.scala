@@ -9,8 +9,10 @@ import model.Presentation
 
 class TagsPanel(id: String, presentation: Presentation) extends Panel(id) {
   
-  add(new CheckBoxMultipleChoice("tagElement", new PropertyModel(presentation, "keywords"), SubmititApp.getListSetting("userSelectedKeywords")))
-
-  override def isVisible = SubmititApp.boolSetting("showUserSelectedKeywords")
+  val multipleCheckBox = new CheckBoxMultipleChoice("tagElement", new PropertyModel(presentation, "keywords"), SubmititApp.getListSetting("userSelectedKeywords"))
+  multipleCheckBox.setPrefix("<div class=\"tagsDivs\">")
+  multipleCheckBox.setSuffix("</div>")
+  
+  add(multipleCheckBox)
   
 }

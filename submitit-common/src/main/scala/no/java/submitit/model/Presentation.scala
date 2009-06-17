@@ -6,6 +6,7 @@ import Level._
 import _root_.java.io.Serializable
 import no.java.submitit.model._
 import scala.xml.NodeSeq
+import common.Implicits._
 
 class Presentation extends Serializable {
   
@@ -28,6 +29,10 @@ class Presentation extends Serializable {
     case PresentationFormat.Presentation => 60
     case PresentationFormat.LightningTalk => 15
   }
+  
+  // Kind of a hack here, so that we may use scala.List in the model object. Need to convert to ArrayList through getters and setters.
+  def getKeywords: _root_.java.util.ArrayList[String] = keywords
+  def setKeywords(list: _root_.java.util.ArrayList[String]) = keywords = list.toArray.foldLeft(List[String]())((l, e) => e.toString :: l)
   
   def init() {
     addSpeaker
