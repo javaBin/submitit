@@ -1,4 +1,4 @@
-package no.java.submitit.app.pages
+package no.java.submitit.app.pages.panels
 
 import org.apache.wicket.markup.html.panel._
 import org.apache.wicket.markup.html.basic._

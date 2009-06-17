@@ -36,10 +36,11 @@ class ReviewPage(p: Presentation) extends LayoutPage {
   })
 
   
-  val presentationMsg = if (!State().fromServer) "Not submitted"
-                        else p.status.toString
+  val statusMsg = if (!State().fromServer) "Not submitted"
+                  else if (!SubmititApp.boolSetting("showActualStatusInReviewPageBoolean")) Status.Pending.toString
+                  else p.status.toString
   
-  add(new Label("status", presentationMsg))
+  add(new Label("status", statusMsg))
   add(new NewPresentationLink("newPresentation"))
 
   val msg = if (State().isNew) SubmititApp.getSetting("reviewPageBeforeSubmitHtml")

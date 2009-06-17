@@ -27,7 +27,7 @@ class SubmititApp extends WebApplication {
     SubmititApp.emsPwd = this nullOnEmptyString props.remove(SubmititApp.emsPwdKey).asInstanceOf[String]
 
     val elems = props.keys
-    var theMap = Map[String, String]()
+    var theMap = DefaultConfigValues.configValues
     for (i <- 0 to props.size() - 1) {
       val e = elems.nextElement.asInstanceOf[String]
       theMap = theMap + (e -> props.getProperty(e).asInstanceOf[String])
@@ -67,6 +67,10 @@ class MyRequestCycle(application: WebApplication, request: WebRequest, response:
 }
 
 object SubmititApp {
+  
+  
+
+  
   
   private val adminPassPhrase = "adminPassPhrase"
   private val emsUrlKey = "emsUrl"
