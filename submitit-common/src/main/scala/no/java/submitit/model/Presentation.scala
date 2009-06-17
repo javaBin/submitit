@@ -14,6 +14,7 @@ class Presentation extends Serializable {
   var summary: String = ""
   var abstr: String = ""
   var speakers: List[Speaker] = Nil
+  var keywords: List[String] = Nil
   var outline: String = ""
   var language: Language.Value = Language.Norwegian
   var level: Level.Value = Level.Beginner

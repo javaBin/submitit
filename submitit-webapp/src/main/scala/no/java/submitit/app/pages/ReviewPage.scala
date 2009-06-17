@@ -35,6 +35,7 @@ class ReviewPage(p: Presentation) extends LayoutPage {
 	  override def isVisible = !State().isNew && State().submitAllowed
   })
 
+  add(new panels.TagsPanel("tags", p))
   
   val statusMsg = if (!State().fromServer) "Not submitted"
                   else if (!SubmititApp.boolSetting("showActualStatusInReviewPageBoolean")) Status.Pending.toString
