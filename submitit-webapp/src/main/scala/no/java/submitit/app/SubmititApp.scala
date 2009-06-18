@@ -117,6 +117,11 @@ object SubmititApp {
   
   def boolSetting(key: String) = _root_.java.lang.Boolean.parseBoolean(getSetting(key))
   
+  def getListSetting(key: String) = getSetting(key) match {
+    case s: String => s.split(',').toList.map(_.trim)
+    case null => Nil
+  }
+  
   def authenticates(password: Object) = adminPass == password
   
 }

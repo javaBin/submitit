@@ -7,6 +7,8 @@ import _root_.java.io.Serializable
 import no.java.submitit.model._
 import xml._
 import xml.Utility.trim
+import scala.xml.NodeSeq
+import common.Implicits._
 
 class Presentation extends Serializable with EmsId {
   
@@ -15,6 +17,7 @@ class Presentation extends Serializable with EmsId {
   var summary: String = ""
   var abstr: String = ""
   var speakers: List[Speaker] = Nil
+  var keywords: List[String] = Nil
   var outline: String = ""
   var language: Language.Value = Language.Norwegian
   var level: Level.Value = Level.Beginner

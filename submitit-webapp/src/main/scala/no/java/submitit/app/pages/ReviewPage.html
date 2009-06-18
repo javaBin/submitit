@@ -20,6 +20,10 @@
 		<div class="infoHeader">Please read this</div>	
 		<label wicket:id="viewMessage"></label>
 	</div>
+
+	<div class="row">
+		<div wicket:id="systemFeedback" class="systemFeedback"></div>
+	</div>
 	 
 	<h2 align="left">Presentation status: <label wicket:id="status"></label></h2>
 	
@@ -37,12 +41,26 @@
 	    </form>
 	</wicket:enclosure>
 	
+	<wicket:enclosure child="showTags">
+		<form wicket:id="saveTagsForm"">
+			<div wicket:id="tags" class="row"></div>
+			<br>
+			<br>
+			<div class="row clearBoth">
+				<input type="submit" value="Update tags"/>
+	       	</div>
+		</form>
+		<br>
+	</wicket:enclosure>
 	
-	<fieldset>
+	
+	<fieldset class="clearBoth">
 	<input type="hidden" wicket:id="showSubmitLink"/>
 	<input type="hidden" wicket:id="showEditLink"/>
 	<input type="hidden" wicket:id="showSubmitUpdatedLink"/>
 	<input type="hidden" wicket:id="showNewLink"/>
+	<input type="hidden" wicket:id="showTags"/>
+	<input type="hidden" wicket:id="viewTags"/>
 	
 	<wicket:enclosure child="feedback">
 	<div class="row">
@@ -97,6 +115,12 @@
 	<div class="titleText"><label>Expected audience</label></div>
 	<div class="reviewField"><label wicket:id="expectedAudience"></label></div>
 	</div>
+	
+	<wicket:enclosure child="viewTags">
+		<div wicket:id="unmodifiableTags" class="row"></div>
+		<div class="row clearBoth">
+       	</div>
+	</wicket:enclosure>
 
 	<h2>Speakers</h2>
 	<div wicket:id="speakers">

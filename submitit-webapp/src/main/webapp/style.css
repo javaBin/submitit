@@ -295,3 +295,24 @@ ul {
 	border: 1px solid;
 	
 }
+
+.tagsDivs {
+	float:left;
+	margin-right:5px;
+	min-width:236px;
+}
+
+.clearBoth {
+	clear: both;	
+}
+
+.systemFeedback {
+	color:RED;
+	font-size:large;
+}
+
+.feedbackPanelINFO {
+	list-style-image:none;
+	list-style-type:none;
+	margin-left:-10px;
+}

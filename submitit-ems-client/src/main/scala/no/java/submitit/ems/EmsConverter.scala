@@ -80,7 +80,8 @@ class EmsConverter extends LoggHandling {
     session.setEquipment(presentation.equipment)
     session.setExpectedAudience(presentation.expectedAudience)
     session.setFeedback(presentation.feedback)
-
+    session.setKeywords(presentation.keywords)
+    
     session.setSpeakers(presentation.speakers.map(speaker => toEmsSpeaker(speaker)))
 
     val language = presentation.language match {
@@ -117,7 +118,8 @@ class EmsConverter extends LoggHandling {
     pres.equipment = session.getEquipment
     pres.expectedAudience = session.getExpectedAudience
     pres.feedback = session.getFeedback
-
+    pres.keywords = session.getKeywords.toList
+    
     pres.language = session.getLanguage.getIsoCode match {
       case "no" => Language.Norwegian
       case "en" => Language.English
