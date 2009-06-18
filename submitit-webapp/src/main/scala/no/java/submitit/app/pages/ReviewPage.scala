@@ -39,12 +39,18 @@ class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
 	  override def isVisible = !State().isNew && State().submitAllowed
   })
   
+  val showTags = SubmititApp.boolSetting("showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean") && !SubmititApp.boolSetting("globalEditAllowedBoolean") && !State().isNew && p.status != Status.NotApproved
+  
   add(new HiddenField("showTags") {
-  	override def isVisible = SubmititApp.boolSetting("showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean") && !SubmititApp.boolSetting("globalEditAllowedBoolean") && !State().isNew && p.status != Status.NotApproved
+  	override def isVisible = showTags
+  })
+  
+  add(new HiddenField("viewTags") {
+  	override def isVisible = !showTags
   })
 
   add(new Form("saveTagsForm"){
-    add(new panels.TagsPanel("tags", p))
+    add(new panels.TagsPanel("tags", p, true))
     override def onSubmit {
     	if(State().isNew) error("Not allowed to update an abstracts keywords, when abstract has not yet been saved. This should never be possible bacause of an invariant.")
     	else try {
@@ -105,6 +111,7 @@ class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
   add(new WikiMarkupText("outline", p.outline))
   add(new WikiMarkupText("equipment", p.equipment))
   add(new WikiMarkupText("expectedAudience", p.expectedAudience))
+  add(new panels.TagsPanel("unmodifiableTags", p, false))
   
   add(new ListView("speakers", p.speakers.reverse) {
     override def populateItem(item: ListItem) {
@@ -126,6 +133,6 @@ class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
   add(new PageLink("editLink",new IPageLink {
     def getPage = new SubmitPage(p)
     def getPageIdentity = classOf[SubmitPage]
-  }))    
+  }))
   
 }
