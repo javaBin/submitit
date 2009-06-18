@@ -14,11 +14,14 @@ import common.Implicits._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import org.apache.wicket.markup.html.form.Form
 import app.State
+import org.apache.wicket.markup.html.panel.FeedbackPanel
 
-class ReviewPage(p: Presentation) extends LayoutPage {
+class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
   
   val supportedExtensions = List("pdf, ppt, key, odp")
   val editAllowed = SubmititApp.boolSetting("globalEditAllowedBoolean")
+  
+  add(new FeedbackPanel("systemFeedback"))
   
   add(new HiddenField("showEditLink") {
 	  override def isVisible = State().isNew || editAllowed
@@ -37,13 +40,23 @@ class ReviewPage(p: Presentation) extends LayoutPage {
   })
   
   add(new HiddenField("showTags") {
-  	override def isVisible = SubmititApp.boolSetting("showUserSelectedKeywords") && !State().isNew
+  	override def isVisible = SubmititApp.boolSetting("showUserSelectedKeywordsInReviewPage") && !State().isNew && p.status != Status.NotApproved
   })
 
   add(new Form("saveTagsForm"){
     add(new panels.TagsPanel("tags", p))
     override def onSubmit {
-    	println(p.keywords)
+    	if(State().isNew) error("Not allowed to update an abstracts keywords, when abstract has not yet been saved. This should never be possible bacause of an invariant.")
+    	else try {
+    	  	State().backendClient.savePresentation(p)
+    	  	info("Updated the tags on your submission")
+        }
+    	  catch {
+    	    case e => {
+    	      logger.warn("Unable to save keywords on abstract", e)
+    	      info("Could not save specified tags. Failure has been logged. Please send your keywords to " + SubmititApp.getOfficialEmail)
+           }
+         }
     }
   })
   

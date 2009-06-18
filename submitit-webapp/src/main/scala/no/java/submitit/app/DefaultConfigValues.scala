@@ -28,8 +28,8 @@ private[app] object DefaultConfigValues {
 		"showSpecialMessageOnRejectBoolean" -> "false",
 		"allowIndidualFeedbackOnRejectBoolean" -> "false",
 		"showActualStatusInReviewPageBoolean" -> "false",
-		"userSelectedKeywords" -> "Keyword1, Keyword2, Keyword3, Keyword4, Keyword5, Keyword6 , Keyword7, Keyword 8, Keyword 9, Keyword 10",
-		"showUserSelectedKeywords" -> "true"
+		"userSelectedKeywords" -> "Core Java, Tools and Techniques, Java Frameworks, Frontend Technologies, Usability, Embedded, Mobile and Gaming, Enterprise Architecture and Integration, Web as a Platform, Architecture and Design, Agile and Software Engineering, Alternative Languages, Experience Reports, Innovative use of IT, Green IT, Domain-driven design",
+		"showUserSelectedKeywordsInReviewPage" -> "true"
   )
 
 }

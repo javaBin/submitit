@@ -20,6 +20,10 @@
 		<div class="infoHeader">Please read this</div>	
 		<label wicket:id="viewMessage"></label>
 	</div>
+
+	<div class="row">
+		<div wicket:id="systemFeedback" class="systemFeedback"></div>
+	</div>
 	 
 	<h2 align="left">Presentation status: <label wicket:id="status"></label></h2>
 	
@@ -40,11 +44,12 @@
 	<wicket:enclosure child="showTags">
 		<form wicket:id="saveTagsForm"">
 			<div wicket:id="tags" class="row"></div>
-			<div class="row">
+			<br>
+			<br>
+			<div class="row clearBoth">
 				<input type="submit" value="Update tags"/>
 	       	</div>
 		</form>
-		<br>
 		<br>
 	</wicket:enclosure>
 	

@@ -30,10 +30,6 @@ class Presentation extends Serializable {
     case PresentationFormat.LightningTalk => 15
   }
   
-  // Kind of a hack here, so that we may use scala.List in the model object. Need to convert to ArrayList through getters and setters.
-  def getKeywords: _root_.java.util.ArrayList[String] = keywords
-  def setKeywords(list: _root_.java.util.ArrayList[String]) = keywords = list.toArray.foldLeft(List[String]())((l, e) => e.toString :: l)
-  
   def init() {
     addSpeaker
   }
