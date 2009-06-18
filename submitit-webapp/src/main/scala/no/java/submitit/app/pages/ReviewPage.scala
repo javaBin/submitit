@@ -40,7 +40,7 @@ class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
   })
   
   add(new HiddenField("showTags") {
-  	override def isVisible = SubmititApp.boolSetting("showUserSelectedKeywordsInReviewPage") && !State().isNew && p.status != Status.NotApproved
+  	override def isVisible = SubmititApp.boolSetting("showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean") && !SubmititApp.boolSetting("globalEditAllowedBoolean") && !State().isNew && p.status != Status.NotApproved
   })
 
   add(new Form("saveTagsForm"){

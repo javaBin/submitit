@@ -19,7 +19,10 @@ class TagsPanel(id: String, presentation: Presentation) extends Panel(id) {
   val multipleCheckBox = new CheckBoxMultipleChoice("tagElement", new PropertyModel(presentationWrapper, "keywords"), SubmititApp.getListSetting("userSelectedKeywords"))
   multipleCheckBox.setPrefix("<div class=\"tagsDivs\">")
   multipleCheckBox.setSuffix("</div>")
+
   
+    
+    
   add(multipleCheckBox)
   
 }

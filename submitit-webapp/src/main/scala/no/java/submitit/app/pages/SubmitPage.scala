@@ -51,6 +51,7 @@ class SubmitPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage 
     addPropRC("level", pres, "level", Level.elements.toList)
     addPropRC("language", pres, "language", Language.elements.toList)
     addPropRC("format", pres, "format", PresentationFormat.elements.toList)
+    add(new panels.TagsPanel("tags", pres))
     
     if (!verified) add(captcha.image)
     
