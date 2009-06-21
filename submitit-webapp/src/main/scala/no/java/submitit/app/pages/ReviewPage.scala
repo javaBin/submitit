@@ -18,7 +18,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel
 
 class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
   
-  val supportedExtensions = List("pdf, ppt, key, odp")
+  val supportedExtensions = SubmititApp.getListSetting("presentationAllowedExtendsionFileTypes")
   val editAllowed = SubmititApp.boolSetting("globalEditAllowedBoolean")
   
   add(new FeedbackPanel("systemFeedback"))
@@ -37,6 +37,14 @@ class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
 
   add(new HiddenField("showNewLink") {
 	  override def isVisible = !State().isNew && State().submitAllowed
+  })
+  
+  add(new HiddenField("showRoom") {
+  	override def isVisible = SubmititApp.boolSetting("showRoomWhenApprovedBoolean") && p.status == Status.Approved && p.room != null
+  })
+  
+  add(new HiddenField("showTimeslot") {
+  	override def isVisible = SubmititApp.boolSetting("showTimeslotWhenApprovedBoolean") && p.status == Status.Approved && p.timeslot != null
   })
   
   val showTags = SubmititApp.boolSetting("showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean") && !SubmititApp.boolSetting("globalEditAllowedBoolean") && !State().isNew && p.status != Status.NotApproved
@@ -71,6 +79,8 @@ class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
                   else p.status.toString
   
   add(new Label("status", statusMsg))
+  add(new Label("room", p.room))
+  add(new Label("timeslot", p.timeslot))
   add(new NewPresentationLink("newPresentation"))
 
   val msg = if (State().isNew) SubmititApp.getSetting("reviewPageBeforeSubmitHtml")
@@ -93,14 +103,17 @@ class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
   
 
   val uploadForm = new FileUploadForm("extension", supportedExtensions) {
+    
     override def onSubmit {
       // what to do??
       info("Thank you for uploading your slides")
     }
     override def isVisible = SubmititApp.boolSetting("allowSlideUploadBoolen") && p.status == Status.Approved
   }
-  uploadForm.setMaxSize(Bytes.megabytes(2))
+  uploadForm.setMaxSize(Bytes.megabytes(SubmititApp.intSetting("presentationUploadSizeInMBInt")))
+  uploadForm.add(new Label("uploadSlideText", "Upload your slides (max " + SubmititApp.intSetting("presentationUploadSizeInMBInt") + " MB). Supported file types: "))
   add(uploadForm)
+  
   
   add(new Label("title", p.title))
   add(new WikiMarkupText("summary", p.summary))

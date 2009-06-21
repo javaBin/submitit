@@ -6,6 +6,8 @@ import common.Implicits._
 import common.{IOUtils, LoggHandling}
 import model._
 import common.IOUtils._
+import org.joda.time.Interval
+import org.joda.time.format.DateTimeFormat
 
 import xml._
 
@@ -119,6 +121,14 @@ class EmsConverter extends LoggHandling {
     pres.expectedAudience = session.getExpectedAudience
     pres.feedback = session.getFeedback
     pres.keywords = session.getKeywords.toList
+    pres.room = if (session.getRoom != null) session.getRoom.getName else null
+    pres.timeslot = if (session.getTimeslot != null) formatInterval(session.getTimeslot) else null
+    
+    def formatInterval(interval: Interval) = {
+    	val dateFormatter = DateTimeFormat.shortDate();
+    	val timeFormatter = DateTimeFormat.shortTime();
+    	dateFormatter.print(interval.getStart()) + " " + timeFormatter.print(interval.getStart()) + " - " + timeFormatter.print(interval.getEnd());    
+    }
     
     pres.language = session.getLanguage.getIsoCode match {
       case "no" => Language.Norwegian

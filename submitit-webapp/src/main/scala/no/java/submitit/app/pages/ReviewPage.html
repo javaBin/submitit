@@ -27,11 +27,23 @@
 	 
 	<h2 align="left">Presentation status: <label wicket:id="status"></label></h2>
 	
+	<wicket:enclosure child="showTimeslot">
+		<div class="row">
+			<div class="titleText">Timeslot:</div> <label wicket:id="timeslot"></label>
+       	</div>
+	</wicket:enclosure>	
+	
+	<wicket:enclosure child="showRoom">
+		<div class="row">
+			<div class="titleText">Room:</div> <label wicket:id="room"></label>
+       	</div>
+	</wicket:enclosure>	
+	
 	<wicket:enclosure child="simpleUpload">
-		<form wicket:id="simpleUpload"">
+		<form wicket:id="simpleUpload">
 			<div class="row">
 				<div class="titleText">
-		        	<label>Upload your slides (max 2MB). Supported file types:&nbsp;</label><label wicket:id="extension"></label>.
+		        	<label wicket:id="uploadSlideText"></label><label wicket:id="extension"></label>.
 		        </div>
 		        <input wicket:id="fileInput" id="upload" type="file"/>
 		    </div>
@@ -42,12 +54,12 @@
 	</wicket:enclosure>
 	
 	<wicket:enclosure child="showTags">
-		<form wicket:id="saveTagsForm"">
+		<form wicket:id="saveTagsForm">
 			<div wicket:id="tags" class="row"></div>
 			<br>
 			<br>
 			<div class="row clearBoth">
-				<input type="submit" value="Update tags"/>
+				<input type="submit" value="Update topics"/>
 	       	</div>
 		</form>
 		<br>
@@ -61,6 +73,8 @@
 	<input type="hidden" wicket:id="showNewLink"/>
 	<input type="hidden" wicket:id="showTags"/>
 	<input type="hidden" wicket:id="viewTags"/>
+	<input type="hidden" wicket:id="showRoom"/>
+	<input type="hidden" wicket:id="showTimeslot"/>
 	
 	<wicket:enclosure child="feedback">
 	<div class="row">
