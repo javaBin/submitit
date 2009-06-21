@@ -27,7 +27,9 @@ private[app] object DefaultConfigValues {
 		"userSelectedKeywords" -> "Core Java, Tools and Techniques, Java Frameworks, Frontend Technologies, Usability, Embedded, Mobile and Gaming, Enterprise Architecture and Integration, Web as a Platform, Architecture and Design, Agile and Software Engineering, Alternative Languages, Experience Reports, Innovative use of IT, Green IT, Domain-driven design",
 		"showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean" -> "true",
     "presentationUploadSizeInMBInt" -> "5",
-    "presentationAllowedExtendsionFileTypes" -> "pdf, ppt, key, odp"
+    "presentationAllowedExtendsionFileTypes" -> "pdf, ppt, key, odp",
+    "showRoomWhenApprovedBoolean" -> "false",
+    "showTimeslotWhenApprovedBoolean" -> "false"
   )
 
 }

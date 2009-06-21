@@ -27,6 +27,18 @@
 	 
 	<h2 align="left">Presentation status: <label wicket:id="status"></label></h2>
 	
+	<wicket:enclosure child="showTimeslot">
+		<div class="row">
+			<div class="titleText">Timeslot:</div> <label wicket:id="timeslot"></label>
+       	</div>
+	</wicket:enclosure>	
+	
+	<wicket:enclosure child="showRoom">
+		<div class="row">
+			<div class="titleText">Room:</div> <label wicket:id="room"></label>
+       	</div>
+	</wicket:enclosure>	
+	
 	<wicket:enclosure child="simpleUpload">
 		<form wicket:id="simpleUpload">
 			<div class="row">
@@ -61,6 +73,8 @@
 	<input type="hidden" wicket:id="showNewLink"/>
 	<input type="hidden" wicket:id="showTags"/>
 	<input type="hidden" wicket:id="viewTags"/>
+	<input type="hidden" wicket:id="showRoom"/>
+	<input type="hidden" wicket:id="showTimeslot"/>
 	
 	<wicket:enclosure child="feedback">
 	<div class="row">
