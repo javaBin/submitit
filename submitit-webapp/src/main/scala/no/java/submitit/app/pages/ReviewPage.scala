@@ -15,11 +15,12 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel
 import org.apache.wicket.markup.html.form.Form
 import app.State
 import org.apache.wicket.markup.html.panel.FeedbackPanel
+import DefaultConfigValues._
 
 class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
   
-  val supportedExtensions = SubmititApp.getListSetting("presentationAllowedExtendsionFileTypes")
-  val editAllowed = SubmititApp.boolSetting("globalEditAllowedBoolean")
+  val supportedExtensions = SubmititApp.getListSetting(presentationAllowedExtendsionFileTypes)
+  val editAllowed = SubmititApp.boolSetting(globalEditAllowedBoolean)
   
   add(new FeedbackPanel("systemFeedback"))
   
@@ -40,14 +41,14 @@ class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
   })
   
   add(new HiddenField("showRoom") {
-  	override def isVisible = SubmititApp.boolSetting("showRoomWhenApprovedBoolean") && p.status == Status.Approved && p.room != null
+  	override def isVisible = SubmititApp.boolSetting(showRoomWhenApprovedBoolean) && p.status == Status.Approved && p.room != null
   })
   
   add(new HiddenField("showTimeslot") {
-  	override def isVisible = SubmititApp.boolSetting("showTimeslotWhenApprovedBoolean") && p.status == Status.Approved && p.timeslot != null
+  	override def isVisible = SubmititApp.boolSetting(showTimeslotWhenApprovedBoolean) && p.status == Status.Approved && p.timeslot != null
   })
   
-  val showTags = SubmititApp.boolSetting("showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean") && !SubmititApp.boolSetting("globalEditAllowedBoolean") && !State().isNew && p.status != Status.NotApproved
+  val showTags = SubmititApp.boolSetting(showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean) && !SubmititApp.boolSetting(globalEditAllowedBoolean) && !State().isNew && p.status != Status.NotApproved
   
   add(new HiddenField("showTags") {
   	override def isVisible = showTags
@@ -75,7 +76,7 @@ class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
   })
   
   val statusMsg = if (!State().fromServer) "Not submitted"
-                  else if (!SubmititApp.boolSetting("showActualStatusInReviewPageBoolean")) Status.Pending.toString
+                  else if (!SubmititApp.boolSetting(showActualStatusInReviewPageBoolean)) Status.Pending.toString
                   else p.status.toString
   
   add(new Label("status", statusMsg))
@@ -83,22 +84,22 @@ class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
   add(new Label("timeslot", p.timeslot))
   add(new NewPresentationLink("newPresentation"))
 
-  val msg = if (State().isNew) SubmititApp.getSetting("reviewPageBeforeSubmitHtml")
-  	else if (!State().isNew && !editAllowed) SubmititApp.getSetting("reviewPageViewSubmittedHthml")
-  	else if (!State().isNew && editAllowed) SubmititApp.getSetting("reviewPageViewSubmittedChangeAllowedHthml")
-  	else SubmititApp.getSetting("reviewPageViewSubmittedHthml")
+  val msg = if (State().isNew) SubmititApp.getSetting(reviewPageBeforeSubmitHtml)
+  	else if (!State().isNew && !editAllowed) SubmititApp.getSetting(reviewPageViewSubmittedHthml)
+  	else if (!State().isNew && editAllowed) SubmititApp.getSetting(reviewPageViewSubmittedChangeAllowedHthml)
+  	else SubmititApp.getSetting(reviewPageViewSubmittedHthml)
 
   add(new HtmlLabel("viewMessage", msg))
 
   val feedback = if(p.status == Status.NotApproved && 
-                   SubmititApp.boolSetting("showSpecialMessageOnRejectBoolean") &&
-  								 !(SubmititApp.boolSetting("allowIndidualFeedbackOnRejectBoolean") && p.feedback != null)) { 
-    							    SubmititApp.getSetting("feedbackRejected")
+                   SubmititApp.boolSetting(showSpecialMessageOnRejectBoolean) &&
+  								 !(SubmititApp.boolSetting(allowIndidualFeedbackOnRejectBoolean) && p.feedback != null)) { 
+    							    SubmititApp.getSetting(feedbackRejected)
                	 }
                  else p.feedback
   
   add(new MultiLineLabel("feedback", feedback) {
-    override def isVisible = SubmititApp.boolSetting("showFeedbackBoolean") && feedback != null && feedback != ""
+    override def isVisible = SubmititApp.boolSetting(showFeedbackBoolean) && feedback != null && feedback != ""
   })
   
 
@@ -108,10 +109,10 @@ class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
       // what to do??
       info("Thank you for uploading your slides")
     }
-    override def isVisible = SubmititApp.boolSetting("allowSlideUploadBoolen") && p.status == Status.Approved
+    override def isVisible = SubmititApp.boolSetting(allowSlideUploadBoolen) && p.status == Status.Approved
   }
-  uploadForm.setMaxSize(Bytes.megabytes(SubmititApp.intSetting("presentationUploadSizeInMBInt")))
-  uploadForm.add(new Label("uploadSlideText", "Upload your slides (max " + SubmititApp.intSetting("presentationUploadSizeInMBInt") + " MB). Supported file types: "))
+  uploadForm.setMaxSize(Bytes.megabytes(SubmititApp.intSetting(presentationUploadSizeInMBInt)))
+  uploadForm.add(new Label("uploadSlideText", "Upload your slides (max " + SubmititApp.intSetting(presentationUploadSizeInMBInt) + " MB). Supported file types: "))
   add(uploadForm)
   
   

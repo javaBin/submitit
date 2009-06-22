@@ -14,6 +14,7 @@ import org.apache.wicket.Session
 import _root_.java.util.Properties
 import org.apache.wicket.Application._
 import org.apache.wicket.settings.IExceptionSettings
+import DefaultConfigValues._
 
 class SubmititApp extends WebApplication with LoggHandling {
 
@@ -28,11 +29,15 @@ class SubmititApp extends WebApplication with LoggHandling {
 
     val elems = props.keys
     var theMap = DefaultConfigValues.configValues
+    
     for (i <- 0 to props.size() - 1) {
       val e = elems.nextElement.asInstanceOf[String]
-      if(theMap contains e) theMap = theMap + (e -> props.getProperty(e).asInstanceOf[String])
-      else logger.info("Removing log value no longer in use:  " + e)
+      DefaultConfigValues getKey(e) match {
+        case Some(key) if theMap.contains(key) => theMap = theMap + (key -> props.getProperty(e).asInstanceOf[String])
+        case _ => logger.info("Removing log value no longer in use:  " + e)
+      }
     }
+    
     SubmititApp.properties = theMap
 
     mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
@@ -43,7 +48,7 @@ class SubmititApp extends WebApplication with LoggHandling {
   }
 
   private def backendClient: BackendClient = {
-    if (SubmititApp.emsUrl != null) new EmsClient(SubmititApp.getSetting("eventName"), SubmititApp.emsUrl, SubmititApp.emsUsername, SubmititApp.emsPwd)
+    if (SubmititApp.emsUrl != null) new EmsClient(SubmititApp.getSetting(eventName), SubmititApp.emsUrl, SubmititApp.emsUsername, SubmititApp.emsPwd)
     else submitit.common.BackendClientMock
   }
 
@@ -69,16 +74,12 @@ class MyRequestCycle(application: WebApplication, request: WebRequest, response:
 
 object SubmititApp {
   
-  
-
-  
-  
   private val adminPassPhrase = "adminPassPhrase"
   private val emsUrlKey = "emsUrl"
   private val emsUsernameKey = "emsUser"
   private val emsPwdKey = "emsPwd"
   
-  private var properties: Map[String, String] = _
+  private var properties: Map[ConfigKey, String] = _
   private var adminPass: String = _
   private var emsUrl: String = _
   private var emsUsername : String = _
@@ -87,9 +88,10 @@ object SubmititApp {
 
   def props = properties
   
-  def props_=(props: Map[String, String]) {
+  def props_=(props: Map[ConfigKey, String]) {
     this.properties = props
-    val map = props + 
+    val stringProps = props.foldLeft(Map[String, String]()){(m, tuple) => m + (tuple._1.toString -> tuple._2)}
+    val map = stringProps + 
       (adminPassPhrase -> adminPass) + 
       (emsUrlKey -> emsUrl) + 
       (emsUsernameKey -> emsUsername) +
@@ -97,33 +99,33 @@ object SubmititApp {
     utils.PropertyIOUtils.writeResource(propertyFileName, map)
   }
   
-  def getSetting(key: String) = props get key match {
+  def getSetting(key: ConfigKey) = props get key match {
     case Some(s) if s != "" => s
     case None => null
     case _ => null
   }
   
   def getBccEmailList = {
-    getSetting("emailBccCommaSeparatedList") match {
+    getSetting(emailBccCommaSeparatedList) match {
       case null => new Array[String](0)
       case email => email.split(",")
     }
   }
   
   def getOfficialEmail = {
-    getSetting("officialEmailReplyTo")
+    getSetting(officialEmailReplyTo)
   }
   
-  def intSetting(key: String) = getSetting(key).toInt
+  def intSetting(key: ConfigKey) = getSetting(key).toInt
   
-  def boolSetting(key: String) = _root_.java.lang.Boolean.parseBoolean(getSetting(key))
+  def boolSetting(key: ConfigKey) = _root_.java.lang.Boolean.parseBoolean(getSetting(key))
   
-  def getListSetting(key: String, separator: Char) = getSetting(key) match {
+  def getListSetting(key: ConfigKey, separator: Char) = getSetting(key) match {
     case s: String => s.split(separator).toList.map(_.trim)
     case null => Nil
   }
 
-  def getListSetting(key: String): List[String] = getListSetting(key, ',')
+  def getListSetting(key: ConfigKey): List[String] = getListSetting(key, ',')
   
   def authenticates(password: Object) = adminPass == password
   

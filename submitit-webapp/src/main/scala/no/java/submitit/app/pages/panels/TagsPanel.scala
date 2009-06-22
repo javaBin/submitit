@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.basic.Label
 import common.Implicits._
 import model.Presentation
 import _root_.java.io.Serializable
+import DefaultConfigValues._
 
 class TagsPanel(id: String, presentation: Presentation, checksEnabled: Boolean) extends Panel(id) {
   
@@ -22,7 +23,7 @@ class TagsPanel(id: String, presentation: Presentation, checksEnabled: Boolean) 
       def setKeywords(list: _root_.java.util.ArrayList[String]) = presentation.keywords = list.toArray.foldLeft(List[String]())((l, e) => e.toString :: l)
   }
   
-  val multipleCheckBox = new CheckBoxMultipleChoice("tagElement", new PropertyModel(presentationWrapper, "keywords"), SubmititApp.getListSetting("userSelectedKeywords", '|')) {
+  val multipleCheckBox = new CheckBoxMultipleChoice("tagElement", new PropertyModel(presentationWrapper, "keywords"), SubmititApp.getListSetting(userSelectedKeywords, '|')) {
     override def onComponentTag(tag: ComponentTag) {
       super.onComponentTag(tag)
       setEnabled(checksEnabled)

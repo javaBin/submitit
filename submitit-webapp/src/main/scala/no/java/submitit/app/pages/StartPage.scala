@@ -1,10 +1,11 @@
 package no.java.submitit.app.pages
 
 import org.apache.wicket.markup.html.basic._
+import DefaultConfigValues._
 
 class StartPage extends LayoutPage {
   
-  if (SubmititApp.boolSetting("submitAllowedBoolean")) {
+  if (SubmititApp.boolSetting(submitAllowedBoolean)) {
     
     if(State().isNew) {
       setResponsePage(new SubmitPage(State().currentPresentation))
@@ -14,7 +15,7 @@ class StartPage extends LayoutPage {
     }
   }
   else {
-    val res = new Label("info", SubmititApp.getSetting("submitNotAllowedHtml"))
+    val res = new Label("info", SubmititApp.getSetting(submitNotAllowedHtml))
     res.setEscapeModelStrings(false)
     add(res)
   }

@@ -5,6 +5,7 @@ import org.apache.wicket.protocol.http.WebSession
 import org.apache.wicket.Session
 import no.java.submitit.common._
 import no.java.submitit.model._
+import DefaultConfigValues._
 
 class State(request: Request, val backendClient: BackendClient) extends WebSession(request) {
   
@@ -23,13 +24,13 @@ class State(request: Request, val backendClient: BackendClient) extends WebSessi
   
   def isNew = submitAllowed && !fromServer
   
-  private def notNewModifyAllowed = !isNew && SubmititApp.boolSetting("globalEditAllowedBoolean")
+  private def notNewModifyAllowed = !isNew && SubmititApp.boolSetting(globalEditAllowedBoolean)
   
-  def submitAllowed = invitation || SubmititApp.boolSetting("submitAllowedBoolean")
+  def submitAllowed = invitation || SubmititApp.boolSetting(submitAllowedBoolean)
 
-  def currentPresentationSubmitAllowed = submitAllowed || (!isNew && SubmititApp.boolSetting("globalEditAllowedBoolean"))
+  def currentPresentationSubmitAllowed = submitAllowed || (!isNew && SubmititApp.boolSetting(globalEditAllowedBoolean))
   
-  def notNewModifyNotAllowedNewAllowed = !isNew && !notNewModifyAllowed && SubmititApp.boolSetting("submitAllowedBoolean")
+  def notNewModifyNotAllowedNewAllowed = !isNew && !notNewModifyAllowed && SubmititApp.boolSetting(submitAllowedBoolean)
   
   private var presentation: Presentation = _
   
