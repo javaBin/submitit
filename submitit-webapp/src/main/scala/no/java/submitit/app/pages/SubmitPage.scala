@@ -17,6 +17,7 @@ import org.apache.wicket.extensions.ajax.markup.html.modal._
 import org.apache.wicket.markup.html.link._
 import no.java.submitit.app._
 import common.Implicits._
+import DefaultConfigValues._
 
 
 class SubmitPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
@@ -41,7 +42,7 @@ class SubmitPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage 
     val verified = State().verifiedWithCaptha
     
     add(new FeedbackPanel("feedback"))
-    add(new widgets.HtmlLabel("infoText", SubmititApp.getSetting("editPageInfoTextHtml")))
+    add(new widgets.HtmlLabel("infoText", SubmititApp.getSetting(editPageInfoTextHtml)))
     addPropTF("title", pres, "title")
     addPropTA("summary", pres, "summary")
     addPropTA("theabstract", pres, "abstr")

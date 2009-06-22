@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.mail.{Message,Session,Transport}
 import javax.mail.internet.MimeMessage
 import org.apache.wicket.markup.html.form.HiddenField
+import DefaultConfigValues._
 
 class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
 
@@ -30,7 +31,7 @@ class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
   val url = {
     val backendClient = State().backendClient
     val uniqueId = backendClient.savePresentation(pres)
-    SubmititApp.getSetting("submititBaseUrl") + "/lookupPresentation?id=" + uniqueId
+    SubmititApp.getSetting(submititBaseUrl) + "/lookupPresentation?id=" + uniqueId
   }
   
   add(new ExternalLink("confirmUrl", url, url))
@@ -44,11 +45,11 @@ class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
     }
   })
 
-  if (SubmititApp.getSetting("smtpHost") != null) sendConfirmationMail(pres, url)
+  if (SubmititApp.getSetting(smtpHost) != null) sendConfirmationMail(pres, url)
   
   def sendConfirmationMail(pres: Presentation, url: String) {
     val props = new Properties
-    props.put("mail.smtp.host", SubmititApp.getSetting("smtpHost"))
+    props.put("mail.smtp.host", SubmititApp.getSetting(smtpHost))
     
     props.put("mail.from", SubmititApp.getOfficialEmail)
     val session = Session.getInstance(props, null)

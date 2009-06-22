@@ -8,6 +8,7 @@ import common.Implicits._
 import scala.collection.jcl.Conversions._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import _root_.java.io.Serializable
+import DefaultConfigValues._
 
 class PropertyModificationPage(it: Boolean) extends LayoutPage {
   
@@ -22,8 +23,8 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
       var list = List[Element]()
       val listView = new ListView("props", props.toList) {
         override def populateItem(item: ListItem) {
-          val values = item.getModelObject.asInstanceOf[(String, String)]
-          val element = new Element(values._1, values._2)
+          val values = item.getModelObject.asInstanceOf[(ConfigKey, String)]
+          val element = new Element(values._1.toString, values._2)
           item.add(new Label("key", new PropertyModel(element, "key")))
           item.add(new TextField("value", new PropertyModel(element, "value")))
           list = element :: list
@@ -32,7 +33,7 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
       add(listView)
     
       override def onSubmit {
-        val newValues = list.foldRight(Map[String, String]())((e, m) => m + (e.key -> e.value))
+        val newValues = list.foldRight(Map[ConfigKey, String]())((e, m) => m + (DefaultConfigValues.key(e.key) -> e.value))
         SubmititApp.props = newValues
         info("Updated")
         PropertyModificationPage.this.replace(createForm)
