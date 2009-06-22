@@ -15,7 +15,7 @@ import _root_.java.util.Properties
 import org.apache.wicket.Application._
 import org.apache.wicket.settings.IExceptionSettings
 
-class SubmititApp extends WebApplication {
+class SubmititApp extends WebApplication with LoggHandling {
 
   override def init() {
     SubmititApp.propertyFileName = super.getServletContext.getInitParameter("submitit.properties")
@@ -30,7 +30,8 @@ class SubmititApp extends WebApplication {
     var theMap = DefaultConfigValues.configValues
     for (i <- 0 to props.size() - 1) {
       val e = elems.nextElement.asInstanceOf[String]
-      theMap = theMap + (e -> props.getProperty(e).asInstanceOf[String])
+      if(theMap contains e) theMap = theMap + (e -> props.getProperty(e).asInstanceOf[String])
+      else logger.info("Removing log value no longer in use:  " + e)
     }
     SubmititApp.properties = theMap
 
