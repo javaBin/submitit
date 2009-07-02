@@ -20,7 +20,7 @@ import DefaultConfigValues._
 class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
   
   val supportedExtensions = SubmititApp.getListSetting(presentationAllowedExtendsionFileTypes)
-  val editAllowed = SubmititApp.boolSetting(globalEditAllowedBoolean)
+  val editAllowed = SubmititApp.boolSetting(globalEditAllowedBoolean) || (p.status == Status.Approved && SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))
   
   add(new FeedbackPanel("systemFeedback"))
   

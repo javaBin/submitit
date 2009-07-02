@@ -28,8 +28,6 @@ class State(request: Request, val backendClient: BackendClient) extends WebSessi
   
   def submitAllowed = invitation || SubmititApp.boolSetting(submitAllowedBoolean)
 
-  def currentPresentationSubmitAllowed = submitAllowed || (!isNew && SubmititApp.boolSetting(globalEditAllowedBoolean))
-  
   def notNewModifyNotAllowedNewAllowed = !isNew && !notNewModifyAllowed && SubmititApp.boolSetting(submitAllowedBoolean)
   
   private var presentation: Presentation = _

@@ -39,6 +39,7 @@ object DefaultConfigValues {
 	case object reviewPageBeforeSubmitHtml extends ConfigKey
 	case object headerText extends ConfigKey
 	case object submitNotAllowedHtml extends ConfigKey
+	case object globalEditAllowedForAcceptedBoolean extends ConfigKey
   
   private [app] val configValues = Map(
 		showFeedbackBoolean -> "false",
@@ -67,7 +68,8 @@ object DefaultConfigValues {
 		reviewPageViewSubmittedHthml -> """If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a>""",
 		reviewPageBeforeSubmitHtml -> """Your presentation has not yet been submittet. Please review, and press the "Submit presentation" link when you are ready.""",
 		headerText -> "Submit your JavaZone 2009 presentation",
-		submitNotAllowedHtml -> "Call for papers is currently not open."
+		submitNotAllowedHtml -> "Call for papers is currently not open.",
+		globalEditAllowedForAcceptedBoolean -> "true"
   )
 
 }
