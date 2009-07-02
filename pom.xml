@@ -8,7 +8,7 @@
   </parent>
   <groupId>no.java.submitit</groupId>
   <artifactId>wicket-submitit</artifactId>
-  <version>1.0.7</version>
+  <version>1.0.7-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>wicket-submitit</name>
   <inceptionYear>2008</inceptionYear>
