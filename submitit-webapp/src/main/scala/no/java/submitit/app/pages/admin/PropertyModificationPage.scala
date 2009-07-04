@@ -49,9 +49,26 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
     
       override def onSubmit {
         val newValues = list.foldRight(Map[ConfigKey, String]())((e, m) => m + (DefaultConfigValues.key(e.key) -> e.value))
-        SubmititApp.props = newValues
-        info("Updated")
-        PropertyModificationPage.this.replace(createForm)
+        
+        val errors = newValues.foldLeft(Map[String, String]())((e, m) => { 
+          try {
+          	m._1.parser(m._2)
+          	e
+          } catch {
+          	case ex => e + (m._1.name -> ex.getMessage)
+          }
+        })
+        
+        if(errors.isEmpty) {
+        	SubmititApp.props = newValues
+        	info("Updated")
+        	PropertyModificationPage.this.replace(createForm)
+         }
+        else {
+          errors.foreach { el =>
+          	error(el._1 + " gave parse errors " + el._2)
+          }
+        }
       }
     }
   }

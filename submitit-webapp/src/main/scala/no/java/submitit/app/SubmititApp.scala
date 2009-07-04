@@ -105,7 +105,7 @@ object SubmititApp {
   
   def props_=(props: Map[ConfigKey, String]) {
     this.properties = props
-    val stringProps = props.foldLeft(Map[String, String]()){(m, tuple) => m + (tuple._1.toString -> tuple._2)}
+    val stringProps = props.foldLeft(Map[String, String]()){(m, tuple) => m + (tuple._1.name -> tuple._2)}
     val map = stringProps + 
       (adminPassPhrase -> adminPass) + 
       (emsUrlKey -> emsUrl) + 
