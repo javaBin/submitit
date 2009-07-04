@@ -23,38 +23,45 @@ object DefaultConfigValues {
   
   private [app] def key(key: String) = configKeyList.find(_.toString == key).getOrElse(throw new IllegalArgumentException("Should not happen"))
   
-	sealed abstract case class ConfigKey() {
+  private val booleanParse = (x: String) => x.toBoolean
+  private val intParse = (x: String) => x.toInt
+  
+	sealed abstract case class ConfigKey(val parser: String => Any) {
+	  def this() {this((x: String) => null)}
+   
 	  configKeyList = this :: configKeyList
+   
+	  val name = """\w+""".r.findFirstIn(toString).get
 	}
  
-	case object showFeedbackBoolean extends ConfigKey
-	case object showSpecialMessageOnRejectBoolean extends ConfigKey
-	case object showActualStatusInReviewPageBoolean extends ConfigKey
+	case object showFeedbackBoolean extends ConfigKey(booleanParse)
+	case object showSpecialMessageOnRejectBoolean extends ConfigKey(booleanParse)
+	case object showActualStatusInReviewPageBoolean extends ConfigKey(booleanParse)
 	case object passPhraseSubmitSpecialURL extends ConfigKey
 	case object captchaLengthInt extends ConfigKey
-	case object allowSlideUploadBoolen extends ConfigKey
-	case object showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean extends ConfigKey
+	case object allowSlideUploadBoolen extends ConfigKey(booleanParse)
+	case object showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean extends ConfigKey(booleanParse)
 	case object eventName extends ConfigKey
-	case object submititBaseUrl extends ConfigKey
-	case object presentationUploadSizeInMBInt extends ConfigKey
+	case object submititBaseUrl extends ConfigKey()
+	case object presentationUploadSizeInMBInt extends ConfigKey(intParse)
 	case object officialEmailReplyTo extends ConfigKey
-	case object allowIndidualFeedbackOnRejectBoolean extends ConfigKey
+	case object allowIndidualFeedbackOnRejectBoolean extends ConfigKey(booleanParse)
 	case object smtpHost extends ConfigKey
 	case object presentationAllowedExtendsionFileTypes extends ConfigKey
-	case object showRoomWhenApprovedBoolean extends ConfigKey
+	case object showRoomWhenApprovedBoolean extends ConfigKey(booleanParse)
 	case object emailBccCommaSeparatedList extends ConfigKey
-	case object submitAllowedBoolean extends ConfigKey
+	case object submitAllowedBoolean extends ConfigKey(booleanParse)
 	case object editPageInfoTextHtml extends ConfigKey
 	case object reviewPageViewSubmittedChangeAllowedHthml extends ConfigKey
-	case object globalEditAllowedBoolean extends ConfigKey
+	case object globalEditAllowedBoolean extends ConfigKey(booleanParse)
 	case object feedbackRejected extends ConfigKey
 	case object userSelectedKeywords extends ConfigKey
-	case object showTimeslotWhenApprovedBoolean extends ConfigKey
+	case object showTimeslotWhenApprovedBoolean extends ConfigKey(booleanParse)
 	case object reviewPageViewSubmittedHthml extends ConfigKey
 	case object reviewPageBeforeSubmitHtml extends ConfigKey
 	case object headerText extends ConfigKey
 	case object submitNotAllowedHtml extends ConfigKey
-	case object globalEditAllowedForAcceptedBoolean extends ConfigKey
+	case object globalEditAllowedForAcceptedBoolean extends ConfigKey(booleanParse)
   
   private [app] val configValues = Map(
 		showFeedbackBoolean -> "false",
