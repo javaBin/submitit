@@ -24,6 +24,7 @@ import collection.jcl.Conversions._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import _root_.java.io.Serializable
 import DefaultConfigValues._
+import collection.mutable.LinkedHashMap
 
 class PropertyModificationPage(it: Boolean) extends LayoutPage {
   
@@ -38,19 +39,24 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
       var list = List[Element]()
       val listView = new ListView("props", props.toList) {
         override def populateItem(item: ListItem) {
-          val values = item.getModelObject.asInstanceOf[(ConfigKey, String)]
-          val element = new Element(values._1.toString, values._2)
+          val (key, value) = item.getModelObject.asInstanceOf[(ConfigKey, String)]
+          val element = new Element(key.toString, value)
+          val field = new TextField("value", new PropertyModel(element, "value"))
+          if(!key.editable) field.setEnabled(false)
+
           item.add(new Label("key", new PropertyModel(element, "key")))
-          item.add(new TextField("value", new PropertyModel(element, "value")))
+          item.add(new Label("description", new Model(key.description)))
+          item.add(field)
+          
           list = element :: list
         }
       }
       add(listView)
     
       override def onSubmit {
-        val newValues = list.foldRight(Map[ConfigKey, String]())((e, m) => m + (DefaultConfigValues.key(e.key) -> e.value))
+        val newValues = list.foldRight(LinkedHashMap[ConfigKey, String]())((e, m) => m + (DefaultConfigValues.key(e.key) -> e.value))
         
-        val errors = newValues.foldLeft(Map[String, String]())((e, m) => { 
+        val errors = newValues.foldLeft(LinkedHashMap[String, String]())((e, m) => { 
           try {
           	m._1.parser(m._2)
           	e

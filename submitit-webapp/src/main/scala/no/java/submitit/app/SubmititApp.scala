@@ -49,7 +49,7 @@ class SubmititApp extends WebApplication with LoggHandling {
       val e = elems.nextElement.asInstanceOf[String]
       DefaultConfigValues getKey(e) match {
         case Some(key) if theMap.contains(key) => theMap = theMap + (key -> props.getProperty(e).asInstanceOf[String])
-        case _ => logger.info("Removing log value no longer in use:  " + e)
+        case _ => logger.info("Removing property value no longer in use:  " + e)
       }
     }
     
@@ -94,7 +94,7 @@ object SubmititApp {
   private val emsUsernameKey = "emsUser"
   private val emsPwdKey = "emsPwd"
   
-  private var properties: Map[ConfigKey, String] = _
+  private var properties: collection.Map[ConfigKey, String] = _
   private var adminPass: String = _
   private var emsUrl: String = _
   private var emsUsername : String = _
@@ -103,7 +103,7 @@ object SubmititApp {
 
   def props = properties
   
-  def props_=(props: Map[ConfigKey, String]) {
+  def props_=(props: collection.Map[ConfigKey, String]) {
     this.properties = props
     val stringProps = props.foldLeft(Map[String, String]()){(m, tuple) => m + (tuple._1.name -> tuple._2)}
     val map = stringProps + 
@@ -114,10 +114,9 @@ object SubmititApp {
     utils.PropertyIOUtils.writeResource(propertyFileName, map)
   }
   
-  def getSetting(key: ConfigKey) = props get key match {
-    case Some(s) if s != "" => s
-    case None => null
-    case _ => null
+  def getSetting(key: ConfigKey) = props.get(key).get match {
+    case s: String => s.trim
+    case null => null
   }
   
   def getBccEmailList = {
@@ -131,9 +130,9 @@ object SubmititApp {
     getSetting(officialEmailReplyTo)
   }
   
-  def intSetting(key: ConfigKey) = getSetting(key).toInt
+  def intSetting(key: ConfigKey) = DefaultConfigValues.intParse(getSetting(key))
   
-  def boolSetting(key: ConfigKey) = _root_.java.lang.Boolean.parseBoolean(getSetting(key))
+  def boolSetting(key: ConfigKey) = DefaultConfigValues.booleanParse(getSetting(key))
   
   def getListSetting(key: ConfigKey, separator: Char) = getSetting(key) match {
     case s: String => s.split(separator).toList.map(_.trim)
