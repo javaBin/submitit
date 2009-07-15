@@ -49,7 +49,7 @@ class SubmititApp extends WebApplication with LoggHandling {
       val e = elems.nextElement.asInstanceOf[String]
       DefaultConfigValues getKey(e) match {
         case Some(key) if theMap.contains(key) => theMap = theMap + (key -> props.getProperty(e).asInstanceOf[String])
-        case _ => logger.info("Removing log value no longer in use:  " + e)
+        case _ => logger.info("Removing property value no longer in use:  " + e)
       }
     }
     
