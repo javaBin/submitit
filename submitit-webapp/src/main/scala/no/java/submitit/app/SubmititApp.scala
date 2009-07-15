@@ -94,7 +94,7 @@ object SubmititApp {
   private val emsUsernameKey = "emsUser"
   private val emsPwdKey = "emsPwd"
   
-  private var properties: Map[ConfigKey, String] = _
+  private var properties: collection.Map[ConfigKey, String] = _
   private var adminPass: String = _
   private var emsUrl: String = _
   private var emsUsername : String = _
@@ -103,7 +103,7 @@ object SubmititApp {
 
   def props = properties
   
-  def props_=(props: Map[ConfigKey, String]) {
+  def props_=(props: collection.Map[ConfigKey, String]) {
     this.properties = props
     val stringProps = props.foldLeft(Map[String, String]()){(m, tuple) => m + (tuple._1.name -> tuple._2)}
     val map = stringProps + 

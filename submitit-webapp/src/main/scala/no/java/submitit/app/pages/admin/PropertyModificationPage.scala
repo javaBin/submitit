@@ -24,6 +24,7 @@ import scala.collection.jcl.Conversions._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import _root_.java.io.Serializable
 import DefaultConfigValues._
+import collection.mutable.LinkedHashMap
 
 class PropertyModificationPage(it: Boolean) extends LayoutPage {
   
@@ -53,9 +54,9 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
       add(listView)
     
       override def onSubmit {
-        val newValues = list.foldRight(Map[ConfigKey, String]())((e, m) => m + (DefaultConfigValues.key(e.key) -> e.value))
+        val newValues = list.foldRight(LinkedHashMap[ConfigKey, String]())((e, m) => m + (DefaultConfigValues.key(e.key) -> e.value))
         
-        val errors = newValues.foldLeft(Map[String, String]())((e, m) => { 
+        val errors = newValues.foldLeft(LinkedHashMap[String, String]())((e, m) => { 
           try {
           	m._1.parser(m._2)
           	e

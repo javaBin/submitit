@@ -23,8 +23,9 @@ object DefaultConfigValues {
   
   private[app] def key(key: String) = getKey(key).getOrElse(throw new IllegalArgumentException("Should not happen"))
   
-  private[app] val booleanParse = (x: String) => defParse(x).toBoolean
-  private[app] val intParse = (x: String) => defParse(x).toInt
+  private[app] val booleanParse = (x: String) => x.toBoolean
+  private[app] val notNullParse = (x: String) => if(x == null || x.trim == "") throw new Exception("Cannot be empty")
+  private[app] val intParse = (x: String) => x.toInt
   private[app] val defParse = (x: String) => x
   
 	sealed abstract case class ConfigKey(val parser: String => Any) {
@@ -40,7 +41,7 @@ object DefaultConfigValues {
 	}
  
 	case object showFeedbackBoolean extends ConfigKey(booleanParse) {
-	  val description = "Toggle viewing feedback"
+	  val description = "Toggle viewing feedback. Regardless of submission status."
 	}
 	case object showSpecialMessageOnRejectBoolean extends ConfigKey(booleanParse) {
 	  val description = "Toggle vieing global feedback on reject from " + feedbackRejected.name
@@ -49,7 +50,7 @@ object DefaultConfigValues {
 	  val description = "Hides the status if set to true and will always show pending. Convenient so actual status may be set in EMS"
 	}
 	case object passPhraseSubmitSpecialURL extends ConfigKey {
-	  val description = "The passphrase used for special invite page. So that speakers may submit after CfP has ended."
+	  val description = "The passphrase used for special invite page. So that speakers may submit after CfP has ended. If empty submission is not possible"
 	}
 	case object captchaLengthInt extends ConfigKey {
 	  val description = "The length of the captha, will always be minimum 1"
@@ -64,23 +65,24 @@ object DefaultConfigValues {
 	  val description = "Name used to identify the event in EMS. Should NEVER be changed after SubmitIT has been started to be used"
 	  override val editable = false
 	}
-	case object submititBaseUrl extends ConfigKey() {
-	  val description = "This URL is used in the confirmation URL. Should point to base URL without path."
+	case object submititBaseUrl extends ConfigKey(notNullParse) {
+	  val description = "This URL is used in the confirmation URL. Should point to base URL without path. Should not be changed during operation."
+	  override val editable = false
 	}
 	case object presentationUploadSizeInMBInt extends ConfigKey(intParse) {
-	  val description = "Max size for uploading slides."
+	  val description = "Max size for uploading slides in MB"
 	}
-	case object officialEmailReplyTo extends ConfigKey {
+	case object officialEmailReplyTo extends ConfigKey(notNullParse) {
 	  val description = "Email which is viewed in several pages for contacting the programme committee"
 	}
 	case object allowIndidualFeedbackOnRejectBoolean extends ConfigKey(booleanParse) {
-	  val description = "If true individual feedback fields will be shown"
+	  val description = "If true individual feedback fields will be shown for rejected submissions"
 	}
 	case object smtpHost extends ConfigKey {
-	  val description = "Hostname of the smtp server. Should normally never be changed during operation"
+	  val description = "Hostname of the smtp server. Should normally never be changed during operation. If emtpy no emails will be sent"
 	}
 	case object presentationAllowedExtendsionFileTypes extends ConfigKey {
-	  val description = "File extension types allowed for presentations"
+	  val description = "File extension types allowed for presentations, comma separated list"
 	}
 	case object showRoomWhenApprovedBoolean extends ConfigKey(booleanParse) {
 	  val description = "If room is set and presetation is approvoed setting this to true will show room in review page"
@@ -89,7 +91,7 @@ object DefaultConfigValues {
 	  val description = "Comma separated list of emails to bcc to for confirmation emails"
 	}
 	case object submitAllowedBoolean extends ConfigKey(booleanParse) {
-	  val description = "Allow new submissions when true"
+	  val description = "Allows new submissions when true"
 	}
 	case object editPageInfoTextHtml extends ConfigKey {
 	  val description = "Shows the information text in the edit page. Allows HTML"
@@ -115,7 +117,7 @@ object DefaultConfigValues {
 	case object reviewPageBeforeSubmitHtml extends ConfigKey {
 	  val description = "Shows the information text for a presentation that has not yet been submitted. Allows HTML"
 	}
-	case object headerText extends ConfigKey {
+	case object headerText extends ConfigKey(notNullParse) {
 	  val description = "Global text in header."
 	}
 	case object submitNotAllowedHtml extends ConfigKey {
@@ -125,35 +127,35 @@ object DefaultConfigValues {
 	  val description = "If true allows accepted submissions to be edited."
 	}
   
-  private [app] val configValues = Map(
+  private [app] val configValues = collection.mutable.LinkedHashMap(
+    eventName -> "JavaZone 2009",
+  	headerText -> "Submit your JavaZone 2009 presentation",
+  	submitAllowedBoolean -> "true",
 		showFeedbackBoolean -> "false",
 		showSpecialMessageOnRejectBoolean -> "false",
 		showActualStatusInReviewPageBoolean -> "false",
-		passPhraseSubmitSpecialURL -> "jz",
-		captchaLengthInt -> "1",
-		allowSlideUploadBoolen -> "false",
-		showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean -> "true",
-		eventName -> "JavaZone 2009",
-		submititBaseUrl -> "http://localhost:8080",
-		presentationUploadSizeInMBInt -> "5",
-		officialEmailReplyTo -> "program@java.no",
 		allowIndidualFeedbackOnRejectBoolean -> "false",
-		smtpHost -> null,
-		presentationAllowedExtendsionFileTypes -> "pdf, ppt, key, odp",
+		globalEditAllowedForAcceptedBoolean -> "true",
+		globalEditAllowedBoolean -> "true",
+		showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean -> "true",
 		showRoomWhenApprovedBoolean -> "false",
-		emailBccCommaSeparatedList -> null,
-		submitAllowedBoolean -> "true",
+		showTimeslotWhenApprovedBoolean -> "false",
+		allowSlideUploadBoolen -> "false",
+		presentationUploadSizeInMBInt -> "5",
+		presentationAllowedExtendsionFileTypes -> "pdf, ppt, key, odp",
+		captchaLengthInt -> "1",
+		passPhraseSubmitSpecialURL -> "jz",
+		submitNotAllowedHtml -> "Call for papers is currently not open.",
 		editPageInfoTextHtml -> """<ul><li>Click the "Help" link, or press the question mark at each field for information about what to enter.</li><li>Before you submit your presentation you have to review it by pressing the "Review presentation" link.</li></ul>""",
 		reviewPageViewSubmittedChangeAllowedHthml -> """You can still change the contents of your submission. You may edit by pressing the "Edit link".<br>If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a>""",
-		globalEditAllowedBoolean -> "true",
 		feedbackRejected -> "Unfortunately we could not provide a presentation slot for this presentation. We have gotten more than 200 proposals this year, selecting the best have been difficult. If you have other submissions you should check their status as well. If you have any questions you may email program@java.no.",
 		userSelectedKeywords -> "Core Java|Tools and Techniques|Java Frameworks|Frontend Technologies|Usability|Embedded, Mobile and Gaming|Enterprise Architecture and Integration|Web as a Platform|Architecture and Design|Agile and Software Engineering|Alternative Languages|Experience Reports|Innovative use of IT|Green IT|Domain-driven design",
-		showTimeslotWhenApprovedBoolean -> "false",
 		reviewPageViewSubmittedHthml -> """If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a>""",
 		reviewPageBeforeSubmitHtml -> """Your presentation has not yet been submittet. Please review, and press the "Submit presentation" link when you are ready.""",
-		headerText -> "Submit your JavaZone 2009 presentation",
-		submitNotAllowedHtml -> "Call for papers is currently not open.",
-		globalEditAllowedForAcceptedBoolean -> "true"
+		submititBaseUrl -> "http://localhost:8080",
+		officialEmailReplyTo -> "program@java.no",
+		smtpHost -> null,
+		emailBccCommaSeparatedList -> null
   )
 
 }
