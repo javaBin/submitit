@@ -19,49 +19,111 @@ object DefaultConfigValues {
   
   private var configKeyList: List[ConfigKey] = Nil 
 
-  private [app] def getKey(key: String) = configKeyList.find(_.toString == key)
+  private[app] def getKey(key: String) = configKeyList.find(_.toString == key)
   
-  private [app] def key(key: String) = configKeyList.find(_.toString == key).getOrElse(throw new IllegalArgumentException("Should not happen"))
+  private[app] def key(key: String) = getKey(key).getOrElse(throw new IllegalArgumentException("Should not happen"))
   
-  private val booleanParse = (x: String) => x.toBoolean
-  private val intParse = (x: String) => x.toInt
+  private[app] val booleanParse = (x: String) => defParse(x).toBoolean
+  private[app] val intParse = (x: String) => defParse(x).toInt
+  private[app] val defParse = (x: String) => x
   
 	sealed abstract case class ConfigKey(val parser: String => Any) {
-	  def this() {this((x: String) => null)}
+	  
+	  def this() {this(defParse)}
    
 	  configKeyList = this :: configKeyList
    
 	  val name = """\w+""".r.findFirstIn(toString).get
+   
+    val description: String
+    val editable = true
 	}
  
-	case object showFeedbackBoolean extends ConfigKey(booleanParse)
-	case object showSpecialMessageOnRejectBoolean extends ConfigKey(booleanParse)
-	case object showActualStatusInReviewPageBoolean extends ConfigKey(booleanParse)
-	case object passPhraseSubmitSpecialURL extends ConfigKey
-	case object captchaLengthInt extends ConfigKey
-	case object allowSlideUploadBoolen extends ConfigKey(booleanParse)
-	case object showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean extends ConfigKey(booleanParse)
-	case object eventName extends ConfigKey
-	case object submititBaseUrl extends ConfigKey()
-	case object presentationUploadSizeInMBInt extends ConfigKey(intParse)
-	case object officialEmailReplyTo extends ConfigKey
-	case object allowIndidualFeedbackOnRejectBoolean extends ConfigKey(booleanParse)
-	case object smtpHost extends ConfigKey
-	case object presentationAllowedExtendsionFileTypes extends ConfigKey
-	case object showRoomWhenApprovedBoolean extends ConfigKey(booleanParse)
-	case object emailBccCommaSeparatedList extends ConfigKey
-	case object submitAllowedBoolean extends ConfigKey(booleanParse)
-	case object editPageInfoTextHtml extends ConfigKey
-	case object reviewPageViewSubmittedChangeAllowedHthml extends ConfigKey
-	case object globalEditAllowedBoolean extends ConfigKey(booleanParse)
-	case object feedbackRejected extends ConfigKey
-	case object userSelectedKeywords extends ConfigKey
-	case object showTimeslotWhenApprovedBoolean extends ConfigKey(booleanParse)
-	case object reviewPageViewSubmittedHthml extends ConfigKey
-	case object reviewPageBeforeSubmitHtml extends ConfigKey
-	case object headerText extends ConfigKey
-	case object submitNotAllowedHtml extends ConfigKey
-	case object globalEditAllowedForAcceptedBoolean extends ConfigKey(booleanParse)
+	case object showFeedbackBoolean extends ConfigKey(booleanParse) {
+	  val description = "Toggle viewing feedback"
+	}
+	case object showSpecialMessageOnRejectBoolean extends ConfigKey(booleanParse) {
+	  val description = "Toggle vieing global feedback on reject from " + feedbackRejected.name
+	}
+	case object showActualStatusInReviewPageBoolean extends ConfigKey(booleanParse) {
+	  val description = "Hides the status if set to true and will always show pending. Convenient so actual status may be set in EMS"
+	}
+	case object passPhraseSubmitSpecialURL extends ConfigKey {
+	  val description = "The passphrase used for special invite page. So that speakers may submit after CfP has ended."
+	}
+	case object captchaLengthInt extends ConfigKey {
+	  val description = "The length of the captha, will always be minimum 1"
+	}
+	case object allowSlideUploadBoolen extends ConfigKey(booleanParse) {
+	  val description = "Toggle slide upload. Currently not implemented properly, should be false"
+	}
+	case object showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean extends ConfigKey(booleanParse) {
+	  val description = "Allow users to save tags on their presentations in the review page. Available tags are specified in " + userSelectedKeywords.name
+	}
+	case object eventName extends ConfigKey {
+	  val description = "Name used to identify the event in EMS. Should NEVER be changed after SubmitIT has been started to be used"
+	  override val editable = false
+	}
+	case object submititBaseUrl extends ConfigKey() {
+	  val description = "This URL is used in the confirmation URL. Should point to base URL without path."
+	}
+	case object presentationUploadSizeInMBInt extends ConfigKey(intParse) {
+	  val description = "Max size for uploading slides."
+	}
+	case object officialEmailReplyTo extends ConfigKey {
+	  val description = "Email which is viewed in several pages for contacting the programme committee"
+	}
+	case object allowIndidualFeedbackOnRejectBoolean extends ConfigKey(booleanParse) {
+	  val description = "If true individual feedback fields will be shown"
+	}
+	case object smtpHost extends ConfigKey {
+	  val description = "Hostname of the smtp server. Should normally never be changed during operation"
+	}
+	case object presentationAllowedExtendsionFileTypes extends ConfigKey {
+	  val description = "File extension types allowed for presentations"
+	}
+	case object showRoomWhenApprovedBoolean extends ConfigKey(booleanParse) {
+	  val description = "If room is set and presetation is approvoed setting this to true will show room in review page"
+	}
+	case object emailBccCommaSeparatedList extends ConfigKey {
+	  val description = "Comma separated list of emails to bcc to for confirmation emails"
+	}
+	case object submitAllowedBoolean extends ConfigKey(booleanParse) {
+	  val description = "Allow new submissions when true"
+	}
+	case object editPageInfoTextHtml extends ConfigKey {
+	  val description = "Shows the information text in the edit page. Allows HTML"
+	}
+	case object reviewPageViewSubmittedChangeAllowedHthml extends ConfigKey {
+	  val description = "Shows information text in review page when it is allowed to change the submission. Allows HTML"
+	}
+	case object globalEditAllowedBoolean extends ConfigKey(booleanParse) {
+	  val description = "If true, allows editing of already submitted submissions"
+	}
+	case object feedbackRejected extends ConfigKey {
+	  val description = "Global feedback message for abstracts that are rejected."
+	}
+	case object userSelectedKeywords extends ConfigKey {
+	  val description = "Bar '|' separted list of tags/keywords the user may select"
+	}
+	case object showTimeslotWhenApprovedBoolean extends ConfigKey(booleanParse) {
+	  val description = "If room is set and presetation is approvoed setting this to true will show time slot in review page"
+	}
+	case object reviewPageViewSubmittedHthml extends ConfigKey {
+	  val description = "Shows info text in HTML for submitted submissions, when the user cannot edit the submission."
+	}
+	case object reviewPageBeforeSubmitHtml extends ConfigKey {
+	  val description = "Shows the information text for a presentation that has not yet been submitted. Allows HTML"
+	}
+	case object headerText extends ConfigKey {
+	  val description = "Global text in header."
+	}
+	case object submitNotAllowedHtml extends ConfigKey {
+	  val description = "Message shown when user tries to access SubmitIT to send in a new submission."
+	}
+	case object globalEditAllowedForAcceptedBoolean extends ConfigKey(booleanParse) {
+	  val description = "If true allows accepted submissions to be edited."
+	}
   
   private [app] val configValues = Map(
 		showFeedbackBoolean -> "false",

@@ -114,10 +114,9 @@ object SubmititApp {
     utils.PropertyIOUtils.writeResource(propertyFileName, map)
   }
   
-  def getSetting(key: ConfigKey) = props get key match {
-    case Some(s) if s != "" => s
-    case None => null
-    case _ => null
+  def getSetting(key: ConfigKey) = props.get(key).get match {
+    case s: String => s.trim
+    case null => null
   }
   
   def getBccEmailList = {
@@ -131,9 +130,9 @@ object SubmititApp {
     getSetting(officialEmailReplyTo)
   }
   
-  def intSetting(key: ConfigKey) = getSetting(key).toInt
+  def intSetting(key: ConfigKey) = DefaultConfigValues.intParse(getSetting(key))
   
-  def boolSetting(key: ConfigKey) = _root_.java.lang.Boolean.parseBoolean(getSetting(key))
+  def boolSetting(key: ConfigKey) = DefaultConfigValues.booleanParse(getSetting(key))
   
   def getListSetting(key: ConfigKey, separator: Char) = getSetting(key) match {
     case s: String => s.split(separator).toList.map(_.trim)

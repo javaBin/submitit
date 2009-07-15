@@ -38,10 +38,15 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
       var list = List[Element]()
       val listView = new ListView("props", props.toList) {
         override def populateItem(item: ListItem) {
-          val values = item.getModelObject.asInstanceOf[(ConfigKey, String)]
-          val element = new Element(values._1.toString, values._2)
+          val (key, value) = item.getModelObject.asInstanceOf[(ConfigKey, String)]
+          val element = new Element(key.toString, value)
+          val field = new TextField("value", new PropertyModel(element, "value"))
+          if(!key.editable) field.setEnabled(false)
+
           item.add(new Label("key", new PropertyModel(element, "key")))
-          item.add(new TextField("value", new PropertyModel(element, "value")))
+          item.add(new Label("description", new Model(key.description)))
+          item.add(field)
+          
           list = element :: list
         }
       }
