@@ -37,14 +37,12 @@ class SubmititApp extends WebApplication with LoggHandling {
     SubmititApp.propertyFileName = super.getServletContext.getInitParameter("submitit.properties")
     if (SubmititApp.propertyFileName == null) throw new Exception("""You must specify "submitit.properties" as a init parameter.""")
     val props = utils.PropertyIOUtils.loadRessource(SubmititApp.propertyFileName)
-    SubmititApp.adminPass = this nullOnEmptyString props.remove(SubmititApp.adminPassPhrase).asInstanceOf[String]
-    SubmititApp.emsUrl = this nullOnEmptyString props.remove(SubmititApp.emsUrlKey).asInstanceOf[String]
-    SubmititApp.emsUsername = this nullOnEmptyString props.remove(SubmititApp.emsUsernameKey).asInstanceOf[String]
-    SubmititApp.emsPwd = this nullOnEmptyString props.remove(SubmititApp.emsPwdKey).asInstanceOf[String]
 
     val elems = props.keys
     var theMap = DefaultConfigValues.configValues
-    
+
+    DefaultConfigValues.configKeyList.filter(_.mandatoryInFile).foreach(e => if(!props.containsKey(e.name)) throw new Exception("You must specify " + e.name + " in property file"))
+
     for (i <- 0 to props.size() - 1) {
       val e = elems.nextElement.asInstanceOf[String]
       DefaultConfigValues getKey(e) match {
@@ -63,7 +61,7 @@ class SubmititApp extends WebApplication with LoggHandling {
   }
 
   private def backendClient: BackendClient = {
-    if (SubmititApp.emsUrl != null) new EmsClient(SubmititApp.getSetting(eventName), SubmititApp.emsUrl, SubmititApp.emsUsername, SubmititApp.emsPwd)
+    if (SubmititApp.getSetting(emsUrl) != null) new EmsClient(SubmititApp.getSetting(eventName), SubmititApp.getSetting(emsUrl), SubmititApp.getSetting(emsUser), SubmititApp.getSetting(emsPwd))
     else submitit.common.BackendClientMock
   }
 
@@ -73,7 +71,7 @@ class SubmititApp extends WebApplication with LoggHandling {
   
   def getHomePage() = classOf[StartPage]
   
-  private def nullOnEmptyString(s: String) = if (s.trim != "") s else null
+  private def nullOnEmptyString(s: String) = if (s.trim != "") s.trim else null
   
   override def newRequestCycle(request: Request, response: Response) = new MyRequestCycle(this, request.asInstanceOf[WebRequest], response)
 
@@ -89,34 +87,19 @@ class MyRequestCycle(application: WebApplication, request: WebRequest, response:
 
 object SubmititApp {
   
-  private val adminPassPhrase = "adminPassPhrase"
-  private val emsUrlKey = "emsUrl"
-  private val emsUsernameKey = "emsUser"
-  private val emsPwdKey = "emsPwd"
-  
   private var properties: collection.Map[ConfigKey, String] = _
-  private var adminPass: String = _
-  private var emsUrl: String = _
-  private var emsUsername : String = _
-  private var emsPwd: String = _
   private var propertyFileName: String = _
 
-  def props = properties
+  def props: collection.Map[ConfigKey, String] = properties
   
   def props_=(props: collection.Map[ConfigKey, String]) {
     this.properties = props
-    val stringProps = props.foldLeft(Map[String, String]()){(m, tuple) => m + (tuple._1.name -> tuple._2)}
-    val map = stringProps + 
-      (adminPassPhrase -> adminPass) + 
-      (emsUrlKey -> emsUrl) + 
-      (emsUsernameKey -> emsUsername) +
-      (emsPwdKey -> emsPwd)
-    utils.PropertyIOUtils.writeResource(propertyFileName, map)
+    utils.PropertyIOUtils.writeResource(propertyFileName, props)
   }
   
   def getSetting(key: ConfigKey) = props.get(key).get match {
-    case s: String => s.trim
-    case null => null
+    case s: String if s != "" => s.trim
+    case _ => null
   }
   
   def getBccEmailList = {
@@ -141,6 +124,6 @@ object SubmititApp {
 
   def getListSetting(key: ConfigKey): List[String] = getListSetting(key, ',')
   
-  def authenticates(password: Object) = adminPass == password
+  def authenticates(password: Object) = getSetting(adminPassPhrase) == password
   
 }
