@@ -61,7 +61,7 @@ class SubmititApp extends WebApplication with LoggHandling {
   }
 
   private def backendClient: BackendClient = {
-    if (SubmititApp.getSetting(emsUrl) != null) new EmsClient(SubmititApp.getSetting(eventName), SubmititApp.getSetting(emsUrl), SubmititApp.getSetting(emsUser), SubmititApp.getSetting(emsPwd))
+    if (SubmititApp.settingOrNull(emsUrl) != null) new EmsClient(SubmititApp.settingOrNull(eventName), SubmititApp.settingOrNull(emsUrl), SubmititApp.settingOrNull(emsUser), SubmititApp.settingOrNull(emsPwd))
     else submitit.common.BackendClientMock
   }
 
@@ -98,32 +98,34 @@ object SubmititApp {
   }
   
   def getSetting(key: ConfigKey) = props.get(key).get match {
-    case s: String if s != "" => s.trim
-    case _ => null
+    case s if s != null && s != "" => Some(s.trim)
+    case _ => None
   }
+  
+  private def settingOrNull(key: ConfigKey) = getSetting(key).getOrElse(null)
   
   def getBccEmailList = {
     getSetting(emailBccCommaSeparatedList) match {
-      case null => new Array[String](0)
-      case email => email.split(",")
+      case Some(email) => email.split(",")
+      case None => new Array[String](0)
     }
   }
   
   def getOfficialEmail = {
-    getSetting(officialEmailReplyTo)
+    getSetting(officialEmailReplyTo).get
   }
   
-  def intSetting(key: ConfigKey) = DefaultConfigValues.intParse(getSetting(key))
+  def intSetting(key: ConfigKey) = DefaultConfigValues.intParse(getSetting(key).get)
   
-  def boolSetting(key: ConfigKey) = DefaultConfigValues.booleanParse(getSetting(key))
+  def boolSetting(key: ConfigKey) = DefaultConfigValues.booleanParse(getSetting(key).get)
   
   def getListSetting(key: ConfigKey, separator: Char) = getSetting(key) match {
-    case s: String => s.split(separator).toList.map(_.trim)
-    case null => Nil
+    case Some(s) => s.split(separator).toList.map(_.trim)
+    case None => Nil
   }
 
   def getListSetting(key: ConfigKey): List[String] = getListSetting(key, ',')
   
-  def authenticates(password: Object) = getSetting(adminPassPhrase) == password
+  def authenticates(password: Object) = getSetting(adminPassPhrase).get == password
   
 }

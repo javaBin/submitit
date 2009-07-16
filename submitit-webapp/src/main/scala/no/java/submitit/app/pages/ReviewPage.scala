@@ -104,16 +104,16 @@ class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
   add(new Label("timeslot", p.timeslot))
   add(new NewPresentationLink("newPresentation"))
 
-  val msg = if (State().isNew) SubmititApp.getSetting(reviewPageBeforeSubmitHtml)
-  	else if (!State().isNew && !editAllowed) SubmititApp.getSetting(reviewPageViewSubmittedHthml)
-  	else if (!State().isNew && editAllowed) SubmititApp.getSetting(reviewPageViewSubmittedChangeAllowedHthml)
-  	else SubmititApp.getSetting(reviewPageViewSubmittedHthml)
+  val msg = if (State().isNew) SubmititApp.getSetting(reviewPageBeforeSubmitHtml).getOrElse("")
+  	else if (!State().isNew && !editAllowed) SubmititApp.getSetting(reviewPageViewSubmittedHthml).getOrElse("")
+  	else if (!State().isNew && editAllowed) SubmititApp.getSetting(reviewPageViewSubmittedChangeAllowedHthml).getOrElse("")
+  	else SubmititApp.getSetting(reviewPageViewSubmittedHthml).getOrElse("")
 
   add(new HtmlLabel("viewMessage", msg))
 
   val feedback = if(p.status == Status.NotApproved) {
     						   if(SubmititApp.boolSetting(allowIndidualFeedbackOnRejectBoolean) && p.hasFeedback) Some(p.feedback)
-                   else if(SubmititApp.boolSetting(showSpecialMessageOnRejectBoolean)) Some(SubmititApp.getSetting(feedbackRejected))
+                   else if(SubmititApp.boolSetting(showSpecialMessageOnRejectBoolean)) Some(SubmititApp.getSetting(feedbackRejected).getOrElse(""))
                  	 else None
                  }
                  else if (SubmititApp.boolSetting(showFeedbackBoolean) && p.hasFeedback) Some(p.feedback)

@@ -21,6 +21,6 @@ import DefaultConfigValues._
 
 class LayoutPage extends WebPage {
   
-  add(new Label("headerText", SubmititApp.getSetting(headerText)))
+  add(new Label("headerText", SubmititApp.getSetting(headerText).get))
 
 }

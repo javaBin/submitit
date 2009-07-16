@@ -46,7 +46,7 @@ class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
   val url = {
     val backendClient = State().backendClient
     val uniqueId = backendClient.savePresentation(pres)
-    SubmititApp.getSetting(submititBaseUrl) + "/lookupPresentation?id=" + uniqueId
+    SubmititApp.getSetting(submititBaseUrl).get + "/lookupPresentation?id=" + uniqueId
   }
   
   add(new ExternalLink("confirmUrl", url, url))
@@ -60,11 +60,11 @@ class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
     }
   })
 
-  if (SubmititApp.getSetting(smtpHost) != null) sendConfirmationMail(pres, url)
+  if (SubmititApp.getSetting(smtpHost).isDefined) sendConfirmationMail(pres, url)
   
   def sendConfirmationMail(pres: Presentation, url: String) {
     val props = new Properties
-    props.put("mail.smtp.host", SubmititApp.getSetting(smtpHost))
+    props.put("mail.smtp.host", SubmititApp.getSetting(smtpHost).get)
     
     props.put("mail.from", SubmititApp.getOfficialEmail)
     val session = Session.getInstance(props, null)
