@@ -106,15 +106,16 @@ class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
 
   add(new HtmlLabel("viewMessage", msg))
 
-  val feedback = if(p.status == Status.NotApproved && 
-                   SubmititApp.boolSetting(showSpecialMessageOnRejectBoolean) &&
-  								 !(SubmititApp.boolSetting(allowIndidualFeedbackOnRejectBoolean) && p.feedback != null)) { 
-    							    SubmititApp.getSetting(feedbackRejected)
-               	 }
-                 else p.feedback
+  val feedback = if(p.status == Status.NotApproved) {
+    						   if(SubmititApp.boolSetting(allowIndidualFeedbackOnRejectBoolean) && p.hasFeedback) Some(p.feedback)
+                   else if(SubmititApp.boolSetting(showSpecialMessageOnRejectBoolean)) Some(SubmititApp.getSetting(feedbackRejected))
+                 	 else None
+                 }
+                 else if (SubmititApp.boolSetting(showFeedbackBoolean) && p.hasFeedback) Some(p.feedback)
+                 else None
   
-  add(new MultiLineLabel("feedback", feedback) {
-    override def isVisible = SubmititApp.boolSetting(showFeedbackBoolean) && feedback != null && feedback != ""
+  add(new MultiLineLabel("feedback", feedback.getOrElse("")) {
+    override def isVisible = feedback.isDefined
   })
   
 
