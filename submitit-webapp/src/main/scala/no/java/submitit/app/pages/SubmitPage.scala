@@ -55,7 +55,7 @@ class SubmitPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage 
     val verified = State().verifiedWithCaptha
     
     add(new FeedbackPanel("feedback"))
-    add(new widgets.HtmlLabel("infoText", SubmititApp.getSetting(editPageInfoTextHtml)))
+    add(new widgets.HtmlLabel("infoText", SubmititApp.getSetting(editPageInfoTextHtml).getOrElse("")))
     addPropTF("title", pres, "title")
     addPropTA("summary", pres, "summary")
     addPropTA("theabstract", pres, "abstr")
