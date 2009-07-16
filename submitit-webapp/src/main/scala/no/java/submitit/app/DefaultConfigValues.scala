@@ -17,7 +17,7 @@ package no.java.submitit.app
 
 object DefaultConfigValues {
   
-  private var configKeyList: List[ConfigKey] = Nil 
+  private[app] var configKeyList: List[ConfigKey] = Nil 
 
   private[app] def getKey(key: String) = configKeyList.find(_.toString == key)
   
@@ -38,13 +38,15 @@ object DefaultConfigValues {
    
     val description: String
     val editable = true
+    val visible = true
+    val mandatoryInFile = false
 	}
  
 	case object showFeedbackBoolean extends ConfigKey(booleanParse) {
 	  val description = "Toggle viewing feedback. Regardless of submission status."
 	}
 	case object showSpecialMessageOnRejectBoolean extends ConfigKey(booleanParse) {
-	  val description = "Toggle vieing global feedback on reject from " + feedbackRejected.name
+	  val description = "Toggle vieing global feedback on rejected presentations. Text defined in " + feedbackRejected.name + ". Will be 'overriden' if individual presentation has feedback and " + allowIndidualFeedbackOnRejectBoolean.name + " is true"
 	}
 	case object showActualStatusInReviewPageBoolean extends ConfigKey(booleanParse) {
 	  val description = "Hides the status if set to true and will always show pending. Convenient so actual status may be set in EMS"
@@ -59,11 +61,12 @@ object DefaultConfigValues {
 	  val description = "Toggle slide upload. Currently not implemented properly, should be false"
 	}
 	case object showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean extends ConfigKey(booleanParse) {
-	  val description = "Allow users to save tags on their presentations in the review page. Available tags are specified in " + userSelectedKeywords.name
+	  val description = "Allow users to save tags on their presentations in the review page. This is only available if the presentation is not editable. This is because normally the edit page must be used to select tags/keywords. Available tags are specified in " + userSelectedKeywords.name
 	}
 	case object eventName extends ConfigKey {
 	  val description = "Name used to identify the event in EMS. Should NEVER be changed after SubmitIT has been started to be used"
 	  override val editable = false
+	  override val mandatoryInFile = true
 	}
 	case object submititBaseUrl extends ConfigKey(notNullParse) {
 	  val description = "This URL is used in the confirmation URL. Should point to base URL without path. Should not be changed during operation."
@@ -76,7 +79,7 @@ object DefaultConfigValues {
 	  val description = "Email which is viewed in several pages for contacting the programme committee"
 	}
 	case object allowIndidualFeedbackOnRejectBoolean extends ConfigKey(booleanParse) {
-	  val description = "If true individual feedback fields will be shown for rejected submissions"
+	  val description = "If true individual feedback fields will be shown for rejected submissions, but only if feedback on the presentation is defined"
 	}
 	case object smtpHost extends ConfigKey {
 	  val description = "Hostname of the smtp server. Should normally never be changed during operation. If emtpy no emails will be sent"
@@ -103,7 +106,7 @@ object DefaultConfigValues {
 	  val description = "If true, allows editing of already submitted submissions"
 	}
 	case object feedbackRejected extends ConfigKey {
-	  val description = "Global feedback message for abstracts that are rejected."
+	  val description = "Global feedback message for abstracts that are rejected. This will be shown when " + showSpecialMessageOnRejectBoolean.name + " is true"
 	}
 	case object userSelectedKeywords extends ConfigKey {
 	  val description = "Bar '|' separted list of tags/keywords the user may select"
@@ -126,6 +129,27 @@ object DefaultConfigValues {
 	case object globalEditAllowedForAcceptedBoolean extends ConfigKey(booleanParse) {
 	  val description = "If true allows accepted submissions to be edited."
 	}
+  case object adminPassPhrase extends ConfigKey {
+    val description = "Passphrase for admin gui"
+    override val visible = false
+    override val mandatoryInFile = true
+  }
+  case object emsUrl extends ConfigKey {
+    val description = "url for ems. If null uses mock."
+    override val visible = false
+    override val mandatoryInFile = true
+  }
+  case object emsUser extends ConfigKey {
+    val description = "The user used to connect to ems"
+    override val visible = false
+    override val mandatoryInFile = true
+  }
+  case object emsPwd extends ConfigKey {
+    val description = "The password for ems."
+    override val visible = false
+    override val mandatoryInFile = true
+  }
+ 
   
   private [app] val configValues = collection.mutable.LinkedHashMap(
     eventName -> "JavaZone 2009",
@@ -155,7 +179,11 @@ object DefaultConfigValues {
 		submititBaseUrl -> "http://localhost:8080",
 		officialEmailReplyTo -> "program@java.no",
 		smtpHost -> null,
-		emailBccCommaSeparatedList -> null
+		emailBccCommaSeparatedList -> null,
+		adminPassPhrase -> "r",
+		emsUrl -> "", 
+		emsUser -> "",
+    emsPwd -> ""
   )
 
 }

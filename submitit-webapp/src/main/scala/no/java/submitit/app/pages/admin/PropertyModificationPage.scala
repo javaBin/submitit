@@ -35,9 +35,10 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
   def createForm: Form= {
     new Form("propertyForm") {
       val props = SubmititApp.props
-        
-      var list = List[Element]()
-      val listView = new ListView("props", props.toList) {
+      val filteredProps = props.filter{case(key, _) => key.visible}
+      var list: List[Element] = Nil
+
+      val listView = new ListView("props", filteredProps.toList) {
         override def populateItem(item: ListItem) {
           val (key, value) = item.getModelObject.asInstanceOf[(ConfigKey, String)]
           val element = new Element(key.toString, value)
@@ -54,20 +55,23 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
       add(listView)
     
       override def onSubmit {
-        val newValues = list.foldRight(LinkedHashMap[ConfigKey, String]())((e, m) => m + (DefaultConfigValues.key(e.key) -> e.value))
+        val newValues: Map[ConfigKey, String] = list.foldLeft(Map[ConfigKey, String]())((m, elem) => m + (DefaultConfigValues.key(elem.key) -> elem.value))
         
-        val errors = newValues.foldLeft(LinkedHashMap[String, String]())((e, m) => { 
+        val errors = newValues.foldLeft(LinkedHashMap[String, String]()){
+          case (e, (key, value)) => { 
           try {
-          	m._1.parser(m._2)
+          	key.parser(value)
           	e
           } catch {
-          	case ex => e + (m._1.name -> ex.getMessage)
+          	case ex => e + (key.name -> ex.getMessage)
           }
-        })
+        }}
         
         if(errors.isEmpty) {
-        	SubmititApp.props = newValues
-        	info("Updated")
+          // Must use this strange thing to make the new Map. Hopefully 2.8 with more consistent collections will fix this
+          val newProps: collection.Map[ConfigKey, String] = new LinkedHashMap[ConfigKey, String]() ++ props ++ newValues
+        	SubmititApp.props = newProps
+        	info("Updated and stored new properties")
         	PropertyModificationPage.this.replace(createForm)
          }
         else {

@@ -19,6 +19,7 @@ import _root_.java.util.Properties
 import _root_.java.io._
 import _root_.no.java.submitit.common.IOUtils
 import common.IOUtils._
+import DefaultConfigValues.ConfigKey
 
 object PropertyIOUtils {
 	
@@ -31,9 +32,9 @@ object PropertyIOUtils {
     }
   }
   
-  def writeResource(fileName: String, props: Map[String, String]) {
+  def writeResource(fileName: String, props: collection.Map[ConfigKey, String]) {
     val file = new File(fileName)
-    val transformed = props.map(tuple => tuple._1 + "=" + emptyForNull(tuple._2)).toList
+    val transformed = props.map{case (key, value) => key.name + "=" + emptyForNull(value)}.toList
     val propertyString = transformed.mkString("", "\n", "")
     using(new BufferedWriter(new FileWriter(file))) { stream =>
       propertyString.foreach(stream.write(_))

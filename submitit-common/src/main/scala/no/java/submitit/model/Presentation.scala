@@ -61,6 +61,8 @@ class Presentation extends Serializable with EmsId {
     speakers = removeSpeaker(s, speakers)
   }
   
+  def hasFeedback = feedback != null && feedback.trim != ""
+  
   private def removeSpeaker(s: Speaker, speakers: List[Speaker]): List[Speaker] = {
     speakers match {
       case speaker :: xs => if (s == speaker) xs else speaker :: removeSpeaker(s, xs)
