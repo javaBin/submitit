@@ -63,7 +63,12 @@ class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
   	override def isVisible = SubmititApp.boolSetting(showTimeslotWhenApprovedBoolean) && p.status == Status.Approved && p.timeslot != null
   })
   
-  val showTags = SubmititApp.boolSetting(showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean) && !SubmititApp.boolSetting(globalEditAllowedBoolean) && !State().isNew && p.status != Status.NotApproved
+  val showTags = (SubmititApp.boolSetting(showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean) && 
+                 !SubmititApp.boolSetting(globalEditAllowedBoolean) && 
+                 !State().isNew && 
+                 p.status != Status.NotApproved) &&
+                 !(p.status == Status.Approved && 
+                 SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))
   
   add(new HiddenField("showTags") {
   	override def isVisible = showTags

@@ -59,7 +59,7 @@ object DefaultConfigValues {
 	  val description = "Toggle slide upload. Currently not implemented properly, should be false"
 	}
 	case object showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean extends ConfigKey(booleanParse) {
-	  val description = "Allow users to save tags on their presentations in the review page. Available tags are specified in " + userSelectedKeywords.name
+	  val description = "Allow users to save tags on their presentations in the review page. This is only available if the presentation is not editable. This is because normally the edit page must be used to select tags/keywords. Available tags are specified in " + userSelectedKeywords.name
 	}
 	case object eventName extends ConfigKey {
 	  val description = "Name used to identify the event in EMS. Should NEVER be changed after SubmitIT has been started to be used"
