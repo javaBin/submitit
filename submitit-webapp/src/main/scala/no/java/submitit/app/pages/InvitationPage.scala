@@ -31,7 +31,7 @@ class InvitationPage extends LayoutPage {
       else {
         State().verifiedWithCaptha = true
         State().invitation = true
-        setResponsePage(new SubmitPage(State().createNewPresentation, true))
+        setResponsePage(new EditPage(State().createNewPresentation, true))
       }
        
     }

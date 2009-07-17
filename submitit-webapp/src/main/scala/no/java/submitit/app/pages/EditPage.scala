@@ -35,7 +35,7 @@ import common.Implicits._
 import DefaultConfigValues._
 
 
-class SubmitPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
+class EditPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
   
   def this(pres: Presentation) {
     this(pres, false)
@@ -94,7 +94,7 @@ class SubmitPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage 
     add(new SubmitLink("captchaButton", this){
       override def onSubmit()  {
         State().resetCaptcha()
-        setResponsePage(new SubmitPage(pres))
+        setResponsePage(new EditPage(pres))
       }
     })
     
