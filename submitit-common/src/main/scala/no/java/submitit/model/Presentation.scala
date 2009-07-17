@@ -80,6 +80,7 @@ class Presentation extends Serializable with EmsId {
     "\nLevel: " + level +
     "\nEquipment:\n" + toNonNullString(equipment) +
     "\n\nExpected audience:\n" + toNonNullString(expectedAudience) +
+    "\n\nTags:\n" + keywords.mkString(", ") +
     "\n\nSpeakers:\n\n" + speakers.mkString("", "\n\n", "")
 
   def toNonNullString(s: String) = if (s != null) s else ""
