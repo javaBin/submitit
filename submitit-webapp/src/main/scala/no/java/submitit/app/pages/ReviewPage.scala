@@ -166,8 +166,8 @@ class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
   }))
       
   add(new PageLink("editLink",new IPageLink {
-    def getPage = new SubmitPage(p)
-    def getPageIdentity = classOf[SubmitPage]
+    def getPage = new EditPage(p)
+    def getPageIdentity = classOf[EditPage]
   }))
   
 }

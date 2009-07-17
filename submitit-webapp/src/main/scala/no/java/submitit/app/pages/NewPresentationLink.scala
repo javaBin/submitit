@@ -21,7 +21,7 @@ import no.java.submitit.model._
 class NewPresentationLink(id: String) extends Link(id) {
   
   override def onClick {
-    setResponsePage(new SubmitPage(State().createNewPresentation))
+    setResponsePage(new EditPage(State().createNewPresentation))
   }
   
 }
