@@ -66,6 +66,8 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
     }
   }
   
+  def getAllPresentations = converter.toPresentationInfo(emsService.getSessions(event.getId).toList)
+  
   private def getSession(id: String): Option[Session] = {
     // Workaround for authorization problems...
     val sessions = emsService.getSessions(event.getId)

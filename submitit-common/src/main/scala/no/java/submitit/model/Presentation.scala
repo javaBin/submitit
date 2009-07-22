@@ -114,4 +114,5 @@ object Presentation {
 			    p
             }
 }
-                   
+
+case class PresentationInfo(id: String, title: String, speakerNames: List[String], status: Status.Value) 

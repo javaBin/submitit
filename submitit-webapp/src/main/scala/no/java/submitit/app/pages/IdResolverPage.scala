@@ -49,7 +49,7 @@ class IdResolverPage extends LayoutPage with LoggHandling {
     case Some(pres) => {
       State().fromServer = true
       State().currentPresentation = pres
-      setResponsePage(new ReviewPage(pres))
+      setResponsePage(new ReviewPage(pres, true))
     }
     case None => {
       add(new Label("identified", new Model(infoMessage)))

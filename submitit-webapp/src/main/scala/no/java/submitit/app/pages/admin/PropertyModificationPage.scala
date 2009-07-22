@@ -51,7 +51,7 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
         bio = "Quack quack"
       }
     	speakers = speaker :: Nil
-    	setResponsePage(new ReviewPage(this))
+    	setResponsePage(new ReviewPage(this, true))
     }
     State().currentPresentation = p
   }
