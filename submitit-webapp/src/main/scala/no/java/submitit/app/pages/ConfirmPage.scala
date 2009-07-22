@@ -32,20 +32,25 @@ import DefaultConfigValues._
 
 class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
 
+  val isTest = pres.testPresentation
+  
   State().fromServer = true
 
   val presentation = pres.toString
-  logger.info(presentation)
+  
+  if(!isTest) logger.info(presentation)
   
   add(new HiddenField("showNewLink") {
 	  override def isVisible = !State().isNew && State().submitAllowed
   })
   
+  add(new Label("extraInfo", if(isTest) "Test submission, has not been submitted and no email has been sent" else ""))
+  
   add(new MultiLineLabel("pres", presentation))
 
   val url = {
     val backendClient = State().backendClient
-    val uniqueId = backendClient.savePresentation(pres)
+    val uniqueId = if(!isTest) backendClient.savePresentation(pres) else Presentation.testPresentationURL
     SubmititApp.getSetting(submititBaseUrl).get + "/lookupPresentation?id=" + uniqueId
   }
   
@@ -60,9 +65,7 @@ class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
     }
   })
 
-  if (SubmititApp.getSetting(smtpHost).isDefined) sendConfirmationMail(pres, url)
-  
-  def sendConfirmationMail(pres: Presentation, url: String) {
+  if (!isTest && SubmititApp.getSetting(smtpHost).isDefined) {
     val props = new Properties
     props.put("mail.smtp.host", SubmititApp.getSetting(smtpHost).get)
     

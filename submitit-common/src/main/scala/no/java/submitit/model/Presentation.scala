@@ -25,6 +25,7 @@ import common.Implicits._
 
 class Presentation extends Serializable {
   
+  val testPresentation = false
   var sessionId: String = _
   var title: String = ""
   var summary: String = ""
@@ -86,6 +87,8 @@ class Presentation extends Serializable {
 }
 
 object Presentation {
+  
+  val testPresentationURL = "TEST-PRESENTATION-WHICH-WILL-NOT-BE-SUBMITTED"
 
   def apply(title: String, 
             speakers: List[Speaker],

@@ -69,6 +69,8 @@ class EditPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
     
     if (!verified) add(captcha.image)
     
+    if (pres.testPresentation) captcha.password = captcha.imagePass
+    
     add(new TextField("password", new PropertyModel(captcha, "password")){
       override def isVisible = !verified
     })
