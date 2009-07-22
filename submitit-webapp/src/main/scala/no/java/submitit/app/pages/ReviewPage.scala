@@ -32,27 +32,30 @@ import app.State
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import DefaultConfigValues._
 
-class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
+class ReviewPage(p: Presentation, editable: Boolean) extends LayoutPage with common.LoggHandling {
   
   val supportedExtensions = SubmititApp.getListSetting(presentationAllowedExtendsionFileTypes)
   val editAllowed = SubmititApp.boolSetting(globalEditAllowedBoolean) || (p.status == Status.Approved && SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))
   
+  private def showLink(shouldShow: Boolean) = editable && shouldShow 
+  
+  
   add(new FeedbackPanel("systemFeedback"))
   
   add(new HiddenField("showEditLink") {
-	  override def isVisible = State().isNew || editAllowed
+	  override def isVisible = showLink(State().isNew || editAllowed)
   })
   
   add(new HiddenField("showSubmitLink") {
-    override def isVisible = State().isNew
+    override def isVisible = showLink(State().isNew)
   })
 
   add(new HiddenField("showSubmitUpdatedLink") {
-	  override def isVisible = !State().isNew && editAllowed
+	  override def isVisible = showLink(!State().isNew && editAllowed)
   })
 
   add(new HiddenField("showNewLink") {
-	  override def isVisible = !State().isNew && State().submitAllowed
+	  override def isVisible = showLink(!State().isNew && State().submitAllowed)
   })
   
   add(new HiddenField("showRoom") {
@@ -71,11 +74,11 @@ class ReviewPage(p: Presentation) extends LayoutPage with common.LoggHandling {
                  SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))
   
   add(new HiddenField("showTags") {
-  	override def isVisible = showTags
+  	override def isVisible = showLink(showTags)
   })
   
   add(new HiddenField("viewTags") {
-  	override def isVisible = !showTags
+  	override def isVisible = showLink(!showTags)
   })
 
   add(new Form("saveTagsForm"){

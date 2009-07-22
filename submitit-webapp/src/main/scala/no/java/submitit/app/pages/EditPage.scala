@@ -42,7 +42,7 @@ class EditPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
   }
 
   def redirectToReview() {
-    setResponsePage(new ReviewPage(State().currentPresentation))
+    setResponsePage(new ReviewPage(State().currentPresentation, true))
   }
   
   State() setCaptchaIfNotSet
@@ -68,6 +68,8 @@ class EditPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
     add(new panels.TagsPanel("tags", pres, true))
     
     if (!verified) add(captcha.image)
+    
+    if (pres.testPresentation) captcha.password = captcha.imagePass
     
     add(new TextField("password", new PropertyModel(captcha, "password")){
       override def isVisible = !verified

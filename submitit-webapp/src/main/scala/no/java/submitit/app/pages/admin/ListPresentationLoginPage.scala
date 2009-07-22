@@ -13,26 +13,22 @@
  *   limitations under the License.
  */
 
-package no.java.submitit.app.pages
+package no.java.submitit.app.pages.admin
 
-import org.apache.wicket.markup.html.basic._
 import DefaultConfigValues._
 
-class StartPage extends LayoutPage {
-  
-  if (SubmititApp.boolSetting(submitAllowedBoolean)) {
-    
-    if(State().isNew) {
-      setResponsePage(new EditPage(State().currentPresentation))
-    }
-    else {
-      setResponsePage(new ReviewPage(State().currentPresentation, true))
-    }
-  }
-  else {
-    val res = new Label("info", SubmititApp.getSetting(submitNotAllowedHtml).getOrElse(""))
-    res.setEscapeModelStrings(false)
-    add(res)
-  }
+class ListPresentationLoginPage extends LayoutPage {
 
+	add(new panels.LoginPanel("login", new LoginHandler {
+		def onLogin(pwd: String) {
+			val authenticated = SubmititApp.getSetting(listAllSubmissionsPassword).isDefined && SubmititApp.getSetting(listAllSubmissionsPassword).get == pwd
+      	if (authenticated) {
+      		setResponsePage(new ListPresentationsPage)
+      	}
+      	else {
+      		 error("Incorrect password")
+      	}
+			}
+  }))
+  
 }

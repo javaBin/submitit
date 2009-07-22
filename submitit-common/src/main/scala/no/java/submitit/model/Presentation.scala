@@ -27,6 +27,7 @@ import common.Implicits._
 
 class Presentation extends Serializable with EmsId {
   
+  val testPresentation = false
   var sessionId: String = _
   var title: String = ""
   var summary: String = ""
@@ -135,6 +136,33 @@ object Presentation {
 			}
 		}
 		p
+  }
 	  
-	}
+  val testPresentationURL = "TEST-PRESENTATION-WHICH-WILL-NOT-BE-SUBMITTED"
+
+  def apply(title: String, 
+            speakers: List[Speaker],
+            summary: String,
+            abstr: String, 
+            outline: String, 
+            language: Language.Value,
+            level: Level.Value,
+            format: PresentationFormat.Value,
+            equipment: String,
+            expectedAudience: String): Presentation = {
+			    val p = new Presentation
+			    p.title = title
+			    p.summary = summary
+			    p.speakers = speakers
+			    p.abstr = abstr
+			    p.outline = outline
+			    p.language = language
+			    p.level = level
+			    p.format = format
+			    p.equipment = equipment
+			    p.expectedAudience = expectedAudience
+			    p
+            }
 }
+
+case class PresentationInfo(id: String, title: String, speakerNames: List[String], status: Status.Value) 

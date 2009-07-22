@@ -19,8 +19,10 @@ import org.apache.wicket.markup.html.form._
 import org.apache.wicket.markup.html.basic._
 import org.apache.wicket.model._
 import org.apache.wicket.markup.html.list._
+import org.apache.wicket.markup.html.link._
 import common.Implicits._
 import collection.jcl.Conversions._
+import model._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import _root_.java.io.Serializable
 import DefaultConfigValues._
@@ -31,6 +33,39 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
   class Element(var key: String, var value: String) extends Serializable {
     override def toString = key + " " + value
   }
+  
+  val whenClicked = (s: Status.Value) => {
+    val p = new Presentation {
+      
+    	override val testPresentation = true
+      title = "Test presentation with actual status " + s.toString
+    	abstr = "This is the abstract. This presentation will not be submitted! You should use this to test that the admin settings are correct"
+    	summary = "This is the summary. This presentation will not be submitted! You should use this to test that the admin settings are correct"
+      status = s
+      timeslot = "10:00 - 11:00"
+      room = "Lab 1"
+      feedback = "This is bogus feedback on a test presentation"
+      val speaker = new Speaker {
+    		name = "Donald Duck"
+        email = "somethingbogus@java.no"
+        bio = "Quack quack"
+      }
+    	speakers = speaker :: Nil
+    	setResponsePage(new ReviewPage(this, true))
+    }
+    State().currentPresentation = p
+  }
+  
+  add(new Link("approvedLink") {
+  	def onClick{whenClicked(Status.Approved)}
+  })
+  add(new Link("pendingLink") {
+  	def onClick{whenClicked(Status.Pending)}
+  })
+  add(new Link("rejectedLink") {
+  	def onClick{whenClicked(Status.NotApproved)}
+  })
+  
   
   def createForm: Form= {
     new Form("propertyForm") {

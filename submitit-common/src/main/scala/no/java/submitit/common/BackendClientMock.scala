@@ -19,7 +19,7 @@ import _root_.java.io.Serializable
 
 import scala.collection.mutable.Map
 
-import no.java.submitit.model.Presentation
+import no.java.submitit.model._
 
 object BackendClientMock extends BackendClient with Serializable {
 
@@ -39,5 +39,9 @@ object BackendClientMock extends BackendClient with Serializable {
   def loadPresentation(id: String): Option[Presentation] = {
     presentations.get(id)
   }
+  
+  def getAllPresentations = presentations.foldLeft(List[PresentationInfo]()){case (l, (s, p)) => toPres(p) :: l}
+  
+  private def toPres(p: Presentation) = PresentationInfo(p.sessionId, p.title, p.speakers.map(_.name), p.status)
   
 }

@@ -15,12 +15,13 @@
 
 package no.java.submitit.common
 
-import model.Presentation
+import model.{Presentation, PresentationInfo}
 
 trait BackendClient {
 
   def savePresentation(presentation: Presentation): String
   
   def loadPresentation(id: String): Option[Presentation]
-  
+
+  def getAllPresentations: List[PresentationInfo]
 }

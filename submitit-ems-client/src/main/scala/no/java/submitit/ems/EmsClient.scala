@@ -26,6 +26,8 @@ import _root_.no.scala.scalanet.http.Implicits._
 
 class EmsClient(eventName: String, serverUrl: String, username: String, password: String) extends BackendClient with Serializable {
   
+  def getAllPresentations: List[PresentationInfo] = Nil
+  
   def isSet(s: String) = s != null && !s.trim.isEmpty
       
   def converter = new EmsConverter
@@ -83,6 +85,8 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
       case None => None
     }
   }
+  
+  def getAllPresentations = converter.toPresentationInfo(emsService.getSessions(event.getId).toList)
   
   private def getSession(id: String): Option[Session] = {
     // Workaround for authorization problems...

@@ -21,8 +21,6 @@ import common.Implicits._
 import common.{IOUtils, LoggHandling}
 import model._
 import common.IOUtils._
-import org.joda.time.Interval
-import org.joda.time.format.DateTimeFormat
 
 import xml._
 
@@ -75,6 +73,19 @@ class EmsConverter extends LoggHandling {
     case Level.Intermediate => "Intermediate"
     case Level.Beginner => "Introductory"
   }
+  
+  // TODO must handle this for listing presentations
+  def toPresentationInfo(sessions: List[Any]) = Nil // sessions.map(s => PresentationInfo(s.getId, s.getTitle, s.getSpeakers.toList.map(_.getName), getStatus(s.getState)))
+  
+  /*
+  private def getStatus(state: Session.State) = state match {
+      case Session.State.Approved => Status.Approved
+      case Session.State.Pending => Status.Pending
+      case Session.State.Rejected => Status.NotApproved
+      case l => unknownEnumValue(l, Status.Pending)
+  }
+  */
+  
 
   private def convertFormat(format: PresentationFormat.Value) = format match {
     case PresentationFormat.Presentation => "Presentation"
@@ -161,6 +172,7 @@ class EmsConverter extends LoggHandling {
       case Session.Format.Quickie => PresentationFormat.LightningTalk
       case l => unknownEnumValue(l, PresentationFormat.Presentation)
     }
+<<<<<<< HEAD:submitit-ems-client/src/main/scala/no/java/submitit/ems/EmsConverter.scala
     pres.status = session.getState match {
       case Session.State.Approved => Status.Approved
       case Session.State.Pending => Status.Pending
@@ -168,6 +180,10 @@ class EmsConverter extends LoggHandling {
       case l => unknownEnumValue(l, Status.Pending)
     }
 
+=======
+    pres.status = getStatus(session.getState)
+    
+>>>>>>> master:submitit-ems-client/src/main/scala/no/java/submitit/ems/EmsConverter.scala
     pres
   }
 
