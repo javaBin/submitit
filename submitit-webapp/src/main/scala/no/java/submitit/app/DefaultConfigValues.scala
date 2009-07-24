@@ -34,8 +34,6 @@ object DefaultConfigValues {
    
 	  configKeyList = this :: configKeyList
    
-	  val name = """\w+""".r.findFirstIn(toString).get
-   
     val description: String
     val editable = true
     val visible = true
@@ -46,7 +44,7 @@ object DefaultConfigValues {
 	  val description = "Toggle viewing feedback. Regardless of submission status."
 	}
 	case object showSpecialMessageOnRejectBoolean extends ConfigKey(booleanParse) {
-	  val description = "Toggle vieing global feedback on rejected presentations. Text defined in " + feedbackRejected.name + ". Will be 'overriden' if individual presentation has feedback and " + allowIndidualFeedbackOnRejectBoolean.name + " is true"
+	  val description = "Toggle vieing global feedback on rejected presentations. Text defined in " + feedbackRejected + ". Will be 'overriden' if individual presentation has feedback and " + allowIndidualFeedbackOnRejectBoolean + " is true"
 	}
 	case object showActualStatusInReviewPageBoolean extends ConfigKey(booleanParse) {
 	  val description = "Hides the status if set to true and will always show pending. Convenient so actual status may be set in EMS"
@@ -61,7 +59,7 @@ object DefaultConfigValues {
 	  val description = "Toggle slide upload. Currently not implemented properly, should be false"
 	}
 	case object showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean extends ConfigKey(booleanParse) {
-	  val description = "Allow users to save tags on their presentations in the review page. This is only available if the presentation is not editable. This is because normally the edit page must be used to select tags/keywords. Available tags are specified in " + userSelectedKeywords.name
+	  val description = "Allow users to save tags on their presentations in the review page. This is only available if the presentation is not editable. This is because normally the edit page must be used to select tags/keywords. Available tags are specified in " + userSelectedKeywords
 	}
 	case object eventName extends ConfigKey {
 	  val description = "Name used to identify the event in EMS. Should NEVER be changed after SubmitIT has been started to be used"
@@ -106,7 +104,7 @@ object DefaultConfigValues {
 	  val description = "If true, allows editing of already submitted submissions"
 	}
 	case object feedbackRejected extends ConfigKey {
-	  val description = "Global feedback message for abstracts that are rejected. This will be shown when " + showSpecialMessageOnRejectBoolean.name + " is true"
+	  val description = "Global feedback message for abstracts that are rejected. This will be shown when " + showSpecialMessageOnRejectBoolean + " is true"
 	}
 	case object userSelectedKeywords extends ConfigKey {
 	  val description = "Bar '|' separted list of tags/keywords the user may select"
@@ -193,5 +191,5 @@ object DefaultConfigValues {
 		emsUser -> "",
     emsPwd -> ""
   )
-
+  
 }

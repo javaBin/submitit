@@ -34,7 +34,7 @@ object PropertyIOUtils {
   
   def writeResource(fileName: String, props: collection.Map[ConfigKey, String]) {
     val file = new File(fileName)
-    val transformed = props.map{case (key, value) => key.name + "=" + emptyForNull(value)}.toList
+    val transformed = props.map{case (key, value) => key + "=" + emptyForNull(value)}.toList
     val propertyString = transformed.mkString("", "\n", "")
     using(new BufferedWriter(new FileWriter(file))) { stream =>
       propertyString.foreach(stream.write(_))
