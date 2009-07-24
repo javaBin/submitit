@@ -106,7 +106,7 @@ class EmsClientTest extends FunSuite {
   
     
   test("get session id from xml") {
-    val client = new EmsClient("JavaZone 2009", null, null, null)
+    val client = new EmsClient("JavaZone 2009", null, None, None, Nil)
     assert("b582a071-d4c2-4a48-ac66-812a5ef94c1b" === client.findEventInXML(xml))
   }
   

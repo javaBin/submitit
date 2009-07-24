@@ -24,12 +24,10 @@ import xml._
 import _root_.no.scala.scalanet.http._
 import _root_.no.scala.scalanet.http.Implicits._
 
-class EmsClient(eventName: String, serverUrl: String, username: String, password: String) extends BackendClient with Serializable {
+class EmsClient(eventName: String, serverUrl: String, username: Option[String], password: Option[String], tags: List[String]) extends BackendClient with Serializable {
   
   def getAllPresentations: List[PresentationInfo] = Nil
   
-  def isSet(s: String) = s != null && !s.trim.isEmpty
-      
   def converter = new EmsConverter
   
   lazy val event = findOrCreateEvent
@@ -98,7 +96,7 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
     val session = 
       if (presentation.sessionId == null) {	
         val s = new Session()
-        s.addTags("fra_submitit" :: Nil)
+        s.addTags(tags)
         s
       }
       else getSession(presentation.sessionId) match {
