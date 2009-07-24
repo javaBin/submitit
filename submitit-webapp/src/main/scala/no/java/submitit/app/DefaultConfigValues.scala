@@ -174,7 +174,7 @@ object DefaultConfigValues {
 		presentationAllowedExtendsionFileTypes -> "pdf, ppt, key, odp",
 		captchaLengthInt -> "1",
 		passPhraseSubmitSpecialURL -> "jz",
-		listAllSubmissionsPassword -> "jzListPassword",
+		listAllSubmissionsPassword -> None,
 		submitNotAllowedHtml -> "Call for papers is currently not open.",
 		editPageInfoTextHtml -> """<ul><li>Click the "Help" link, or press the question mark at each field for information about what to enter.</li><li>Before you submit your presentation you have to review it by pressing the "Review presentation" link.</li></ul>""",
 		reviewPageViewSubmittedChangeAllowedHthml -> """You can still change the contents of your submission. You may edit by pressing the "Edit link".<br>If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a>""",
