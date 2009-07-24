@@ -62,7 +62,10 @@ class SubmititApp extends WebApplication with LoggHandling {
   }
 
   private def backendClient: BackendClient = {
-    if (SubmititApp.settingOrNull(emsUrl) != null) new EmsClient(SubmititApp.settingOrNull(eventName), SubmititApp.settingOrNull(emsUrl), SubmititApp.settingOrNull(emsUser), SubmititApp.settingOrNull(emsPwd), SubmititApp.getListSetting(commaSeparatedListOfTagsForNewSubmissions))
+    if (SubmititApp.getSetting(emsUrl).isDefined) new EmsClient(SubmititApp.getSetting(eventName).get, 
+                                                                SubmititApp.getSetting(emsUrl).get, 
+                                                                SubmititApp.getSetting(emsUser), SubmititApp.getSetting(emsPwd), 
+                                                                SubmititApp.getListSetting(commaSeparatedListOfTagsForNewSubmissions))
     else submitit.common.BackendClientMock
   }
 
@@ -102,8 +105,6 @@ object SubmititApp {
     case s if s != null && s != "" => Some(s.trim)
     case _ => None
   }
-  
-  private def settingOrNull(key: ConfigKey) = getSetting(key).getOrElse(null)
   
   def getBccEmailList = {
     getSetting(emailBccCommaSeparatedList) match {

@@ -23,14 +23,12 @@ import common.Implicits._
 import common._
 import model._
 
-class EmsClient(eventName: String, serverUrl: String, username: String, password: String, tags: List[String]) extends BackendClient with Serializable {
+class EmsClient(eventName: String, serverUrl: String, username: Option[String], password: Option[String], tags: List[String]) extends BackendClient with Serializable {
 
-  def isSet(s: String) = s != null && !s.trim.isEmpty
-    
   def emsService = {
     val service = new RestEmsService(serverUrl)
-    if (isSet(username) || isSet(password)) {
-      service.setCredentials(username, password)
+    if (username.isDefined && password.isDefined) {
+      service.setCredentials(username.get, password.get)
     }
     service
   }
