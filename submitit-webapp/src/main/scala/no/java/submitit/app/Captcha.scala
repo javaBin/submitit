@@ -23,7 +23,7 @@ import DefaultConfigValues._
 
 class Captcha extends Serializable {
 
-  def randomString() = {
+  private def randomString() = {
     def randomInt(min: Int, max: Int):Int = (Math.random * (max - min)).asInstanceOf[Int] + min
     
     val captchaLength = SubmititApp.intSetting(captchaLengthInt) - 1

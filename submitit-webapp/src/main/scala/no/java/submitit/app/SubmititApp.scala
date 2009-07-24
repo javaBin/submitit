@@ -73,9 +73,7 @@ class SubmititApp extends WebApplication with LoggHandling {
   
   override def newSession(request: Request, response: Response):State = new State(request, backendClient)
   
-  def getHomePage() = classOf[StartPage]
-  
-  private def nullOnEmptyString(s: String) = if (s.trim != "") s.trim else null
+  def getHomePage = classOf[StartPage]
   
   override def newRequestCycle(request: Request, response: Response) = new MyRequestCycle(this, request.asInstanceOf[WebRequest], response)
 
