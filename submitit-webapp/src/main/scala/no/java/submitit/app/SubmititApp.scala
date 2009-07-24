@@ -41,7 +41,7 @@ class SubmititApp extends WebApplication with LoggHandling {
     val elems = props.keys
     var theMap = DefaultConfigValues.configValues
 
-    DefaultConfigValues.configKeyList.filter(_.mandatoryInFile).foreach(e => if(!props.containsKey(e.name)) throw new Exception("You must specify " + e.name + " in property file"))
+    DefaultConfigValues.configKeyList.filter(_.mandatoryInFile).foreach(e => if(!props.containsKey(e.toString)) throw new Exception("You must specify " + e + " in property file"))
 
     for (i <- 0 to props.size() - 1) {
       val e = elems.nextElement.asInstanceOf[String]
