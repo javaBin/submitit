@@ -154,8 +154,9 @@ object DefaultConfigValues {
     override val mandatoryInFile = true
   }
  
+  implicit def stringToSome(v: String) = Some(v)
   
-  private [app] val configValues = collection.mutable.LinkedHashMap(
+  private [app] val configValues = collection.mutable.LinkedHashMap[ConfigKey, Option[String]](
     eventName -> "JavaZone 2009",
   	headerText -> "Submit your JavaZone 2009 presentation",
   	submitAllowedBoolean -> "true",
@@ -183,8 +184,8 @@ object DefaultConfigValues {
 		reviewPageBeforeSubmitHtml -> """Your presentation has not yet been submittet. Please review, and press the "Submit presentation" link when you are ready.""",
 		submititBaseUrl -> "http://localhost:8080",
 		officialEmailReplyTo -> "program@java.no",
-		smtpHost -> null,
-		emailBccCommaSeparatedList -> null,
+		smtpHost -> None,
+		emailBccCommaSeparatedList -> None,
 		commaSeparatedListOfTagsForNewSubmissions -> "fra_submitit",
 		adminPassPhrase -> "r",
 		emsUrl -> "", 

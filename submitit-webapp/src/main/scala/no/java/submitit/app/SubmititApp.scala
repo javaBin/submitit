@@ -30,6 +30,7 @@ import _root_.java.util.Properties
 import org.apache.wicket.Application._
 import org.apache.wicket.settings.IExceptionSettings
 import DefaultConfigValues._
+import Functions._
 
 class SubmititApp extends WebApplication with LoggHandling {
 
@@ -46,7 +47,7 @@ class SubmititApp extends WebApplication with LoggHandling {
     for (i <- 0 to props.size() - 1) {
       val e = elems.nextElement.asInstanceOf[String]
       DefaultConfigValues getKey(e) match {
-        case Some(key) if theMap.contains(key) => theMap = theMap + (key -> props.getProperty(e).asInstanceOf[String])
+        case Some(key) if theMap.contains(key) => theMap = theMap + (key -> stringToOption(props.getProperty(e).asInstanceOf[String]))
         case _ => logger.info("Removing property value no longer in use:  " + e)
       }
     }
@@ -89,20 +90,17 @@ class MyRequestCycle(application: WebApplication, request: WebRequest, response:
 
 object SubmititApp {
   
-  private var properties: collection.Map[ConfigKey, String] = _
+  private var properties: collection.Map[ConfigKey, Option[String]] = _
   private var propertyFileName: String = _
 
-  def props: collection.Map[ConfigKey, String] = properties
+  def props: collection.Map[ConfigKey, Option[String]] = properties
   
-  def props_=(props: collection.Map[ConfigKey, String]) {
+  def props_=(props: collection.Map[ConfigKey, Option[String]]) {
     this.properties = props
     utils.PropertyIOUtils.writeResource(propertyFileName, props)
   }
   
-  def getSetting(key: ConfigKey) = props.get(key).get match {
-    case s if s != null && s != "" => Some(s.trim)
-    case _ => None
-  }
+  def getSetting(key: ConfigKey) = props.get(key).get
   
   def getBccEmailList = {
     getSetting(emailBccCommaSeparatedList) match {

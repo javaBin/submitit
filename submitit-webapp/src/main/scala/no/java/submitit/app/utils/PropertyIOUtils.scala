@@ -32,9 +32,9 @@ object PropertyIOUtils {
     }
   }
   
-  def writeResource(fileName: String, props: collection.Map[ConfigKey, String]) {
+  def writeResource(fileName: String, props: collection.Map[ConfigKey, Option[String]]) {
     val file = new File(fileName)
-    val transformed = props.map{case (key, value) => key + "=" + emptyForNull(value)}.toList
+    val transformed = props.map{case (key, value) => key + "=" + value.getOrElse("")}.toList
     val propertyString = transformed.mkString("", "\n", "")
     using(new BufferedWriter(new FileWriter(file))) { stream =>
       propertyString.foreach(stream.write(_))
@@ -42,6 +42,4 @@ object PropertyIOUtils {
     }
   }
 
-  def emptyForNull(value: String) = if (value == null) "" else value
-    
 }

@@ -27,6 +27,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel
 import _root_.java.io.Serializable
 import DefaultConfigValues._
 import collection.mutable.LinkedHashMap
+import Functions._
 
 class PropertyModificationPage(it: Boolean) extends LayoutPage {
   
@@ -75,8 +76,8 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
 
       val listView = new ListView("props", filteredProps.toList) {
         override def populateItem(item: ListItem) {
-          val (key, value) = item.getModelObject.asInstanceOf[(ConfigKey, String)]
-          val element = new Element(key.toString, value)
+          val (key, value) = item.getModelObject.asInstanceOf[(ConfigKey, Option[String])]
+          val element = new Element(key.toString, value.getOrElse(""))
           val field = new TextField("value", new PropertyModel(element, "value"))
           if(!key.editable) field.setEnabled(false)
 
@@ -103,8 +104,9 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
         }}
         
         if(errors.isEmpty) {
+          val parsed: Map[ConfigKey, Option[String]] = list.foldLeft(Map[ConfigKey, Option[String]]())((m, elem) => m + (DefaultConfigValues.key(elem.key) -> stringToOption(elem.value)))
           // Must use this strange thing to make the new Map. Hopefully 2.8 with more consistent collections will fix this
-          val newProps: collection.Map[ConfigKey, String] = new LinkedHashMap[ConfigKey, String]() ++ props ++ newValues
+          val newProps: collection.Map[ConfigKey, Option[String]] = new LinkedHashMap[ConfigKey, Option[String]]() ++ props ++ parsed
         	SubmititApp.props = newProps
         	info("Updated and stored new properties")
         	PropertyModificationPage.this.replace(createForm)
