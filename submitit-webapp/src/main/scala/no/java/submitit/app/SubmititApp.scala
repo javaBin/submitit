@@ -62,7 +62,7 @@ class SubmititApp extends WebApplication with LoggHandling {
   }
 
   private def backendClient: BackendClient = {
-    if (SubmititApp.settingOrNull(emsUrl) != null) new EmsClient(SubmititApp.settingOrNull(eventName), SubmititApp.settingOrNull(emsUrl), SubmititApp.settingOrNull(emsUser), SubmititApp.settingOrNull(emsPwd))
+    if (SubmititApp.settingOrNull(emsUrl) != null) new EmsClient(SubmititApp.settingOrNull(eventName), SubmititApp.settingOrNull(emsUrl), SubmititApp.settingOrNull(emsUser), SubmititApp.settingOrNull(emsPwd), SubmititApp.getListSetting(commaSeparatedListOfTagsForNewSubmissions))
     else submitit.common.BackendClientMock
   }
 

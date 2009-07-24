@@ -23,8 +23,8 @@ import common.Implicits._
 import common._
 import model._
 
-class EmsClient(eventName: String, serverUrl: String, username: String, password: String) extends BackendClient with Serializable {
-  
+class EmsClient(eventName: String, serverUrl: String, username: String, password: String, tags: List[String]) extends BackendClient with Serializable {
+
   def isSet(s: String) = s != null && !s.trim.isEmpty
     
   def emsService = {
@@ -78,7 +78,7 @@ class EmsClient(eventName: String, serverUrl: String, username: String, password
     val session = 
       if (presentation.sessionId == null) {	
         val s = new Session()
-        s.addTags("fra_submitit" :: Nil)
+        s.addTags(tags)
         s
       }
       else getSession(presentation.sessionId) match {

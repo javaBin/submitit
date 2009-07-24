@@ -132,6 +132,9 @@ object DefaultConfigValues {
 	case object listAllSubmissionsPassword extends ConfigKey {
 		val description = "Password for accessing all submissions in a list view."
 	}
+	case object commaSeparatedListOfTagsForNewSubmissions extends ConfigKey {
+		val description = "All new submissions sent from SubmitIT will get the tags set by this comma separated list of strings."
+	}
   case object adminPassPhrase extends ConfigKey {
     val description = "Passphrase for admin gui"
     override val visible = false
@@ -184,6 +187,7 @@ object DefaultConfigValues {
 		officialEmailReplyTo -> "program@java.no",
 		smtpHost -> null,
 		emailBccCommaSeparatedList -> null,
+		commaSeparatedListOfTagsForNewSubmissions -> "fra_submitit",
 		adminPassPhrase -> "r",
 		emsUrl -> "", 
 		emsUser -> "",
