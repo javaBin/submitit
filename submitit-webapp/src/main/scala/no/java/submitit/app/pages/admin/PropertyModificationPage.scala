@@ -68,9 +68,8 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
   })
   
   
-  def createForm: Form= {
+  def createForm(props: collection.Map[ConfigKey, Option[String]]): Form= {
     new Form("propertyForm") {
-      val props = SubmititApp.props
       val filteredProps = props.filter{case(key, _) => key.visible}
       var list: List[Element] = Nil
 
@@ -103,24 +102,26 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
           }
         }}
         
-        if(errors.isEmpty) {
-          val parsed: Map[ConfigKey, Option[String]] = list.foldLeft(Map[ConfigKey, Option[String]]())((m, elem) => m + (DefaultConfigValues.key(elem.key) -> stringToOption(elem.value)))
-          // Must use this strange thing to make the new Map. Hopefully 2.8 with more consistent collections will fix this
-          val newProps: collection.Map[ConfigKey, Option[String]] = new LinkedHashMap[ConfigKey, Option[String]]() ++ props ++ parsed
+      val parsed: Map[ConfigKey, Option[String]] = list.foldLeft(Map[ConfigKey, Option[String]]())((m, elem) => m + (DefaultConfigValues.key(elem.key) -> stringToOption(elem.value)))
+      // Must use this strange thing to make the new Map. Hopefully 2.8 with more consistent collections will fix this
+      val newProps: collection.Map[ConfigKey, Option[String]] = new LinkedHashMap[ConfigKey, Option[String]]() ++ props ++ parsed
+
+      if(errors.isEmpty) {
         	SubmititApp.props = newProps
         	info("Updated and stored new properties")
-        	PropertyModificationPage.this.replace(createForm)
          }
         else {
           errors.foreach { el =>
           	error(el._1 + " gave parse errors " + el._2)
           }
         }
+        
+      	PropertyModificationPage.this.replace(createForm(newProps))
       }
     }
   }
   
-  add(createForm)  
+  add(createForm(SubmititApp.props))  
   add(new FeedbackPanel("feedback"))
   
 }
