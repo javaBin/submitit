@@ -21,13 +21,8 @@ import DefaultConfigValues._
 class StartPage extends LayoutPage {
   
   if (SubmititApp.boolSetting(submitAllowedBoolean)) {
-    
-    if(State().isNew) {
-      setResponsePage(new EditPage(State().currentPresentation))
-    }
-    else {
-      setResponsePage(new ReviewPage(State().currentPresentation, true))
-    }
+    State().currentPresentation = null
+    setResponsePage(new EditPage(State().currentPresentation))
   }
   else {
     val res = new Label("info", SubmititApp.getSetting(submitNotAllowedHtml).getOrElse(""))

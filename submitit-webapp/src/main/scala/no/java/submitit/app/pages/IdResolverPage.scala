@@ -47,7 +47,6 @@ class IdResolverPage extends LayoutPage with LoggHandling {
 
   presentation match {
     case Some(pres) => {
-      State().fromServer = true
       State().currentPresentation = pres
       setResponsePage(new ReviewPage(pres, true))
     }

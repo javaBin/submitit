@@ -44,6 +44,8 @@ class Presentation extends Serializable with EmsId {
   var status: Status.Value = Status.Pending
   var timeslot: String = _
   var room: String = _
+  
+  def isNew = sessionId == null
 
   def duration: Int = format match {
     case PresentationFormat.Presentation => 60
