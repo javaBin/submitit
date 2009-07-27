@@ -20,10 +20,7 @@
 			<a href="#" wicket:id="editLink">Edit presentation</a>&nbsp;
 		</wicket:enclosure>
 		<wicket:enclosure child="showSubmitLink">
-			&nbsp;<a href="#" wicket:id="submitLink">Submit presentation</a>
-		</wicket:enclosure>
-		<wicket:enclosure child="showSubmitUpdatedLink">
-			&nbsp;<a href="#" wicket:id="submitLink">Submit updated presentation</a>
+			&nbsp;<a href="#" wicket:id="submitLink"><label wicket:id="submitLinkMessage"></label></a>
 		</wicket:enclosure>
 		<wicket:enclosure child="showNewLink">
 			&nbsp;<a href="#" wicket:id="newPresentation">Create a new submission</a>
@@ -83,7 +80,6 @@
 	<fieldset class="clearBoth">
 	<input type="hidden" wicket:id="showSubmitLink"/>
 	<input type="hidden" wicket:id="showEditLink"/>
-	<input type="hidden" wicket:id="showSubmitUpdatedLink"/>
 	<input type="hidden" wicket:id="showNewLink"/>
 	<input type="hidden" wicket:id="showTags"/>
 	<input type="hidden" wicket:id="viewTags"/>

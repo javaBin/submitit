@@ -15,6 +15,8 @@
 
 package no.java.submitit.app
 
+import Functions._
+
 object DefaultConfigValues {
   
   private[app] var configKeyList: List[ConfigKey] = Nil 
@@ -24,7 +26,7 @@ object DefaultConfigValues {
   private[app] def key(key: String) = getKey(key).getOrElse(throw new IllegalArgumentException("Should not happen"))
   
   private[app] val booleanParse = (x: String) => x.toBoolean
-  private[app] val notNullParse = (x: String) => if(x == null || x.trim == "") throw new Exception("Cannot be empty")
+  private[app] val notNullParse = (x: String) => if(stringToOption(x).isEmpty) throw new Exception("Cannot be empty")
   private[app] val intParse = (x: String) => x.toInt
   private[app] val defParse = (x: String) => x
   
@@ -47,7 +49,7 @@ object DefaultConfigValues {
 	  val description = "Toggle vieing global feedback on rejected presentations. Text defined in " + feedbackRejected + ". Will be 'overriden' if individual presentation has feedback and " + allowIndidualFeedbackOnRejectBoolean + " is true"
 	}
 	case object showActualStatusInReviewPageBoolean extends ConfigKey(booleanParse) {
-	  val description = "Hides the status if set to true and will always show pending. Convenient so actual status may be set in EMS"
+	  val description = "Hides the status if set to false and will always show pending. Convenient so actual status may be set in EMS"
 	}
 	case object passPhraseSubmitSpecialURL extends ConfigKey {
 	  val description = "The passphrase used for special invite page. So that speakers may submit after CfP has ended. If empty submission is not possible"

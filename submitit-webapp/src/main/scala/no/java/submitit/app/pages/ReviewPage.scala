@@ -32,30 +32,26 @@ import app.State
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import DefaultConfigValues._
 
-class ReviewPage(p: Presentation, editable: Boolean) extends LayoutPage with common.LoggHandling {
+class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with common.LoggHandling {
   
   val supportedExtensions = SubmititApp.getListSetting(presentationAllowedExtendsionFileTypes)
   val editAllowed = SubmititApp.boolSetting(globalEditAllowedBoolean) || (p.status == Status.Approved && SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))
   
-  private def showLink(shouldShow: Boolean) = editable && shouldShow 
+  private def showLink(shouldShow: Boolean) = notAdminView && shouldShow 
   
   
   add(new FeedbackPanel("systemFeedback"))
   
   add(new HiddenField("showEditLink") {
-	  override def isVisible = showLink(State().isNew || editAllowed)
+	  override def isVisible = showLink(p.isNew || editAllowed)
   })
   
   add(new HiddenField("showSubmitLink") {
-    override def isVisible = showLink(State().isNew)
+    override def isVisible = showLink(p.isNew || editAllowed)
   })
-
-  add(new HiddenField("showSubmitUpdatedLink") {
-	  override def isVisible = showLink(!State().isNew && editAllowed)
-  })
-
+  
   add(new HiddenField("showNewLink") {
-	  override def isVisible = showLink(!State().isNew && State().submitAllowed)
+	  override def isVisible = showLink(!p.isNew && State().submitAllowed)
   })
   
   add(new HiddenField("showRoom") {
@@ -68,7 +64,7 @@ class ReviewPage(p: Presentation, editable: Boolean) extends LayoutPage with com
   
   val showTags = (SubmititApp.boolSetting(showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean) && 
                  !SubmititApp.boolSetting(globalEditAllowedBoolean) && 
-                 !State().isNew && 
+                 !p.isNew && 
                  p.status != Status.NotApproved) &&
                  !(p.status == Status.Approved && 
                  SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))
@@ -84,7 +80,7 @@ class ReviewPage(p: Presentation, editable: Boolean) extends LayoutPage with com
   add(new Form("saveTagsForm"){
     add(new panels.TagsPanel("tags", p, true))
     override def onSubmit {
-    	if(State().isNew) error("Not allowed to update an abstracts keywords, when abstract has not yet been saved. This should never be possible bacause of an invariant.")
+    	if(p.isNew) error("Not allowed to update an abstracts keywords, when abstract has not yet been saved. This should never be possible bacause of an invariant.")
     	else try {
     	  	State().backendClient.savePresentation(p)
     	  	info("Updated the tags on your submission")
@@ -98,8 +94,8 @@ class ReviewPage(p: Presentation, editable: Boolean) extends LayoutPage with com
     }
   })
   
-  val statusMsg = if (!State().fromServer) "Not submitted"
-                  else if (!SubmititApp.boolSetting(showActualStatusInReviewPageBoolean)) Status.Pending.toString
+  val statusMsg = if (p.isNew) "Not submitted"
+                  else if (notAdminView && !SubmititApp.boolSetting(showActualStatusInReviewPageBoolean)) Status.Pending.toString
                   else p.status.toString
   
   add(new Label("status", statusMsg))
@@ -107,9 +103,9 @@ class ReviewPage(p: Presentation, editable: Boolean) extends LayoutPage with com
   add(new Label("timeslot", p.timeslot))
   add(new NewPresentationLink("newPresentation"))
 
-  val msg = if (State().isNew) SubmititApp.getSetting(reviewPageBeforeSubmitHtml).getOrElse("")
-  	else if (!State().isNew && !editAllowed) SubmititApp.getSetting(reviewPageViewSubmittedHthml).getOrElse("")
-  	else if (!State().isNew && editAllowed) SubmititApp.getSetting(reviewPageViewSubmittedChangeAllowedHthml).getOrElse("")
+  val msg = if (p.isNew) SubmititApp.getSetting(reviewPageBeforeSubmitHtml).getOrElse("")
+  	else if (!p.isNew && !editAllowed) SubmititApp.getSetting(reviewPageViewSubmittedHthml).getOrElse("")
+  	else if (!p.isNew && editAllowed) SubmititApp.getSetting(reviewPageViewSubmittedChangeAllowedHthml).getOrElse("")
   	else SubmititApp.getSetting(reviewPageViewSubmittedHthml).getOrElse("")
 
   add(new HtmlLabel("viewMessage", msg))
@@ -163,10 +159,15 @@ class ReviewPage(p: Presentation, editable: Boolean) extends LayoutPage with com
   })
   
   
-  add(new PageLink("submitLink", new IPageLink {
+  val submitLink = new PageLink("submitLink", new IPageLink {
+   
+    
     def getPage = new ConfirmPage(p)
     def getPageIdentity = classOf[ConfirmPage]
-  }))
+  })
+  
+  submitLink.add(new Label("submitLinkMessage", if(p.isNew) "Submit presentation" else "Submit updated presentation"))
+  add(submitLink)
       
   add(new PageLink("editLink",new IPageLink {
     def getPage = new EditPage(p)

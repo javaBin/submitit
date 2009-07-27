@@ -29,21 +29,13 @@ class State(request: Request, val backendClient: BackendClient) extends WebSessi
   
   var invitation = false
   
-  private var f = false
+  private def fromServer = currentPresentation.sessionId != null
   
-  def fromServer = f
-  
-  def fromServer_=(from: Boolean) {
-    f = from
-  }
-  
-  def isNew = submitAllowed && !fromServer
-  
-  private def notNewModifyAllowed = !isNew && SubmititApp.boolSetting(globalEditAllowedBoolean)
+  private def notNewModifyAllowed = fromServer && SubmititApp.boolSetting(globalEditAllowedBoolean)
   
   def submitAllowed = invitation || SubmititApp.boolSetting(submitAllowedBoolean)
 
-  def notNewModifyNotAllowedNewAllowed = !isNew && !notNewModifyAllowed && SubmititApp.boolSetting(submitAllowedBoolean)
+  def notNewModifyNotAllowedNewAllowed = fromServer && !notNewModifyAllowed && SubmititApp.boolSetting(submitAllowedBoolean)
   
   private var presentation: Presentation = _
   
@@ -66,7 +58,6 @@ class State(request: Request, val backendClient: BackendClient) extends WebSessi
       val p = new Presentation
       p.speakers = presentation.speakers
       presentation = p
-      fromServer = false
       presentation
     }
     else {

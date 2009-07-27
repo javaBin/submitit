@@ -34,14 +34,12 @@ class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
 
   val isTest = pres.testPresentation
   
-  State().fromServer = true
-
   val presentation = pres.toString
   
   if(!isTest) logger.info(presentation)
   
   add(new HiddenField("showNewLink") {
-	  override def isVisible = !State().isNew && State().submitAllowed
+	  override def isVisible = State().invitation || State().submitAllowed
   })
   
   add(new Label("extraInfo", if(isTest) "Test submission, has not been submitted and no email has been sent" else ""))
@@ -51,6 +49,7 @@ class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
   val url = {
     val backendClient = State().backendClient
     val uniqueId = if(!isTest) backendClient.savePresentation(pres) else Presentation.testPresentationURL
+    pres.sessionId = uniqueId
     SubmititApp.getSetting(submititBaseUrl).get + "/lookupPresentation?id=" + uniqueId
   }
   
@@ -78,7 +77,7 @@ class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
       msg.addRecipients(Message.RecipientType.TO, speaker.email)
     )
     
-    val (greetmessage, subjectmessage) = if(State().isNew) ("submitting", "of") else ("updating", "on updating")
+    val (greetmessage, subjectmessage) = if(pres.isNew) ("submitting", "of") else ("updating", "on updating")
     
     SubmititApp.getBccEmailList.foreach(msg.addRecipients(Message.RecipientType.BCC, _))
     msg.setSubject("Confirmation " + subjectmessage + " your JavaZone 2009 submission \"" + pres.title + "\"")
