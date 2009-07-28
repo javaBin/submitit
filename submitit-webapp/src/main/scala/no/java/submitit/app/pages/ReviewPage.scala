@@ -123,21 +123,34 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
     override def isVisible = feedback.isDefined
   })
   
-  add(createUploadForm("pdfForm", "uploadSlideText", "Upload pdf for publishing (max " + SubmititApp.intSetting(presentationUploadSizeInMBInt) + " MB). Supported file types: "+ supportedExtensions.mkString(", ")))
-  add(createUploadForm("slideForm", "uploadSlideText", "Upload slides as backup for your presentation (max " + SubmititApp.intSetting(presentationUploadSizeInMBInt) + " MB). Supported file types: "+ supportedExtensions.mkString(", ")))
+  add(createUploadForm("pdfForm", "uploadSlideText", "You must upload pdf for publishing online. (max " + SubmititApp.intSetting(presentationUploadSizeInMBInt) + " MB). Supported file types: "+ supportedExtensions.mkString(", "),
+                       SubmititApp.intSetting(presentationUploadPdfSizeInMBInt),
+                       supportedExtensions,
+                       p.pdfSlideset = _
+  ))
+  add(createUploadForm("slideForm", "uploadSlideText", "You can upload slides as backup for your presentation. This will be available for you at the venue (max " + SubmititApp.intSetting(presentationUploadPdfSizeInMBInt) + " MB)", 
+                       SubmititApp.intSetting(presentationUploadPdfSizeInMBInt),
+                       Nil,
+                       p.slideset = _
+  ))
   
-  def createUploadForm(formId: String, titleId: String, titleText: String) = new FileUploadForm(formId) {
+  def createUploadForm(formId: String, titleId: String, titleText: String, maxFileSize: Int, extenstions: List[String], assign: Some[Binary] => Unit) = new FileUploadForm(formId) {
     override def onSubmit {
       val uploadRes = getFileContents(fileUploadField.getFileUpload)
     	if (uploadRes.isDefined) {
     		val (fileName, bytes, contentType) = uploadRes.get
-    		p.pdfSlideset = Some(new Binary(bytes, fileName, contentType))
-    		State().backendClient.savePresentation(p)
+    		if(hasExtension(fileName)(extensionRegex(extenstions)).isDefined) {
+    			assign(Some(new Binary(bytes, fileName, contentType)))
+    			State().backendClient.savePresentation(p)
+    		}
+    		else {
+    			error("Upload does not have correct file type")
+    		}
       }
     }
     
     override def isVisible = SubmititApp.boolSetting(allowSlideUploadBoolen) && p.status == Status.Approved
-    setMaxSize(Bytes.megabytes(SubmititApp.intSetting(presentationUploadSizeInMBInt)))
+    setMaxSize(Bytes.megabytes(maxFileSize))
     add(new Label(titleId, titleText))
   }
   
@@ -153,6 +166,14 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
   add(new WikiMarkupText("expectedAudience", p.expectedAudience))
   add(new panels.TagsPanel("unmodifiableTags", p, false))
   
+  add(createFileLabel("pdfName", p.pdfSlideset))
+  add(createFileLabel("slideName", p.slideset))
+  
+  private def createFileLabel(id: String, binary: Option[Binary]) = new Label(id) {
+  	setModel(if (binary.isDefined) new Model(binary.get.name) else new Model(""))
+  	override def isVisible = binary.isDefined
+  }
+  
   add(new ListView("speakers", p.speakers.reverse) {
     override def populateItem(item: ListItem) {
       val speaker = item.getModelObject.asInstanceOf[Speaker]
@@ -166,8 +187,6 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
   
   
   val submitLink = new PageLink("submitLink", new IPageLink {
-   
-    
     def getPage = new ConfirmPage(p)
     def getPageIdentity = classOf[ConfirmPage]
   })

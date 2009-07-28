@@ -92,7 +92,7 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
           if (uploadRes.isDefined) {
             val (fileName, bytes, contentType) = uploadRes.get
             // Create a new file
-            extensionRegex.findFirstIn(fileName) match {
+            hasExtension(fileName) match {
               case Some(n) => speaker.picture = new Binary(bytes, fileName, contentType)
               case None => error(fileName + " has an unsupported file type")
             }
