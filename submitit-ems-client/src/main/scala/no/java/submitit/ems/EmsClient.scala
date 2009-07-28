@@ -16,7 +16,7 @@
 package no.java.submitit.ems
 
 import no.java.ems.client._
-import no.java.ems.domain.{Event,Session,Person,EmailAddress,Binary}
+import no.java.ems.domain.{Event,Session,Person,EmailAddress}
 import _root_.java.io.Serializable
 import _root_.scala.collection.jcl.Conversions._
 import common.Implicits._
@@ -143,7 +143,7 @@ class EmsClient(eventName: String, serverUrl: String, username: Option[String], 
     person
   }
   
-  private def savePicture(picture: Picture) {
+  private def savePicture(picture: Binary) {
     val photo = converter.toPhoto(picture)
     val result = emsService.saveBinary(photo)
     picture.id = result.getId

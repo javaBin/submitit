@@ -23,7 +23,7 @@ class Speaker extends Serializable {
   var name: String = _
   var email: String = _
   var bio: String = _
-  var picture: Picture = _
+  var picture: Binary = _
   
   override def toString =
     "Name: " + name +
@@ -53,7 +53,7 @@ class Speaker extends Serializable {
 
 object Speaker {
   
-  def apply(name: String, email: String, bio: String, picture: Picture): Speaker = {
+  def apply(name: String, email: String, bio: String, picture: Binary): Speaker = {
     val s = new Speaker()
     s.name = name
     s.email = email

@@ -16,7 +16,7 @@
 package no.java.submitit.ems
 
 import no.java.ems._
-import no.java.ems.domain.{Event,Session,Person,EmailAddress,Binary,ByteArrayBinary}
+import no.java.ems.domain.{Event,Session,Person,Speaker => EmsSpeaker,EmailAddress,Binary => EmsBinary,ByteArrayBinary}
 import _root_.java.io.InputStream
 import _root_.scala.collection.jcl.Conversions._
 import common.Implicits._
@@ -124,14 +124,14 @@ class EmsConverter extends LoggHandling {
     pres
   }
   
-  def toEmsSpeaker(speaker: Speaker): no.java.ems.domain.Speaker = {
-    val result = new no.java.ems.domain.Speaker(speaker.personId, speaker.name)
+  def toEmsSpeaker(speaker: Speaker): EmsSpeaker = {
+    val result = new EmsSpeaker(speaker.personId, speaker.name)
     result.setDescription(speaker.bio)
     result.setPhoto(toPhoto(speaker.picture))
     result
   }
   
-  def fromEmsSpeaker(speaker: no.java.ems.domain.Speaker): Speaker = {
+  def fromEmsSpeaker(speaker: EmsSpeaker): Speaker = {
     val result = new Speaker
     result.personId = speaker.getPersonId
     result.name = speaker.getName
@@ -140,7 +140,7 @@ class EmsConverter extends LoggHandling {
     result
   }
 
-  def toPhoto(picture: Picture): Binary = {
+  def toPhoto(picture: Binary): EmsBinary = {
     if (picture != null) {
       new ByteArrayBinary(picture.id, picture.name, picture.contentType, picture.content)
     } else {
@@ -148,7 +148,7 @@ class EmsConverter extends LoggHandling {
     }
   }
   
-  def toPicture(photo: Binary): Picture = {
+  def toPicture(photo: EmsBinary): Binary = {
     if (photo != null) {
       val content = new Array[Byte](photo.getSize.toInt)
       
@@ -156,7 +156,7 @@ class EmsConverter extends LoggHandling {
         stream => read(0, stream, content)
       }
 
-      new Picture(photo.getId, content, photo.getFileName, photo.getMimeType)
+      new Binary(photo.getId, content, photo.getFileName, photo.getMimeType)
     } else {
       null
     }

@@ -42,6 +42,8 @@ class Presentation extends Serializable {
   var status: Status.Value = Status.Pending
   var timeslot: String = _
   var room: String = _
+  var slideset: Option[Binary] = None
+  var pdfSlideset: Option[Binary] = None
   
   def isNew = sessionId == null
 
