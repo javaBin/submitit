@@ -75,6 +75,9 @@ object DefaultConfigValues {
 	case object presentationUploadSizeInMBInt extends ConfigKey(intParse) {
 	  val description = "Max size for uploading slides in MB"
 	}
+	case object presentationUploadPdfSizeInMBInt extends ConfigKey(intParse) {
+		val description = "Max size for pdf slides for publishing in MB"
+	}
 	case object officialEmailReplyTo extends ConfigKey(notNullParse) {
 	  val description = "Email which is viewed in several pages for contacting the programme committee"
 	}
@@ -172,11 +175,12 @@ object DefaultConfigValues {
 		showRoomWhenApprovedBoolean -> "false",
 		showTimeslotWhenApprovedBoolean -> "false",
 		allowSlideUploadBoolen -> "false",
-		presentationUploadSizeInMBInt -> "5",
+		presentationUploadSizeInMBInt -> "10",
+		presentationUploadPdfSizeInMBInt -> "10",
 		presentationAllowedExtendsionFileTypes -> "pdf, ppt, key, odp",
 		captchaLengthInt -> "1",
 		passPhraseSubmitSpecialURL -> "jz",
-		listAllSubmissionsPassword -> None,
+		listAllSubmissionsPassword -> "jz",
 		submitNotAllowedHtml -> "Call for papers is currently not open.",
 		editPageInfoTextHtml -> """<ul><li>Click the "Help" link, or press the question mark at each field for information about what to enter.</li><li>Before you submit your presentation you have to review it by pressing the "Review presentation" link.</li></ul>""",
 		reviewPageViewSubmittedChangeAllowedHthml -> """You can still change the contents of your submission. You may edit by pressing the "Edit link".<br>If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a>""",
