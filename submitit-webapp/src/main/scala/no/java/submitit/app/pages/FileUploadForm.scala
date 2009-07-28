@@ -19,10 +19,9 @@ import org.apache.wicket.markup.html.form.upload._
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.basic.Label
 
-abstract class FileUploadForm(extensionWicketId: String, supportedExtensions: List[String]) extends Form("simpleUpload") {
-  protected val fileUploadField : FileUploadField = new FileUploadField("fileInput")
+abstract class FileUploadForm(wicketId: String) extends Form(wicketId) {
   
-  add(new Label(extensionWicketId, supportedExtensions.mkString(", ")))
+  protected val fileUploadField : FileUploadField = new FileUploadField("fileInput")
   
   // set this form to multipart mode (allways needed for uploads!)
   setMultiPart(true);

@@ -50,11 +50,22 @@
        	</div>
 	</wicket:enclosure>	
 	
-	<wicket:enclosure child="simpleUpload">
-		<form wicket:id="simpleUpload">
+	<wicket:enclosure child="pdfForm">
+		<form wicket:id="pdfForm">
 			<div class="row">
 				<div class="titleText">
-		        	<label wicket:id="uploadSlideText"></label><label wicket:id="extension"></label>.
+		        	<label wicket:id="uploadSlideText"></label>.
+		        </div>
+		        <input wicket:id="fileInput" id="upload" type="file"/>
+		    </div>
+			<div class="row">
+				<input type="submit" value="Upload slides"/>
+	       	</div>
+	    </form>
+		<form wicket:id="slideForm">
+			<div class="row">
+				<div class="titleText">
+		        	<label wicket:id="uploadSlideText"></label>.
 		        </div>
 		        <input wicket:id="fileInput" id="upload" type="file"/>
 		    </div>

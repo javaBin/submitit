@@ -31,6 +31,7 @@ import org.apache.wicket.markup.html.form.Form
 import app.State
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import DefaultConfigValues._
+import Functions._
 
 class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with common.LoggHandling {
   
@@ -122,18 +123,23 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
     override def isVisible = feedback.isDefined
   })
   
-
-  val uploadForm = new FileUploadForm("extension", supportedExtensions) {
-    
+  add(createUploadForm("pdfForm", "uploadSlideText", "Upload pdf for publishing (max " + SubmititApp.intSetting(presentationUploadSizeInMBInt) + " MB). Supported file types: "+ supportedExtensions.mkString(", ")))
+  add(createUploadForm("slideForm", "uploadSlideText", "Upload slides as backup for your presentation (max " + SubmititApp.intSetting(presentationUploadSizeInMBInt) + " MB). Supported file types: "+ supportedExtensions.mkString(", ")))
+  
+  def createUploadForm(formId: String, titleId: String, titleText: String) = new FileUploadForm(formId) {
     override def onSubmit {
-      // what to do??
-      info("Thank you for uploading your slides")
+      val uploadRes = getFileContents(fileUploadField.getFileUpload)
+    	if (uploadRes.isDefined) {
+    		val (fileName, bytes, contentType) = uploadRes.get
+    		p.pdfSlideset = Some(new Binary(bytes, fileName, contentType))
+    		State().backendClient.savePresentation(p)
+      }
     }
+    
     override def isVisible = SubmititApp.boolSetting(allowSlideUploadBoolen) && p.status == Status.Approved
+    setMaxSize(Bytes.megabytes(SubmititApp.intSetting(presentationUploadSizeInMBInt)))
+    add(new Label(titleId, titleText))
   }
-  uploadForm.setMaxSize(Bytes.megabytes(SubmititApp.intSetting(presentationUploadSizeInMBInt)))
-  uploadForm.add(new Label("uploadSlideText", "Upload your slides (max " + SubmititApp.intSetting(presentationUploadSizeInMBInt) + " MB). Supported file types: "))
-  add(uploadForm)
   
   
   add(new Label("title", p.title))
