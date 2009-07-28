@@ -30,6 +30,7 @@ import org.apache.wicket.markup.html.list._
 import org.apache.wicket.model._
 import model._
 import common.Implicits._
+import Functions._
 
 class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
   
@@ -84,16 +85,15 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
       
       
       // Add upload form with ajax progress bar
-      val uploadForm = new FileUploadForm("extension", supportedExtensions) {
+      val uploadForm = new FileUploadForm("simpleUpload") {
       
         override def onSubmit {
-          val upload = fileUploadField.getFileUpload();
-          if (upload != null) {
+          val uploadRes = getFileContents(fileUploadField.getFileUpload())
+          if (uploadRes.isDefined) {
+            val (fileName, bytes, contentType) = uploadRes.get
             // Create a new file
-            val fileName = upload.getClientFileName
-            val bytes = upload.getBytes
             extensionRegex.findFirstIn(fileName) match {
-              case Some(n) => speaker.picture = new Picture(bytes, fileName, upload.getContentType)
+              case Some(n) => speaker.picture = new Binary(bytes, fileName, contentType)
               case None => error(fileName + " has an unsupported file type")
             }
           }

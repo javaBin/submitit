@@ -24,7 +24,7 @@ class Speaker extends Serializable with EmsId {
   var name: String = _
   var email: String = _
   var bio: String = _
-  var picture: Picture = _
+  var picture: Binary = _
   
   override def toString =
     "Name: " + name +
@@ -90,6 +90,12 @@ object Speaker {
 
 	private def extractFirstEmail(xml: NodeSeq) = (xml \\ "email-address").firstOption.getOrElse(<n></n>).text
  
+  def apply(name: String, email: String, bio: String, picture: Binary): Speaker = {
+    val s = new Speaker()
+    s.name = name
+    s.email = email
+    s.bio = bio
+    s.picture = picture
+    s
+  }
 }
-  
-

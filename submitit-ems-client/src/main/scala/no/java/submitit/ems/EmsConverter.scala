@@ -132,6 +132,9 @@ class EmsConverter extends LoggHandling {
     session.setLanguage(language)
     session.setLevel(level)
     session.setFormat(format)
+
+    val attachments = presentation.slideset.toList ::: presentation.pdfSlideset.toList
+    session.setAttachements(attachments.map(toEmsBinary(_)))
   }
 
   def toPresentation(session: Session): Presentation = {
@@ -172,7 +175,6 @@ class EmsConverter extends LoggHandling {
       case Session.Format.Quickie => PresentationFormat.LightningTalk
       case l => unknownEnumValue(l, PresentationFormat.Presentation)
     }
-<<<<<<< HEAD:submitit-ems-client/src/main/scala/no/java/submitit/ems/EmsConverter.scala
     pres.status = session.getState match {
       case Session.State.Approved => Status.Approved
       case Session.State.Pending => Status.Pending
@@ -180,46 +182,47 @@ class EmsConverter extends LoggHandling {
       case l => unknownEnumValue(l, Status.Pending)
     }
 
-=======
     pres.status = getStatus(session.getState)
-    
->>>>>>> master:submitit-ems-client/src/main/scala/no/java/submitit/ems/EmsConverter.scala
     pres
   }
 
   def toEmsSpeaker(speaker: Speaker): no.java.ems.domain.Speaker = {
     val result = new no.java.ems.domain.Speaker(speaker.personId, speaker.name)
-    result.setDescription(speaker.bio)
-    result.setPhoto(toPhoto(speaker.picture))
-    result
+    val attachments = session.getAttachements.toList.map(toBinary(_))
+    attachments.foreach(_ match {
+      case b: Binary if b.name.toLowerCase.endsWith(".pdf") => pres.pdfSlideset = Some(b)
+      case b: Binary => pres.slideset = Some(b)
+    })
+    
+    pres
   }
-
-  def fromEmsSpeaker(speaker: no.java.ems.domain.Speaker): Speaker = {
+  
+  def fromEmsSpeaker(speaker: EmsSpeaker): Speaker = {
     val result = new Speaker
     result.personId = speaker.getPersonId
     result.name = speaker.getName
     result.bio = speaker.getDescription
-    result.picture = toPicture(speaker.getPhoto)
+    result.picture = toBinary(speaker.getPhoto)
     result
   }
 
-  def toPhoto(picture: Picture): Binary = {
-    if (picture != null) {
-      new ByteArrayBinary(picture.id, picture.name, picture.contentType, picture.content)
+  def toEmsBinary(binary: Binary): EmsBinary = {
+    if (binary != null) {
+      new ByteArrayBinary(binary.id, binary.name, binary.contentType, binary.content)
     } else {
       null
     }
   }
 
-  def toPicture(photo: Binary): Picture = {
-    if (photo != null) {
-      val content = new Array[Byte](photo.getSize.toInt)
-
-      usingIS(photo.getDataStream) {
+  def toBinary(binary: EmsBinary): Binary = {
+    if (binary != null) {
+      val content = new Array[Byte](binary.getSize.toInt)
+      
+      usingIS(binary.getDataStream) { 
         stream => read(0, stream, content)
       }
 
-      new Picture(photo.getId, content, photo.getFileName, photo.getMimeType)
+      new Binary(binary.getId, content, binary.getFileName, binary.getMimeType)
     } else {
       null
     }

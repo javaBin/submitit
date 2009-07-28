@@ -62,9 +62,12 @@ class EmsClient(eventName: String, serverUrl: String, username: Option[String], 
       speaker.personId = person.getId
       
       val picture = speaker.picture
-      if (picture != null && picture.id == null) savePicture(picture)
+      if (picture != null && picture.id == null) saveBinary(picture)
     })
 
+    val attachments = presentation.slideset.toList ::: presentation.pdfSlideset.toList
+    attachments.filter(_.id == null).foreach(saveBinary(_))
+    
     updateOrCreateSession(presentation).sessionId
   }
   
@@ -163,10 +166,10 @@ class EmsClient(eventName: String, serverUrl: String, username: Option[String], 
     person
   }
   
-  private def savePicture(picture: Picture) {
-    val photo = converter.toPhoto(picture)
-    val result = emsService.saveBinary(photo)
-    picture.id = result.getId
+  private def saveBinary(binary: Binary) {
+    val emsBinary = converter.toEmsBinary(binary)
+    val result = emsService.saveBinary(emsBinary)
+    binary.id = result.getId
   }
   
   private def findOrCreateEvent(name: String, events: List[Event]): Event = {
