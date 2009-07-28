@@ -79,6 +79,9 @@ class EmsConverter extends LoggHandling {
     session.setLanguage(language)
     session.setLevel(level)
     session.setFormat(format)
+
+    val attachments = presentation.slideset.toList ::: presentation.pdfSlideset.toList
+    session.setAttachements(attachments.map(toEmsBinary(_)))
   }
   
   def toPresentation(session: Session): Presentation = {
@@ -121,13 +124,19 @@ class EmsConverter extends LoggHandling {
     }
     pres.status = getStatus(session.getState)
     
+    val attachments = session.getAttachements.toList.map(toBinary(_))
+    attachments.foreach(_ match {
+      case b: Binary if b.name.toLowerCase.endsWith(".pdf") => pres.pdfSlideset = Some(b)
+      case b: Binary => pres.slideset = Some(b)
+    })
+    
     pres
   }
   
   def toEmsSpeaker(speaker: Speaker): EmsSpeaker = {
     val result = new EmsSpeaker(speaker.personId, speaker.name)
     result.setDescription(speaker.bio)
-    result.setPhoto(toPhoto(speaker.picture))
+    result.setPhoto(toEmsBinary(speaker.picture))
     result
   }
   
@@ -136,27 +145,27 @@ class EmsConverter extends LoggHandling {
     result.personId = speaker.getPersonId
     result.name = speaker.getName
     result.bio = speaker.getDescription
-    result.picture = toPicture(speaker.getPhoto)
+    result.picture = toBinary(speaker.getPhoto)
     result
   }
 
-  def toPhoto(picture: Binary): EmsBinary = {
-    if (picture != null) {
-      new ByteArrayBinary(picture.id, picture.name, picture.contentType, picture.content)
+  def toEmsBinary(binary: Binary): EmsBinary = {
+    if (binary != null) {
+      new ByteArrayBinary(binary.id, binary.name, binary.contentType, binary.content)
     } else {
       null
     }
   }
   
-  def toPicture(photo: EmsBinary): Binary = {
-    if (photo != null) {
-      val content = new Array[Byte](photo.getSize.toInt)
+  def toBinary(binary: EmsBinary): Binary = {
+    if (binary != null) {
+      val content = new Array[Byte](binary.getSize.toInt)
       
-      usingIS(photo.getDataStream) { 
+      usingIS(binary.getDataStream) { 
         stream => read(0, stream, content)
       }
 
-      new Binary(photo.getId, content, photo.getFileName, photo.getMimeType)
+      new Binary(binary.getId, content, binary.getFileName, binary.getMimeType)
     } else {
       null
     }
