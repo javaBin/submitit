@@ -21,13 +21,22 @@ import org.apache.wicket.Session
 import no.java.submitit.common._
 import no.java.submitit.model._
 import DefaultConfigValues._
+import _root_.java.io.File
+import Functions._
 
-class State(request: Request, val backendClient: BackendClient) extends WebSession(request) {
+class State(request: Request, val backendClient: BackendClient) extends WebSession(request) with LoggHandling {
   
   var captcha: Captcha = _
   var verifiedWithCaptha = false
   
   var invitation = false
+  
+  var binaries = List[Binary]()
+  
+  def addBinary(binary: Binary) {
+    logger.info("Adding binary with temp file " + binary.tmpFileName.getOrElse(""))
+    binaries = binary :: binaries
+  }
   
   private def fromServer = currentPresentation.sessionId != null
   
@@ -49,7 +58,11 @@ class State(request: Request, val backendClient: BackendClient) extends WebSessi
    }
 
   def currentPresentation_=(currentPresentation: Presentation) {
+  	removeBinaries(binaries)
+    
     presentation = currentPresentation
+    binaries = currentPresentation.pdfSlideset.toList ::: currentPresentation.slideset.toList ::: currentPresentation.speakers.map(_.picture)
+    if(binaries != Nil) logger.info("Adding binary with temp file " + binaries.map(_.tmpFileName.getOrElse("")).mkString(", "))
   }
   
   def createNewPresentation = {

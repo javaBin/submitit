@@ -5,6 +5,12 @@
 
 	<display-name>submitit</display-name>
 
+	<listener>
+		<listener-class>
+			no.java.submitit.app.SessionListener
+		</listener-class>
+	</listener>
+
 	<filter>
 		<filter-name>wicket.publicweb-wicket</filter-name>
 		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
@@ -20,6 +26,7 @@
 	</filter-mapping>
 
 	<session-config>
+		<!-- <session-timeout>1</session-timeout>-->
 		<session-timeout>120</session-timeout>
 	</session-config>
 

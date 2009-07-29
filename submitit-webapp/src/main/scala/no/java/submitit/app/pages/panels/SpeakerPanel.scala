@@ -93,11 +93,15 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
             val (fileName, bytes, contentType) = uploadRes.get
             // Create a new file
             hasExtension(fileName) match {
-              case Some(n) => speaker.picture = new Binary(bytes, fileName, contentType)
+              case Some(n) => {
+                speaker.picture = Binary(fileName, contentType, bytes)
+                State().addBinary(speaker.picture)
+              }
               case None => error(fileName + " has an unsupported file type")
             }
           }
         }
+         add(new Label("extension", supportedImages.mkString(", ")))
       }
       item.add(uploadForm);
       

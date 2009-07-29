@@ -1,9 +1,15 @@
 package no.java.submitit.app
 
+import _root_.java.io.File
+import no.java.submitit.model.Binary
 
-object Functions {
+object Functions extends common.LoggHandling {
   
-  implicit val supportedImageExtensions: util.matching.Regex = extensionRegex(List("jpg", "jpeg", "png", "gif"))
+  val binariesInSession = "no.java.submitit.binaryholder"
+  
+  val supportedImages = List("jpg", "jpeg", "png", "gif")
+  
+  implicit val supportedImageExtensions: util.matching.Regex = extensionRegex(supportedImages)
   
   def extensionRegex(ext: List[String]) = if(ext != Nil) ("""(?i)\.""" + ext.mkString("(?:", "|", ")") + "$").r else "".r 
 
@@ -21,5 +27,14 @@ object Functions {
 	}
  
 	def hasExtension(fileName: String)(implicit ext: util.matching.Regex) = ext.findFirstIn(fileName)
+ 
+	def removeBinaries(binariesTempFileNames: List[Binary]) {
+  	binariesTempFileNames.foreach{ binary =>
+  		if(binary.tmpFileName.isDefined) {
+  			val file = new File(binary.tmpFileName.get)
+  			logger.info("Deleted file " + binary.tmpFileName.get + " which returned " + file.delete)
+  		}
+  	}
+  }
 
 }

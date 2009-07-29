@@ -70,7 +70,9 @@ class SubmititApp extends WebApplication with LoggHandling {
     else submitit.common.BackendClientMock
   }
 
-  override def newWebRequest(servletRequest: HttpServletRequest) = new UploadWebRequest(servletRequest)
+  override def newWebRequest(servletRequest: HttpServletRequest) = {
+    new UploadWebRequest(servletRequest)
+  }
   
   override def newSession(request: Request, response: Response):State = new State(request, backendClient)
   
@@ -86,6 +88,13 @@ class MyRequestCycle(application: WebApplication, request: WebRequest, response:
       new ErrorPage(State().currentPresentation, e)
     else super.onRuntimeException(cause, e)
   }
+  
+  override def onBeginRequest(){
+  	val webRequest = request.asInstanceOf[WebRequest]
+    val session = webRequest.getHttpServletRequest.getSession
+    session.setAttribute(binariesInSession, State().binaries)
+  }
+  
 }
 
 object SubmititApp {
