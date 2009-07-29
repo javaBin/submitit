@@ -188,7 +188,7 @@ class EmsConverter extends LoggHandling {
 
   def toEmsSpeaker(speaker: Speaker): no.java.ems.domain.Speaker = {
     val result = new no.java.ems.domain.Speaker(speaker.personId, speaker.name)
-    val attachments = session.getAttachements.toList.map(toBinary(_))
+    val attachments = session.getAttachements.toList.map(toBinary(_, false))
     attachments.foreach(_ match {
       case b: Binary if b.name.toLowerCase.endsWith(".pdf") => pres.pdfSlideset = Some(b)
       case b: Binary => pres.slideset = Some(b)
@@ -202,27 +202,29 @@ class EmsConverter extends LoggHandling {
     result.personId = speaker.getPersonId
     result.name = speaker.getName
     result.bio = speaker.getDescription
-    result.picture = toBinary(speaker.getPhoto)
+    result.picture = toBinary(speaker.getPhoto, true)
     result
   }
 
   def toEmsBinary(binary: Binary): EmsBinary = {
-    if (binary != null) {
+    if (binary != null && binary.content.length > 0) {
       new ByteArrayBinary(binary.id, binary.name, binary.contentType, binary.content)
     } else {
       null
     }
   }
-
-  def toBinary(binary: EmsBinary): Binary = {
+  
+  def toBinary(binary: EmsBinary, fetchData: Boolean): Binary = {
     if (binary != null) {
-      val content = new Array[Byte](binary.getSize.toInt)
+    	var content: Array[Byte] = null
       
-      usingIS(binary.getDataStream) { 
-        stream => read(0, stream, content)
+      if(fetchData) {
+        content = new Array[Byte](binary.getSize.toInt)
+      	usingIS(binary.getDataStream) { 
+      		stream => read(0, stream, content)
+      	}
       }
-
-      new Binary(binary.getId, content, binary.getFileName, binary.getMimeType)
+      Binary(binary.getId, binary.getFileName, binary.getMimeType, content)
     } else {
       null
     }

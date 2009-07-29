@@ -14,12 +14,54 @@
  */
 
 package no.java.submitit.model
+import common.IOUtils._
 
-import _root_.java.io.Serializable
+import _root_.java.io._
 
-class Binary(var id: String, val content: Array[byte], val name: String, val contentType: String) extends Serializable {
+class Binary private(var id: String, val name: String, val contentType: String) extends Serializable {
 
-  def this(content: Array[byte], name: String, contentType: String) = 
-    this(null, content, name, contentType)
+  var tmpFileName: Option[String] = None
+  private var fileLength: Int = _
+ 
+  def this(name: String, contentType: String) = 
+    this(null, name, contentType)
+  
+  def content: Array[byte] = {
+    if (tmpFileName.isDefined) {
+      var res = List[Byte]()
+    	using(new BufferedInputStream(new DataInputStream(new FileInputStream(new File(tmpFileName.get))))) { stream =>
+    		var value = stream.read
+    		while(value != -1) {
+    			res = value.toByte :: res
+    		  value = stream.read
+    		}
+    	}
+      res.reverse.toArray
+    }
+    else new Array[Byte](0)
+  }
+    
+  def content_= (content: Array[Byte]) {
+   val tempFile = File.createTempFile(name, ".tmp");
+   fileLength = content.length
+   using(new BufferedOutputStream(new DataOutputStream(new FileOutputStream(tempFile)))) { stream =>
+   	content.foreach(stream.write(_))
+   }
+   tmpFileName = Some(tempFile.getCanonicalPath)
+   println(tmpFileName)
+  }
   
 }
+
+object Binary {
+  
+	def apply(name: String, contentType: String, content: Array[Byte]): Binary = apply(null, name, contentType, content) 
+   
+  def apply(id: String, name: String, contentType: String, content: Array[Byte]) = {
+    val res = new Binary(id, name, contentType)
+    if(content != null) res.content = content
+    res
+  }
+  
+}
+

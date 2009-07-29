@@ -140,7 +140,8 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
     	if (uploadRes.isDefined) {
     		val (fileName, bytes, contentType) = uploadRes.get
     		if(hasExtension(fileName)(extensionRegex(extenstions)).isDefined) {
-    			assign(Some(new Binary(bytes, fileName, contentType)))
+    		  println(bytes)
+    			assign(Some(Binary(fileName, contentType, bytes)))
     			State().backendClient.savePresentation(p)
     		}
     		else {
