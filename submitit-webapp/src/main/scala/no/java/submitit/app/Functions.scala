@@ -9,7 +9,7 @@ object Functions extends common.LoggHandling {
   
   val supportedImages = List("jpg", "jpeg", "png", "gif")
   
-  implicit val supportedImageExtensions: util.matching.Regex = extensionRegex(supportedImages)
+  val supportedImageExtensions: util.matching.Regex = extensionRegex(supportedImages)
   
   def extensionRegex(ext: List[String]) = if(ext != Nil) ("""(?i)\.""" + ext.mkString("(?:", "|", ")") + "$").r else "".r 
 
@@ -26,7 +26,7 @@ object Functions extends common.LoggHandling {
    else None
 	}
  
-	def hasExtension(fileName: String)(implicit ext: util.matching.Regex) = ext.findFirstIn(fileName)
+	def hasExtension(fileName: String, ext: util.matching.Regex) = ext.findFirstIn(fileName)
  
 	def removeBinaries(binariesTempFileNames: List[Binary]) {
   	binariesTempFileNames.foreach{ binary =>
