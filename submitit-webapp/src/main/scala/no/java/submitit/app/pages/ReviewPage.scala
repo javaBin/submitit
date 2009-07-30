@@ -31,6 +31,7 @@ import org.apache.wicket.markup.html.form.Form
 import app.State
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import DefaultConfigValues._
+import org.apache.wicket.extensions.ajax.markup.html.form.upload.UploadProgressBar
 import Functions._
 
 class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with common.LoggHandling {
@@ -143,14 +144,16 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
     		  println(bytes)
     			assign(Some(Binary(fileName, contentType, bytes)))
     			State().backendClient.savePresentation(p)
+    			setResponsePage(new ReviewPage(p, true))
+    			info(fileName + " uploaded successfully")
     		}
     		else {
     			error("Upload does not have correct file type")
     		}
       }
     }
-    
     override def isVisible = SubmititApp.boolSetting(allowSlideUploadBoolen) && p.status == Status.Approved
+    add(new UploadProgressBar("progress", this));
     setMaxSize(Bytes.megabytes(maxFileSize))
     add(new Label(titleId, titleText))
   }

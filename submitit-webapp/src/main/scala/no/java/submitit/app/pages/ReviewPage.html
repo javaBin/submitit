@@ -50,17 +50,6 @@
        	</div>
 	</wicket:enclosure>	
 	
-	<wicket:enclosure child="pdfName">
-		<div class="row">
-			<div class="titleText">Pdf for publishing:</div> <label wicket:id="pdfName"></label>
-       	</div>
-	</wicket:enclosure>	
-	<wicket:enclosure child="slideName">
-		<div class="row">
-			<div class="titleText">Slides for backup:</div> <label wicket:id="slideName"></label>
-       	</div>
-	</wicket:enclosure>	
-	
 	<wicket:enclosure child="pdfForm">
 		<form wicket:id="pdfForm">
 			<div class="row">
@@ -71,8 +60,19 @@
 		    </div>
 			<div class="row">
 				<input type="submit" value="Upload pdf"/>
+				 <span wicket:id="progress">[[ajax upload progressbar]]</span>
 	       	</div>
 	    </form>
+	</wicket:enclosure>	
+	
+	<wicket:enclosure child="pdfName">
+		<div class="row">
+			<div class="titleText">Uploaded pdf</div> <label wicket:id="pdfName"></label>
+       	</div>
+       	<br>
+	</wicket:enclosure>
+	    
+	<wicket:enclosure child="slideForm">
 		<form wicket:id="slideForm">
 			<div class="row">
 				<div class="titleText">
@@ -82,8 +82,16 @@
 		    </div>
 			<div class="row">
 				<input type="submit" value="Upload slides"/>
+				 <span wicket:id="progress">[[ajax upload progressbar]]</span>
 	       	</div>
 	    </form>
+	</wicket:enclosure>
+	
+	<wicket:enclosure child="slideName">
+		<div class="row">
+			<div class="titleText">Uploaded slides</div> <label wicket:id="slideName"></label>
+       	</div>
+       	<br>
 	</wicket:enclosure>
 	
 	<wicket:enclosure child="showTags">
