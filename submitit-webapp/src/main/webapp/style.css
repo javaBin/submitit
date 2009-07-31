@@ -316,3 +316,7 @@ ul {
 	list-style-type:none;
 	margin-left:-10px;
 }
+
+div.wupb-progressBar .wupb-border {
+	width: 100%;	
+}

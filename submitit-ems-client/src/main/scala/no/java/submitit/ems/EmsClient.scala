@@ -42,14 +42,12 @@ class EmsClient(eventName: String, serverUrl: String, username: Option[String], 
       val person = findOrCreateContact(speaker)
       updateDefaultEmail(person, speaker.email)
       speaker.personId = person.getId
-      
-      val picture = speaker.picture
-      if (picture != null && picture.id == null) saveBinary(picture)
+      if (speaker.picture.isDefined) saveBinary(speaker.picture.get)
     })
 
     val attachments = presentation.slideset.toList ::: presentation.pdfSlideset.toList
-    attachments.filter(_.id == null).foreach(saveBinary(_))
-    
+    attachments.filter(binary => binary.id == null && binary.hasContent).foreach(saveBinary)
+    attachments.foreach(b => "Savingg name " + attachments)
     updateOrCreateSession(presentation).sessionId
   }
   
@@ -147,6 +145,7 @@ class EmsClient(eventName: String, serverUrl: String, username: Option[String], 
   }
   
   private def saveBinary(binary: Binary) {
+    println("Saving  " + binary.name)
     val emsBinary = converter.toEmsBinary(binary)
     val result = emsService.saveBinary(emsBinary)
     binary.id = result.getId

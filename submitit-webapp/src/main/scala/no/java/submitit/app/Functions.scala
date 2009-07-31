@@ -26,7 +26,8 @@ object Functions extends common.LoggHandling {
    else None
 	}
  
-	def hasExtension(fileName: String, ext: util.matching.Regex) = ext.findFirstIn(fileName)
+	def hasExtension(fileName: String, ext: util.matching.Regex) = ext.findFirstIn(fileName).isDefined
+	def hasntExtension(fileName: String, ext: util.matching.Regex) = ext.findFirstIn(fileName).isEmpty
  
 	def removeBinaries(binariesTempFileNames: List[Binary]) {
   	binariesTempFileNames.foreach{ binary =>

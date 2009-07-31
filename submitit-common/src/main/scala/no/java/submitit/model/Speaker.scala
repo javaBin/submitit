@@ -23,13 +23,13 @@ class Speaker extends Serializable {
   var name: String = _
   var email: String = _
   var bio: String = _
-  var picture: Binary = _
-  
+  var picture: Option[Binary] = None 
+    
   override def toString =
     "Name: " + name +
     "\nE-mail: " + email +
     "\nSpeaker's profile:\n" + bio +
-    "\n\nPicture name: " + (if (picture != null) picture.name else "")
+    "\n\nPicture name: " + (picture.map(_.name).getOrElse(""))
 
   override def equals(other: Any): Boolean = {
     other match {
@@ -53,7 +53,7 @@ class Speaker extends Serializable {
 
 object Speaker {
   
-  def apply(name: String, email: String, bio: String, picture: Binary): Speaker = {
+  def apply(name: String, email: String, bio: String, picture: Option[Binary]): Speaker = {
     val s = new Speaker()
     s.name = name
     s.email = email

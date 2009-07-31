@@ -22,33 +22,34 @@ class Binary private(var id: String, val name: String, val contentType: String) 
 
   var tmpFileName: Option[String] = None
   private var fileLength: Int = _
+  
+  def hasContent = tmpFileName.isDefined
  
   def this(name: String, contentType: String) = 
     this(null, name, contentType)
   
-  def content: Array[byte] = {
+  def content: Option[Array[byte]] = {
     if (tmpFileName.isDefined) {
       var res = List[Byte]()
-    	using(new BufferedInputStream(new DataInputStream(new FileInputStream(new File(tmpFileName.get))))) { stream =>
+    	using(new BufferedInputStream(new FileInputStream(new File(tmpFileName.get)))) { stream =>
     		var value = stream.read
     		while(value != -1) {
     			res = value.toByte :: res
     		  value = stream.read
     		}
     	}
-      res.reverse.toArray
+      Some(res.reverse.toArray)
     }
-    else new Array[Byte](0)
+    else None
   }
     
-  def content_= (content: Array[Byte]) {
+  private def content_= (content: Array[Byte]) {
    val tempFile = File.createTempFile(name, ".tmp");
    fileLength = content.length
-   using(new BufferedOutputStream(new DataOutputStream(new FileOutputStream(tempFile)))) { stream =>
+   using(new BufferedOutputStream(new FileOutputStream(tempFile))) { stream =>
    	content.foreach(stream.write(_))
    }
    tmpFileName = Some(tempFile.getCanonicalPath)
-   println(tmpFileName)
   }
   
 }
@@ -58,6 +59,7 @@ object Binary {
 	def apply(name: String, contentType: String, content: Array[Byte]): Binary = apply(null, name, contentType, content) 
    
   def apply(id: String, name: String, contentType: String, content: Array[Byte]) = {
+    println(name + " " + content)
     val res = new Binary(id, name, contentType)
     if(content != null) res.content = content
     res

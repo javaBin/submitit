@@ -124,24 +124,24 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
     override def isVisible = feedback.isDefined
   })
   
+  
   add(createUploadForm("pdfForm", "uploadSlideText", "You must upload pdf for publishing online. (max " + SubmititApp.intSetting(presentationUploadSizeInMBInt) + " MB). Supported file types: "+ supportedExtensions.mkString(", "),
                        SubmititApp.intSetting(presentationUploadPdfSizeInMBInt),
-                       supportedExtensions,
+                       hasExtension(_, extensionRegex(supportedExtensions)),
                        p.pdfSlideset = _
   ))
   add(createUploadForm("slideForm", "uploadSlideText", "You can upload slides as backup for your presentation. This will be available for you at the venue (max " + SubmititApp.intSetting(presentationUploadPdfSizeInMBInt) + " MB)", 
                        SubmititApp.intSetting(presentationUploadPdfSizeInMBInt),
-                       Nil,
+                       hasntExtension(_, extensionRegex(List("pdf"))),
                        p.slideset = _
   ))
   
-  def createUploadForm(formId: String, titleId: String, titleText: String, maxFileSize: Int, extenstions: List[String], assign: Some[Binary] => Unit) = new FileUploadForm(formId) {
+  def createUploadForm(formId: String, titleId: String, titleText: String, maxFileSize: Int, fileNameValidator: String => Boolean, assign: Some[Binary] => Unit) = new FileUploadForm(formId) {
     override def onSubmit {
       val uploadRes = getFileContents(fileUploadField.getFileUpload)
     	if (uploadRes.isDefined) {
     		val (fileName, bytes, contentType) = uploadRes.get
-    		if(hasExtension(fileName, extensionRegex(extenstions)).isDefined) {
-    		  println(bytes)
+    		if(fileNameValidator(fileName)) {
     			assign(Some(Binary(fileName, contentType, bytes)))
     			State().backendClient.savePresentation(p)
     			setResponsePage(new ReviewPage(p, true))
@@ -184,8 +184,14 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
       item.add(new Label("name", speaker.name))
       item.add(new Label("email", speaker.email))
       item.add(new WikiMarkupText("bio", speaker.bio))
-      item add (if (speaker.picture != null) new NonCachingImage("image", new ByteArrayResource(speaker.picture.contentType, speaker.picture.content))
-                  else new Image("image", new ContextRelativeResource("images/question.jpeg")))
+      
+      if (speaker.picture.isDefined) {
+        val picture = speaker.picture.get
+        item add (new NonCachingImage("image", new ByteArrayResource(picture.contentType, picture.content.get)))
+      }
+      else {
+       item add new Image("image", new ContextRelativeResource("images/question.jpeg"))
+      }
     }
   })
   
