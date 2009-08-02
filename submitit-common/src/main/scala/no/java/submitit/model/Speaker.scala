@@ -24,6 +24,8 @@ class Speaker extends Serializable {
   var email: String = _
   var bio: String = _
   var picture: Option[Binary] = None 
+  
+  def hasNewPicture = picture.map(_.isNew).getOrElse(false)
     
   override def toString =
     "Name: " + name +

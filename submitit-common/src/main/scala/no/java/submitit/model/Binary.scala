@@ -24,6 +24,7 @@ class Binary private(var id: String, val name: String, val contentType: String) 
   private var fileLength: Int = _
   
   def hasContent = tmpFileName.isDefined
+  def isNew = id == null
  
   def this(name: String, contentType: String) = 
     this(null, name, contentType)

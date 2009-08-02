@@ -42,11 +42,11 @@ class EmsClient(eventName: String, serverUrl: String, username: Option[String], 
       val person = findOrCreateContact(speaker)
       updateDefaultEmail(person, speaker.email)
       speaker.personId = person.getId
-      if (speaker.picture.isDefined) saveBinary(speaker.picture.get)
+      if (speaker.hasNewPicture) saveBinary(speaker.picture.get)
     })
 
     val attachments = presentation.slideset.toList ::: presentation.pdfSlideset.toList
-    attachments.filter(binary => binary.id == null && binary.hasContent).foreach(saveBinary)
+    attachments.filter(_.isNew).foreach(saveBinary)
     attachments.foreach(b => "Savingg name " + attachments)
     updateOrCreateSession(presentation).sessionId
   }

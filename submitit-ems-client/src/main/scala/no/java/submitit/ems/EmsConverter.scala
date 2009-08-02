@@ -150,11 +150,9 @@ class EmsConverter extends LoggHandling {
   }
 
   def toEmsBinary(binary: Binary): EmsBinary = {
-    if (binary.content.isDefined) {
-      new ByteArrayBinary(binary.id, binary.name, binary.contentType, binary.content.get)
-    } else {
-      null
-    }
+    // EMS requires a non-empty array here.
+    val bytes = binary.content.getOrElse(new Array[Byte](0))
+    new ByteArrayBinary(binary.id, binary.name, binary.contentType, bytes)
   }
   
   def toBinary(binary: EmsBinary, fetchData: Boolean): Option[Binary] = {
