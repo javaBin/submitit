@@ -307,7 +307,7 @@ ul {
 }
 
 .systemFeedback {
-	color:RED;
+	color:BLUE;
 	font-size:large;
 }
 
@@ -315,4 +315,8 @@ ul {
 	list-style-image:none;
 	list-style-type:none;
 	margin-left:-10px;
+}
+
+div.wupb-progressBar .wupb-border {
+	width: 100%;	
 }

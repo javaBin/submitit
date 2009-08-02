@@ -134,7 +134,7 @@ class EmsConverter extends LoggHandling {
     session.setFormat(format)
 
     val attachments = presentation.slideset.toList ::: presentation.pdfSlideset.toList
-    session.setAttachements(attachments.map(toEmsBinary(_)))
+    session.setAttachements(attachments.map(toEmsBinary))
   }
 
   def toPresentation(session: Session): Presentation = {
@@ -190,11 +190,18 @@ class EmsConverter extends LoggHandling {
     val result = new no.java.ems.domain.Speaker(speaker.personId, speaker.name)
     val attachments = session.getAttachements.toList.map(toBinary(_, false))
     attachments.foreach(_ match {
-      case b: Binary if b.name.toLowerCase.endsWith(".pdf") => pres.pdfSlideset = Some(b)
-      case b: Binary => pres.slideset = Some(b)
+      case Some(b) if b.name.toLowerCase.endsWith(".pdf") => pres.pdfSlideset = Some(b)
+      case Some(b) => pres.slideset = Some(b)
+      case None =>
     })
-    
     pres
+  }
+  
+  def toEmsSpeaker(speaker: Speaker): EmsSpeaker = {
+    val result = new EmsSpeaker(speaker.personId, speaker.name)
+    result.setDescription(speaker.bio)
+    if (speaker.picture.isDefined) result.setPhoto(toEmsBinary(speaker.picture.get))
+    result
   }
   
   def fromEmsSpeaker(speaker: EmsSpeaker): Speaker = {
@@ -207,14 +214,12 @@ class EmsConverter extends LoggHandling {
   }
 
   def toEmsBinary(binary: Binary): EmsBinary = {
-    if (binary != null && binary.content.length > 0) {
-      new ByteArrayBinary(binary.id, binary.name, binary.contentType, binary.content)
-    } else {
-      null
-    }
+    // EMS requires a non-empty array here.
+    val bytes = binary.content.getOrElse(new Array[Byte](0))
+    new ByteArrayBinary(binary.id, binary.name, binary.contentType, bytes)
   }
   
-  def toBinary(binary: EmsBinary, fetchData: Boolean): Binary = {
+  def toBinary(binary: EmsBinary, fetchData: Boolean): Option[Binary] = {
     if (binary != null) {
     	var content: Array[Byte] = null
       
@@ -224,9 +229,9 @@ class EmsConverter extends LoggHandling {
       		stream => read(0, stream, content)
       	}
       }
-      Binary(binary.getId, binary.getFileName, binary.getMimeType, content)
+      Some(Binary(binary.getId, binary.getFileName, binary.getMimeType, content))
     } else {
-      null
+      None
     }
   }
 

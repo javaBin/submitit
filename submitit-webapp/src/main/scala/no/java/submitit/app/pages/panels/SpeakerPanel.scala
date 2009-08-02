@@ -92,12 +92,12 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
           if (uploadRes.isDefined) {
             val (fileName, bytes, contentType) = uploadRes.get
             // Create a new file
-            hasExtension(fileName) match {
-              case Some(n) => {
-                speaker.picture = Binary(fileName, contentType, bytes)
-                State().addBinary(speaker.picture)
+            if(hasExtension(fileName, supportedImageExtensions)){
+                speaker.picture = Some(Binary(fileName, contentType, bytes))
+                State().addBinary(speaker.picture.get)
               }
-              case None => error(fileName + " has an unsupported file type")
+            else {
+            	error(fileName + " has an unsupported file type")
             }
           }
         }
@@ -105,7 +105,7 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
       }
       item.add(uploadForm);
       
-      item.add(new Label("fileName", if (speaker.picture != null) speaker.picture.name else null) {
+      item.add(new Label("fileName", if (speaker.picture.isDefined) speaker.picture.get.name else null) {
         override def isVisible = speaker.picture != null
       })	
     }

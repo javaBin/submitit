@@ -24,13 +24,15 @@ class Speaker extends Serializable with EmsId {
   var name: String = _
   var email: String = _
   var bio: String = _
-  var picture: Binary = _
+  var picture: Option[Binary] = None 
   
+  def hasNewPicture = picture.map(_.isNew).getOrElse(false)
+    
   override def toString =
     "Name: " + name +
     "\nE-mail: " + email +
     "\nSpeaker's profile:\n" + bio +
-    "\n\nPicture name: " + (if (picture != null) picture.name else "")
+    "\n\nPicture name: " + (picture.map(_.name).getOrElse(""))
 
   def toPersonXml(language: Language.Value) = trim {
       <person>
@@ -90,7 +92,7 @@ object Speaker {
 
 	private def extractFirstEmail(xml: NodeSeq) = (xml \\ "email-address").firstOption.getOrElse(<n></n>).text
  
-  def apply(name: String, email: String, bio: String, picture: Binary): Speaker = {
+  def apply(name: String, email: String, bio: String, picture: Option[Binary]): Speaker = {
     val s = new Speaker()
     s.name = name
     s.email = email

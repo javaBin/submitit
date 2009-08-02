@@ -70,16 +70,14 @@ class SubmititApp extends WebApplication with LoggHandling {
     else submitit.common.BackendClientMock
   }
 
-  override def newWebRequest(servletRequest: HttpServletRequest) = {
-    new UploadWebRequest(servletRequest)
-  }
+  override def newWebRequest(servletRequest: HttpServletRequest) = new UploadWebRequest(servletRequest)
   
   override def newSession(request: Request, response: Response):State = new State(request, backendClient)
   
   def getHomePage = classOf[StartPage]
   
   override def newRequestCycle(request: Request, response: Response) = new MyRequestCycle(this, request.asInstanceOf[WebRequest], response)
-
+  
 }
 
 class MyRequestCycle(application: WebApplication, request: WebRequest, response: Response) extends org.apache.wicket.protocol.http.WebRequestCycle(application, request, response) {
