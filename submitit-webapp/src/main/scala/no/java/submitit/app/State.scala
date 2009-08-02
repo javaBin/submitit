@@ -61,8 +61,10 @@ class State(request: Request, val backendClient: BackendClient) extends WebSessi
   	removeBinaries(binaries)
     
     presentation = currentPresentation
-    binaries = currentPresentation.pdfSlideset.toList ::: currentPresentation.slideset.toList ::: currentPresentation.speakers.filter(_.picture.isDefined).map(_.picture.get)
-    if(binaries != Nil) logger.info("Adding binary with temp file " + binaries.map(_.tmpFileName.getOrElse("")).mkString(", "))
+    if (currentPresentation != null) {
+    	binaries = currentPresentation.pdfSlideset.toList ::: currentPresentation.slideset.toList ::: currentPresentation.speakers.filter(_.picture.isDefined).map(_.picture.get)
+    	if(binaries != Nil) logger.info("Adding binary with temp file " + binaries.map(_.tmpFileName.getOrElse("")).mkString(", "))
+    }
   }
   
   def createNewPresentation = {
