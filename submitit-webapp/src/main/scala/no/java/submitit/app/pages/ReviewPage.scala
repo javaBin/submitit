@@ -125,13 +125,13 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
   })
   
   
-  add(createUploadForm("pdfForm", "uploadSlideText", "You must upload pdf for publishing online. (max " + SubmititApp.intSetting(presentationUploadSizeInMBInt) + " MB). Supported file types: "+ supportedExtensions.mkString(", "),
+  add(createUploadForm("pdfForm", "uploadSlideText", "You must upload pdf for publishing online. Max file size is " + SubmititApp.intSetting(presentationUploadPdfSizeInMBInt) + " MB. Supported file types: "+ supportedExtensions.mkString(", "),
                        SubmititApp.intSetting(presentationUploadPdfSizeInMBInt),
                        hasExtension(_, extensionRegex(supportedExtensions)),
                        p.pdfSlideset = _
   ))
-  add(createUploadForm("slideForm", "uploadSlideText", "You can upload slides as backup for your presentation. This will be available for you at the venue (max " + SubmititApp.intSetting(presentationUploadPdfSizeInMBInt) + " MB)", 
-                       SubmititApp.intSetting(presentationUploadPdfSizeInMBInt),
+  add(createUploadForm("slideForm", "uploadSlideText", "You can upload slides as backup for your presentation. This will be available for you at the venue. Max file size is " + SubmititApp.intSetting(presentationUploadSizeInMBInt) + " MB", 
+                       SubmititApp.intSetting(presentationUploadSizeInMBInt),
                        hasntExtension(_, extensionRegex(List("pdf"))),
                        p.slideset = _
   ))

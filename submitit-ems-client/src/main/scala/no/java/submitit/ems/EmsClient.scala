@@ -145,7 +145,6 @@ class EmsClient(eventName: String, serverUrl: String, username: Option[String], 
   }
   
   private def saveBinary(binary: Binary) {
-    println("Saving  " + binary.name)
     val emsBinary = converter.toEmsBinary(binary)
     val result = emsService.saveBinary(emsBinary)
     binary.id = result.getId

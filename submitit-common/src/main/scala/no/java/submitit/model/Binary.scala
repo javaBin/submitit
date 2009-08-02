@@ -60,7 +60,6 @@ object Binary {
 	def apply(name: String, contentType: String, content: Array[Byte]): Binary = apply(null, name, contentType, content) 
    
   def apply(id: String, name: String, contentType: String, content: Array[Byte]) = {
-    println(name + " " + content)
     val res = new Binary(id, name, contentType)
     if(content != null) res.content = content
     res
