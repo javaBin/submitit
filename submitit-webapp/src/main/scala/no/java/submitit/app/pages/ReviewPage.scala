@@ -142,7 +142,7 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
     	if (uploadRes.isDefined) {
     		val (fileName, bytes, contentType) = uploadRes.get
     		if(fileNameValidator(fileName)) {
-    			assign(Some(Binary(fileName, contentType, bytes)))
+    			assign(Some(Binary(fileName, contentType, Some(bytes))))
     			State().backendClient.savePresentation(p)
     			setResponsePage(new ReviewPage(p, true))
     			info(fileName + " uploaded successfully")

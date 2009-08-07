@@ -93,7 +93,7 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
             val (fileName, bytes, contentType) = uploadRes.get
             // Create a new file
             if(hasExtension(fileName, supportedImageExtensions)){
-                speaker.picture = Some(Binary(fileName, contentType, bytes))
+                speaker.picture = Some(Binary(fileName, contentType, Some(bytes)))
                 State().addBinary(speaker.picture.get)
               }
             else {

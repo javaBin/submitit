@@ -157,24 +157,15 @@ class EmsConverter extends LoggHandling {
   
   def toBinary(binary: EmsBinary, fetchData: Boolean): Option[Binary] = {
     if (binary != null) {
-    	var content: Array[Byte] = null
+    	var content: Option[(InputStream)] = None
       
       if(fetchData) {
-        content = new Array[Byte](binary.getSize.toInt)
-      	usingIS(binary.getDataStream) { 
-      		stream => read(0, stream, content)
-      	}
+        content = Some(binary.getDataStream)
       }
       Some(Binary(binary.getId, binary.getFileName, binary.getMimeType, content))
     } else {
       None
     }
-  }
-
-  private def read(ofs: Int, is: InputStream, content: Array[Byte]): Unit = {
-    val len = is.read(content, ofs, content.length - ofs)
-    if (len != -1)
-      read(ofs + len, is, content)
   }
 
   private def unknownEnumValue[T](v: Any, r: T): T = {

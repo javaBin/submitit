@@ -21,7 +21,7 @@ object Functions extends common.LoggHandling {
 	def getFileContents(file: org.apache.wicket.markup.html.form.upload.FileUpload) = {
 	  if(file != null) {
 	  	// Create a new file
-			Some(file.getClientFileName, file.getBytes, file.getContentType)
+			Some(file.getClientFileName, file.getInputStream, file.getContentType)
 	  }
    else None
 	}

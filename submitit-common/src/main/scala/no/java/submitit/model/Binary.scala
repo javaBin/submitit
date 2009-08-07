@@ -21,7 +21,6 @@ import _root_.java.io._
 class Binary private(var id: String, val name: String, val contentType: String) extends Serializable {
 
   var tmpFileName: Option[String] = None
-  private var fileLength: Int = _
   
   def hasContent = tmpFileName.isDefined
   def isNew = id == null
@@ -44,12 +43,20 @@ class Binary private(var id: String, val name: String, val contentType: String) 
     else None
   }
     
-  private def content_= (content: Array[Byte]) {
+  private def content(inputStream: InputStream) {
    val tempFile = File.createTempFile(name, ".tmp");
-   fileLength = content.length
-   using(new BufferedOutputStream(new FileOutputStream(tempFile))) { stream =>
-   	content.foreach(stream.write(_))
-   }
+   
+    usingIS(new BufferedInputStream(inputStream)) { 
+      istream => 
+      using(new BufferedOutputStream(new FileOutputStream(tempFile))) { ustream =>
+        var current: Int = istream.read()
+        while(current != -1) {
+          ustream.write(current)
+          current = istream.read()
+        }
+      }
+    }
+   
    tmpFileName = Some(tempFile.getCanonicalPath)
   }
   
@@ -57,11 +64,14 @@ class Binary private(var id: String, val name: String, val contentType: String) 
 
 object Binary {
   
-	def apply(name: String, contentType: String, content: Array[Byte]): Binary = apply(null, name, contentType, content) 
-   
-  def apply(id: String, name: String, contentType: String, content: Array[Byte]) = {
+	def apply(name: String, contentType: String, content: Option[InputStream]): Binary = apply(null, name, contentType, content) 
+         	
+  def apply(id: String, name: String, contentType: String, content: Option[InputStream]) = {
     val res = new Binary(id, name, contentType)
-    if(content != null) res.content = content
+    content match {
+      case Some(stream) => res.content(stream)
+      case None =>
+    }
     res
   }
   
