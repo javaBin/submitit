@@ -28,22 +28,40 @@ class Binary private(var id: String, val name: String, val contentType: String) 
   def this(name: String, contentType: String) = 
     this(null, name, contentType)
   
-  def content: Option[Array[byte]] = {
-    if (tmpFileName.isDefined) {
+  def getTmpFile = new File(tmpFileName.get)
+  
+  def content: Array[Byte] = {
+    if (hasContent) {
       var res = List[Byte]()
-    	using(new BufferedInputStream(new FileInputStream(new File(tmpFileName.get)))) { stream =>
+       using(new BufferedInputStream(new FileInputStream(new File(tmpFileName.get)))) { stream =>
+       	var value = stream.read
+       	while(value != -1) {
+       		res = value.toByte :: res
+       		value = stream.read
+       	}
+      }
+      return res.reverse.toArray
+     }
+    else return new Array[Byte](0)
+  }
+  
+  
+  def writeContent(os: OutputStream) {
+    using(new BufferedOutputStream(os)) {
+      ostream =>
+    	if (tmpFileName.isDefined) {
+    		using(new BufferedInputStream(new FileInputStream(new File(tmpFileName.get)))) { stream =>
     		var value = stream.read
     		while(value != -1) {
-    			res = value.toByte :: res
+    		  os.write(value)
     		  value = stream.read
     		}
     	}
-      Some(res.reverse.toArray)
+    	}
+     }
     }
-    else None
-  }
     
-  private def content(inputStream: InputStream) {
+  private def saveContent(inputStream: InputStream) {
    val tempFile = File.createTempFile(name, ".tmp");
    
     usingIS(new BufferedInputStream(inputStream)) { 
@@ -56,7 +74,6 @@ class Binary private(var id: String, val name: String, val contentType: String) 
         }
       }
     }
-   
    tmpFileName = Some(tempFile.getCanonicalPath)
   }
   
@@ -69,7 +86,7 @@ object Binary {
   def apply(id: String, name: String, contentType: String, content: Option[InputStream]) = {
     val res = new Binary(id, name, contentType)
     content match {
-      case Some(stream) => res.content(stream)
+      case Some(stream) => res.saveContent(stream)
       case None =>
     }
     res

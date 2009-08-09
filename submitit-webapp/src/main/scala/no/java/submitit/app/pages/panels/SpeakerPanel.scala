@@ -90,10 +90,10 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
         override def onSubmit {
           val uploadRes = getFileContents(fileUploadField.getFileUpload())
           if (uploadRes.isDefined) {
-            val (fileName, bytes, contentType) = uploadRes.get
+            val (fileName, stream, contentType) = uploadRes.get
             // Create a new file
             if(hasExtension(fileName, supportedImageExtensions)){
-                speaker.picture = Some(Binary(fileName, contentType, Some(bytes)))
+                speaker.picture = Some(Binary(fileName, contentType, Some(stream)))
                 State().addBinary(speaker.picture.get)
               }
             else {

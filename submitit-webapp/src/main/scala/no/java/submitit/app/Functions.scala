@@ -31,7 +31,7 @@ object Functions extends common.LoggHandling {
  
 	def removeBinaries(binariesTempFileNames: List[Binary]) {
   	binariesTempFileNames.foreach{ binary =>
-  		if(binary.tmpFileName.isDefined) {
+  		if(binary.hasContent) {
   			val file = new File(binary.tmpFileName.get)
   			logger.info("Deleted file " + binary.tmpFileName.get + " which returned " + file.delete)
   		}

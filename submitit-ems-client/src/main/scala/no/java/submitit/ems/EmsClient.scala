@@ -47,7 +47,6 @@ class EmsClient(eventName: String, serverUrl: String, username: Option[String], 
 
     val attachments = presentation.slideset.toList ::: presentation.pdfSlideset.toList
     attachments.filter(_.isNew).foreach(saveBinary)
-    attachments.foreach(b => "Savingg name " + attachments)
     updateOrCreateSession(presentation).sessionId
   }
   
