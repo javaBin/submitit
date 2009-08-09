@@ -14,8 +14,9 @@
  */
 
 package no.java.submitit.model
-import common.IOUtils._
 
+import common.IOUtils._
+import collection.mutable.ArrayBuffer
 import _root_.java.io._
 
 class Binary private(var id: String, val name: String, val contentType: String) extends Serializable {
@@ -32,15 +33,15 @@ class Binary private(var id: String, val name: String, val contentType: String) 
   
   def content: Array[Byte] = {
     if (hasContent) {
-      var res = List[Byte]()
+      var res = new ArrayBuffer[Byte]()
        using(new BufferedInputStream(new FileInputStream(new File(tmpFileName.get)))) { stream =>
        	var value = stream.read
        	while(value != -1) {
-       		res = value.toByte :: res
+       		res += value.toByte
        		value = stream.read
        	}
       }
-      return res.reverse.toArray
+      return res.toArray
      }
     else return new Array[Byte](0)
   }
