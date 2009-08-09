@@ -32,6 +32,7 @@ import app.State
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import DefaultConfigValues._
 import org.apache.wicket.extensions.ajax.markup.html.form.upload.UploadProgressBar
+import org.apache.wicket.util.resource.{IResourceStream, FileResourceStream}
 import Functions._
 
 class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with common.LoggHandling {
@@ -140,9 +141,9 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
     override def onSubmit {
       val uploadRes = getFileContents(fileUploadField.getFileUpload)
     	if (uploadRes.isDefined) {
-    		val (fileName, bytes, contentType) = uploadRes.get
+    		val (fileName, stream, contentType) = uploadRes.get
     		if(fileNameValidator(fileName)) {
-    			assign(Some(Binary(fileName, contentType, bytes)))
+    			assign(Some(Binary(fileName, contentType, Some(stream))))
     			State().backendClient.savePresentation(p)
     			setResponsePage(new ReviewPage(p, true))
     			info(fileName + " uploaded successfully")
@@ -187,7 +188,9 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
       
       if (speaker.picture.isDefined) {
         val picture = speaker.picture.get
-        item add (new NonCachingImage("image", new ByteArrayResource(picture.contentType, picture.content.get)))
+        item add (new Image("image", new ByteArrayResource(picture.contentType, null) {
+         override def getResourceStream: IResourceStream = new FileResourceStream(picture.getTmpFile)
+        }))
       }
       else {
        item add new Image("image", new ContextRelativeResource("images/question.jpeg"))

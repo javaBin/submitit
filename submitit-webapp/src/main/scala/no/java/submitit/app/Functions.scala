@@ -21,7 +21,7 @@ object Functions extends common.LoggHandling {
 	def getFileContents(file: org.apache.wicket.markup.html.form.upload.FileUpload) = {
 	  if(file != null) {
 	  	// Create a new file
-			Some(file.getClientFileName, file.getBytes, file.getContentType)
+			Some(file.getClientFileName, file.getInputStream, file.getContentType)
 	  }
    else None
 	}
@@ -31,7 +31,7 @@ object Functions extends common.LoggHandling {
  
 	def removeBinaries(binariesTempFileNames: List[Binary]) {
   	binariesTempFileNames.foreach{ binary =>
-  		if(binary.tmpFileName.isDefined) {
+  		if(binary.hasContent) {
   			val file = new File(binary.tmpFileName.get)
   			logger.info("Deleted file " + binary.tmpFileName.get + " which returned " + file.delete)
   		}

@@ -127,12 +127,12 @@ Bladi</body>
 
 
   /*
-
+class EmsConverterTest extends TestCase("EMS converter") {
   val converter = new EmsConverter
   
-  val speaker1 = Speaker("Alf Kristian Støyle", "aks@knowit.no", "Developer at KnowIT", null)
-  val speaker2 = Speaker("Jon Anders Teigen", "mail@jteigen.com", "Developer at JPro", null)
-  val speaker3 = Speaker("Fredrik Vraalsen", "fredrik@vraalsen.no", "Developer at KnowIT", null)
+  val speaker1 = Speaker("Alf Kristian Støyle", "aks@knowit.no", "Developer at KnowIT", None)
+  val speaker2 = Speaker("Jon Anders Teigen", "mail@jteigen.com", "Developer at JPro", None)
+  val speaker3 = Speaker("Fredrik Vraalsen", "fredrik@vraalsen.no", "Developer at KnowIT", None)
   val speakers = speaker1 :: speaker2 :: speaker3 :: Nil
   val presentation = Presentation("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras pellentesque.", 
                                       speakers, 
