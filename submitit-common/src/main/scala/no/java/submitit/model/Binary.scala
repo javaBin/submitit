@@ -33,15 +33,18 @@ class Binary private(var id: String, val name: String, val contentType: String) 
   
   def content: Array[Byte] = {
     if (hasContent) {
-      var res = new ArrayBuffer[Byte]()
-       using(new BufferedInputStream(new FileInputStream(new File(tmpFileName.get)))) { stream =>
+      val f = new File(tmpFileName.get)
+      var res = new Array[Byte](f.length().toInt)
+       using(new BufferedInputStream(new FileInputStream(f))) { stream =>
        	var value = stream.read
+        var pos = 0
        	while(value != -1) {
-       		res += value.toByte
+       		res(pos) = value.toByte
        		value = stream.read
+          pos += 1
        	}
       }
-      return res.toArray
+      return res
      }
     else return new Array[Byte](0)
   }
