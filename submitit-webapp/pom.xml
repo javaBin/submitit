@@ -63,6 +63,14 @@
       <artifactId>jetty</artifactId>
       <scope>provided</scope>
     </dependency>
+
+    <!-- Needed for IDEA -->
+    <dependency>
+        <groupId>org.scala-lang</groupId>
+        <artifactId>scala-compiler</artifactId>
+        <version>${scala.version}</version>
+        <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>
