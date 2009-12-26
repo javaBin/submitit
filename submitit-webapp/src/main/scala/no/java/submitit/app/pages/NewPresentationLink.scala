@@ -17,6 +17,7 @@ package no.java.submitit.app.pages
 
 import org.apache.wicket.markup.html.link._
 import no.java.submitit.model._
+import no.java.submitit.app.State
 
 class NewPresentationLink(id: String) extends Link(id) {
   

@@ -31,7 +31,7 @@ import org.apache.wicket.ajax._
 import org.apache.wicket.extensions.ajax.markup.html.modal._
 import org.apache.wicket.markup.html.link._
 import no.java.submitit.app._
-import common.Implicits._
+import no.java.submitit.common.Implicits._
 import DefaultConfigValues._
 
 

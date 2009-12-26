@@ -28,9 +28,11 @@ import org.apache.wicket.ajax.form._
 import org.apache.wicket.markup.html.form._
 import org.apache.wicket.markup.html.list._
 import org.apache.wicket.model._
-import model._
-import common.Implicits._
-import Functions._
+import no.java.submitit.model._
+import no.java.submitit.common.Implicits._
+import no.java.submitit.app.Functions._
+import no.java.submitit.app.pages.{FileUploadForm, EasyForm}
+import no.java.submitit.app.State
 
 class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
   

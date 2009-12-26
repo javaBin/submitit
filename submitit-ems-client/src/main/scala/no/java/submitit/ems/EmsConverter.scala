@@ -19,10 +19,10 @@ import no.java.ems._
 import no.java.ems.domain.{Event,Session,Person,Speaker => EmsSpeaker,EmailAddress,Binary => EmsBinary,ByteArrayBinary}
 import _root_.java.io.InputStream
 import _root_.scala.collection.jcl.Conversions._
-import common.Implicits._
-import common.{IOUtils, LoggHandling}
-import model._
-import common.IOUtils._
+import no.java.submitit.common.Implicits._
+import no.java.submitit.common.{IOUtils, LoggHandling}
+import no.java.submitit.model._
+import no.java.submitit.common.IOUtils._
 import org.joda.time.Interval
 import org.joda.time.format.DateTimeFormat
 

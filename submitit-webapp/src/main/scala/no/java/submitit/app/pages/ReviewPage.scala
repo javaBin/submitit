@@ -23,19 +23,20 @@ import org.apache.wicket.markup.html.list._
 import org.apache.wicket.model._
 import org.apache.wicket.markup.html.link._
 import org.apache.wicket.util.lang.Bytes
-import model._
+import no.java.submitit.model._
 import widgets._
-import common.Implicits._
+import no.java.submitit.common.Implicits._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import org.apache.wicket.markup.html.form.Form
-import app.State
 import org.apache.wicket.markup.html.panel.FeedbackPanel
-import DefaultConfigValues._
+import no.java.submitit.app.DefaultConfigValues._
 import org.apache.wicket.extensions.ajax.markup.html.form.upload.UploadProgressBar
 import org.apache.wicket.util.resource.{IResourceStream, FileResourceStream}
-import Functions._
+import no.java.submitit.app.Functions._
+import no.java.submitit.app.{SubmititApp, State}
+import no.java.submitit.common.LoggHandling
 
-class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with common.LoggHandling {
+class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with LoggHandling {
   
   val supportedExtensions = SubmititApp.getListSetting(presentationAllowedExtendsionFileTypes)
   val editAllowed = SubmititApp.boolSetting(globalEditAllowedBoolean) || (p.status == Status.Approved && SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))

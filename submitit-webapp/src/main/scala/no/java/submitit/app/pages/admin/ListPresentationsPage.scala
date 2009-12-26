@@ -19,9 +19,10 @@ import org.apache.wicket.markup.html.list._
 import org.apache.wicket.behavior.HeaderContributor
 import org.apache.wicket.markup.html.link.Link
 import org.apache.wicket.markup.html.basic._
-import model._
-import common.Implicits._
-
+import no.java.submitit.model._
+import no.java.submitit.common.Implicits._
+import no.java.submitit.app.pages.{ReviewPage, LayoutPage}
+import no.java.submitit.app.State
 class ListPresentationsPage extends LayoutPage {
 
   add(org.apache.wicket.behavior.HeaderContributor.forJavaScript("js/jquery-1.3.2.min.js"));

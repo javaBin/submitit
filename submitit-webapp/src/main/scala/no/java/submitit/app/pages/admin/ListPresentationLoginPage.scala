@@ -15,11 +15,14 @@
 
 package no.java.submitit.app.pages.admin
 
-import DefaultConfigValues._
+import no.java.submitit.app.SubmititApp
+import no.java.submitit.app.DefaultConfigValues._
+import no.java.submitit.app.pages.{LoginHandler, LayoutPage}
+import no.java.submitit.app.pages.panels.LoginPanel
 
 class ListPresentationLoginPage extends LayoutPage {
 
-	add(new panels.LoginPanel("login", new LoginHandler {
+	add(new LoginPanel("login", new LoginHandler {
 		def onLogin(pwd: String) {
 			val authenticated = SubmititApp.getSetting(listAllSubmissionsPassword).isDefined && SubmititApp.getSetting(listAllSubmissionsPassword).get == pwd
       	if (authenticated) {

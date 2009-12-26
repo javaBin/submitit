@@ -20,15 +20,16 @@ import org.apache.wicket.markup.html.basic._
 import org.apache.wicket.model._
 import org.apache.wicket.markup.html.list._
 import org.apache.wicket.markup.html.link._
-import common.Implicits._
-import model._
+import no.java.submitit.common.Implicits._
+import no.java.submitit.model._
 import scala.collection.jcl.Conversions._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import _root_.java.io.Serializable
-import DefaultConfigValues._
 import collection.mutable.LinkedHashMap
-import Functions._
-
+import no.java.submitit.app.pages.{ReviewPage, LayoutPage}
+import no.java.submitit.app.{SubmititApp, State, DefaultConfigValues}
+import no.java.submitit.app.DefaultConfigValues.ConfigKey
+import no.java.submitit.app.Functions._
 class PropertyModificationPage(it: Boolean) extends LayoutPage {
   
   class Element(var key: String, var value: String) extends Serializable {

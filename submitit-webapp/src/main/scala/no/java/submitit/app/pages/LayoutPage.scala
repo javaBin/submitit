@@ -17,7 +17,8 @@ package no.java.submitit.app.pages
 
 import org.apache.wicket.markup.html.WebPage
 import org.apache.wicket.markup.html.basic.Label
-import DefaultConfigValues._
+import no.java.submitit.app.DefaultConfigValues._
+import no.java.submitit.app.SubmititApp
 
 class LayoutPage extends WebPage {
   

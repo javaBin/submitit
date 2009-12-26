@@ -18,7 +18,8 @@ package no.java.submitit.app.pages
 import org.apache.wicket.markup.html.form._
 import org.apache.wicket.model._
 import no.java.submitit.model.Presentation
-import DefaultConfigValues._
+import no.java.submitit.app.DefaultConfigValues._
+import no.java.submitit.app.{State, SubmititApp}
 
 class InvitationPage extends LayoutPage {
   

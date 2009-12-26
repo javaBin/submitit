@@ -17,6 +17,8 @@ package no.java.submitit.app.pages.admin
 
 import org.apache.wicket.markup.html.form._
 import org.apache.wicket.model._
+import no.java.submitit.app.pages.{LoginHandler, LayoutPage}
+import no.java.submitit.app.SubmititApp
 
 class AdminLogin extends LayoutPage {
 

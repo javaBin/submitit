@@ -18,7 +18,7 @@ package no.java.submitit.ems
 import no.java.ems.domain.Session
 import junit.framework._
 import Assert._
-import model._
+import no.java.submitit.model._
 
 class EmsConverterTest extends TestCase("EMS converter") {
 

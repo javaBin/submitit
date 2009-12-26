@@ -19,7 +19,6 @@ import org.apache.wicket.markup.html.WebPage
 import org.apache.wicket.markup.html.link._
 import no.java.submitit.common._
 import no.java.submitit.model._
-import no.java.submitit.app.State
 import org.apache.wicket.markup.html.basic._
 import org.apache.wicket.markup.html.link._
 import org.apache.wicket.protocol.http.servlet.ServletWebRequest
@@ -28,7 +27,8 @@ import javax.servlet.http.HttpServletRequest
 import javax.mail.{Message,Session,Transport}
 import javax.mail.internet.MimeMessage
 import org.apache.wicket.markup.html.form.HiddenField
-import DefaultConfigValues._
+import no.java.submitit.app.DefaultConfigValues._
+import no.java.submitit.app.{SubmititApp, State}
 
 class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
 

@@ -16,6 +16,7 @@
 package no.java.submitit.app.pages
 
 import org.apache.wicket.markup.html.link.ExternalLink
+import no.java.submitit.app.SubmititApp
 
 class HelpPage extends LayoutPage {
 

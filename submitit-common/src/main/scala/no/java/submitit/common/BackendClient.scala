@@ -15,7 +15,7 @@
 
 package no.java.submitit.common
 
-import model.{Presentation, PresentationInfo}
+import no.java.submitit.model.{Presentation, PresentationInfo}
 
 trait BackendClient {
 
