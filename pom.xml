@@ -102,6 +102,20 @@
         <groupId>no.java.ems</groupId>
         <artifactId>ems-client</artifactId>
         <version>${ems.version}</version>
+        <exclusions>
+            <exclusion>
+                <groupId>org.restlet</groupId>
+                <artifactId>org.restlet</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>com.noelios.restlet</groupId>
+                <artifactId>com.noelios.restlet</artifactId>
+            </exclusion>
+            <exclusion>
+                <artifactId>com.noelios.restlet.ext.net</artifactId>
+                <groupId>com.noelios.restlet</groupId>
+            </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>no.java.ems</groupId>
