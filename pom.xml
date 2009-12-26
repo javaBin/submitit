@@ -22,13 +22,13 @@
   </parent>
   <groupId>no.java.submitit</groupId>
   <artifactId>wicket-submitit</artifactId>
-  <version>1.0.8-SNAPSHOT</version>
+  <version>1.0.9-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>wicket-submitit</name>
   <inceptionYear>2008</inceptionYear>
 
   <properties>
-    <scala.version>2.7.5</scala.version>
+    <scala.version>2.7.7</scala.version>
     <scala-plugin.version>2.10</scala-plugin.version>
     <ems.version>1.1</ems.version>
     <jetty.version>6.1.14</jetty.version>
@@ -251,8 +251,8 @@
   </reporting>
 
   <scm>
-    <developerConnection>scm:git:git@github.com:stoyle/wicket-submitit.git</developerConnection>
-    <connection>scm:git:git://github.com/stoyle/wicket-submitit.git</connection>
+    <developerConnection>scm:git:git@github.com:javaBin/wicket-submitit.git</developerConnection>
+    <connection>scm:git:git://github.com/javaBin/wicket-submitit.git</connection>
   </scm>
 
   <profiles>

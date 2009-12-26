@@ -40,21 +40,21 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
   val supportedExtensions = SubmititApp.getListSetting(presentationAllowedExtendsionFileTypes)
   val editAllowed = SubmititApp.boolSetting(globalEditAllowedBoolean) || (p.status == Status.Approved && SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))
   
-  private def showLink(shouldShow: Boolean) = notAdminView && shouldShow 
+  private def show(shouldShow: Boolean) = notAdminView && shouldShow 
   
   
   add(new FeedbackPanel("systemFeedback"))
   
   add(new HiddenField("showEditLink") {
-	  override def isVisible = showLink(p.isNew || editAllowed)
+	  override def isVisible = show(p.isNew || editAllowed)
   })
   
   add(new HiddenField("showSubmitLink") {
-    override def isVisible = showLink(p.isNew || editAllowed)
+    override def isVisible = show(p.isNew || editAllowed)
   })
   
   add(new HiddenField("showNewLink") {
-	  override def isVisible = showLink(!p.isNew && State().submitAllowed)
+	  override def isVisible = show(!p.isNew && State().submitAllowed)
   })
   
   add(new HiddenField("showRoom") {
@@ -73,11 +73,11 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
                  SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))
   
   add(new HiddenField("showTags") {
-  	override def isVisible = showLink(showTags)
+  	override def isVisible = show(showTags)
   })
   
   add(new HiddenField("viewTags") {
-  	override def isVisible = showLink(!showTags)
+  	override def isVisible = show(!showTags)
   })
 
   add(new Form("saveTagsForm"){
@@ -153,7 +153,7 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
     		}
       }
     }
-    override def isVisible = SubmititApp.boolSetting(allowSlideUploadBoolen) && p.status == Status.Approved
+    override def isVisible = show(SubmititApp.boolSetting(allowSlideUploadBoolen) && p.status == Status.Approved)
     add(new UploadProgressBar("progress", this));
     setMaxSize(Bytes.megabytes(maxFileSize))
     add(new Label(titleId, titleText))
