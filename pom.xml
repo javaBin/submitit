@@ -162,6 +162,33 @@
   </dependencyManagement>
 
   <build>
+    <sourceDirectory>src/main/scala</sourceDirectory>
+    <testSourceDirectory>src/test/scala</testSourceDirectory>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+      <resource>
+        <directory>src/main/scala</directory>
+        <includes>
+          <include>**</include>
+        </includes>
+        <excludes>
+          <exclude>**/*.scala</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <includes>
+          <include>**</include>
+        </includes>
+        <excludes>
+          <exclude>**/*.scala</exclude>
+        </excludes>
+      </testResource>
+    </testResources>      
     <plugins>
       <plugin>
         <groupId>org.scala-tools</groupId>
