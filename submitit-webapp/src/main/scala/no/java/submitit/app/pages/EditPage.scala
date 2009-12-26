@@ -56,6 +56,7 @@ class EditPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
     
     add(new FeedbackPanel("feedback"))
     add(new widgets.HtmlLabel("infoText", SubmititApp.getSetting(editPageInfoTextHtml).getOrElse("")))
+    add(new panels.LegendPanel)
     addPropTF("title", pres, "title")
     addPropTA("summary", pres, "summary")
     addPropTA("theabstract", pres, "abstr")

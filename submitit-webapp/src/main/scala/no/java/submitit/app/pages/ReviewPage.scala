@@ -101,7 +101,8 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
   val statusMsg = if (p.isNew) "Not submitted"
                   else if (notAdminView && !SubmititApp.boolSetting(showActualStatusInReviewPageBoolean)) Status.Pending.toString
                   else p.status.toString
-  
+
+  add(new panels.LegendPanel)
   add(new Label("status", statusMsg))
   add(new Label("room", p.room))
   add(new Label("timeslot", p.timeslot))
