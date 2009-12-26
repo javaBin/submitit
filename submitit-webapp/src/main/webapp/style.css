@@ -320,3 +320,8 @@ ul {
 div.wupb-progressBar .wupb-border {
 	width: 100%;	
 }
+
+.boldAndMed {
+    font-size:medium;
+    font-weight:bold;
+}
