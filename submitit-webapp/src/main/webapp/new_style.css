@@ -435,3 +435,20 @@ a:hover {
 .clearBoth {
 	clear: both;
 }
+
+
+.systemFeedback {
+	color:BLUE;
+	font-size:large;
+}
+
+.feedbackPanelINFO {
+	list-style-image:none;
+	list-style-type:none;
+	margin-left:-10px;
+}
+
+.feedbackPanelERROR {
+	color:red;
+	font-weight:bold;
+}
