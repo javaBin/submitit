@@ -51,7 +51,7 @@ a:hover {
 }
 
 #wrapper {
-	width: 900px;
+	width: 1000px;
 	margin: 0 auto;
 	background: url(new_images/img04.jpg) no-repeat left top;
 }
@@ -63,7 +63,7 @@ a:hover {
 /* Header */
 
 #header {
-	width: 900px;
+	width: 1000px;
 	height: 105px;
 	margin: 0 auto;
 	background: url(new_images/img02.jpg) repeat-y left top;
@@ -143,7 +143,7 @@ a:hover {
 /* Menu */
 
 #menu {
-	width: 900px;
+	width: 1000px;
 	height: 44px;
 	background: url(new_images/img03.jpg) no-repeat left top;
 	margin: 0 auto;
@@ -189,7 +189,7 @@ a:hover {
 /* Page */
 
 #page {
-	width: 900px;
+	width: 1000px;
 	margin: 0 auto;
 	padding-top: 20px;
 }
@@ -323,7 +323,7 @@ a:hover {
 /* Footer */
 
 #footer {
-	width: 900px;
+	width: 1000px;
 	height: 20px;
 	margin: 0 auto;
 	padding: 20px 0 15px 0;
