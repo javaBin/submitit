@@ -15,6 +15,7 @@
 
 package no.java.submitit.app.pages
 
+import borders.ContentBorder
 import org.apache.wicket.markup.html.WebPage
 import org.apache.wicket.markup.html.link._
 import no.java.submitit.common._
@@ -41,10 +42,23 @@ class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
   add(new HiddenField("showNewLink") {
 	  override def isVisible = State().invitation || State().submitAllowed
   })
+
+  add(new NewPresentationLink("newPresentation"))
+
+  add(new Link("toJavaZone"){
+    override def onClick {
+      setRedirect(false)
+      getResponse.redirect("http://www.javazone.no")
+      State().invalidateNow
+    }
+  })
   
-  add(new Label("extraInfo", if(isTest) "Test submission, has not been submitted and no email has been sent" else ""))
+  val contentBorder = new ContentBorder("contentBorder")
+  add(contentBorder)
+
+  contentBorder.add(new Label("extraInfo", if(isTest) "Test submission, has not been submitted and no email has been sent" else ""))
   
-  add(new MultiLineLabel("pres", presentation))
+  contentBorder.add(new MultiLineLabel("pres", presentation))
 
   val url = {
     val backendClient = State().backendClient
@@ -53,16 +67,8 @@ class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
     SubmititApp.getSetting(submititBaseUrl).get + "/lookupPresentation?id=" + uniqueId
   }
   
-  add(new ExternalLink("confirmUrl", url, url))
+  contentBorder.add(new ExternalLink("confirmUrl", url, url))
   
-  add(new NewPresentationLink("newPresentation"))
-  add(new Link("toJavaZone"){
-    override def onClick {
-      setRedirect(false)
-      getResponse.redirect("http://www.javazone.no")
-      State().invalidateNow
-    }
-  })
 
   if (!isTest && SubmititApp.getSetting(smtpHost).isDefined) {
     val props = new Properties

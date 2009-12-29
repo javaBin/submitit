@@ -14,28 +14,36 @@
   ~   limitations under the License.
   -->
 <wicket:extend>
-	<div class="linkRow">
+	<div id="menu">
+        <ul>
 		<wicket:enclosure child="showNewLink">
-			<a href="#" wicket:id="newPresentation">Create a new submission</a>
+			<li><a href="#" wicket:id="newPresentation">Create a new submission</a></li>
 		</wicket:enclosure>&nbsp;&nbsp;
-		<a href="#" wicket:id="toJavaZone">JavaZone.no</a>
+		<li><a href="#" wicket:id="toJavaZone">JavaZone.no</a></li>
+        </ul>
 	</div>
-	<input type="hidden" wicket:id="showNewLink"></input>
-	<div class="row">
-		<h1 wicket:id="extraInfo"></h1>
-	</div>
-	<h2 align="left">Thank you for submitting. A confirmation email has been sent.</h2>
-	<p>
-		<label>You can always come back and review your presentation with the following link:</label>
-	</p>
-	<p>
-	<a href="#" wicket:id="confirmUrl">Replaced</a>
-	</p>
-	<p>
-	<div class="titleText">
-		The following has been registered:
-	</div>
-	<label wicket:id="pres"></label>
-	</p>
+
+    <input type="hidden" wicket:id="showNewLink"></input>
+
+    <span wicket:id="contentBorder">
+
+        <div class="row">
+            <h1 wicket:id="extraInfo"></h1>
+        </div>
+        <h2 align="left">Thank you for submitting. A confirmation email has been sent.</h2>
+        <p>
+            <label>You can always come back and review your presentation with the following link:</label>
+        </p>
+        <p>
+        <a href="#" wicket:id="confirmUrl">Replaced</a>
+        </p>
+        <p>
+        <div class="titleText">
+            The following has been registered:
+        </div>
+        <label wicket:id="pres"></label>
+        </p>
+
+    </span>
 </wicket:extend>
 </html>
