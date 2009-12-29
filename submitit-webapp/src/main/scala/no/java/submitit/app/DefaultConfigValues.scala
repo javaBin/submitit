@@ -162,8 +162,8 @@ object DefaultConfigValues {
   implicit def stringToSome(v: String) = Some(v)
   
   private [app] val configValues = collection.mutable.LinkedHashMap[ConfigKey, Option[String]](
-    eventName -> "JavaZone 2009",
-  	headerText -> "Submit your JavaZone 2009 presentation",
+    eventName -> "JavaZone 2010",
+  	headerText -> "Submit your JavaZone 2010 presentation",
   	submitAllowedBoolean -> "true",
 		showFeedbackBoolean -> "false",
 		showSpecialMessageOnRejectBoolean -> "false",
