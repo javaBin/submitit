@@ -15,7 +15,7 @@
   -->
 <wicket:extend>
 
-	<form wicket:id="inputForm">
+
 	<div id="menu">
         <ul>
 		 <li><a href="#" wicket:id="reviewButtonTop">Review presentation</a></li>
@@ -23,10 +23,9 @@
         </ul>
 	</div>
 
-    <div id="wrapper">
-        <div class="btm">
-            <div id="page">
-                <div id="content">
+    <span wicket:id="contentBorder">
+
+	<form wicket:id="inputForm">
 
     <div wicket:id="modal"></div>
 	<div class="infoHeader">Please read this before you begin</div>
@@ -139,11 +138,8 @@
 	<div wicket:id="speakers" />
 
 
-
-                </div>
-            </div>
-        </div>
-    </div>
 	</form>
+
+    </span>
 </wicket:extend>
 </html>
