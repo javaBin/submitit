@@ -15,11 +15,19 @@
   -->
 <wicket:extend>
 
-	<form wicket:id="inputForm">
-	<div class="linkRow">
-		<a href="#" wicket:id="reviewButtonTop">Review presentation</a>&nbsp;&nbsp;<a href="helpit" target="_blank">Help</a>
+
+	<div id="menu">
+        <ul>
+		 <li><a href="#" wicket:id="reviewButtonTop">Review presentation</a></li>
+         <li><a href="help" target="_blank">Help</a></li>
+        </ul>
 	</div>
-	<div wicket:id="modal"></div>
+
+    <span wicket:id="contentBorder">
+
+	<form wicket:id="inputForm">
+
+    <div wicket:id="modal"></div>
 	<div class="infoHeader">Please read this before you begin</div>
 	<div class="infoText">
 		<div wicket:id="infoText"></div>
@@ -123,11 +131,17 @@
 	<div class="row">
 		<div wicket:id="tags"></div>
 	</div>
-	<div class="clearBoth"></div>
+    <div class="clearBoth">
+        &nbsp;
+    </div>
 	<div class="row ">
 		<h2>Speakers <a href="#" wicket:id="speakersHelp"><img class="helpImg" src="images/questionmark.gif"></a></h2>
 	</div>
 	<div wicket:id="speakers" />
+
+
 	</form>
+
+    </span>
 </wicket:extend>
 </html>

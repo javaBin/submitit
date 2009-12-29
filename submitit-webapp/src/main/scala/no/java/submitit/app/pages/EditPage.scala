@@ -15,6 +15,7 @@
 
 package no.java.submitit.app.pages
 
+import borders.ContentBorder
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import org.apache.wicket.extensions.validation.validator.RfcCompliantEmailAddressValidator
 import org.apache.wicket.markup.html.basic._
@@ -49,8 +50,11 @@ class EditPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
   def captcha = State().captcha
 
   def password = getRequest.getParameter("password");
-  
-  add(new Form("inputForm") with EasyForm {
+
+  val contentBorder = new ContentBorder("contentBorder")
+  add(contentBorder)
+
+  val form = new Form("inputForm") with EasyForm {
     
     val verified = State().verifiedWithCaptha
     
@@ -76,12 +80,6 @@ class EditPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
       override def isVisible = !verified
     })
     
-    private class ReviewLink(id: String, form: Form) extends SubmitLink(id, form){
-      override def onSubmit() { 
-          handleSubmit
-      }
-    }
-    
     addHelpLink("outlineHelp", true)
     addHelpLink("expectedAudienceHelp", true)
     addHelpLink("formatHelp", false)
@@ -91,8 +89,8 @@ class EditPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
     addHelpLink("languageHelp", false)
     addHelpLink("speakersHelp", false)
     addHelpLink("highlightHelp", true)
-    
-    add(new ReviewLink("reviewButtonTop", this))
+
+
     
     add(new SubmitLink("captchaButton", this){
       override def onSubmit()  {
@@ -102,29 +100,40 @@ class EditPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
     })
     
     add(new panels.SpeakerPanel(pres))
-    
-    def handleSubmit() {
-      // Some form validation
-      if (!State().verifiedWithCaptha && captcha.imagePass != password) error("Wrong captcha password")
-      
-      val emailValidator = RfcCompliantEmailAddressValidator.getInstance().getPattern.matcher("")
-      required(pres.speakers, "You must specify at least one speaker")
-      required(pres.title, "You must specify a title")
-      required(pres.abstr, "You must specify an abstract")
-      required(pres.summary, "You must specify highlights")
-      
-      pres.speakers.foreach(sp => {
-        required(sp.name, "You must specify speaker name")
-        required(sp.email, "You must specify an email")
-        required(sp.bio, "You must specify speaker's profile")
-        if (sp.email != null && !emailValidator.reset(sp.email).matches) error("'" + sp.email + "' is not valid email")
-      })
-      
-      if(!hasErrorMessage) {
-        State().verifiedWithCaptha = true
-        redirectToReview()
-      }
+
+   def handleSubmit() {
+    // Some form validation
+    if (!State().verifiedWithCaptha && captcha.imagePass != password) error("Wrong captcha password")
+
+    val emailValidator = RfcCompliantEmailAddressValidator.getInstance().getPattern.matcher("")
+    required(pres.speakers, "You must specify at least one speaker")
+    required(pres.title, "You must specify a title")
+    required(pres.abstr, "You must specify an abstract")
+    required(pres.summary, "You must specify highlights")
+
+    pres.speakers.foreach(sp => {
+      required(sp.name, "You must specify speaker name")
+      required(sp.email, "You must specify an email")
+      required(sp.bio, "You must specify speaker's profile")
+      if (sp.email != null && !emailValidator.reset(sp.email).matches) error("'" + sp.email + "' is not valid email")
+    })
+
+    if(!hasErrorMessage) {
+      State().verifiedWithCaptha = true
+      redirectToReview()
     }
-  })
+  }
+
+  }
+
+
+  private class ReviewLink(id: String) extends SubmitLink(id, form){
+    override def onSubmit() {
+        form.handleSubmit()
+    }
+  }
+
+  contentBorder.add(form)
+  add(new ReviewLink("reviewButtonTop"))
     
 }

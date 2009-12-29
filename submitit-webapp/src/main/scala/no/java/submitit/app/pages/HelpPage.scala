@@ -15,19 +15,23 @@
 
 package no.java.submitit.app.pages
 
+import borders.ContentBorder
 import org.apache.wicket.markup.html.link.ExternalLink
 import no.java.submitit.app.SubmititApp
+import org.apache.wicket.{MarkupContainer, Component}
 
 class HelpPage extends LayoutPage {
 
-  OfficialEmailLink.addLink(this)
+  val contentBorder = new ContentBorder("contentBorder")
+  add(contentBorder)
+  OfficialEmailLink.addLink(contentBorder)
   
 }
 
 object OfficialEmailLink {
   
-  def addLink(page: org.apache.wicket.Page) {
-    page.add(new ExternalLink("officialEmail", "mailto:" + SubmititApp.getOfficialEmail, SubmititApp.getOfficialEmail))
+  def addLink(container: MarkupContainer) {
+    container.add(new ExternalLink("officialEmail", "mailto:" + SubmititApp.getOfficialEmail, SubmititApp.getOfficialEmail))
   }
   
 }

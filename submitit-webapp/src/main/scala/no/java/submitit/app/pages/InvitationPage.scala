@@ -15,6 +15,7 @@
 
 package no.java.submitit.app.pages
 
+import borders.ContentBorder
 import org.apache.wicket.markup.html.form._
 import org.apache.wicket.model._
 import no.java.submitit.model.Presentation
@@ -22,8 +23,11 @@ import no.java.submitit.app.DefaultConfigValues._
 import no.java.submitit.app.{State, SubmititApp}
 
 class InvitationPage extends LayoutPage {
-  
-  add(new panels.LoginPanel("login", new LoginHandler {
+
+  val contentBorder = new ContentBorder("contentBorder")
+  add(contentBorder)
+
+  contentBorder.add(new panels.LoginPanel("login", new LoginHandler {
     
     def onLogin(pwd: String) {
       if(SubmititApp.getSetting(passPhraseSubmitSpecialURL).isDefined && pwd != SubmititApp.getSetting(passPhraseSubmitSpecialURL).get) {

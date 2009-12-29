@@ -15,17 +15,25 @@
   -->
 <wicket:extend>
 
-	<div class="linkRow">
+	<div id="menu">
+        <ul>
 		<wicket:enclosure child="showEditLink">
-			<a href="#" wicket:id="editLink">Edit presentation</a>&nbsp;
+			<li><a href="#" wicket:id="editLink">Edit presentation</a></li>
 		</wicket:enclosure>
 		<wicket:enclosure child="showSubmitLink">
-			&nbsp;<a href="#" wicket:id="submitLink"><label wicket:id="submitLinkMessage"></label></a>
+			<li><a href="#" wicket:id="submitLink"><label wicket:id="submitLinkMessage"></label></a></li>
 		</wicket:enclosure>
 		<wicket:enclosure child="showNewLink">
-			&nbsp;<a href="#" wicket:id="newPresentation">Create a new submission</a>
+			<li><a href="#" wicket:id="newPresentation">Create a new submission</a></li>
 		</wicket:enclosure>&nbsp;
+        </ul>
 	</div>
+
+    <input type="hidden" wicket:id="showSubmitLink"/>
+	<input type="hidden" wicket:id="showEditLink"/>
+	<input type="hidden" wicket:id="showNewLink"/>
+
+    <span wicket:id="contentBorder">
 
 	<div class="infoText">
 		<div class="infoHeader">Please read this</div>	
@@ -37,7 +45,8 @@
 	</div>
 	 
 	<h2 align="left">Presentation status: <label wicket:id="status"></label></h2>
-	
+    <br>
+    <br>
 	<wicket:enclosure child="showTimeslot">
 		<div class="row">
 			<div class="titleText">Timeslot:</div> <label wicket:id="timeslot"></label>
@@ -96,9 +105,6 @@
 	
 	
 	<fieldset class="clearBoth">
-	<input type="hidden" wicket:id="showSubmitLink"/>
-	<input type="hidden" wicket:id="showEditLink"/>
-	<input type="hidden" wicket:id="showNewLink"/>
 	<input type="hidden" wicket:id="showRoom"/>
 	<input type="hidden" wicket:id="showTimeslot"/>
 	
@@ -216,5 +222,7 @@
 	</div>
 
 	</fieldset>
+
+    </span>
 </wicket:extend>
 </html>
