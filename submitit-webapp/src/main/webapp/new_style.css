@@ -6,7 +6,7 @@ Released for free under a Creative Commons Attribution 2.5 License
 
 body {
 	margin: 0px;
-	background: url(images/img01.gif) repeat-x left top;
+	background: url(new_images/img01.gif) repeat-x left top;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: #444444;
@@ -41,8 +41,9 @@ ul, ol {
 
 a {
 	text-decoration: none;
-	border-bottom: 1px dotted #CC0001;
 	color: #FB7600;
+	// Does not look good with question image
+	// border-bottom: 1px dotted #CC0001;
 }
 
 a:hover {
@@ -56,7 +57,7 @@ a:hover {
 }
 
 #wrapper .btm {
-	background: url(new_images/img05.gif) no-repeat left bottom;
+	background: url(new_images/img05.png) no-repeat left bottom;
 }
 
 /* Header */
@@ -196,9 +197,10 @@ a:hover {
 /* Content */
 
 #content {
-	float: right;
-	width: 610px;
-	padding: 20px 20px 0 0;
+	// float: right;
+	// width: 610px;;
+	// padding: 20px 20px 0 0;
+	padding: 3px 11px 3px 11px;
 }
 
 .post {
@@ -341,4 +343,75 @@ a:hover {
 #footer a {
 	color: #FFFFFF;
 	border-bottom: 1px #FFFFFF dotted;
+}
+
+
+/*
+* Styles added manually
+*/
+
+.infoText {
+	background: #ADD8E6;
+	border:1px solid blue;
+	font-size:medium;
+	margin-bottom:11px;
+}
+
+.infoHeader {
+	background:#3A8CBD;
+	border:1px solid blue;
+	border-bottom: 0px;
+	font-size:medium;
+	font-weight: bold;
+	margin-bottom:0px;
+	margin-top:0px;
+}
+
+.helpImg {
+	height:16px;
+	border: none;
+}
+
+.titleText {
+	font-size:medium;
+	font-weight: bold;
+	background: #E0E0E0;
+}
+
+.inputArea {
+	width:99%;
+	height:10em;
+	border:1px solid;
+}
+
+.smallInputArea {
+	height:4em;
+	width:99%;
+	border:1px solid;
+}
+
+.inputField {
+	min-height:19px;
+	width:99%;
+	border:1px solid;
+}
+
+.reviewField {
+	min-height: 10px;
+}
+
+.choices {
+	margin: 3px;
+}
+
+.row {
+	margin-bottom: 5px;
+}
+
+.inlineLink {
+	font-size:15px;
+	padding: 3px;
+	background: #ADD8E6;
+	border: 1px solid blue;
+	color: black;
 }
