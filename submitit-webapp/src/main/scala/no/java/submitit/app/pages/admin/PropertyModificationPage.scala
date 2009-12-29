@@ -30,6 +30,8 @@ import no.java.submitit.app.pages.{ReviewPage, LayoutPage}
 import no.java.submitit.app.{SubmititApp, State, DefaultConfigValues}
 import no.java.submitit.app.DefaultConfigValues.ConfigKey
 import no.java.submitit.app.Functions._
+import no.java.submitit.app.pages.borders.ContentBorder
+
 class PropertyModificationPage(it: Boolean) extends LayoutPage {
   
   class Element(var key: String, var value: String) extends Serializable {
@@ -57,14 +59,18 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
     }
     State().currentPresentation = p
   }
+
+  private val contentBorder = new ContentBorder("contentBorder")
+  add(contentBorder)
+
   
-  add(new Link("approvedLink") {
+  contentBorder.add(new Link("approvedLink") {
   	def onClick{whenClicked(Status.Approved)}
   })
-  add(new Link("pendingLink") {
+  contentBorder.add(new Link("pendingLink") {
   	def onClick{whenClicked(Status.Pending)}
   })
-  add(new Link("rejectedLink") {
+  contentBorder.add(new Link("rejectedLink") {
   	def onClick{whenClicked(Status.NotApproved)}
   })
   
@@ -117,13 +123,13 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
           }
         }
         
-      	PropertyModificationPage.this.replace(createForm(newProps))
+      	PropertyModificationPage.this.contentBorder.replace(createForm(newProps))
       }
     }
   }
   
-  add(createForm(SubmititApp.props))  
-  add(new FeedbackPanel("feedback"))
+  contentBorder.add(createForm(SubmititApp.props))
+  contentBorder.add(new FeedbackPanel("feedback"))
   
 }
 
