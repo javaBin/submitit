@@ -415,3 +415,12 @@ a:hover {
 	border: 1px solid blue;
 	color: black;
 }
+
+.infoText ul {
+    line-height: 140%;
+}
+
+.boldAndMed {
+    font-size:medium;
+    font-weight:bold;
+}
