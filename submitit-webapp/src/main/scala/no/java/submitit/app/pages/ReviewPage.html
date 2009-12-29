@@ -94,25 +94,11 @@
        	<br>
 	</wicket:enclosure>
 	
-	<wicket:enclosure child="showTags">
-		<form wicket:id="saveTagsForm">
-			<div wicket:id="tags" class="row"></div>
-			<br>
-			<br>
-			<div class="row clearBoth">
-				<input type="submit" value="Update topics"/>
-	       	</div>
-		</form>
-		<br>
-	</wicket:enclosure>
-	
 	
 	<fieldset class="clearBoth">
 	<input type="hidden" wicket:id="showSubmitLink"/>
 	<input type="hidden" wicket:id="showEditLink"/>
 	<input type="hidden" wicket:id="showNewLink"/>
-	<input type="hidden" wicket:id="showTags"/>
-	<input type="hidden" wicket:id="viewTags"/>
 	<input type="hidden" wicket:id="showRoom"/>
 	<input type="hidden" wicket:id="showTimeslot"/>
 	
@@ -190,11 +176,10 @@
 	<div class="reviewField"><label wicket:id="expectedAudience"></label></div>
 	</div>
 
-	<wicket:enclosure child="viewTags">
-		<div wicket:id="unmodifiableTags" class="row"></div>
+	<div wicket:id="unmodifiableTags" class="row"></div>
 		<div class="row clearBoth">
-       	</div>
-	</wicket:enclosure>
+    </div>
+
 
 	<h2>Speakers</h2>
 	<div wicket:id="speakers">

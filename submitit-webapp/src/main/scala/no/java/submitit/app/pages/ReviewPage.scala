@@ -66,38 +66,6 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
   	override def isVisible = SubmititApp.boolSetting(showTimeslotWhenApprovedBoolean) && p.status == Status.Approved && p.timeslot != null
   })
   
-  val showTags = (SubmititApp.boolSetting(showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean) && 
-                 !SubmititApp.boolSetting(globalEditAllowedBoolean) && 
-                 !p.isNew && 
-                 p.status != Status.NotApproved) &&
-                 !(p.status == Status.Approved && 
-                 SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))
-  
-  add(new HiddenField("showTags") {
-  	override def isVisible = show(showTags)
-  })
-  
-  add(new HiddenField("viewTags") {
-  	override def isVisible = show(!showTags)
-  })
-
-  add(new Form("saveTagsForm"){
-    add(new panels.TagsPanel("tags", p, true))
-    override def onSubmit {
-    	if(p.isNew) error("Not allowed to update an abstracts keywords, when abstract has not yet been saved. This should never be possible bacause of an invariant.")
-    	else try {
-    	  	State().backendClient.savePresentation(p)
-    	  	info("Updated the tags on your submission")
-        }
-    	  catch {
-    	    case e => {
-    	      logger.warn("Unable to save keywords on abstract", e)
-    	      info("Could not save specified tags. Failure has been logged. Please send your keywords to " + SubmititApp.getOfficialEmail)
-           }
-         }
-    }
-  })
-  
   val statusMsg = if (p.isNew) "Not submitted"
                   else if (notAdminView && !SubmititApp.boolSetting(showActualStatusInReviewPageBoolean)) Status.Pending.toString
                   else p.status.toString
