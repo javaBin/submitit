@@ -424,3 +424,14 @@ a:hover {
     font-size:medium;
     font-weight:bold;
 }
+
+.tagsDivs {
+	float:left;
+	margin-right:5px;
+	min-width:236px;
+	margin
+}
+
+.clearBoth {
+	clear: both;
+}
