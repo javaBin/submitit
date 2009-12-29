@@ -129,9 +129,6 @@ object DefaultConfigValues {
 	case object globalEditAllowedForAcceptedBoolean extends ConfigKey(booleanParse) {
 	  val description = "If true allows accepted submissions to be edited."
 	}
-	case object listAllSubmissionsPassword extends ConfigKey {
-		val description = "Password for accessing all submissions in a list view."
-	}
 	case object commaSeparatedListOfTagsForNewSubmissions extends ConfigKey {
 		val description = "All new submissions sent from SubmitIT will get the tags set by this comma separated list of strings."
 	}
@@ -176,7 +173,6 @@ object DefaultConfigValues {
 		presentationAllowedExtendsionFileTypes -> "pdf",
 		captchaLengthInt -> "1",
 		passPhraseSubmitSpecialURL -> "jz",
-		listAllSubmissionsPassword -> None,
 		submitNotAllowedHtml -> "Call for papers is currently not open.",
 		editPageInfoTextHtml -> """<ul><li>Click the "Help" link, or press the question mark at each field for information about what to enter.</li><li>Before you submit your presentation you have to review it by pressing the "Review presentation" link.</li><li>The session timeout is 2 hours. Wondering what <a style="font-weight:normal;" target="_blank" href="http://www.juniper.net/techpubs/software/management/sdx/sdx50x/sw-sdx-sw-basics/html/web-app-installing4.html" style="font-weight: normal;">session timeout is?</a></li></ul></li></ul>""",
 		reviewPageViewSubmittedChangeAllowedHthml -> """You can still change the contents of your submission. You may edit by pressing the "Edit link".<br>If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a><br>""",
