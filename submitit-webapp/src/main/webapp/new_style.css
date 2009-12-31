@@ -54,6 +54,7 @@ a:hover {
 	width: 1000px;
 	margin: 0 auto;
 	background: url(new_images/img04.jpg) no-repeat left top;
+	min-height: 400px;
 }
 
 #wrapper .btm {
