@@ -143,7 +143,7 @@ class EditPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
       val newPres = State().clearPresentation
        setResponsePage(new EditPage(newPres))
     }
-    add(new SimpleAttributeModifier("onclick", "return confirm('Are you want to continue, this will reset and clear the entire form');"))
+    add(new SimpleAttributeModifier("onclick", "return confirm('Are you sure you want to continue, this will reset and clear the entire form');"))
   }
 
   menuLinks = new ReviewLink("reviewButtonTop") :: new ReviewLink("reviewButtonBottom") :: resetButton("resetButtonTop") :: resetButton("resetButtonBottom") :: Nil
