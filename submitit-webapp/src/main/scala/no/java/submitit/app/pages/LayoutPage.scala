@@ -26,6 +26,7 @@ abstract class LayoutPage extends WebPage {
   private var l: List[_ <: AbstractLink] = _
 
   add(new Label("headerText", SubmititApp.getSetting(headerText).get))
+  add(new Label("headerLogoText", SubmititApp.getSetting(headerLogoText).get))
 
   protected def menuLinks_= (links: List[_ <: AbstractLink]) {
      links.foreach(add(_))

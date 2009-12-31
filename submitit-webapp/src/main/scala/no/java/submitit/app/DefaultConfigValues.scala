@@ -123,6 +123,10 @@ object DefaultConfigValues {
 	case object headerText extends ConfigKey(notNullParse) {
 	  val description = "Global text in header."
 	}
+  case object headerLogoText extends ConfigKey(notNullParse) {
+	  val description = "Shown as first part of logo in header. This should be the name of the conference."
+    override val editable = false
+	}
 	case object submitNotAllowedHtml extends ConfigKey {
 	  val description = "Message shown when user tries to access SubmitIT to send in a new submission."
 	}
@@ -157,6 +161,7 @@ object DefaultConfigValues {
   
   private [app] val configValues = collection.mutable.LinkedHashMap[ConfigKey, Option[String]](
     eventName -> "JavaZone 2010",
+    headerLogoText -> "JavaZone 2010",
   	headerText -> "Submit your JavaZone 2010 presentation",
   	submitAllowedBoolean -> "true",
 		showFeedbackBoolean -> "false",
