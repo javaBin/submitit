@@ -15,14 +15,18 @@
 
 package no.java.submitit.app.pages
 
+import borders.ContentBorder
 import no.java.submitit.common.LoggHandling
 import no.java.submitit.model.Presentation
 
 class ErrorPage(pres: Presentation, e: Exception) extends LayoutPage with LoggHandling {
+
+  val contentBorder = new ContentBorder("contentBorder")
+  add(contentBorder)
   
   logger.error("Exception has occured", e)
   
-  OfficialEmailLink.addLink(this)
-  add(new org.apache.wicket.markup.html.basic.MultiLineLabel("pres", new org.apache.wicket.model.Model(pres)))
+  OfficialEmailLink.addLink(contentBorder)
+  contentBorder.add(new org.apache.wicket.markup.html.basic.MultiLineLabel("pres", new org.apache.wicket.model.Model(pres)))
   
 }
