@@ -76,11 +76,15 @@ class State(request: Request, val backendClient: BackendClient) extends WebSessi
       presentation
     }
     else {
+      clearPresentation()
+    }
+    
+  }
+
+  def clearPresentation() = {
       presentation = new Presentation
       presentation.init
       presentation
-    }
-    
   }
 
   def setCaptchaIfNotSet() {

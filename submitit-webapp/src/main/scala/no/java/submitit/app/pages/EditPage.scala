@@ -21,7 +21,6 @@ import org.apache.wicket.extensions.validation.validator.RfcCompliantEmailAddres
 import org.apache.wicket.markup.html.basic._
 import org.apache.wicket.model._
 import no.java.submitit.model._
-import org.apache.wicket.PageParameters
 import org.apache.wicket.markup.ComponentTag
 import org.apache.wicket.markup.html.form._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
@@ -34,7 +33,8 @@ import org.apache.wicket.markup.html.link._
 import no.java.submitit.app._
 import no.java.submitit.common.Implicits._
 import DefaultConfigValues._
-
+import org.apache.wicket.{Component, AttributeModifier, PageParameters}
+import org.apache.wicket.behavior.SimpleAttributeModifier
 
 class EditPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
   
@@ -130,13 +130,22 @@ class EditPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
   private[pages] class ReviewLink(id: String) extends SubmitLink(id, form){
 
     override def onSubmit() {
-        println("doing it")
         form.handleSubmit()
     }
   }
 
   contentBorder.add(form)
-  
-  super.menuLinks = new ReviewLink("reviewButtonTop") :: new ReviewLink("reviewButtonBottom") :: Nil
+
+
+  def resetButton(name: String) = new Link(name) {
+
+    override def onClick() {
+      val newPres = State().clearPresentation
+       setResponsePage(new EditPage(newPres))
+    }
+    add(new SimpleAttributeModifier("onclick", "return confirm('Are you want to continue, this will reset and clear the entire form');"))
+  }
+
+  menuLinks = new ReviewLink("reviewButtonTop") :: new ReviewLink("reviewButtonBottom") :: resetButton("resetButtonTop") :: resetButton("resetButtonBottom") :: Nil
     
 }
