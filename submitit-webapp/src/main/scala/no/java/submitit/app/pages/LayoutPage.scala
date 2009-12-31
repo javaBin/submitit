@@ -19,9 +19,19 @@ import org.apache.wicket.markup.html.WebPage
 import org.apache.wicket.markup.html.basic.Label
 import no.java.submitit.app.DefaultConfigValues._
 import no.java.submitit.app.SubmititApp
+import org.apache.wicket.markup.html.link.AbstractLink
 
-class LayoutPage extends WebPage {
-  
+abstract class LayoutPage extends WebPage {
+
+  private var l: List[_ <: AbstractLink] = _
+
   add(new Label("headerText", SubmititApp.getSetting(headerText).get))
+
+  protected def menuLinks_= (links: List[_ <: AbstractLink]) {
+     links.foreach(add(_))
+     l = links
+  }
+
+  protected def menuLinks = Nil
 
 }

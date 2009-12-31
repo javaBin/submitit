@@ -43,15 +43,18 @@ class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
 	  override def isVisible = State().invitation || State().submitAllowed
   })
 
-  add(new NewPresentationLink("newPresentation"))
-
-  add(new Link("toJavaZone"){
+  private def exitLink(name: String) = new Link(name){
     override def onClick {
       setRedirect(false)
       getResponse.redirect("http://www.javazone.no")
       State().invalidateNow
     }
-  })
+  }
+
+  menuLinks = new NewPresentationLink("newPresentationTop") ::
+              new NewPresentationLink("newPresentationBottom") ::
+              exitLink("exitLinkTop") ::
+              exitLink("exitLinkBottom") :: Nil
   
   val contentBorder = new ContentBorder("contentBorder")
   add(contentBorder)

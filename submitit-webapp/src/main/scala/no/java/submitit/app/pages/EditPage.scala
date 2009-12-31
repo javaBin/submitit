@@ -127,13 +127,16 @@ class EditPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
   }
 
 
-  private class ReviewLink(id: String) extends SubmitLink(id, form){
+  private[pages] class ReviewLink(id: String) extends SubmitLink(id, form){
+
     override def onSubmit() {
+        println("doing it")
         form.handleSubmit()
     }
   }
 
   contentBorder.add(form)
-  add(new ReviewLink("reviewButtonTop"))
+  
+  super.menuLinks = new ReviewLink("reviewButtonTop") :: new ReviewLink("reviewButtonBottom") :: Nil
     
 }

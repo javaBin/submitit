@@ -44,18 +44,26 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
   
   private def show(shouldShow: Boolean) = notAdminView && shouldShow
 
-  val submitLink = new PageLink("submitLink", new IPageLink {
+  private def submitLink(name: String) = new PageLink(name, new IPageLink {
     def getPage = new ConfirmPage(p)
     def getPageIdentity = classOf[ConfirmPage]
-  })
+  }) {
+    // Add this message to to PageLink for proper nesting
+    add(new Label("submitLinkMessage", if(p.isNew) "Submit presentation" else "Submit updated presentation"))
+  }
 
-  submitLink.add(new Label("submitLinkMessage", if(p.isNew) "Submit presentation" else "Submit updated presentation"))
-  add(submitLink)
 
-  add(new PageLink("editLink",new IPageLink {
+  private def editLink(name: String) = new PageLink(name, new IPageLink {
     def getPage = new EditPage(p)
     def getPageIdentity = classOf[EditPage]
-  }))
+  })
+
+  menuLinks = submitLink("submitLinkTop") ::
+              submitLink("submitLinkBottom") ::
+              editLink("editLinkTop") ::
+              editLink("editLinkBottom") ::
+              new NewPresentationLink("newPresentationTop") ::
+              new NewPresentationLink("newPresentationBottom") :: Nil
 
   add(new HiddenField("showEditLink") {
 	  override def isVisible = show(p.isNew || editAllowed)
@@ -69,7 +77,7 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
 	  override def isVisible = show(!p.isNew && State().submitAllowed)
   })
 
-  add(new NewPresentationLink("newPresentation"))
+
 
   val contentBorder = new ContentBorder("contentBorder")
   add(contentBorder)
