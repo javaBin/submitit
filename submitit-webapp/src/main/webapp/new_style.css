@@ -459,3 +459,25 @@ a:hover {
 	color:red;
 	font-weight:bold;
 }
+
+.paragraph {
+	margin-bottom: 1em;
+}
+
+.wiki ul {
+    line-height: 140%;
+}
+
+.wiki {
+    line-height: 100%;
+}
+
+
+.heading-1 {
+	font-size:medium;
+	margin-bottom:0.5em;
+}
+
+.bioImage {
+	max-width: 974px;
+}
