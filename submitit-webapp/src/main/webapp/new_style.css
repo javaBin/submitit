@@ -373,9 +373,15 @@ a:hover {
 }
 
 .titleText {
-	font-size:medium;
-	font-weight: bold;
 	background: #E0E0E0;
+	border-left: 4px double #F57601;
+	border-right: 4px double #F57601;
+	padding: 3px 10px 3px 10px;
+	text-align: left;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-bottom:3px;
+	font-size:medium;
+    font-weight:bold;
 }
 
 .inputArea {
