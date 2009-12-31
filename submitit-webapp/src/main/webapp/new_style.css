@@ -58,6 +58,7 @@ a:hover {
 
 #wrapper .btm {
 	background: url(new_images/img05.png) no-repeat left bottom;
+	padding-bottom: 17px;
 }
 
 /* Header */
@@ -142,7 +143,7 @@ a:hover {
 
 /* Menu */
 
-#menu {
+.menu {
 	width: 1000px;
 	height: 44px;
 	background: url(new_images/img03.jpg) no-repeat left top;
@@ -150,18 +151,18 @@ a:hover {
 	padding: 0;
 }
 
-#menu ul {
+.menu ul {
 	margin: 0;
 	padding: 13px 0 0 20px;
 	list-style: none;
 	line-height: normal;
 }
 
-#menu li {
+.menu li {
 	float: left;
 }
 
-#menu a {
+.menu a {
 	display: block;
 	margin-right: 3px;
 	padding: 5px 20px 7px 20px;
@@ -173,15 +174,15 @@ a:hover {
 	border: none;
 }
 
-#menu a:hover, #menu .current_page_item a {
+.menu a:hover, .menu .current_page_item a {
 }
 
-#menu a:hover {
+.menu a:hover {
 	background: #FF7900;
 	text-decoration: none;
 }
 
-#menu .first {
+.menu .first {
 	margin-right: 3px;
 	background: #FF7900;
 }
