@@ -27,8 +27,8 @@
 			<div class="row">
 				<div class="titleText">
 					<label>Speaker name *</label>
-                    <img class="helpImg" src="images/visible_in_programme.gif">
-                    <img class="helpImg" src="images/visible_as_teaser.gif">
+                    <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
+                    <img class="helpImg" src="images/visible_as_teaser.gif" title="May be used to advertise presentation in advance">
 				</div>
 				<input wicket:id="speakerName" type="text" class="inputField"/>
 			</div>
@@ -36,14 +36,14 @@
 				<div class="titleText">
 					<label>Speaker's profile *</label>
                     <a href="#" wicket:id="speakersProfileHelp"><img class="helpImg" src="images/questionmark.gif"></a>
-                    <img class="helpImg" src="images/visible_in_programme.gif">
+                    <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
 				</div>
 				<textarea wicket:id="bio" class="inputArea" ></textarea>
 			</div>
 			<div class="row">
 				<div class="titleText">
 					<label>Email *</label>
-                    <img class="helpImg" src="images/visible_to_pcom.gif">
+                    <img class="helpImg" src="images/visible_to_pcom.gif" title="Only visible to the programme committee">
 				</div>
 				<input wicket:id="email" type="text" class="inputField"/>
 			</div>
@@ -53,7 +53,7 @@
 			<div class="row">
 				<div class="titleText">
 		        	<label>Profile picture (max 500KB). Supported types:&nbsp;</label><label wicket:id="extension"></label>.
-                    <img class="helpImg" src="images/visible_in_programme.gif">
+                    <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
 		        </div>
 		        <input wicket:id="fileInput" id="upload" type="file"/>
 		    </div>
