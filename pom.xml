@@ -51,6 +51,16 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
+	
+	<!-- Necessary for transitive dependencies in ems-client org.restlet. Project won't build without it. -->
+    <repository>
+      <id>maven-restlet</id>
+      <name>Public online Restlet repository</name>
+      <url>http://maven.restlet.org</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>	
 <!--
     <repository>
       <id>javabin-snapshot</id>
