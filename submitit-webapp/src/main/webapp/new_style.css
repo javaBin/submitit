@@ -42,12 +42,12 @@ ul, ol {
 a {
 	text-decoration: none;
 	color: #FB7600;
-	// Does not look good with question image
-	// border-bottom: 1px dotted #CC0001;
+	/*  Does not look good with question image */
+	/*  border-bottom: 1px dotted #CC0001; */
 }
 
 a:hover {
-	// background: none;
+	/*  background: none; */
 }
 
 #wrapper {
@@ -87,7 +87,7 @@ a:hover {
 	padding: 30px 0 0 20px;
 	margin-right: 10px;
 	letter-spacing: -1px;
-	// text-transform: lowercase;
+	/*  text-transform: lowercase; */
 	font-size: 2.8em;
 }
 
@@ -199,9 +199,9 @@ a:hover {
 /* Content */
 
 #content {
-	// float: right;
-	// width: 610px;;
-	// padding: 20px 20px 0 0;
+	/*  float: right; */
+	/*  width: 610px;; */
+	/*  padding: 20px 20px 0 0; */
 	padding: 3px 11px 3px 11px;
 }
 
@@ -338,7 +338,7 @@ a:hover {
 	margin: 0;
 	line-height: normal;
 	font-size: 9px;
-	// text-transform: uppercase;
+	/*  text-transform: uppercase; */
 	text-align: center;
 }
 
