@@ -48,13 +48,13 @@
     <br>
     <br>
 	<wicket:enclosure child="showTimeslot">
-		<div class="row">
+		<div class="row-content">
 			<div class="titleText">Timeslot:</div> <label wicket:id="timeslot"></label>
        	</div>
 	</wicket:enclosure>	
 	
 	<wicket:enclosure child="showRoom">
-		<div class="row">
+		<div class="row-content">
 			<div class="titleText">Room:</div> <label wicket:id="room"></label>
        	</div>
 	</wicket:enclosure>	
@@ -65,9 +65,11 @@
 				<div class="titleText">
 		        	<label wicket:id="uploadSlideText"></label>.
 		        </div>
-		        <input wicket:id="fileInput" id="upload" type="file"/>
+                <div class="row-content">
+		            <input wicket:id="fileInput" id="upload" type="file"/>
+                </div>
 		    </div>
-			<div class="row">
+			<div class="row-content">
 				<input type="submit" value="Upload pdf"/>
 				 <span wicket:id="progress">[[ajax upload progressbar]]</span>
 	       	</div>
@@ -76,7 +78,10 @@
 	
 	<wicket:enclosure child="pdfName">
 		<div class="row">
-			<div class="titleText">Uploaded pdf for publishing online</div> <label wicket:id="pdfName"></label>
+			<div class="titleText">Uploaded pdf for publishing online</div>
+            <div class="row-content">
+                <label wicket:id="pdfName"></label>
+             </div>
        	</div>
        	<br>
 	</wicket:enclosure>
@@ -87,9 +92,11 @@
 				<div class="titleText">
 		        	<label wicket:id="uploadSlideText"></label>.
 		        </div>
-		        <input wicket:id="fileInput" id="upload" type="file"/>
+                <div class="row-content">
+		            <input wicket:id="fileInput" id="upload" type="file"/>
+                </div>
 		    </div>
-			<div class="row">
+			<div class="row-content">
 				<input type="submit" value="Upload slides"/>
 				 <span wicket:id="progress">[[ajax upload progressbar]]</span>
 	       	</div>
@@ -98,7 +105,10 @@
 	
 	<wicket:enclosure child="slideName">
 		<div class="row">
-			<div class="titleText">Uploaded slides for backup at venue</div> <label wicket:id="slideName"></label>
+			<div class="titleText">Uploaded slides for backup at venue</div>
+            <div class="row-content">
+                <label wicket:id="slideName"></label>
+            </div>
        	</div>
        	<br>
 	</wicket:enclosure>

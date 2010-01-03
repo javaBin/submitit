@@ -503,3 +503,7 @@ a:hover {
 .infoContent {
     padding: 5px 11px;
 }
+
+div.wupb-progressBar .wupb-border {
+	width: 100%;
+}
