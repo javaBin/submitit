@@ -51,9 +51,6 @@ class EditPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
 
   def password = getRequest.getParameter("password");
 
-  val contentBorder = new ContentBorder("contentBorder")
-  add(contentBorder)
-
   val form = new Form("inputForm") with EasyForm {
     
     val verified = State().verifiedWithCaptha

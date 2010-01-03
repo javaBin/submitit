@@ -24,9 +24,6 @@ import no.java.submitit.app.{State, SubmititApp}
 
 class InvitationPage extends LayoutPage {
 
-  val contentBorder = new ContentBorder("contentBorder")
-  add(contentBorder)
-
   contentBorder.add(new panels.LoginPanel("login", new LoginHandler {
     
     def onLogin(pwd: String) {

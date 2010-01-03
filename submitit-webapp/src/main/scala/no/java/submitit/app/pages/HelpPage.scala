@@ -22,8 +22,6 @@ import org.apache.wicket.{MarkupContainer, Component}
 
 class HelpPage extends LayoutPage {
 
-  val contentBorder = new ContentBorder("contentBorder")
-  add(contentBorder)
   OfficialEmailLink.addLink(contentBorder)
   
 }

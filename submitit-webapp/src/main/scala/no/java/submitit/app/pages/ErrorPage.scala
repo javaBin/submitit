@@ -20,9 +20,6 @@ import no.java.submitit.common.LoggHandling
 import no.java.submitit.model.Presentation
 
 class ErrorPage(pres: Presentation, e: Exception) extends LayoutPage with LoggHandling {
-
-  val contentBorder = new ContentBorder("contentBorder")
-  add(contentBorder)
   
   logger.error("Exception has occured", e)
   

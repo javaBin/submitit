@@ -23,9 +23,6 @@ import no.java.submitit.app.pages.borders.ContentBorder
 
 class AdminLogin extends LayoutPage {
 
-  val contentBorder = new ContentBorder("contentBorder")
-  add(contentBorder)
-
 	contentBorder.add(new panels.LoginPanel("login", new LoginHandler {
     def onLogin(pwd: String) {
       val authenticated = SubmititApp.authenticates(pwd)

@@ -59,10 +59,6 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
     }
     State().currentPresentation = p
   }
-
-  private val contentBorder = new ContentBorder("contentBorder")
-  add(contentBorder)
-
   
   contentBorder.add(new Link("approvedLink") {
   	def onClick{whenClicked(Status.Approved)}

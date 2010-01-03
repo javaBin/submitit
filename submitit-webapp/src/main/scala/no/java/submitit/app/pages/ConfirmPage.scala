@@ -56,9 +56,6 @@ class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
               exitLink("exitLinkTop") ::
               exitLink("exitLinkBottom") :: Nil
   
-  val contentBorder = new ContentBorder("contentBorder")
-  add(contentBorder)
-
   contentBorder.add(new Label("extraInfo", if(isTest) "Test submission, has not been submitted and no email has been sent" else ""))
   
   contentBorder.add(new MultiLineLabel("pres", presentation))

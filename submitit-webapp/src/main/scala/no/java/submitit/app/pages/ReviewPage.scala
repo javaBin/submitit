@@ -77,11 +77,6 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
 	  override def isVisible = show(!p.isNew && State().submitAllowed)
   })
 
-
-
-  val contentBorder = new ContentBorder("contentBorder")
-  add(contentBorder)
-
   contentBorder.add(new FeedbackPanel("systemFeedback"))
   
   contentBorder.add(new HiddenField("showRoom") {

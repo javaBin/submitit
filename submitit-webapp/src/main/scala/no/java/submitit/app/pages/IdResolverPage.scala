@@ -25,9 +25,6 @@ import org.apache.wicket.model.Model
 
 class IdResolverPage extends LayoutPage with LoggHandling {
 
-  val contentBorder = new ContentBorder("contentBorder")
-  add(contentBorder)
-
   val id = getRequest.getParameter("id")
 
   val (presentation, infoMessage) =

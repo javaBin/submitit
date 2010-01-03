@@ -15,6 +15,7 @@
 
 package no.java.submitit.app.pages
 
+import borders.ContentBorder
 import org.apache.wicket.markup.html.WebPage
 import org.apache.wicket.markup.html.basic.Label
 import no.java.submitit.app.DefaultConfigValues._
@@ -28,11 +29,14 @@ abstract class LayoutPage extends WebPage {
   add(new Label("headerText", SubmititApp.getSetting(headerText).get))
   add(new Label("headerLogoText", SubmititApp.getSetting(headerLogoText).get))
 
+  val contentBorder = new ContentBorder("contentBorder")
+  add(contentBorder)
+
   protected def menuLinks_= (links: List[_ <: AbstractLink]) {
      links.foreach(add(_))
      l = links
   }
 
-  protected def menuLinks = Nil
+  protected def menuLinks = l
 
 }
