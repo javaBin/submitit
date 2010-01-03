@@ -109,11 +109,11 @@ class EditPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
     required(pres.speakers, "You must specify at least one speaker")
     required(pres.title, "You must specify a title")
     required(pres.abstr, "You must specify an abstract")
-    required(pres.summary, "You must specify highlights")
+    required(pres.summary, "You must specify highlight summary")
 
     pres.speakers.foreach(sp => {
       required(sp.name, "You must specify speaker name")
-      required(sp.email, "You must specify an email")
+      required(sp.email, "You must specify email address")
       required(sp.bio, "You must specify speaker's profile")
       if (sp.email != null && !emailValidator.reset(sp.email).matches) error("'" + sp.email + "' is not valid email")
     })
