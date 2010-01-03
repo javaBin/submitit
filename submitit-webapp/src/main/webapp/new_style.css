@@ -367,6 +367,7 @@ a:hover {
 	font-weight: bold;
 	margin-bottom:0px;
 	margin-top:0px;
+	padding-left:11px;
 }
 
 .helpImg {
@@ -433,6 +434,7 @@ a:hover {
 
 .infoText ul {
     line-height: 140%;
+    margin-top: 7px;
 }
 
 .boldAndMed {
@@ -495,4 +497,9 @@ a:hover {
 	width: 20em;
 	min-height: 19px;
 	border: 1px solid;
+}
+
+
+.infoContent {
+    padding: 5px 11px;
 }
