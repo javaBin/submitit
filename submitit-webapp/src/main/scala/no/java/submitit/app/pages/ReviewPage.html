@@ -48,16 +48,24 @@
     <br>
     <br>
 	<wicket:enclosure child="showTimeslot">
-		<div class="row-content">
-			<div class="titleText">Timeslot:</div> <label wicket:id="timeslot"></label>
+		<div class="row">
+			<div class="titleText">Timeslot:</div>
+            <div class="row-content">
+                <label wicket:id="timeslot"></label>
+            </div>
        	</div>
+        <br>
 	</wicket:enclosure>	
 	
 	<wicket:enclosure child="showRoom">
-		<div class="row-content">
-			<div class="titleText">Room:</div> <label wicket:id="room"></label>
+		<div class="row">
+			<div class="titleText">Room:</div>
+            <div class="row-content">
+                <label wicket:id="room"></label>
+            </div>
        	</div>
-	</wicket:enclosure>	
+        <br>
+	</wicket:enclosure>
 	
 	<wicket:enclosure child="pdfForm">
 		<form wicket:id="pdfForm">
