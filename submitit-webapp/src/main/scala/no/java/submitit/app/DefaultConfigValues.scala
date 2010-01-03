@@ -58,7 +58,7 @@ object DefaultConfigValues {
 	  val description = "The length of the captha, will always be minimum 1"
 	}
 	case object allowSlideUploadBoolen extends ConfigKey(booleanParse) {
-	  val description = "Toggle slide upload. Currently not implemented properly, should be false"
+	  val description = "Toggle slide upload. Only available for presentations that are approved."
 	}
 	case object eventName extends ConfigKey {
 	  val description = "Name used to identify the event in EMS. Should NEVER be changed after SubmitIT has been started to be used"
