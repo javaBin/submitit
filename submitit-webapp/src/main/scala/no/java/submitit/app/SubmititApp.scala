@@ -55,6 +55,7 @@ class SubmititApp extends WebApplication with LoggHandling {
     SubmititApp.properties = theMap
 
     mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
+    mountBookmarkablePage("/proposal", classOf[IdResolverPage]);
     mountBookmarkablePage("/help", classOf[HelpPage]);
     mountBookmarkablePage("/admin-login", classOf[admin.AdminLogin])
     mountBookmarkablePage("/invitation", classOf[InvitationPage])

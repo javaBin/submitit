@@ -64,7 +64,7 @@ class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
     val backendClient = State().backendClient
     val uniqueId = if(!isTest) backendClient.savePresentation(pres) else Presentation.testPresentationURL
     pres.sessionId = uniqueId
-    SubmititApp.getSetting(submititBaseUrl).get + "/lookupPresentation?id=" + uniqueId
+    SubmititApp.getSetting(submititBaseUrl).get + "/proposal?id=" + uniqueId
   }
   
   contentBorder.add(new ExternalLink("confirmUrl", url, url))
