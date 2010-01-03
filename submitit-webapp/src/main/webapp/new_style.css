@@ -483,3 +483,9 @@ a:hover {
 .bioImage {
 	max-width: 974px;
 }
+
+.captchaField {
+	width: 20em;
+	min-height: 19px;
+	border: 1px solid;
+}
