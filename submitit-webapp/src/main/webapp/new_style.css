@@ -406,6 +406,7 @@ a:hover {
 
 .reviewField {
 	min-height: 10px;
+	margin-left: 4px;
 }
 
 .choices {
@@ -414,6 +415,12 @@ a:hover {
 
 .row {
 	margin-bottom: 5px;
+}
+
+
+.row-content {
+    margin-bottom: 5px;
+    margin-left: 4px;
 }
 
 .inlineLink {
