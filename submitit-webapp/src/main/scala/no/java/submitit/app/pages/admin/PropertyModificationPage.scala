@@ -20,14 +20,17 @@ import org.apache.wicket.markup.html.basic._
 import org.apache.wicket.model._
 import org.apache.wicket.markup.html.list._
 import org.apache.wicket.markup.html.link._
-import common.Implicits._
-import collection.jcl.Conversions._
-import model._
+import no.java.submitit.common.Implicits._
+import no.java.submitit.model._
+import _root_.scala.collection.jcl.Conversions._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import _root_.java.io.Serializable
-import DefaultConfigValues._
 import collection.mutable.LinkedHashMap
-import Functions._
+import no.java.submitit.app.pages.{ReviewPage, LayoutPage}
+import no.java.submitit.app.{SubmititApp, State, DefaultConfigValues}
+import no.java.submitit.app.DefaultConfigValues.ConfigKey
+import no.java.submitit.app.Functions._
+import no.java.submitit.app.pages.borders.ContentBorder
 
 class PropertyModificationPage(it: Boolean) extends LayoutPage {
   
@@ -57,13 +60,13 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
     State().currentPresentation = p
   }
   
-  add(new Link("approvedLink") {
+  contentBorder.add(new Link("approvedLink") {
   	def onClick{whenClicked(Status.Approved)}
   })
-  add(new Link("pendingLink") {
+  contentBorder.add(new Link("pendingLink") {
   	def onClick{whenClicked(Status.Pending)}
   })
-  add(new Link("rejectedLink") {
+  contentBorder.add(new Link("rejectedLink") {
   	def onClick{whenClicked(Status.NotApproved)}
   })
   
@@ -116,13 +119,13 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
           }
         }
         
-      	PropertyModificationPage.this.replace(createForm(newProps))
+      	PropertyModificationPage.this.contentBorder.replace(createForm(newProps))
       }
     }
   }
   
-  add(createForm(SubmititApp.props))  
-  add(new FeedbackPanel("feedback"))
+  contentBorder.add(createForm(SubmititApp.props))
+  contentBorder.add(new FeedbackPanel("feedback"))
   
 }
 

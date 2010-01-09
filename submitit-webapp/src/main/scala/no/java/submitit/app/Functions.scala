@@ -2,8 +2,9 @@ package no.java.submitit.app
 
 import _root_.java.io.File
 import no.java.submitit.model.Binary
+import no.java.submitit.common.LoggHandling
 
-object Functions extends common.LoggHandling {
+object Functions extends LoggHandling {
   
   val binariesInSession = "no.java.submitit.binaryholder"
   

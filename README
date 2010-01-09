@@ -1,7 +1,2 @@
 This is the submission app for JavaZone presentation. Written i Scala and Wicket, awesome combination! :)
 
-TODO list:
-Upload of slides, when status is approved. Mandates change in EMS system.
-Get feedback from the rest of pcom (any other features we want?).
-More Ajax stuff?
-* Mouseover on inline help in stead of popup

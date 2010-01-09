@@ -18,6 +18,7 @@ package no.java.submitit.app.pages.panels
 import org.apache.wicket.markup.html.form._
 import org.apache.wicket.markup.html.panel._
 import org.apache.wicket.model._
+import no.java.submitit.app.pages.LoginHandler
 
 class LoginPanel(id: String, handler: LoginHandler) extends Panel(id) {
   

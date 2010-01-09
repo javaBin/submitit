@@ -21,10 +21,11 @@ import org.apache.wicket.model._
 import org.apache.wicket.markup.html.list._
 import org.apache.wicket.markup.ComponentTag
 import org.apache.wicket.markup.html.basic.Label
-import common.Implicits._
-import model.Presentation
+import no.java.submitit.common.Implicits._
+import no.java.submitit.model.Presentation
 import _root_.java.io.Serializable
-import DefaultConfigValues._
+import no.java.submitit.app.DefaultConfigValues._
+import no.java.submitit.app.SubmititApp
 
 class TagsPanel(id: String, presentation: Presentation, checksEnabled: Boolean) extends Panel(id) {
   

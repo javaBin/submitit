@@ -15,6 +15,7 @@
 
 package no.java.submitit.app.pages
 
+import borders.ContentBorder
 import org.apache.wicket.markup.html.form.HiddenField
 import org.apache.wicket.markup.html.image._
 import org.apache.wicket.resource._
@@ -23,95 +24,85 @@ import org.apache.wicket.markup.html.list._
 import org.apache.wicket.model._
 import org.apache.wicket.markup.html.link._
 import org.apache.wicket.util.lang.Bytes
-import model._
+import no.java.submitit.model._
 import widgets._
-import common.Implicits._
+import no.java.submitit.common.Implicits._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import org.apache.wicket.markup.html.form.Form
-import app.State
 import org.apache.wicket.markup.html.panel.FeedbackPanel
-import DefaultConfigValues._
+import no.java.submitit.app.DefaultConfigValues._
 import org.apache.wicket.extensions.ajax.markup.html.form.upload.UploadProgressBar
 import org.apache.wicket.util.resource.{IResourceStream, FileResourceStream}
-import Functions._
+import no.java.submitit.app.Functions._
+import no.java.submitit.app.{SubmititApp, State}
+import no.java.submitit.common.LoggHandling
 
-class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with common.LoggHandling {
+class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with LoggHandling {
   
   val supportedExtensions = SubmititApp.getListSetting(presentationAllowedExtendsionFileTypes)
   val editAllowed = SubmititApp.boolSetting(globalEditAllowedBoolean) || (p.status == Status.Approved && SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))
   
-  private def show(shouldShow: Boolean) = notAdminView && shouldShow 
-  
-  
-  add(new FeedbackPanel("systemFeedback"))
-  
+  private def show(shouldShow: Boolean) = notAdminView && shouldShow
+
+  private def submitLink(name: String) = new PageLink(name, new IPageLink {
+    def getPage = new ConfirmPage(p)
+    def getPageIdentity = classOf[ConfirmPage]
+  }) {
+    // Add this message to to PageLink for proper nesting
+    add(new Label("submitLinkMessage", if(p.isNew) "Submit presentation" else "Submit updated presentation"))
+  }
+
+
+  private def editLink(name: String) = new PageLink(name, new IPageLink {
+    def getPage = new EditPage(p)
+    def getPageIdentity = classOf[EditPage]
+  })
+
+  menuLinks = submitLink("submitLinkTop") ::
+              submitLink("submitLinkBottom") ::
+              editLink("editLinkTop") ::
+              editLink("editLinkBottom") ::
+              new NewPresentationLink("newPresentationTop") ::
+              new NewPresentationLink("newPresentationBottom") :: Nil
+
   add(new HiddenField("showEditLink") {
 	  override def isVisible = show(p.isNew || editAllowed)
   })
-  
+
   add(new HiddenField("showSubmitLink") {
     override def isVisible = show(p.isNew || editAllowed)
   })
-  
+
   add(new HiddenField("showNewLink") {
 	  override def isVisible = show(!p.isNew && State().submitAllowed)
   })
+
+  contentBorder.add(new FeedbackPanel("systemFeedback"))
   
-  add(new HiddenField("showRoom") {
+  contentBorder.add(new HiddenField("showRoom") {
   	override def isVisible = SubmititApp.boolSetting(showRoomWhenApprovedBoolean) && p.status == Status.Approved && p.room != null
   })
   
-  add(new HiddenField("showTimeslot") {
+  contentBorder.add(new HiddenField("showTimeslot") {
   	override def isVisible = SubmititApp.boolSetting(showTimeslotWhenApprovedBoolean) && p.status == Status.Approved && p.timeslot != null
-  })
-  
-  val showTags = (SubmititApp.boolSetting(showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean) && 
-                 !SubmititApp.boolSetting(globalEditAllowedBoolean) && 
-                 !p.isNew && 
-                 p.status != Status.NotApproved) &&
-                 !(p.status == Status.Approved && 
-                 SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))
-  
-  add(new HiddenField("showTags") {
-  	override def isVisible = show(showTags)
-  })
-  
-  add(new HiddenField("viewTags") {
-  	override def isVisible = show(!showTags)
-  })
-
-  add(new Form("saveTagsForm"){
-    add(new panels.TagsPanel("tags", p, true))
-    override def onSubmit {
-    	if(p.isNew) error("Not allowed to update an abstracts keywords, when abstract has not yet been saved. This should never be possible bacause of an invariant.")
-    	else try {
-    	  	State().backendClient.savePresentation(p)
-    	  	info("Updated the tags on your submission")
-        }
-    	  catch {
-    	    case e => {
-    	      logger.warn("Unable to save keywords on abstract", e)
-    	      info("Could not save specified tags. Failure has been logged. Please send your keywords to " + SubmititApp.getOfficialEmail)
-           }
-         }
-    }
   })
   
   val statusMsg = if (p.isNew) "Not submitted"
                   else if (notAdminView && !SubmititApp.boolSetting(showActualStatusInReviewPageBoolean)) Status.Pending.toString
                   else p.status.toString
-  
-  add(new Label("status", statusMsg))
-  add(new Label("room", p.room))
-  add(new Label("timeslot", p.timeslot))
-  add(new NewPresentationLink("newPresentation"))
+
+  contentBorder.add(new panels.LegendPanel)
+  contentBorder.add(new Label("status", statusMsg))
+  contentBorder.add(new Label("room", p.room))
+  contentBorder.add(new Label("timeslot", p.timeslot))
+
 
   val msg = if (p.isNew) SubmititApp.getSetting(reviewPageBeforeSubmitHtml).getOrElse("")
   	else if (!p.isNew && !editAllowed) SubmititApp.getSetting(reviewPageViewSubmittedHthml).getOrElse("")
   	else if (!p.isNew && editAllowed) SubmititApp.getSetting(reviewPageViewSubmittedChangeAllowedHthml).getOrElse("")
   	else SubmititApp.getSetting(reviewPageViewSubmittedHthml).getOrElse("")
 
-  add(new HtmlLabel("viewMessage", msg))
+  contentBorder.add(new HtmlLabel("viewMessage", msg))
 
   val feedback = if(p.status == Status.NotApproved) {
     						   if(SubmititApp.boolSetting(allowIndidualFeedbackOnRejectBoolean) && p.hasFeedback) Some(p.feedback)
@@ -121,17 +112,17 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
                  else if (SubmititApp.boolSetting(showFeedbackBoolean) && p.hasFeedback) Some(p.feedback)
                  else None
   
-  add(new MultiLineLabel("feedback", feedback.getOrElse("")) {
+  contentBorder.add(new MultiLineLabel("feedback", feedback.getOrElse("")) {
     override def isVisible = feedback.isDefined
   })
   
   
-  add(createUploadForm("pdfForm", "uploadSlideText", "You must upload pdf for publishing online. Max file size is " + SubmititApp.intSetting(presentationUploadPdfSizeInMBInt) + " MB. Supported file types: "+ supportedExtensions.mkString(", "),
+  contentBorder.add(createUploadForm("pdfForm", "uploadSlideText", "You must upload pdf for publishing online. Max file size is " + SubmititApp.intSetting(presentationUploadPdfSizeInMBInt) + " MB. Supported file types: "+ supportedExtensions.mkString(", "),
                        SubmititApp.intSetting(presentationUploadPdfSizeInMBInt),
                        hasExtension(_, extensionRegex(supportedExtensions)),
                        p.pdfSlideset = _
   ))
-  add(createUploadForm("slideForm", "uploadSlideText", "You can upload slides as backup for your presentation. This will be available for you at the venue. Max file size is " + SubmititApp.intSetting(presentationUploadSizeInMBInt) + " MB", 
+  contentBorder.add(createUploadForm("slideForm", "uploadSlideText", "You can upload slides as backup for your presentation. This will be available for you at the venue. Max file size is " + SubmititApp.intSetting(presentationUploadSizeInMBInt) + " MB",
                        SubmititApp.intSetting(presentationUploadSizeInMBInt),
                        hasntExtension(_, extensionRegex(List("pdf"))),
                        p.slideset = _
@@ -160,26 +151,26 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
   }
   
   
-  add(new Label("title", p.title))
-  add(new WikiMarkupText("summary", p.summary))
-  add(new WikiMarkupText("abstract", p.abstr))
-  add(new Label("language", p.language.toString))
-  add(new Label("level", p.level.toString))
-  add(new Label("format", p.format.toString))
-  add(new WikiMarkupText("outline", p.outline))
-  add(new WikiMarkupText("equipment", p.equipment))
-  add(new WikiMarkupText("expectedAudience", p.expectedAudience))
-  add(new panels.TagsPanel("unmodifiableTags", p, false))
+  contentBorder.add(new Label("title", p.title))
+  contentBorder.add(new WikiMarkupText("summary", p.summary))
+  contentBorder.add(new WikiMarkupText("abstract", p.abstr))
+  contentBorder.add(new Label("language", p.language.toString))
+  contentBorder.add(new Label("level", p.level.toString))
+  contentBorder.add(new Label("format", p.format.toString))
+  contentBorder.add(new WikiMarkupText("outline", p.outline))
+  contentBorder.add(new WikiMarkupText("equipment", p.equipment))
+  contentBorder.add(new WikiMarkupText("expectedAudience", p.expectedAudience))
+  contentBorder.add(new panels.TagsPanel("unmodifiableTags", p, false))
   
-  add(createFileLabel("pdfName", p.pdfSlideset))
-  add(createFileLabel("slideName", p.slideset))
+  contentBorder.add(createFileLabel("pdfName", p.pdfSlideset))
+  contentBorder.add(createFileLabel("slideName", p.slideset))
   
   private def createFileLabel(id: String, binary: Option[Binary]) = new Label(id) {
   	setModel(if (binary.isDefined) new Model(binary.get.name) else new Model(""))
   	override def isVisible = binary.isDefined
   }
   
-  add(new ListView("speakers", p.speakers.reverse) {
+  contentBorder.add(new ListView("speakers", p.speakers.reverse) {
     override def populateItem(item: ListItem) {
       val speaker = item.getModelObject.asInstanceOf[Speaker]
       item.add(new Label("name", speaker.name))
@@ -197,19 +188,5 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
       }
     }
   })
-  
-  
-  val submitLink = new PageLink("submitLink", new IPageLink {
-    def getPage = new ConfirmPage(p)
-    def getPageIdentity = classOf[ConfirmPage]
-  })
-  
-  submitLink.add(new Label("submitLinkMessage", if(p.isNew) "Submit presentation" else "Submit updated presentation"))
-  add(submitLink)
-      
-  add(new PageLink("editLink",new IPageLink {
-    def getPage = new EditPage(p)
-    def getPageIdentity = classOf[EditPage]
-  }))
   
 }

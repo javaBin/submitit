@@ -15,7 +15,9 @@
 
 package no.java.submitit.ems
 
-import model._
+import junit.framework._
+import Assert._
+import no.java.submitit.model._
 
 import org.scalatest._
 import org.scalatest.matchers.ShouldMatchers._

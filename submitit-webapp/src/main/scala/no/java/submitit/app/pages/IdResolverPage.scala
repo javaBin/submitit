@@ -15,15 +15,16 @@
 
 package no.java.submitit.app.pages
 
+import borders.ContentBorder
+import no.java.submitit.app.{SubmititApp, State}
 import org.apache.wicket.markup.html.WebPage
 import no.java.submitit.common._
 import no.java.submitit.model._
-import no.java.submitit.app.State
 import org.apache.wicket.markup.html.basic._
 import org.apache.wicket.model.Model
 
 class IdResolverPage extends LayoutPage with LoggHandling {
-  
+
   val id = getRequest.getParameter("id")
 
   val (presentation, infoMessage) =
@@ -51,7 +52,7 @@ class IdResolverPage extends LayoutPage with LoggHandling {
       setResponsePage(new ReviewPage(pres, true))
     }
     case None => {
-      add(new Label("identified", new Model(infoMessage)))
+      contentBorder.add(new Label("identified", new Model(infoMessage)))
     }
   }
 

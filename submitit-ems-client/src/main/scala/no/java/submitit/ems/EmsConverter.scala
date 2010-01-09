@@ -17,10 +17,10 @@ package no.java.submitit.ems
 
 import _root_.java.io.InputStream
 import _root_.scala.collection.jcl.Conversions._
-import common.Implicits._
-import common.{IOUtils, LoggHandling}
-import model._
-import common.IOUtils._
+import no.java.submitit.common.Implicits._
+import no.java.submitit.common.{IOUtils, LoggHandling}
+import no.java.submitit.model._
+import no.java.submitit.common.IOUtils._
 
 import xml._
 

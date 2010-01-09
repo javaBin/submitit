@@ -14,6 +14,10 @@
   ~   limitations under the License.
   -->
 <wicket:extend>
+
+<div class="menu"></div>
+
+<span wicket:id="contentBorder">
 <div class="row">
 	<div wicket:id="feedback"></div>
 </div>
@@ -26,12 +30,16 @@
 		<div class="titleText">
 			<label wicket:id="key"></label>
 		</div>
-		<div class="row">
+		<div class="row-content">
 			<label wicket:id="description"></label>
-		</div>
-		<input type="text" class="inputField" wicket:id="value" />
+            </div>
+        <div class="row-content">
+            <input type="text" class="inputField" wicket:id="value" />
+        </div>
 	</div>
 	<input type="submit" value="Apply changes" />
 </form>
+</span>
+<div class="menu"/>
 </wicket:extend>
 </html>

@@ -15,21 +15,29 @@
   -->
 <wicket:extend>
 
-	<div class="linkRow">
+	<div class="menu">
+        <ul>
 		<wicket:enclosure child="showEditLink">
-			<a href="#" wicket:id="editLink">Edit presentation</a>&nbsp;
+			<li><a href="#" wicket:id="editLinkTop">Edit presentation</a></li>
 		</wicket:enclosure>
 		<wicket:enclosure child="showSubmitLink">
-			&nbsp;<a href="#" wicket:id="submitLink"><label wicket:id="submitLinkMessage"></label></a>
+			<li><a href="#" wicket:id="submitLinkTop"><span wicket:id="submitLinkMessage"></span></a></li>
 		</wicket:enclosure>
 		<wicket:enclosure child="showNewLink">
-			&nbsp;<a href="#" wicket:id="newPresentation">Create a new submission</a>
-		</wicket:enclosure>&nbsp;
+			<li><a href="#" wicket:id="newPresentationTop">Create a new submission</a></li>
+		</wicket:enclosure>
+        </ul>
 	</div>
 
+    <input type="hidden" wicket:id="showSubmitLink"/>
+	<input type="hidden" wicket:id="showEditLink"/>
+	<input type="hidden" wicket:id="showNewLink"/>
+
+    <span wicket:id="contentBorder">
+
 	<div class="infoText">
-		<div class="infoHeader">Please read this</div>	
-		<label wicket:id="viewMessage"></label>
+		<div class="infoHeader">Please read this</div>
+		<div wicket:id="viewMessage" class="infoContent"></div>
 	</div>
 
 	<div class="row">
@@ -37,18 +45,27 @@
 	</div>
 	 
 	<h2 align="left">Presentation status: <label wicket:id="status"></label></h2>
-	
+    <br>
+    <br>
 	<wicket:enclosure child="showTimeslot">
 		<div class="row">
-			<div class="titleText">Timeslot:</div> <label wicket:id="timeslot"></label>
+			<div class="titleText">Timeslot:</div>
+            <div class="row-content">
+                <label wicket:id="timeslot"></label>
+            </div>
        	</div>
+        <br>
 	</wicket:enclosure>	
 	
 	<wicket:enclosure child="showRoom">
 		<div class="row">
-			<div class="titleText">Room:</div> <label wicket:id="room"></label>
+			<div class="titleText">Room:</div>
+            <div class="row-content">
+                <label wicket:id="room"></label>
+            </div>
        	</div>
-	</wicket:enclosure>	
+        <br>
+	</wicket:enclosure>
 	
 	<wicket:enclosure child="pdfForm">
 		<form wicket:id="pdfForm">
@@ -56,9 +73,11 @@
 				<div class="titleText">
 		        	<label wicket:id="uploadSlideText"></label>.
 		        </div>
-		        <input wicket:id="fileInput" id="upload" type="file"/>
+                <div class="row-content">
+		            <input wicket:id="fileInput" id="upload" type="file"/>
+                </div>
 		    </div>
-			<div class="row">
+			<div class="row-content">
 				<input type="submit" value="Upload pdf"/>
 				 <span wicket:id="progress">[[ajax upload progressbar]]</span>
 	       	</div>
@@ -67,7 +86,10 @@
 	
 	<wicket:enclosure child="pdfName">
 		<div class="row">
-			<div class="titleText">Uploaded pdf for publishing online</div> <label wicket:id="pdfName"></label>
+			<div class="titleText">Uploaded pdf for publishing online</div>
+            <div class="row-content">
+                <label wicket:id="pdfName"></label>
+             </div>
        	</div>
        	<br>
 	</wicket:enclosure>
@@ -78,9 +100,11 @@
 				<div class="titleText">
 		        	<label wicket:id="uploadSlideText"></label>.
 		        </div>
-		        <input wicket:id="fileInput" id="upload" type="file"/>
+                <div class="row-content">
+		            <input wicket:id="fileInput" id="upload" type="file"/>
+                </div>
 		    </div>
-			<div class="row">
+			<div class="row-content">
 				<input type="submit" value="Upload slides"/>
 				 <span wicket:id="progress">[[ajax upload progressbar]]</span>
 	       	</div>
@@ -89,30 +113,16 @@
 	
 	<wicket:enclosure child="slideName">
 		<div class="row">
-			<div class="titleText">Uploaded slides for backup at venue</div> <label wicket:id="slideName"></label>
+			<div class="titleText">Uploaded slides for backup at venue</div>
+            <div class="row-content">
+                <label wicket:id="slideName"></label>
+            </div>
        	</div>
        	<br>
 	</wicket:enclosure>
 	
-	<wicket:enclosure child="showTags">
-		<form wicket:id="saveTagsForm">
-			<div wicket:id="tags" class="row"></div>
-			<br>
-			<br>
-			<div class="row clearBoth">
-				<input type="submit" value="Update topics"/>
-	       	</div>
-		</form>
-		<br>
-	</wicket:enclosure>
-	
 	
 	<fieldset class="clearBoth">
-	<input type="hidden" wicket:id="showSubmitLink"/>
-	<input type="hidden" wicket:id="showEditLink"/>
-	<input type="hidden" wicket:id="showNewLink"/>
-	<input type="hidden" wicket:id="showTags"/>
-	<input type="hidden" wicket:id="viewTags"/>
 	<input type="hidden" wicket:id="showRoom"/>
 	<input type="hidden" wicket:id="showTimeslot"/>
 	
@@ -124,82 +134,126 @@
 		</div>		
 	</div>
 	</wicket:enclosure>
-	
+
+    <div wicket:id="legend" />
 	<div class="row">
-	<div class="titleText"><label>Presentation format</label></div>
+	<div class="titleText"><label>Presentation format</label>
+        <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
+    </div>
 	<div class="reviewField"><label wicket:id="format"></label></div>
 	</div>
 	
 	<div class="row">
-	<div class="titleText"><label>Title</label></div>
+	<div class="titleText"><label>Title</label>
+        <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
+        <img class="helpImg" src="images/visible_as_teaser.gif" title="May be used to advertise presentation in advance">
+    </div>
 	<div class="reviewField"><label wicket:id="title"></label></div>
 	</div>
 
 	<div class="row">
-	<div class="titleText"><label>Highlight Summary</label></div>
-	<div class="reviewField"><label wicket:id="summary"></label></div>
-	</div>
-
-	<div class="row">
-	<div class="titleText"><label>Abstract</label></div>
+	<div class="titleText"><label>Abstract</label>
+        <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
+    </div>
 	<div class="reviewField"><label wicket:id="abstract"></label></div>
 	</div>
 
 	<div class="row">
-	<div class="titleText"><label>Language</label></div>
+	<div class="titleText"><label>Language</label>
+        <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
+    </div>
 	<div class="reviewField"><label wicket:id="language"></label></div>
 	</div>
 
 	<div class="row">
-	<div class="titleText"><label>Level</label></div>
+	<div class="titleText"><label>Level</label>
+        <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
+    </div>
 	<div class="reviewField"><label wicket:id="level"></label></div>
 	</div>
 
 	<div class="row">
-	<div class="titleText"><label>Outline</label></div>
+	<div class="titleText"><label>Outline</label>
+        <img class="helpImg" src="images/visible_to_pcom.gif" title="Only visible to the programme committee">
+    </div>
 	<div class="reviewField"><label wicket:id="outline"></label></div>
 	</div>
 
+    <div class="row">
+    <div class="titleText"><label>Highlight Summary</label>
+        <img class="helpImg" src="images/visible_as_teaser.gif" title="May be used to advertise presentation in advance">
+    </div>
+    <div class="reviewField"><label wicket:id="summary"></label></div>
+    </div>
+
 	<div class="row">
-	<div class="titleText"><label>Equipment</label></div>
+	<div class="titleText"><label>Equipment</label>
+        <img class="helpImg" src="images/visible_to_pcom.gif" title="Only visible to the programme committee">
+    </div>
 	<div class="reviewField"><label wicket:id="equipment"></label></div>
 	</div>
 
 	<div class="row">
-	<div class="titleText"><label>Expected audience</label></div>
+	<div class="titleText"><label>Expected audience</label>
+        <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
+    </div>
 	<div class="reviewField"><label wicket:id="expectedAudience"></label></div>
 	</div>
-	
-	<wicket:enclosure child="viewTags">
-		<div wicket:id="unmodifiableTags" class="row"></div>
+
+	<div wicket:id="unmodifiableTags" class="row"></div>
 		<div class="row clearBoth">
-       	</div>
-	</wicket:enclosure>
+    </div>
+
 
 	<h2>Speakers</h2>
 	<div wicket:id="speakers">
 	<fieldset>
 	<div class="row">
-	<div class="titleText"><label>Name</label></div>
+	<div class="titleText"><label>Name</label>
+        <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
+        <img class="helpImg" src="images/visible_as_teaser.gif" title="May be used to advertise presentation in advance">
+    </div>
 	<div class="reviewField"><label wicket:id="name"></label></div>
-	</div>
-
-	<div class="row">
-	<div class="titleText"><label>Email</label></div>
-	<div class="reviewField"><label wicket:id="email"></label></div>
 	</div>
 	
 	<div class="row">
-	<div class="titleText"><label>Speaker's profile</label></div>
+	<div class="titleText"><label>Speaker's profile</label>
+        <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
+    </div>
 	<div class="reviewField"><label wicket:id="bio"></label></div>
 	</div>
+
 	<div class="row">
-	<div class="titleText"><label>Picture</label></div>
+	<div class="titleText"><label>Email</label>
+        <img class="helpImg" src="images/visible_to_pcom.gif" title="Only visible to the programme committee">
+    </div>
+	<div class="reviewField"><label wicket:id="email"></label></div>
+	</div>
+
+	<div class="row">
+	<div class="titleText"><label>Picture</label>
+        <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
+    </div>
 	<div class="reviewField"><img wicket:id="image" class="bioImage"></img></div>
 	</div>
 	</fieldset>
 	</div>
 
 	</fieldset>
+
+    </span>
+	<div class="menu">
+        <ul>
+		<wicket:enclosure child="showEditLink">
+			<li><a href="#" wicket:id="editLinkBottom">Edit presentation</a></li>
+		</wicket:enclosure>
+		<wicket:enclosure child="showSubmitLink">
+			<li><a href="#" wicket:id="submitLinkBottom"><span wicket:id="submitLinkMessage"></span></a></li>
+		</wicket:enclosure>
+		<wicket:enclosure child="showNewLink">
+			<li><a href="#" wicket:id="newPresentationBottom">Create a new submission</a></li>
+		</wicket:enclosure>
+        </ul>
+	</div>
 </wicket:extend>
 </html>

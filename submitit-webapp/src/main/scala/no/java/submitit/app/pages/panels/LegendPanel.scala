@@ -13,22 +13,9 @@
  *   limitations under the License.
  */
 
-package no.java.submitit.app.pages.admin
+package no.java.submitit.app.pages.panels
 
-import DefaultConfigValues._
+import org.apache.wicket.markup.html.panel.Panel
 
-class ListPresentationLoginPage extends LayoutPage {
 
-	add(new panels.LoginPanel("login", new LoginHandler {
-		def onLogin(pwd: String) {
-			val authenticated = SubmititApp.getSetting(listAllSubmissionsPassword).isDefined && SubmititApp.getSetting(listAllSubmissionsPassword).get == pwd
-      	if (authenticated) {
-      		setResponsePage(new ListPresentationsPage)
-      	}
-      	else {
-      		 error("Incorrect password")
-      	}
-			}
-  }))
-  
-}
+class LegendPanel extends Panel("legend")

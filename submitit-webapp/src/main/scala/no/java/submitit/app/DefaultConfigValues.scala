@@ -58,10 +58,7 @@ object DefaultConfigValues {
 	  val description = "The length of the captha, will always be minimum 1"
 	}
 	case object allowSlideUploadBoolen extends ConfigKey(booleanParse) {
-	  val description = "Toggle slide upload. Currently not implemented properly, should be false"
-	}
-	case object showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean extends ConfigKey(booleanParse) {
-	  val description = "Allow users to save tags on their presentations in the review page. This is only available if the presentation is not editable. This is because normally the edit page must be used to select tags/keywords. Available tags are specified in " + userSelectedKeywords
+	  val description = "Toggle slide upload. Only available for presentations that are approved."
 	}
 	case object eventName extends ConfigKey {
 	  val description = "Name used to identify the event in EMS. Should NEVER be changed after SubmitIT has been started to be used"
@@ -126,14 +123,15 @@ object DefaultConfigValues {
 	case object headerText extends ConfigKey(notNullParse) {
 	  val description = "Global text in header."
 	}
+  case object headerLogoText extends ConfigKey(notNullParse) {
+	  val description = "Shown as first part of logo in header. This should be the name of the conference."
+    override val editable = false
+	}
 	case object submitNotAllowedHtml extends ConfigKey {
 	  val description = "Message shown when user tries to access SubmitIT to send in a new submission."
 	}
 	case object globalEditAllowedForAcceptedBoolean extends ConfigKey(booleanParse) {
 	  val description = "If true allows accepted submissions to be edited."
-	}
-	case object listAllSubmissionsPassword extends ConfigKey {
-		val description = "Password for accessing all submissions in a list view."
 	}
 	case object commaSeparatedListOfTagsForNewSubmissions extends ConfigKey {
 		val description = "All new submissions sent from SubmitIT will get the tags set by this comma separated list of strings."
@@ -162,8 +160,9 @@ object DefaultConfigValues {
   implicit def stringToSome(v: String) = Some(v)
   
   private [app] val configValues = collection.mutable.LinkedHashMap[ConfigKey, Option[String]](
-    eventName -> "JavaZone 2009",
-  	headerText -> "Submit your JavaZone 2009 presentation",
+    eventName -> "JavaZone 2010",
+    headerLogoText -> "JavaZone 2010",
+  	headerText -> "Submit your JavaZone 2010 presentation",
   	submitAllowedBoolean -> "true",
 		showFeedbackBoolean -> "false",
 		showSpecialMessageOnRejectBoolean -> "false",
@@ -171,7 +170,6 @@ object DefaultConfigValues {
 		allowIndidualFeedbackOnRejectBoolean -> "false",
 		globalEditAllowedForAcceptedBoolean -> "true",
 		globalEditAllowedBoolean -> "true",
-		showUserSelectedKeywordsInReviewPageWhenEditNotAllowedBoolean -> "true",
 		showRoomWhenApprovedBoolean -> "false",
 		showTimeslotWhenApprovedBoolean -> "false",
 		allowSlideUploadBoolen -> "false",
@@ -180,14 +178,13 @@ object DefaultConfigValues {
 		presentationAllowedExtendsionFileTypes -> "pdf",
 		captchaLengthInt -> "1",
 		passPhraseSubmitSpecialURL -> "jz",
-		listAllSubmissionsPassword -> None,
 		submitNotAllowedHtml -> "Call for papers is currently not open.",
-		editPageInfoTextHtml -> """<ul><li>Click the "Help" link, or press the question mark at each field for information about what to enter.</li><li>Before you submit your presentation you have to review it by pressing the "Review presentation" link.</li></ul>""",
-		reviewPageViewSubmittedChangeAllowedHthml -> """You can still change the contents of your submission. You may edit by pressing the "Edit link".<br>If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a>""",
-		feedbackRejected -> "Unfortunately we could not provide a presentation slot for this presentation. We have gotten more than 200 proposals this year, selecting the best have been difficult. If you have other submissions you should check their status as well. If you have any questions you may email program@java.no.",
-		userSelectedKeywords -> "Core Java|Tools and Techniques|Java Frameworks|Frontend Technologies|Usability|Embedded, Mobile and Gaming|Enterprise Architecture and Integration|Web as a Platform|Architecture and Design|Agile and Software Engineering|Alternative Languages|Experience Reports|Innovative use of IT|Green IT|Domain-driven design",
+		editPageInfoTextHtml -> """<ul><li>Click the "Help", or press the question mark at each field for information about what to enter.</li><li>Before you submit your presentation you have to review it by pressing "Review presentation".</li><li>The session timeout is 2 hours. Wondering what <a style="font-weight:normal;" target="_blank" href="http://www.juniper.net/techpubs/software/management/sdx/sdx50x/sw-sdx-sw-basics/html/web-app-installing4.html" style="font-weight: normal;">session timeout is?</a></li></ul></li></ul>""",
+		reviewPageViewSubmittedChangeAllowedHthml -> """You can still change the contents of your submission. You may edit by pressing the "Edit presentation".<br>If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a><br>""",
+		feedbackRejected -> "The high quality of all the submissions this year has made the selection process very difficult, and unfortunately we cannot accept all talks. We actually had almost 250 submissions, and we only have 90 slots. We regret to inform you that we are unable to accept your proposal. We hope however that you will keep up the good effort and submit proposals next year as well!",
+		userSelectedKeywords -> "alternative languages|concurrency / scalability|enterprise|core / jvm|web / frontend|methodology|testing|experience report",
 		reviewPageViewSubmittedHthml -> """If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a>""",
-		reviewPageBeforeSubmitHtml -> """Your presentation has not yet been submittet. Please review, and press the "Submit presentation" link when you are ready.""",
+		reviewPageBeforeSubmitHtml -> """Your presentation has not yet been submittet. Please review, and press "Submit presentation" when you are ready.""",
 		submititBaseUrl -> "http://localhost:8080",
 		officialEmailReplyTo -> "program@java.no",
 		smtpHost -> None,

@@ -15,100 +15,151 @@
   -->
 <wicket:extend>
 
-	<form wicket:id="inputForm">
-	<div class="linkRow">
-		<a href="#" wicket:id="reviewButtonTop">Review presentation</a>&nbsp;&nbsp;<a href="helpit" target="_blank">Help</a>
+
+	<div class="menu">
+        <ul>
+		 <li><a href="#" wicket:id="reviewButtonTop">Review presentation</a></li>
+		 <li><a href="#" wicket:id="resetButtonTop">Reset form</a></li>
+         <li><a href="help" target="_blank">Help</a></li>
+        </ul>
 	</div>
-	<div wicket:id="modal"></div>
+
+    <span wicket:id="contentBorder">
+
+	<form wicket:id="inputForm">
+
+    <div wicket:id="modal"></div>
 	<div class="infoHeader">Please read this before you begin</div>
 	<div class="infoText">
-		<div wicket:id="infoText"></div>
+		<div wicket:id="infoText" class="infoContent"></div>
 	</div>
 	<h2>Fill in your presentation details</h2>
 	<div class="row">
 		<div wicket:id="feedback"></div>
 	</div>
+    <div wicket:id="legend" />
 	<wicket:enclosure child="password">
 		<div class="titleText">
 			<label>Captcha *</label>
 		</div>
-		<div class="row" />
-		<div class="row">
+		<div class="row-content">
 			<img wicket:id="captchaImage">
 		</div>
-		<div class="row">
+		<div class="row-content">
         	Please replicate the text you see above (<a href="#" wicket:id="captchaButton">I cannot read this</a>)
 		</div>
-		<div class="row">
+		<div class="row-content">
 			<input wicket:id="password" type="text" class="captchaField"/>
 		</div>
 	</wicket:enclosure>
 	<div class="row">
 		<div class="titleText">
-			<label>Presentation format</label> <a href="#" wicket:id="formatHelp"><img class="helpImg" src="images/questionmark.gif"></a>
+			<label>Presentation format</label>
+            <a href="#" wicket:id="formatHelp"><img class="helpImg" src="images/questionmark.gif" title="Click for help on this element"></a>
+            <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
 		</div>
 		<div wicket:id="format" class="choices">
 		</div>
 	</div>
 	<div class="row">
 		<div class="titleText">
-			<label>Title *</label> <a href="#" wicket:id="titleHelp"><img class="helpImg" src="images/questionmark.gif"></a>
+			<label>Title *</label>
+            <a href="#" wicket:id="titleHelp"><img class="helpImg" src="images/questionmark.gif" title="Click for help on this element"></a>
+            <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
+            <img class="helpImg" src="images/visible_as_teaser.gif" title="May be used to advertise presentation in advance">
 		</div>
-		<input type="text" class="inputField" wicket:id="title">
+        <div class="row-content">
+		    <input type="text" class="inputField" wicket:id="title">
+        </div>
 	</div>
 	<div class="row">
 		<div class="titleText">
-			<label>Highlight Summary *</label> <a href="#" wicket:id="highlightHelp"><img class="helpImg" src="images/questionmark.gif"></a>
-		</div> 
-		<textarea class="smallInputArea" wicket:id="summary"></textarea>
+			<label>Abstract *</label>
+            <a href="#" wicket:id="abstractHelp"><img class="helpImg" src="images/questionmark.gif" title="Click for help on this element"></a>
+            <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
+		</div>
+        <div class="row-content">
+		    <textarea class="inputArea" wicket:id="theabstract"></textarea>
+        </div>
 	</div>
 	<div class="row">
 		<div class="titleText">
-			<label>Abstract *</label> <a href="#" wicket:id="abstractHelp"><img class="helpImg" src="images/questionmark.gif"></a>
-		</div> 
-		<textarea class="inputArea" wicket:id="theabstract"></textarea>
-	</div>
-	<div class="row">
-		<div class="titleText">
-			<label>Language</label> <a href="#" wicket:id="languageHelp"><img class="helpImg" src="images/questionmark.gif"></a>
+			<label>Language</label>
+            <a href="#" wicket:id="languageHelp"><img class="helpImg" src="images/questionmark.gif" title="Click for help on this element"></a>
+            <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
 		</div>
 		<div wicket:id="language" class="choices">
 		</div>
 	</div>
 	<div class="row">
 		<div class="titleText">
-			<label>Level</label> <a href="#" wicket:id="levelHelp"><img class="helpImg" src="images/questionmark.gif"></a>
+			<label>Level</label>
+            <a href="#" wicket:id="levelHelp"><img class="helpImg" src="images/questionmark.gif" title="Click for help on this element"></a>
+            <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
 		</div>
 		<div wicket:id="level" class="choices">
 		</div>
 	</div>
 	<div class="row">
 		<div class="titleText">
-			<label>Outline</label> <a href="#" wicket:id="outlineHelp"><img class="helpImg" src="images/questionmark.gif"></a>
+			<label>Outline</label>
+            <a href="#" wicket:id="outlineHelp"><img class="helpImg" src="images/questionmark.gif" title="Click for help on this element"></a>
+            <img class="helpImg" src="images/visible_to_pcom.gif" title="Only visible to the programme committee">
 		</div>
-	 	<textarea class="inputArea" wicket:id="outline"></textarea>
+        <div class="row-content">
+	 	    <textarea class="inputArea" wicket:id="outline"></textarea>
+        </div>
+	</div>
+	<div class="row">
+		<div class="titleText">
+			<label>Highlight Summary (English only) *</label>
+            <a href="#" wicket:id="highlightHelp"><img class="helpImg" src="images/questionmark.gif" title="Click for help on this element"></a>
+            <img class="helpImg" src="images/visible_as_teaser.gif" title="May be used to advertise presentation in advance">
+		</div>
+        <div class="row-content">
+		    <textarea class="smallInputArea" wicket:id="summary"></textarea>
+        </div>
 	</div>
 	<div class="row">
 		<div class="titleText">
 			<label>Equipment</label>
+            <img class="helpImg" src="images/visible_to_pcom.gif" title="Only visible to the programme committee">
 		</div>
-		<wicket:message key="equipmentHelp"/>
-	 	<textarea class="smallInputArea" wicket:id="equipment"></textarea>
+        <div class="row-content">
+		    <wicket:message key="equipmentHelp"/>
+	 	    <textarea class="smallInputArea" wicket:id="equipment"></textarea>
+        </div>
 	</div>
 	<div class="row">
 		<div class="titleText">
-			<label>Expected audience</label> <a href="#" wicket:id="expectedAudienceHelp"><img class="helpImg" src="images/questionmark.gif"></a>
+			<label>Expected audience</label>
+            <a href="#" wicket:id="expectedAudienceHelp"><img class="helpImg" src="images/questionmark.gif" title="Click for help on this element"></a>
+            <img class="helpImg" src="images/visible_in_programme.gif" title="Will be visible in online programme">
 		</div>
-	 	<textarea class="inputArea" wicket:id="expectedAudience"></textarea>
+        <div class="row-content">
+	 	    <textarea class="inputArea" wicket:id="expectedAudience"></textarea>
+        </div>
 	</div>
 	<div class="row">
 		<div wicket:id="tags"></div>
 	</div>
-	<div class="clearBoth"></div>
+    <div class="clearBoth">
+        &nbsp;
+    </div>
 	<div class="row ">
-		<h2>Speakers <a href="#" wicket:id="speakersHelp"><img class="helpImg" src="images/questionmark.gif"></a></h2>
+		<h2>Speakers <a href="#" wicket:id="speakersHelp"><img class="helpImg" src="images/questionmark.gif" title="Click for help on this element"></a></h2>
 	</div>
 	<div wicket:id="speakers" />
+
+
 	</form>
+    </span>
+	<div class="menu">
+        <ul>
+		 <li><a href="#" wicket:id="reviewButtonBottom">Review presentation</a></li>
+         <li><a href="#" wicket:id="resetButtonBottom">Reset form</a></li>
+         <li><a href="help" target="_blank">Help</a></li>
+        </ul>
+	</div>
 </wicket:extend>
 </html>

@@ -55,9 +55,9 @@ class SubmititApp extends WebApplication with LoggHandling {
     SubmititApp.properties = theMap
 
     mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
-    mountBookmarkablePage("/helpit", classOf[HelpPage]);
+    mountBookmarkablePage("/proposal", classOf[IdResolverPage]);
+    mountBookmarkablePage("/help", classOf[HelpPage]);
     mountBookmarkablePage("/admin-login", classOf[admin.AdminLogin])
-    mountBookmarkablePage("/list-submissions", classOf[admin.ListPresentationLoginPage])
     mountBookmarkablePage("/invitation", classOf[InvitationPage])
     getApplicationSettings.setDefaultMaximumUploadSize(Bytes.kilobytes(500))
   }

@@ -2,25 +2,29 @@
 <html xmlns:wicket="http://wicket.apache.org/">
 <head>
 	<title>SubmitIT</title>
-	<link rel="stylesheet" href="style.css" type="text/css" >
+	<link rel="stylesheet" href="new_style.css" type="text/css" >
     <script type="text/javascript" src="prototype.js"></script>
     <script type="text/javascript" src="scriptaculous.js"></script>
     <script type="text/javascript" src="effects.js"></script>
 </head>  
 <body>
-	<div class="frame">
-		<div id="wrapper">
-			<div id="header">
-				<img width="1000" height="102" alt="JavaZone 2009" src="images/javazone_banner.jpg"/>
-				<div class="headerTitle">SubmitIT - <label wicket:id="headerText">Submit your JavaZone presentation</label></div>
-			</div>    
-			<div id="content">
-				<wicket:child />
-			</div>
+
+	<div id="header">
+		<div id="logo">
+			<h1><a href="#"><span wicket:id="headerLogoText"></span></a></h1>
+
+			<p>SubmitIT - <label wicket:id="headerText">Submit your JavaZone presentation</label></p>
 		</div>
-		<div id="footer">JavaZone &copy; 2009 <img width="4" height="3" alt="dot" src="images/dot.gif"/> <a href="mailto:javazone@java.no">javazone@java.no</a> <img width="4" height="3" alt="dot" src="images/dot.gif"/> <a href="http://www.javazone.no" target="_blank">www.javazone.no</a></div>	</div>
-	<div id="footer2"><br />
-		 Powered by <a href="http://wicket.apache.org/" target="_blank">Wicket</a> and <a href="http://www.scala-lang.org/" target="_blank">Scala</a>| Developed by <a href="http://scala.java.no/" target="_blank">scalaBin</a>
-	</div> 
+	</div>
+
+    <wicket:child />
+	<div id="footer">
+        <p>
+            &copy; JavaZone 2010
+        <p>
+            Design by <a href="http://www.freecsstemplates.org/">Free CSS Templates</a> . Powered by <a href="http://wicket.apache.org/" target="_blank">Wicket</a> and <a href="http://www.scala-lang.org/" target="_blank">Scala</a> . Developed by <a href="http://scala.java.no/" target="_blank">scalaBin</a>
+        </p>
+    </div>
+
 </body>
 </html>

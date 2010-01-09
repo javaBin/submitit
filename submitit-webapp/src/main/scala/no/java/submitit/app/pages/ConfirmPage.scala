@@ -15,11 +15,11 @@
 
 package no.java.submitit.app.pages
 
+import borders.ContentBorder
 import org.apache.wicket.markup.html.WebPage
 import org.apache.wicket.markup.html.link._
 import no.java.submitit.common._
 import no.java.submitit.model._
-import no.java.submitit.app.State
 import org.apache.wicket.markup.html.basic._
 import org.apache.wicket.markup.html.link._
 import org.apache.wicket.protocol.http.servlet.ServletWebRequest
@@ -28,7 +28,8 @@ import javax.servlet.http.HttpServletRequest
 import javax.mail.{Message,Session,Transport}
 import javax.mail.internet.MimeMessage
 import org.apache.wicket.markup.html.form.HiddenField
-import DefaultConfigValues._
+import no.java.submitit.app.DefaultConfigValues._
+import no.java.submitit.app.{SubmititApp, State}
 
 class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
 
@@ -41,28 +42,33 @@ class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
   add(new HiddenField("showNewLink") {
 	  override def isVisible = State().invitation || State().submitAllowed
   })
-  
-  add(new Label("extraInfo", if(isTest) "Test submission, has not been submitted and no email has been sent" else ""))
-  
-  add(new MultiLineLabel("pres", presentation))
 
-  val url = {
-    val backendClient = State().backendClient
-    val uniqueId = if(!isTest) backendClient.savePresentation(pres) else Presentation.testPresentationURL
-    pres.sessionId = uniqueId
-    SubmititApp.getSetting(submititBaseUrl).get + "/lookupPresentation?id=" + uniqueId
-  }
-  
-  add(new ExternalLink("confirmUrl", url, url))
-  
-  add(new NewPresentationLink("newPresentation"))
-  add(new Link("toJavaZone"){
+  private def exitLink(name: String) = new Link(name){
     override def onClick {
       setRedirect(false)
       getResponse.redirect("http://www.javazone.no")
       State().invalidateNow
     }
-  })
+  }
+
+  menuLinks = new NewPresentationLink("newPresentationTop") ::
+              new NewPresentationLink("newPresentationBottom") ::
+              exitLink("exitLinkTop") ::
+              exitLink("exitLinkBottom") :: Nil
+  
+  contentBorder.add(new Label("extraInfo", if(isTest) "Test submission, has not been submitted and no email has been sent" else ""))
+  
+  contentBorder.add(new MultiLineLabel("pres", presentation))
+
+  val url = {
+    val backendClient = State().backendClient
+    val uniqueId = if(!isTest) backendClient.savePresentation(pres) else Presentation.testPresentationURL
+    pres.sessionId = uniqueId
+    SubmititApp.getSetting(submititBaseUrl).get + "/proposal?id=" + uniqueId
+  }
+  
+  contentBorder.add(new ExternalLink("confirmUrl", url, url))
+  
 
   if (!isTest && SubmititApp.getSetting(smtpHost).isDefined) {
     val props = new Properties

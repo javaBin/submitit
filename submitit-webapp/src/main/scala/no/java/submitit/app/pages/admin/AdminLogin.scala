@@ -17,10 +17,13 @@ package no.java.submitit.app.pages.admin
 
 import org.apache.wicket.markup.html.form._
 import org.apache.wicket.model._
+import no.java.submitit.app.pages.{LoginHandler, LayoutPage}
+import no.java.submitit.app.SubmititApp
+import no.java.submitit.app.pages.borders.ContentBorder
 
 class AdminLogin extends LayoutPage {
 
-  add(new panels.LoginPanel("login", new LoginHandler {
+	contentBorder.add(new panels.LoginPanel("login", new LoginHandler {
     def onLogin(pwd: String) {
       val authenticated = SubmititApp.authenticates(pwd)
       if (authenticated) {
