@@ -31,7 +31,7 @@ import org.apache.wicket.markup.html.form.HiddenField
 import no.java.submitit.app.DefaultConfigValues._
 import no.java.submitit.app.{SubmititApp, State}
 
-class ConfirmPage(pres: Presentation) extends LayoutPage with LoggHandling {
+class ConfirmPage(val pres: Presentation) extends LayoutPage with LoggHandling with UpdateSessionHandling {
 
   val isTest = pres.testPresentation
   
