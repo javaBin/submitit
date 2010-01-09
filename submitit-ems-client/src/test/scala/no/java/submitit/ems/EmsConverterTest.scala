@@ -19,12 +19,11 @@ import model._
 
 import org.scalatest._
 import org.scalatest.matchers.ShouldMatchers._
-import com.jteigen.scalatest.JUnit4Runner
+import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
-
 import xml.Node
 
-@RunWith(classOf[JUnit4Runner])
+@RunWith(classOf[JUnitRunner])
 class EmsConverterTest extends FunSuite {
   
   val original = 

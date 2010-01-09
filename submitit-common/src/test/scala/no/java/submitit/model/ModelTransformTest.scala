@@ -16,13 +16,13 @@
 package no.java.submitit.model
 
 import _root_.java.util.Stack
-import com.jteigen.scalatest.JUnit4Runner
+import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FunSuite
 import xml.Utility.trim
 
-@RunWith(classOf[JUnit4Runner])
+@RunWith(classOf[JUnitRunner])
 class ModelTranformTest extends FunSuite with ShouldMatchers{
 
   val speaker = new Speaker

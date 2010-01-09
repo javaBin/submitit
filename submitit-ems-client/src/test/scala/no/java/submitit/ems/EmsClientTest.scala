@@ -17,10 +17,10 @@ package no.java.submitit.ems
 
 import model._
 import org.scalatest._
-import com.jteigen.scalatest.JUnit4Runner
+import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 
-@RunWith(classOf[JUnit4Runner])
+@RunWith(classOf[JUnitRunner])
 class EmsClientTest extends FunSuite {
 
   val xml = <ns2:events xmlns:ns2="http://xmlns.java.no/ems/external/1">
