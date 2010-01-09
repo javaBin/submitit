@@ -15,7 +15,7 @@
 
 package no.java.submitit.common
 
-import no.java.submitit.model.{Presentation, PresentationInfo}
+import no.java.submitit.model.{Presentation}
 
 trait BackendClient {
 
@@ -23,5 +23,4 @@ trait BackendClient {
   
   def loadPresentation(id: String): Option[Presentation]
 
-  def getAllPresentations: List[PresentationInfo]
 }

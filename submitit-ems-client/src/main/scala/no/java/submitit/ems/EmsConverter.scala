@@ -29,8 +29,6 @@ import org.joda.time.format.DateTimeFormat
 import scala.xml.XML
 
 class EmsConverter extends LoggHandling {
-    
-  def toPresentationInfo(sessions: List[Session]) = sessions.map(s => PresentationInfo(s.getId, s.getTitle, s.getSpeakers.toList.map(_.getName), getStatus(s.getState)))
   
   private def getStatus(state: Session.State) = state match {
       case Session.State.Approved => Status.Approved

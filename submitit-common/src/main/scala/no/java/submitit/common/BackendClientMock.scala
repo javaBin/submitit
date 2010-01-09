@@ -40,8 +40,4 @@ object BackendClientMock extends BackendClient with Serializable {
     presentations.get(id)
   }
   
-  def getAllPresentations = presentations.foldLeft(List[PresentationInfo]()){case (l, (s, p)) => toPres(p) :: l}
-  
-  private def toPres(p: Presentation) = PresentationInfo(p.sessionId, p.title, p.speakers.map(_.name), p.status)
-  
 }
