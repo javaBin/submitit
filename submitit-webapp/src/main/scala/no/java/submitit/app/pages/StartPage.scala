@@ -23,6 +23,7 @@ class StartPage extends LayoutPage {
   
   if (SubmititApp.boolSetting(submitAllowedBoolean)) {
     State().currentPresentation = null
+    getRequestCycle().setRedirect(true);
     setResponsePage(new EditPage(State().currentPresentation))
   }
   else {

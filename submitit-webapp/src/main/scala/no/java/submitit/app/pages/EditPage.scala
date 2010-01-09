@@ -43,7 +43,7 @@ class EditPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
   }
 
   def redirectToReview() {
-    setResponsePage(new ReviewPage(State().currentPresentation, true))
+    setResponsePage(new ReviewPage(pres, true))
   }
   
   State() setCaptchaIfNotSet
