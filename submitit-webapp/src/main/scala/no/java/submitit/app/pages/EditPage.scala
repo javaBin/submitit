@@ -36,14 +36,14 @@ import DefaultConfigValues._
 import org.apache.wicket.{Component, AttributeModifier, PageParameters}
 import org.apache.wicket.behavior.SimpleAttributeModifier
 
-class EditPage(pres: Presentation, specialInvite: Boolean) extends LayoutPage {
+class EditPage(val pres: Presentation, specialInvite: Boolean) extends LayoutPage with UpdateSessionHandling {
   
   def this(pres: Presentation) {
     this(pres, false)
   }
 
   def redirectToReview() {
-    setResponsePage(new ReviewPage(State().currentPresentation, true))
+    setResponsePage(new ReviewPage(pres, true))
   }
   
   State() setCaptchaIfNotSet

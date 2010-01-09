@@ -53,7 +53,7 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
   
   add(new AjaxSubmitLink("newSpeaker", newSpeakerForm) {
     override def onSubmit(target: AjaxRequestTarget, form: Form) {
-      State().currentPresentation.addSpeaker()
+      pres.addSpeaker()
       target.addComponent(SpeakerPanel.this)
       target.appendJavascript("new Effect.Highlight($('" + SpeakerPanel.this.getMarkupId() + "'));");
     }
@@ -79,7 +79,7 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
       
       item.add(new AjaxSubmitLink("remove", speakersForm) {
         override def onSubmit(target: AjaxRequestTarget, form: Form) {
-          State().currentPresentation.removeSpeaker(speaker) 
+          pres.removeSpeaker(speaker) 
           target.addComponent(item)
           target.appendJavascript("new Effect.Fade($('" + item.getMarkupId() + "'));");
         }	

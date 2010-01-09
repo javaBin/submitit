@@ -37,24 +37,24 @@ import no.java.submitit.app.Functions._
 import no.java.submitit.app.{SubmititApp, State}
 import no.java.submitit.common.LoggHandling
 
-class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with LoggHandling {
+class ReviewPage(val pres: Presentation, notAdminView: Boolean) extends LayoutPage with LoggHandling with UpdateSessionHandling {
   
   val supportedExtensions = SubmititApp.getListSetting(presentationAllowedExtendsionFileTypes)
-  val editAllowed = SubmititApp.boolSetting(globalEditAllowedBoolean) || (p.status == Status.Approved && SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))
+  val editAllowed = SubmititApp.boolSetting(globalEditAllowedBoolean) || (pres.status == Status.Approved && SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))
   
   private def show(shouldShow: Boolean) = notAdminView && shouldShow
 
   private def submitLink(name: String) = new PageLink(name, new IPageLink {
-    def getPage = new ConfirmPage(p)
+    def getPage = new ConfirmPage(pres)
     def getPageIdentity = classOf[ConfirmPage]
   }) {
     // Add this message to to PageLink for proper nesting
-    add(new Label("submitLinkMessage", if(p.isNew) "Submit presentation" else "Submit updated presentation"))
+    add(new Label("submitLinkMessage", if(pres.isNew) "Submit presentation" else "Submit updated presentation"))
   }
 
 
   private def editLink(name: String) = new PageLink(name, new IPageLink {
-    def getPage = new EditPage(p)
+    def getPage = new EditPage(pres)
     def getPageIdentity = classOf[EditPage]
   })
 
@@ -66,50 +66,50 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
               new NewPresentationLink("newPresentationBottom") :: Nil
 
   add(new HiddenField("showEditLink") {
-	  override def isVisible = show(p.isNew || editAllowed)
+	  override def isVisible = show(pres.isNew || editAllowed)
   })
 
   add(new HiddenField("showSubmitLink") {
-    override def isVisible = show(p.isNew || editAllowed)
+    override def isVisible = show(pres.isNew || editAllowed)
   })
 
   add(new HiddenField("showNewLink") {
-	  override def isVisible = show(!p.isNew && State().submitAllowed)
+	  override def isVisible = show(!pres.isNew && State().submitAllowed)
   })
 
   contentBorder.add(new FeedbackPanel("systemFeedback"))
   
   contentBorder.add(new HiddenField("showRoom") {
-  	override def isVisible = SubmititApp.boolSetting(showRoomWhenApprovedBoolean) && p.status == Status.Approved && p.room != null
+  	override def isVisible = SubmititApp.boolSetting(showRoomWhenApprovedBoolean) && pres.status == Status.Approved && pres.room != null
   })
   
   contentBorder.add(new HiddenField("showTimeslot") {
-  	override def isVisible = SubmititApp.boolSetting(showTimeslotWhenApprovedBoolean) && p.status == Status.Approved && p.timeslot != null
+  	override def isVisible = SubmititApp.boolSetting(showTimeslotWhenApprovedBoolean) && pres.status == Status.Approved && pres.timeslot != null
   })
   
-  val statusMsg = if (p.isNew) "Not submitted"
+  val statusMsg = if (pres.isNew) "Not submitted"
                   else if (notAdminView && !SubmititApp.boolSetting(showActualStatusInReviewPageBoolean)) Status.Pending.toString
-                  else p.status.toString
+                  else pres.status.toString
 
   contentBorder.add(new panels.LegendPanel)
   contentBorder.add(new Label("status", statusMsg))
-  contentBorder.add(new Label("room", p.room))
-  contentBorder.add(new Label("timeslot", p.timeslot))
+  contentBorder.add(new Label("room", pres.room))
+  contentBorder.add(new Label("timeslot", pres.timeslot))
 
 
-  val msg = if (p.isNew) SubmititApp.getSetting(reviewPageBeforeSubmitHtml).getOrElse("")
-  	else if (!p.isNew && !editAllowed) SubmititApp.getSetting(reviewPageViewSubmittedHthml).getOrElse("")
-  	else if (!p.isNew && editAllowed) SubmititApp.getSetting(reviewPageViewSubmittedChangeAllowedHthml).getOrElse("")
+  val msg = if (pres.isNew) SubmititApp.getSetting(reviewPageBeforeSubmitHtml).getOrElse("")
+  	else if (!pres.isNew && !editAllowed) SubmititApp.getSetting(reviewPageViewSubmittedHthml).getOrElse("")
+  	else if (!pres.isNew && editAllowed) SubmititApp.getSetting(reviewPageViewSubmittedChangeAllowedHthml).getOrElse("")
   	else SubmititApp.getSetting(reviewPageViewSubmittedHthml).getOrElse("")
 
   contentBorder.add(new HtmlLabel("viewMessage", msg))
 
-  val feedback = if(p.status == Status.NotApproved) {
-    						   if(SubmititApp.boolSetting(allowIndidualFeedbackOnRejectBoolean) && p.hasFeedback) Some(p.feedback)
+  val feedback = if(pres.status == Status.NotApproved) {
+    						   if(SubmititApp.boolSetting(allowIndidualFeedbackOnRejectBoolean) && pres.hasFeedback) Some(pres.feedback)
                    else if(SubmititApp.boolSetting(showSpecialMessageOnRejectBoolean)) Some(SubmititApp.getSetting(feedbackRejected).getOrElse(""))
                  	 else None
                  }
-                 else if (SubmititApp.boolSetting(showFeedbackBoolean) && p.hasFeedback) Some(p.feedback)
+                 else if (SubmititApp.boolSetting(showFeedbackBoolean) && pres.hasFeedback) Some(pres.feedback)
                  else None
   
   contentBorder.add(new MultiLineLabel("feedback", feedback.getOrElse("")) {
@@ -120,12 +120,12 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
   contentBorder.add(createUploadForm("pdfForm", "uploadSlideText", "You must upload pdf for publishing online. Max file size is " + SubmititApp.intSetting(presentationUploadPdfSizeInMBInt) + " MB. Supported file types: "+ supportedExtensions.mkString(", "),
                        SubmititApp.intSetting(presentationUploadPdfSizeInMBInt),
                        hasExtension(_, extensionRegex(supportedExtensions)),
-                       p.pdfSlideset = _
+                       pres.pdfSlideset = _
   ))
   contentBorder.add(createUploadForm("slideForm", "uploadSlideText", "You can upload slides as backup for your presentation. This will be available for you at the venue. Max file size is " + SubmititApp.intSetting(presentationUploadSizeInMBInt) + " MB",
                        SubmititApp.intSetting(presentationUploadSizeInMBInt),
                        hasntExtension(_, extensionRegex(List("pdf"))),
-                       p.slideset = _
+                       pres.slideset = _
   ))
   
   def createUploadForm(formId: String, titleId: String, titleText: String, maxFileSize: Int, fileNameValidator: String => Boolean, assign: Some[Binary] => Unit) = new FileUploadForm(formId) {
@@ -135,8 +135,8 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
     		val (fileName, stream, contentType) = uploadRes.get
     		if(fileNameValidator(fileName)) {
     			assign(Some(Binary(fileName, contentType, Some(stream))))
-    			State().backendClient.savePresentation(p)
-    			setResponsePage(new ReviewPage(p, true))
+    			State().backendClient.savePresentation(pres)
+    			setResponsePage(new ReviewPage(pres, true))
     			info(fileName + " uploaded successfully")
     		}
     		else {
@@ -144,33 +144,33 @@ class ReviewPage(p: Presentation, notAdminView: Boolean) extends LayoutPage with
     		}
       }
     }
-    override def isVisible = show(SubmititApp.boolSetting(allowSlideUploadBoolen) && p.status == Status.Approved)
+    override def isVisible = show(SubmititApp.boolSetting(allowSlideUploadBoolen) && pres.status == Status.Approved)
     add(new UploadProgressBar("progress", this));
     setMaxSize(Bytes.megabytes(maxFileSize))
     add(new Label(titleId, titleText))
   }
   
   
-  contentBorder.add(new Label("title", p.title))
-  contentBorder.add(new WikiMarkupText("summary", p.summary))
-  contentBorder.add(new WikiMarkupText("abstract", p.abstr))
-  contentBorder.add(new Label("language", p.language.toString))
-  contentBorder.add(new Label("level", p.level.toString))
-  contentBorder.add(new Label("format", p.format.toString))
-  contentBorder.add(new WikiMarkupText("outline", p.outline))
-  contentBorder.add(new WikiMarkupText("equipment", p.equipment))
-  contentBorder.add(new WikiMarkupText("expectedAudience", p.expectedAudience))
-  contentBorder.add(new panels.TagsPanel("unmodifiableTags", p, false))
+  contentBorder.add(new Label("title", pres.title))
+  contentBorder.add(new WikiMarkupText("summary", pres.summary))
+  contentBorder.add(new WikiMarkupText("abstract", pres.abstr))
+  contentBorder.add(new Label("language", pres.language.toString))
+  contentBorder.add(new Label("level", pres.level.toString))
+  contentBorder.add(new Label("format", pres.format.toString))
+  contentBorder.add(new WikiMarkupText("outline", pres.outline))
+  contentBorder.add(new WikiMarkupText("equipment", pres.equipment))
+  contentBorder.add(new WikiMarkupText("expectedAudience", pres.expectedAudience))
+  contentBorder.add(new panels.TagsPanel("unmodifiableTags", pres, false))
   
-  contentBorder.add(createFileLabel("pdfName", p.pdfSlideset))
-  contentBorder.add(createFileLabel("slideName", p.slideset))
+  contentBorder.add(createFileLabel("pdfName", pres.pdfSlideset))
+  contentBorder.add(createFileLabel("slideName", pres.slideset))
   
   private def createFileLabel(id: String, binary: Option[Binary]) = new Label(id) {
   	setModel(if (binary.isDefined) new Model(binary.get.name) else new Model(""))
   	override def isVisible = binary.isDefined
   }
   
-  contentBorder.add(new ListView("speakers", p.speakers.reverse) {
+  contentBorder.add(new ListView("speakers", pres.speakers.reverse) {
     override def populateItem(item: ListItem) {
       val speaker = item.getModelObject.asInstanceOf[Speaker]
       item.add(new Label("name", speaker.name))
