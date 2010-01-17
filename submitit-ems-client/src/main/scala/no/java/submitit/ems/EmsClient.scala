@@ -147,13 +147,7 @@ class EmsClient(eventName: String, serverUrl: String, username: Option[String], 
     binary.id = result.getId
   }
   
-  private def findOrCreateEvent(name: String, events: List[Event]): Event = {
-    events match {
-      case event :: events => 
-        if (event.getName() == name) event else findOrCreateEvent(name, events)
-      case Nil => createEvent(name)
-    }
-  }
+  private def findOrCreateEvent(name: String, events: List[Event]): Event = events.find(_.getName == name).getOrElse(createEvent(name))
   
   private def createEvent(name: String): Event = {
     val event = new Event()
