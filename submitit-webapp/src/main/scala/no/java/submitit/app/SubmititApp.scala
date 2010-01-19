@@ -36,6 +36,7 @@ class SubmititApp extends WebApplication with LoggHandling {
 
   override def init() {
     SubmititApp.propertyFileName = super.getServletContext.getInitParameter("submitit.properties")
+    if (SubmititApp.propertyFileName == null) SubmititApp.propertyFileName = System.getProperty("submitit.properties")
     if (SubmititApp.propertyFileName == null) throw new Exception("""You must specify "submitit.properties" as a init parameter.""")
     val props = utils.PropertyIOUtils.loadRessource(SubmititApp.propertyFileName)
 
