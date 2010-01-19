@@ -14,8 +14,8 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
   override def parallelExecution = true
 
   lazy val common = project("submitit-common", "Common", new DefaultProject(_){
-	val slf4j = "org.slf4j" % "slf4j-log4j12" % "1.4.2"
-	val log4j = "log4j" % "log4j" % "1.2.14"
+    val slf4j = "org.slf4j" % "slf4j-log4j12" % "1.4.2"
+    val log4j = "log4j" % "log4j" % "1.2.14"
   })
   
   lazy val ems = project("submitit-ems-client", "Ems Client", new DefaultProject(_){
@@ -24,12 +24,11 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
   }, common)
   
   lazy val ui = project("submitit-webapp", "WebApplication", new DefaultWebProject(_){
-	system[File]("submitit.properties")() = "src" / "test" / "resources" / "submitit.properties" asFile
+    system[File]("submitit.properties")() = "src" / "test" / "resources" / "submitit.properties" asFile
+    override def mainResources = super.mainResources +++ descendents( mainSourceRoots, "*" ) --- mainSources
 	
-	override def mainResources = super.mainResources +++ descendents( mainSourceRoots, "*" ) --- mainSources
-	
-	val ems_wiki = "no.java.ems" % "ems-wiki" % ems_version
-	val wicket = "org.apache.wicket" % "wicket" % wicket_version
+    val ems_wiki = "no.java.ems" % "ems-wiki" % ems_version
+    val wicket = "org.apache.wicket" % "wicket" % wicket_version
     val wicket_extensions = "org.apache.wicket" % "wicket-extensions" % wicket_version
     val servlet = "javax.servlet" % "servlet-api" % "2.5" % "provided"
     val mail = "javax.mail" % "mail" % "1.4.1"
