@@ -29,7 +29,7 @@ class StartPage extends LayoutPage {
   else {
     val res = new Label("info", SubmititApp.getSetting(submitNotAllowedHtml).getOrElse(""))
     res.setEscapeModelStrings(false)
-    add(res)
+    contentBorder.add(res)
   }
 
 }
