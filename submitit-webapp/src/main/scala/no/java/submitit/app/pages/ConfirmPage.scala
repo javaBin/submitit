@@ -60,6 +60,8 @@ class ConfirmPage(val pres: Presentation) extends LayoutPage with LoggHandling w
   
   contentBorder.add(new MultiLineLabel("pres", presentation))
 
+  val (greetmessage, subjectmessage) = if(pres.isNew) ("submitting", "of") else ("updating", "on updating")
+
   val url = {
     val backendClient = State().backendClient
     val uniqueId = if(!isTest) backendClient.savePresentation(pres) else Presentation.testPresentationURL
@@ -83,10 +85,8 @@ class ConfirmPage(val pres: Presentation) extends LayoutPage with LoggHandling w
       msg.addRecipients(Message.RecipientType.TO, speaker.email)
     )
     
-    val (greetmessage, subjectmessage) = if(pres.isNew) ("submitting", "of") else ("updating", "on updating")
-    
     SubmititApp.getBccEmailList.foreach(msg.addRecipients(Message.RecipientType.BCC, _))
-    msg.setSubject("Confirmation " + subjectmessage + " your JavaZone 2009 submission \"" + pres.title + "\"")
+    msg.setSubject("Confirmation " + subjectmessage + " your JavaZone 2010 submission \"" + pres.title + "\"")
     msg.setSentDate(new Date)
     msg.setText("Thank you for " + greetmessage + " your presentation titled \"" + pres.title + "\".\n\n" +
                 "You can access the submitted presentation at " + url + "\n\n\n" +
