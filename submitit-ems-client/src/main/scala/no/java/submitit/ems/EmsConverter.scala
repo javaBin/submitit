@@ -18,7 +18,7 @@ package no.java.submitit.ems
 import no.java.ems._
 import no.java.ems.domain.{Event,Session,Person,Speaker => EmsSpeaker,EmailAddress,Binary => EmsBinary,ByteArrayBinary}
 import _root_.java.io.InputStream
-import _root_.scala.collection.jcl.Conversions._
+import scala.collection.JavaConversions._
 import no.java.submitit.common.Implicits._
 import no.java.submitit.common.{IOUtils, LoggHandling}
 import no.java.submitit.model._

@@ -64,9 +64,9 @@ class EditPage(val pres: Presentation, specialInvite: Boolean) extends LayoutPag
     addPropTA("outline", pres, "outline")
     addPropTA("equipment", pres, "equipment")
     addPropTA("expectedAudience", pres, "expectedAudience")
-    addPropRC("level", pres, "level", Level.elements.toList)
-    addPropRC("language", pres, "language", Language.elements.toList)
-    addPropRC("format", pres, "format", PresentationFormat.elements.toList)
+    addPropRC("level", pres, "level", Level.values.toList)
+    addPropRC("language", pres, "language", Language.values.toList)
+    addPropRC("format", pres, "format", PresentationFormat.values .toList)
     add(new panels.TagsPanel("tags", pres, true))
     
     if (!verified) add(captcha.image)

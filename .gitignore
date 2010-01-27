@@ -16,6 +16,8 @@ TAGS
 *.iml
 .idea/
 
+.scala_dependencies
+
 # SBT ingores
 project/boot/
 project/build/target/

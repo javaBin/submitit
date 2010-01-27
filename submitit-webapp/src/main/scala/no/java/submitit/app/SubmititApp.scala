@@ -67,7 +67,7 @@ class SubmititApp extends WebApplication with LoggHandling {
                                                                 SubmititApp.getSetting(emsUrl).get, 
                                                                 SubmititApp.getSetting(emsUser), SubmititApp.getSetting(emsPwd), 
                                                                 SubmititApp.getListSetting(commaSeparatedListOfTagsForNewSubmissions))
-    else submitit.common.BackendClientMock
+    else no.java.submitit.common.BackendClientMock
   }
 
   override def newWebRequest(servletRequest: HttpServletRequest) = new UploadWebRequest(servletRequest)

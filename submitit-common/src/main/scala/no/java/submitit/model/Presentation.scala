@@ -21,7 +21,7 @@ import Level._
 import _root_.java.io.Serializable
 import no.java.submitit.model._
 import scala.xml.NodeSeq
-import common.Implicits._
+import no.java.submitit.common.Implicits._
 
 class Presentation extends Serializable {
   

@@ -20,10 +20,11 @@ import org.apache.wicket.model._
 import no.java.submitit.app.pages.{LoginHandler, LayoutPage}
 import no.java.submitit.app.SubmititApp
 import no.java.submitit.app.pages.borders.ContentBorder
+import no.java.submitit.app.pages.panels.LoginPanel
 
 class AdminLogin extends LayoutPage {
 
-	contentBorder.add(new panels.LoginPanel("login", new LoginHandler {
+	contentBorder.add(new LoginPanel("login", new LoginHandler {
     def onLogin(pwd: String) {
       val authenticated = SubmititApp.authenticates(pwd)
       if (authenticated) {

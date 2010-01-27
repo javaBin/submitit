@@ -22,7 +22,7 @@ import org.apache.wicket.markup.html.list._
 import org.apache.wicket.markup.html.link._
 import no.java.submitit.common.Implicits._
 import no.java.submitit.model._
-import scala.collection.jcl.Conversions._
+import scala.collection.JavaConversions._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import _root_.java.io.Serializable
 import collection.mutable.LinkedHashMap

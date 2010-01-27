@@ -15,7 +15,7 @@
 
 package no.java.submitit.model
 
-import common.IOUtils._
+import no.java.submitit.common.IOUtils._
 import collection.mutable.ArrayBuffer
 import _root_.java.io._
 

@@ -18,8 +18,8 @@ package no.java.submitit.app.utils
 import _root_.java.util.Properties
 import _root_.java.io._
 import _root_.no.java.submitit.common.IOUtils
-import common.IOUtils._
-import DefaultConfigValues.ConfigKey
+import no.java.submitit.common.IOUtils._
+import no.java.submitit.app.DefaultConfigValues.ConfigKey
 
 object PropertyIOUtils {
 	

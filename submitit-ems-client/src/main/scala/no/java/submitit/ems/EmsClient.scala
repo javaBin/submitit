@@ -18,7 +18,7 @@ package no.java.submitit.ems
 import no.java.ems.client._
 import no.java.ems.domain.{Event,Session,Person,EmailAddress}
 import _root_.java.io.Serializable
-import _root_.scala.collection.jcl.Conversions._
+import scala.collection.JavaConversions._
 import no.java.submitit.common.Implicits._
 import no.java.submitit.common._
 import no.java.submitit.model._
