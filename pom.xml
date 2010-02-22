@@ -294,8 +294,8 @@
   </reporting>
 
   <scm>
-    <developerConnection>scm:git:git@github.com:javaBin/wicket-submitit.git</developerConnection>
-    <connection>scm:git:git://github.com/javaBin/wicket-submitit.git</connection>
+    <developerConnection>scm:git:git@github.com:javaBin/submitit.git</developerConnection>
+    <connection>scm:git:git://github.com/javaBin/submitit.git</connection>
   </scm>
 
   <profiles>
