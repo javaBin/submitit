@@ -179,7 +179,7 @@ class ReviewPage(val pres: Presentation, notAdminView: Boolean) extends LayoutPa
       
       if (speaker.picture.isDefined) {
         val picture = speaker.picture.get
-        item add (new Image("image", new ByteArrayResource(picture.contentType, null) {
+        item add (new NonCachingImage("image", new ByteArrayResource(picture.contentType, null) {
          override def getResourceStream: IResourceStream = new FileResourceStream(picture.getTmpFile)
         }))
       }
