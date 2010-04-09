@@ -84,9 +84,9 @@ class ConfirmPage(val pres: Presentation) extends LayoutPage with LoggHandling w
     pres.speakers.foreach(speaker => 
       msg.addRecipients(Message.RecipientType.TO, speaker.email)
     )
-    
+
     SubmititApp.getBccEmailList.foreach(msg.addRecipients(Message.RecipientType.BCC, _))
-    msg.setSubject("Confirmation " + subjectmessage + " your JavaZone 2010 submission \"" + pres.title + "\"")
+    msg.setSubject("Confirmation " + subjectmessage + " your " + SubmititApp.getSetting(eventName).get + " submission \"" + pres.title + "\"")
     msg.setSentDate(new Date)
     msg.setText("Thank you for " + greetmessage + " your presentation titled \"" + pres.title + "\".\n\n" +
                 "You can access the submitted presentation at " + url + "\n\n\n" +
