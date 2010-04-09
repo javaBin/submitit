@@ -13,17 +13,25 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
 
   override def parallelExecution = true
 
-  lazy val common = project("submitit-common", "Common", new DefaultProject(_){
+  trait OutPutPaths extends BasicScalaProject {
+
+	override def outputPath = "target"
+    override def mainCompilePath = outputPath / "classes"
+	override def testCompilePath = outputPath / "test-classes"
+
+  }
+
+  lazy val common = project("submitit-common", "Common", new DefaultProject(_) with OutPutPaths {
     val slf4j = "org.slf4j" % "slf4j-log4j12" % "1.4.2"
     val log4j = "log4j" % "log4j" % "1.2.14"
   })
   
-  lazy val ems = project("submitit-ems-client", "Ems Client", new DefaultProject(_){
+  lazy val ems = project("submitit-ems-client", "Ems Client", new DefaultProject(_) with OutPutPaths {
     val ems_client = "no.java.ems" % "ems-client" % ems_version
     val junit = "junit" % "junit" % "4.5" % "test"    	
   }, common)
   
-  lazy val ui = project("submitit-webapp", "WebApplication", new DefaultWebProject(_){
+  lazy val ui = project("submitit-webapp", "WebApplication", new DefaultWebProject(_) with OutPutPaths {
     system[File]("submitit.properties")() = "src" / "test" / "resources" / "submitit.properties" asFile
     override def mainResources = super.mainResources +++ descendents( mainSourceRoots, "*" ) --- mainSources
 	

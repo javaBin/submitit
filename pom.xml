@@ -22,7 +22,7 @@
   </parent>
   <groupId>no.java.submitit</groupId>
   <artifactId>wicket-submitit</artifactId>
-  <version>1.0.10-SNAPSHOT</version>
+  <version>1.0.11-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>wicket-submitit</name>
   <inceptionYear>2008</inceptionYear>
@@ -294,8 +294,8 @@
   </reporting>
 
   <scm>
-    <developerConnection>scm:git:git@github.com:javaBin/wicket-submitit.git</developerConnection>
-    <connection>scm:git:git://github.com/javaBin/wicket-submitit.git</connection>
+    <developerConnection>scm:git:git@github.com:javaBin/submitit.git</developerConnection>
+    <connection>scm:git:git://github.com/javaBin/submitit.git</connection>
   </scm>
 
   <profiles>
