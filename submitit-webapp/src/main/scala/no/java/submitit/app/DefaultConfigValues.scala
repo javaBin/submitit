@@ -84,9 +84,6 @@ object DefaultConfigValues {
 	case object smtpHost extends ConfigKey {
 	  val description = "Hostname of the smtp server. Should normally never be changed during operation. If emtpy no emails will be sent"
 	}
-	case object presentationAllowedExtendsionFileTypes extends ConfigKey {
-	  val description = "File extension types allowed for presentations, comma separated list"
-	}
 	case object showRoomWhenApprovedBoolean extends ConfigKey(booleanParse) {
 	  val description = "If room is set and presetation is approvoed setting this to true will show room in review page"
 	}
@@ -175,7 +172,6 @@ object DefaultConfigValues {
 		allowSlideUploadBoolen -> "false",
 		presentationUploadSizeInMBInt -> "30",
 		presentationUploadPdfSizeInMBInt -> "20",
-		presentationAllowedExtendsionFileTypes -> "pdf",
 		captchaLengthInt -> "1",
 		passPhraseSubmitSpecialURL -> "jz",
 		submitNotAllowedHtml -> "Call for papers is currently not open.",
