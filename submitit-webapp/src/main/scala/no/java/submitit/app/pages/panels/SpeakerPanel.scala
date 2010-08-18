@@ -103,7 +103,7 @@ class SpeakerPanel(val pres: Presentation, enclosingForm: Form[_]) extends Panel
         }
          add(new Label("extension", supportedImages.mkString(", ")))
       }
-      item.add(uploadForm);
+      speakersForm.add(uploadForm);
       
       item.add(new Label("fileName", if (speaker.picture.isDefined) speaker.picture.get.name else null) {
         override def isVisible = speaker.picture != null

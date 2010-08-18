@@ -22,7 +22,7 @@
 			<a href="#" wicket:id="remove" class="inlineLink">Remove this speaker</a>
 		</div>
 		<br>
-		<form wicket:id="speakersForm">
+		<div wicket:id="speakersForm">
 			<div wicket:id="modal"></div>
 			<div class="row">
 				<div class="titleText">
@@ -53,7 +53,7 @@
 				    <input wicket:id="email" type="text" class="inputField"/>
                 </div>
 			</div>
-		</form>
+
 		
 		<form wicket:id="simpleUpload">
 			<div class="row">
@@ -69,6 +69,8 @@
 				<input type="submit" value="Upload picture"/>
 	       	</div>
 	    </form>
+
+        </div>
 	    <wicket:enclosure child="fileName">
 	    	<div class="row-content">
 				<div class="uploadedFileText">
