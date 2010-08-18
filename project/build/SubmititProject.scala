@@ -9,7 +9,7 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
   val maven_restlet = "Public online Restlet repository" at "http://maven.restlet.org"
 
   val ems_version = "1.1"
-  val wicket_version = "1.3.7"
+  val wicket_version = "1.4.10"
   val junit_version = "4.5"
 
   override def parallelExecution = true

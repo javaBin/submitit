@@ -30,11 +30,11 @@ class LoginPanel(id: String, handler: LoginHandler) extends Panel(id) {
     
     override def isVersioned = false
 
-    val passModel = new Model
+    val passModel = new Model[String]
     add(new PasswordTextField("passPhrase", passModel))
     
     override def onSubmit {
-      handler.onLogin(passModel.getObject.asInstanceOf[String])
+      handler.onLogin(passModel.getObject)
     }
   })
   

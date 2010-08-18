@@ -22,7 +22,7 @@
 			<a href="#" wicket:id="remove" class="inlineLink">Remove this speaker</a>
 		</div>
 		<br>
-		<form wicket:id="speakersForm">
+		<div wicket:id="speakersForm">
 			<div wicket:id="modal"></div>
 			<div class="row">
 				<div class="titleText">
@@ -53,9 +53,9 @@
 				    <input wicket:id="email" type="text" class="inputField"/>
                 </div>
 			</div>
-		</form>
+
 		
-		<form wicket:id="simpleUpload"">
+		<form wicket:id="simpleUpload">
 			<div class="row">
 				<div class="titleText">
 		        	<label>Profile picture (max 500KB). Supported types:&nbsp;</label><label wicket:id="extension"></label>.
@@ -69,6 +69,8 @@
 				<input type="submit" value="Upload picture"/>
 	       	</div>
 	    </form>
+
+        </div>
 	    <wicket:enclosure child="fileName">
 	    	<div class="row-content">
 				<div class="uploadedFileText">
@@ -78,7 +80,6 @@
 	    	</div>
 	    </wicket:enclosure>
 	</fieldset>
-    <form wicket:id="newSpeakerForm"></form>
     <br>
     <div class="row-content">
 		<a href="#" wicket:id="newSpeaker" class="inlineLink">Add another speaker</a>
