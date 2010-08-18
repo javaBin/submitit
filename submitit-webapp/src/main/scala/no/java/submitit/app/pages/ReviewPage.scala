@@ -39,7 +39,6 @@ import no.java.submitit.common.LoggHandling
 
 class ReviewPage(val pres: Presentation, notAdminView: Boolean) extends LayoutPage with LoggHandling with UpdateSessionHandling {
   
-  val supportedExtensions = SubmititApp.getListSetting(presentationAllowedExtendsionFileTypes)
   val editAllowed = SubmititApp.boolSetting(globalEditAllowedBoolean) || (pres.status == Status.Approved && SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))
   
   private def show(shouldShow: Boolean) = notAdminView && shouldShow
@@ -117,9 +116,9 @@ class ReviewPage(val pres: Presentation, notAdminView: Boolean) extends LayoutPa
   })
   
   
-  contentBorder.add(createUploadForm("pdfForm", "uploadSlideText", "You must upload pdf for publishing online. Max file size is " + SubmititApp.intSetting(presentationUploadPdfSizeInMBInt) + " MB. Supported file types: "+ supportedExtensions.mkString(", "),
+  contentBorder.add(createUploadForm("pdfForm", "uploadSlideText", "You must upload pdf for publishing online. Max file size is " + SubmititApp.intSetting(presentationUploadPdfSizeInMBInt) + " MB.",
                        SubmititApp.intSetting(presentationUploadPdfSizeInMBInt),
-                       hasExtension(_, extensionRegex(supportedExtensions)),
+                       hasExtension(_, extensionRegex(List("pdf"))),
                        pres.pdfSlideset = _
   ))
   contentBorder.add(createUploadForm("slideForm", "uploadSlideText", "You can upload slides as backup for your presentation. This will be available for you at the venue. Max file size is " + SubmititApp.intSetting(presentationUploadSizeInMBInt) + " MB",
