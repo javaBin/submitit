@@ -43,10 +43,7 @@ class TagsPanel(id: String, presentation: Presentation, checksEnabled: Boolean) 
 
   val selection = SubmititApp.getListSetting(userSelectedKeywords, '|')
   val multipleCheckBox = new CheckBoxMultipleChoice("tagElement", new PropertyModel(presentationWrapper, "keywords"), selection) {
-    override def onComponentTag(tag: ComponentTag) {
-      super.onComponentTag(tag)
-      setEnabled(checksEnabled)
-    }
+    override def isEnabled = checksEnabled
   }
   
   multipleCheckBox.setPrefix("""<div class="tagsDivs">""")
