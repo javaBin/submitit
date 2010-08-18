@@ -47,7 +47,7 @@ class SubmititApp extends WebApplication with LoggHandling {
     for (i <- 0 to props.size() - 1) {
       val e = elems.nextElement.asInstanceOf[String]
       DefaultConfigValues getKey(e) match {
-        case Some(key) if theMap.contains(key) => theMap = theMap + (key -> stringToOption(props.getProperty(e).asInstanceOf[String]))
+        case Some(key) if theMap.contains(key) => theMap += (key -> stringToOption(props.getProperty(e).asInstanceOf[String]))
         case _ => logger.info("Removing property value no longer in use:  " + e)
       }
     }

@@ -30,7 +30,7 @@ object DefaultConfigValues {
   private[app] val intParse = (x: String) => x.toInt
   private[app] val defParse = (x: String) => x
   
-	sealed abstract case class ConfigKey(val parser: String => Any) {
+	sealed abstract class ConfigKey(val parser: String => Any) {
 	  
 	  def this() {this(defParse)}
    

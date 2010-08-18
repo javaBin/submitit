@@ -101,7 +101,7 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
           	key.parser(value)
           	e
           } catch {
-          	case ex => e + (key.toString -> ex.getMessage)
+          	case ex => e += (key.toString -> ex.getMessage)
           }
         }}
         

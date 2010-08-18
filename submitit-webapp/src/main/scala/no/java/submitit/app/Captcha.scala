@@ -19,12 +19,13 @@ import _root_.java.io.Serializable
 
 import org.apache.wicket.extensions.markup.html.captcha.CaptchaImageResource
 import org.apache.wicket.markup.html.image.Image
+import scala.math._
 import DefaultConfigValues._
 
 class Captcha extends Serializable {
 
   private def randomString() = {
-    def randomInt(min: Int, max: Int):Int = (Math.random * (max - min)).asInstanceOf[Int] + min
+    def randomInt(min: Int, max: Int):Int = (random * (max - min)).asInstanceOf[Int] + min
     
     val captchaLength = SubmititApp.intSetting(captchaLengthInt) - 1
     val res = for(i <- 0 to captchaLength) yield randomInt('a', 'z').asInstanceOf[Byte]
