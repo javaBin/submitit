@@ -26,7 +26,7 @@ import org.apache.wicket.ajax.form._
 import org.apache.wicket.markup.html.form._
 
 trait EasyForm extends org.apache.wicket.MarkupContainer  {
-  
+
   def requiredText = """\s*\S{2}""".r
   
   def required(value: String, errorMsg: String) {
@@ -37,24 +37,25 @@ trait EasyForm extends org.apache.wicket.MarkupContainer  {
     if(list == null || list.isEmpty) error(errorMsg)
   }
   
-  def addPropTF(id: String, any: Any, propertyName: String) {
-    add(new TextField(id,  pm(any, propertyName)))
+  def addPropTF[T](id: String, any: T, propertyName: String, visible: Boolean = true) {
+    val tf = new TextField(id,  pm(any, propertyName))
+    tf.setVisible(visible)
+    add(tf)
   }
   
-  def addPropTA(id: String, any: Any, propertyName: String) {
+  def addPropTA[T](id: String, any: T, propertyName: String) {
     add(new TextArea(id, pm(any, propertyName)))
   }
     
-  def addPropRC(id: String, any: Any, propertyName: String, choices: _root_.java.util.List[_]) {
-    add(new RadioChoice(id, pm(any, propertyName), choices))
+  def addPropRC[T](id: String, any: Any, propertyName: String, choices: _root_.java.util.List[T]) {
+    add(new RadioChoice[T](id, new PropertyModel[T](any, propertyName), choices))
   }
   
   def addPropLabel(id: String, any: Any, propertyName: String) {
     add(new Label(id, pm(any, propertyName)))
   }
   
-  private def pm(any: Any, propertyName: String) = new PropertyModel(any, propertyName)
-  
+  private def pm[T](any: T, propertyName: String) = new PropertyModel[T](any, propertyName)
   
   private var modalWindow: ModalWindow = _
   

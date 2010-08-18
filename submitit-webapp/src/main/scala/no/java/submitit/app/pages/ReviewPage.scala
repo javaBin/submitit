@@ -36,26 +36,25 @@ import org.apache.wicket.util.resource.{IResourceStream, FileResourceStream}
 import no.java.submitit.app.Functions._
 import no.java.submitit.app.{SubmititApp, State}
 import no.java.submitit.common.LoggHandling
+import org.apache.wicket.Page
 
 class ReviewPage(val pres: Presentation, notAdminView: Boolean) extends LayoutPage with LoggHandling with UpdateSessionHandling {
   
   val editAllowed = SubmititApp.boolSetting(globalEditAllowedBoolean) || (pres.status == Status.Approved && SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))
-  
+
+  private class PLink(id: String, f: => Page) extends Link[Page](id) {
+    override def onClick {
+      setResponsePage(f)
+    }
+  }
+
   private def show(shouldShow: Boolean) = notAdminView && shouldShow
 
-  private def submitLink(name: String) = new PageLink(name, new IPageLink {
-    def getPage = new ConfirmPage(pres)
-    def getPageIdentity = classOf[ConfirmPage]
-  }) {
-    // Add this message to to PageLink for proper nesting
+  private def submitLink(name: String) = new PLink(name, new ConfirmPage(pres)) {
     add(new Label("submitLinkMessage", if(pres.isNew) "Submit presentation" else "Submit updated presentation"))
   }
 
-
-  private def editLink(name: String) = new PageLink(name, new IPageLink {
-    def getPage = new EditPage(pres)
-    def getPageIdentity = classOf[EditPage]
-  })
+  private def editLink(name: String) = new PLink(name,new EditPage(pres))
 
   menuLinks = submitLink("submitLinkTop") ::
               submitLink("submitLinkBottom") ::
@@ -165,13 +164,13 @@ class ReviewPage(val pres: Presentation, notAdminView: Boolean) extends LayoutPa
   contentBorder.add(createFileLabel("slideName", pres.slideset))
   
   private def createFileLabel(id: String, binary: Option[Binary]) = new Label(id) {
-  	setModel(if (binary.isDefined) new Model(binary.get.name) else new Model(""))
+  	setDefaultModel(if (binary.isDefined) new Model(binary.get.name) else new Model(""))
   	override def isVisible = binary.isDefined
   }
   
   contentBorder.add(new ListView("speakers", pres.speakers.reverse) {
-    override def populateItem(item: ListItem) {
-      val speaker = item.getModelObject.asInstanceOf[Speaker]
+    override def populateItem(item: ListItem[Speaker]) {
+      val speaker = item.getModelObject
       item.add(new Label("name", speaker.name))
       item.add(new Label("email", speaker.email))
       item.add(new WikiMarkupText("bio", speaker.bio))

@@ -36,7 +36,7 @@ class HelpPopupPanel(resourceKey: String, id: String, supportsMarkup: Boolean) e
 
   val res = new Label("content")
   res.setEscapeModelStrings(false)
-  res.setModel(new Model(htmlContent))
+  res.setDefaultModel(new Model(htmlContent))
   
   add(res)
   

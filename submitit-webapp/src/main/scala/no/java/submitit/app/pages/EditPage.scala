@@ -52,7 +52,7 @@ class EditPage(val pres: Presentation, specialInvite: Boolean) extends LayoutPag
   def password = getRequest.getParameter("password");
 
   val form = new Form("inputForm") with EasyForm {
-    
+
     val verified = State().verifiedWithCaptha
     
     add(new FeedbackPanel("feedback"))
@@ -69,13 +69,11 @@ class EditPage(val pres: Presentation, specialInvite: Boolean) extends LayoutPag
     addPropRC("format", pres, "format", PresentationFormat.values .toList)
     add(new panels.TagsPanel("tags", pres, true))
     
-    if (!verified) add(captcha.image)
+    add(captcha.image)
     
     if (pres.testPresentation) captcha.password = captcha.imagePass
     
-    add(new TextField("password", new PropertyModel(captcha, "password")){
-      override def isVisible = !verified
-    })
+    addPropTF("password", captcha, "password", !verified)
     
     addHelpLink("outlineHelp", true)
     addHelpLink("expectedAudienceHelp", true)
@@ -96,7 +94,7 @@ class EditPage(val pres: Presentation, specialInvite: Boolean) extends LayoutPag
       }
     })
     
-    add(new panels.SpeakerPanel(pres))
+    add(new panels.SpeakerPanel(pres, this))
 
    def handleSubmit() {
     // Some form validation

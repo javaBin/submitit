@@ -71,16 +71,16 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
   })
   
   
-  def createForm(props: collection.Map[ConfigKey, Option[String]]): Form= {
+  def createForm(props: collection.Map[ConfigKey, Option[String]]): Form[_] = {
     new Form("propertyForm") {
       val filteredProps = props.filter{case(key, _) => key.visible}
       var list: List[Element] = Nil
 
       val listView = new ListView("props", filteredProps.toList) {
-        override def populateItem(item: ListItem) {
-          val (key, value) = item.getModelObject.asInstanceOf[(ConfigKey, Option[String])]
+        override def populateItem(item: ListItem[(ConfigKey, Option[String])]) {
+          val (key, value) = item.getModelObject
           val element = new Element(key.toString, value.getOrElse(""))
-          val field = new TextField("value", new PropertyModel(element, "value"))
+          val field = new TextField("value", new PropertyModel[Element](element, "value"))
           if(!key.editable) field.setEnabled(false)
 
           item.add(new Label("key", new PropertyModel(element, "key")))

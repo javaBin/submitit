@@ -28,31 +28,29 @@ import org.apache.wicket.ajax.form._
 import org.apache.wicket.markup.html.form._
 import org.apache.wicket.markup.html.list._
 import org.apache.wicket.model._
+import org.apache.wicket.MarkupContainer
 import no.java.submitit.model._
 import no.java.submitit.common.Implicits._
 import no.java.submitit.app.Functions._
 import no.java.submitit.app.pages.{FileUploadForm, EasyForm}
 import no.java.submitit.app.State
 
-class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
+class SpeakerPanel(val pres: Presentation, enclosingForm: Form[_]) extends Panel("speakers") {
   
   val supportedExtensions = List("jpg", "jpeg", "png", "gif")
-  def extensionRegex = ("""(?i)\.""" + supportedExtensions.mkString("(?:", "|", ")") + "$").r 
-  
+  def extensionRegex = ("""(?i)\.""" + supportedExtensions.mkString("(?:", "|", ")") + "$").r
 
-  def model = new IModel {
-    def getObject():_root_.java.util.List[_] = pres.speakers.reverse
-    def setObject(obj: Object) {}
-    def detach() {}
+  def model = {
+    type T = _root_.java.util.List[Speaker]
+    new IModel[T] {
+      def getObject(): T = pres.speakers.reverse
+      def setObject(obj: T) {}
+      def detach() {}
+    }
   }
 
-  val newSpeakerForm = new Form("newSpeakerForm")
-  newSpeakerForm.setOutputMarkupId(true)
-  add(newSpeakerForm)
-
-  
-  add(new AjaxSubmitLink("newSpeaker", newSpeakerForm) {
-    override def onSubmit(target: AjaxRequestTarget, form: Form) {
+  add(new AjaxSubmitLink("newSpeaker", enclosingForm) {
+    override def onSubmit(target: AjaxRequestTarget, form: Form[_]) {
       pres.addSpeaker()
       target.addComponent(SpeakerPanel.this)
       target.appendJavascript("new Effect.Highlight($('" + SpeakerPanel.this.getMarkupId() + "'));");
@@ -62,23 +60,23 @@ class SpeakerPanel(val pres: Presentation) extends Panel("speakers") {
 
   
   val speakersList = new ListView("speakerList", model) {
-    override def populateItem(item: ListItem) {
-      val speakersForm = new Form("speakersForm") with EasyForm
+    override def populateItem(item: ListItem[Speaker]) {
+      val speakersForm = new MarkupContainer("speakersForm") with EasyForm
       speakersForm.setOutputMarkupId(true)
       item.setOutputMarkupId(true)
       item.add(speakersForm)
       
-      val speaker = item.getModelObject.asInstanceOf[Speaker]
-      speakersForm.add(new TextField("speakerName", new PropertyModel(speaker, "name")))
+      val speaker = item.getModelObject
+      speakersForm.add(new TextField("speakerName", new PropertyModel[Speaker](speaker, "name")))
       
-      val email = new TextField("email", new PropertyModel(speaker, "email"))
+      val email = new TextField("email", new PropertyModel[Speaker](speaker, "email"))
       
       speakersForm.add(email)
       speakersForm.addPropTA("bio", speaker, "bio")
       speakersForm.addHelpLink("speakersProfileHelp", true)
       
-      item.add(new AjaxSubmitLink("remove", speakersForm) {
-        override def onSubmit(target: AjaxRequestTarget, form: Form) {
+      item.add(new AjaxSubmitLink("remove", enclosingForm) {
+        override def onSubmit(target: AjaxRequestTarget, form: Form[_]) {
           pres.removeSpeaker(speaker) 
           target.addComponent(item)
           target.appendJavascript("new Effect.Fade($('" + item.getMarkupId() + "'));");
