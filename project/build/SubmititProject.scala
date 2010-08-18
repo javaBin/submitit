@@ -1,5 +1,6 @@
 import sbt._
-import java.io.File
+import java.io.File       
+import sbt.BasicScalaProject._
 
 class SubmititProject(info: ProjectInfo) extends ParentProject(info){
   
@@ -13,11 +14,18 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
 
   override def parallelExecution = true
 
+  override def disableCrossPaths = true
+
   trait OutPutPaths extends BasicScalaProject {
 
 	override def outputPath = "target"
     override def mainCompilePath = outputPath / "classes"
 	override def testCompilePath = outputPath / "test-classes"
+	override val mainResourcesOutputPath = "target" / "classes"
+    override val testResourcesOutputPath = "target" / "test-classes"
+
+    protected override def copyResourcesAction = copyTask(mainResources, mainResourcesOutputPath) describedAs CopyResourcesDescription
+    protected override def copyTestResourcesAction = copyTask(testResources, testResourcesOutputPath) describedAs CopyTestResourcesDescription
 
   }
 
