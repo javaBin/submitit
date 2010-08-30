@@ -77,11 +77,11 @@ class ReviewPage(val pres: Presentation, notAdminView: Boolean) extends LayoutPa
 
   contentBorder.add(new FeedbackPanel("systemFeedback"))
   
-  contentBorder.add(new HiddenField("showRoom") {
+  contentBorder.add(new HiddenField("showRoom", new Model("")) {
   	override def isVisible = SubmititApp.boolSetting(showRoomWhenApprovedBoolean) && pres.status == Status.Approved && pres.room != null
   })
   
-  contentBorder.add(new HiddenField("showTimeslot") {
+  contentBorder.add(new HiddenField("showTimeslot", new Model("")) {
   	override def isVisible = SubmititApp.boolSetting(showTimeslotWhenApprovedBoolean) && pres.status == Status.Approved && pres.timeslot != null
   })
   
@@ -120,7 +120,7 @@ class ReviewPage(val pres: Presentation, notAdminView: Boolean) extends LayoutPa
                        hasExtension(_, extensionRegex(List("pdf"))),
                        pres.pdfSlideset = _
   ))
-  contentBorder.add(createUploadForm("slideForm", "uploadSlideText", "You can upload slides as backup for your presentation. This will be available for you at the venue. Max file size is " + SubmititApp.intSetting(presentationUploadSizeInMBInt) + " MB",
+  contentBorder.add(createUploadForm("slideForm", "uploadSlideText", "You can upload slides as backup for your presentation. This will be available for you at the venue. Max file size is " + SubmititApp.intSetting(presentationUploadSizeInMBInt) + " MB.",
                        SubmititApp.intSetting(presentationUploadSizeInMBInt),
                        hasntExtension(_, extensionRegex(List("pdf"))),
                        pres.slideset = _
