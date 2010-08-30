@@ -55,76 +55,73 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
         bio = "Quack quack"
       }
     	speakers = speaker :: Nil
-    	setResponsePage(new ReviewPage(this, true))
     }
     State().currentPresentation = p
+    setResponsePage(new ReviewPage(p, true))
   }
   
-  contentBorder.add(new Link("approvedLink") {
-  	def onClick{whenClicked(Status.Approved)}
-  })
-  contentBorder.add(new Link("pendingLink") {
-  	def onClick{whenClicked(Status.Pending)}
-  })
-  contentBorder.add(new Link("rejectedLink") {
-  	def onClick{whenClicked(Status.NotApproved)}
-  })
-  
-  
-  def createForm(props: collection.Map[ConfigKey, Option[String]]): Form[_] = {
-    new Form("propertyForm") {
-      val filteredProps = props.filter{case(key, _) => key.visible}
-      var list: List[Element] = Nil
 
-      val listView = new ListView("props", filteredProps.toList) {
-        override def populateItem(item: ListItem[(ConfigKey, Option[String])]) {
-          val (key, value) = item.getModelObject
-          val element = new Element(key.toString, value.getOrElse(""))
-          val field = new TextField("value", new PropertyModel[Element](element, "value"))
-          if(!key.editable) field.setEnabled(false)
+  val form =  new Form("propertyForm") {
+    val filteredProps = SubmititApp.props.filter{case(key, _) => key.visible}
+    var list: List[Element] = Nil
 
-          item.add(new Label("key", new PropertyModel(element, "key")))
-          item.add(new Label("description", new Model(key.description)))
-          item.add(field)
-          
-          list = element :: list
-        }
-      }
-      add(listView)
-    
-      override def onSubmit {
-        val newValues: Map[ConfigKey, String] = list.foldLeft(Map[ConfigKey, String]())((m, elem) => m + (DefaultConfigValues.key(elem.key) -> elem.value))
-        
-        val errors = newValues.foldLeft(LinkedHashMap[String, String]()){
-          case (e, (key, value)) => { 
-          try {
-          	key.parser(value)
-          	e
-          } catch {
-          	case ex => e += (key.toString -> ex.getMessage)
-          }
-        }}
-        
-      val parsed: Map[ConfigKey, Option[String]] = list.foldLeft(Map[ConfigKey, Option[String]]())((m, elem) => m + (DefaultConfigValues.key(elem.key) -> stringToOption(elem.value)))
-      // Must use this strange thing to make the new Map. Hopefully 2.8 with more consistent collections will fix this
-      val newProps: collection.Map[ConfigKey, Option[String]] = new LinkedHashMap[ConfigKey, Option[String]]() ++ props ++ parsed
+    val listView = new ListView("props", filteredProps.toList) {
+      override def populateItem(item: ListItem[(ConfigKey, Option[String])]) {
+        val (key, value) = item.getModelObject
+        val element = new Element(key.toString, value.getOrElse(""))
+        val field = new TextField("value", new PropertyModel[Element](element, "value"))
+        if(!key.editable) field.setEnabled(false)
 
-      if(errors.isEmpty) {
-        	SubmititApp.props = newProps
-        	info("Updated and stored new properties")
-         }
-        else {
-          errors.foreach { el =>
-          	error(el._1 + " gave parse errors " + el._2)
-          }
-        }
-        
-      	PropertyModificationPage.this.contentBorder.replace(createForm(newProps))
+        item.add(new Label("key", new PropertyModel(element, "key")))
+        item.add(new Label("description", new Model(key.description)))
+        item.add(field)
+
+        list = element :: list
       }
     }
+    add(listView)
+
+    override def onSubmit {
+      val newValues: Map[ConfigKey, String] = list.foldLeft(Map[ConfigKey, String]())((m, elem) => m + (DefaultConfigValues.key(elem.key) -> elem.value))
+
+      val errors = newValues.foldLeft(Map[String, String]()){
+        case (e, (key, value)) => {
+        try {
+          key.parser(value)
+          e
+        } catch {
+          case ex => e + (key.toString -> ex.getMessage)
+        }
+      }}
+
+      val parsed: Map[ConfigKey, Option[String]] = list.foldLeft(Map[ConfigKey, Option[String]]())((m, elem) => m + (DefaultConfigValues.key(elem.key) -> stringToOption(elem.value)))
+
+      val newProps: collection.Map[ConfigKey, Option[String]] = SubmititApp.props ++ parsed
+
+      if(errors.isEmpty) {
+        SubmititApp.props = newProps
+        info("Updated and stored new properties")
+      }
+      else {
+        errors.foreach { el =>
+          error(el._1 + " gave parse errors " + el._2)
+        }
+      }
+      setResponsePage(new PropertyModificationPage(true))
+    }
   }
+
+  contentBorder.add(new Link("approvedLink") {
+	def onClick{whenClicked(Status.Approved)}
+  })
+  contentBorder.add(new Link("pendingLink") {
+	def onClick{whenClicked(Status.Pending)}
+  })
+  contentBorder.add(new Link("rejectedLink") {
+	def onClick{whenClicked(Status.NotApproved)}
+  })
   
-  contentBorder.add(createForm(SubmititApp.props))
+  contentBorder.add(form)
   contentBorder.add(new FeedbackPanel("feedback"))
   
 }

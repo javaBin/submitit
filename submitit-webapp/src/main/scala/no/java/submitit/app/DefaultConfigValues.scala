@@ -30,9 +30,9 @@ object DefaultConfigValues {
   private[app] val intParse = (x: String) => x.toInt
   private[app] val defParse = (x: String) => x
   
-	sealed abstract class ConfigKey(val parser: String => Any) {
+	sealed abstract class ConfigKey {
 	  
-	  def this() {this(defParse)}
+    val parser: String => Any = defParse
    
 	  configKeyList = this :: configKeyList
    
@@ -40,15 +40,25 @@ object DefaultConfigValues {
     val editable = true
     val visible = true
     val mandatoryInFile = false
+
+    override def equals(other: Any) = other match {
+      case o: AnyRef => this.getClass.equals(o.getClass)
+      case _ => false
+    }
+    override def hashCode = this.getClass.hashCode
+
 	}
  
-	case object showFeedbackBoolean extends ConfigKey(booleanParse) {
+	case object showFeedbackBoolean extends ConfigKey {
+    override val parser = booleanParse
 	  val description = "Toggle viewing feedback. Regardless of submission status."
 	}
-	case object showSpecialMessageOnRejectBoolean extends ConfigKey(booleanParse) {
+	case object showSpecialMessageOnRejectBoolean extends ConfigKey{
+    override val parser = booleanParse
 	  val description = "Toggle vieing global feedback on rejected presentations. Text defined in " + feedbackRejected + ". Will be 'overriden' if individual presentation has feedback and " + allowIndidualFeedbackOnRejectBoolean + " is true"
 	}
-	case object showActualStatusInReviewPageBoolean extends ConfigKey(booleanParse) {
+	case object showActualStatusInReviewPageBoolean extends ConfigKey {
+    override val parser = booleanParse
 	  val description = "Hides the status if set to false and will always show pending. Convenient so actual status may be set in EMS"
 	}
 	case object passPhraseSubmitSpecialURL extends ConfigKey {
@@ -57,7 +67,8 @@ object DefaultConfigValues {
 	case object captchaLengthInt extends ConfigKey {
 	  val description = "The length of the captha, will always be minimum 1"
 	}
-	case object allowSlideUploadBoolen extends ConfigKey(booleanParse) {
+	case object allowSlideUploadBoolen extends ConfigKey {
+    override val parser = booleanParse
 	  val description = "Toggle slide upload. Only available for presentations that are approved."
 	}
 	case object eventName extends ConfigKey {
@@ -65,32 +76,39 @@ object DefaultConfigValues {
 	  override val editable = false
 	  override val mandatoryInFile = true
 	}
-	case object submititBaseUrl extends ConfigKey(notNullParse) {
+	case object submititBaseUrl extends ConfigKey {
+    override val parser = notNullParse
 	  val description = "This URL is used in the confirmation URL. Should point to base URL without path. Should not be changed during operation."
 	  override val editable = false
 	}
-	case object presentationUploadSizeInMBInt extends ConfigKey(intParse) {
+	case object presentationUploadSizeInMBInt extends ConfigKey {
+    override val parser = intParse
 	  val description = "Max size for uploading slides in MB"
 	}
-	case object presentationUploadPdfSizeInMBInt extends ConfigKey(intParse) {
+	case object presentationUploadPdfSizeInMBInt extends ConfigKey {
+    override val parser = intParse
 		val description = "Max size for pdf slides for publishing in MB"
 	}
-	case object officialEmailReplyTo extends ConfigKey(notNullParse) {
+	case object officialEmailReplyTo extends ConfigKey {
+    override val parser = notNullParse
 	  val description = "Email which is viewed in several pages for contacting the programme committee"
 	}
-	case object allowIndidualFeedbackOnRejectBoolean extends ConfigKey(booleanParse) {
+	case object allowIndidualFeedbackOnRejectBoolean extends ConfigKey {
+    override val parser = booleanParse
 	  val description = "If true individual feedback fields will be shown for rejected submissions, but only if feedback on the presentation is defined"
 	}
 	case object smtpHost extends ConfigKey {
 	  val description = "Hostname of the smtp server. Should normally never be changed during operation. If emtpy no emails will be sent"
 	}
-	case object showRoomWhenApprovedBoolean extends ConfigKey(booleanParse) {
+	case object showRoomWhenApprovedBoolean extends ConfigKey {
+    override val parser = booleanParse
 	  val description = "If room is set and presetation is approvoed setting this to true will show room in review page"
 	}
 	case object emailBccCommaSeparatedList extends ConfigKey {
 	  val description = "Comma separated list of emails to bcc to for confirmation emails"
 	}
-	case object submitAllowedBoolean extends ConfigKey(booleanParse) {
+	case object submitAllowedBoolean extends ConfigKey {
+    override val parser = booleanParse
 	  val description = "Allows new submissions when true"
 	}
 	case object editPageInfoTextHtml extends ConfigKey {
@@ -99,7 +117,8 @@ object DefaultConfigValues {
 	case object reviewPageViewSubmittedChangeAllowedHthml extends ConfigKey {
 	  val description = "Shows information text in review page when it is allowed to change the submission. Allows HTML"
 	}
-	case object globalEditAllowedBoolean extends ConfigKey(booleanParse) {
+	case object globalEditAllowedBoolean extends ConfigKey {
+    override val parser = booleanParse
 	  val description = "If true, allows editing of already submitted submissions"
 	}
 	case object feedbackRejected extends ConfigKey {
@@ -108,7 +127,8 @@ object DefaultConfigValues {
 	case object userSelectedKeywords extends ConfigKey {
 	  val description = "Bar '|' separted list of tags/keywords the user may select"
 	}
-	case object showTimeslotWhenApprovedBoolean extends ConfigKey(booleanParse) {
+	case object showTimeslotWhenApprovedBoolean extends ConfigKey {
+    override val parser = booleanParse
 	  val description = "If room is set and presetation is approvoed setting this to true will show time slot in review page"
 	}
 	case object reviewPageViewSubmittedHthml extends ConfigKey {
@@ -117,17 +137,20 @@ object DefaultConfigValues {
 	case object reviewPageBeforeSubmitHtml extends ConfigKey {
 	  val description = "Shows the information text for a presentation that has not yet been submitted. Allows HTML"
 	}
-	case object headerText extends ConfigKey(notNullParse) {
+	case object headerText extends ConfigKey {
+    override val parser = notNullParse
 	  val description = "Global text in header."
 	}
-  case object headerLogoText extends ConfigKey(notNullParse) {
+  case object headerLogoText extends ConfigKey {
+    override val parser = notNullParse
 	  val description = "Shown as first part of logo in header. This should be the name of the conference."
     override val editable = false
 	}
 	case object submitNotAllowedHtml extends ConfigKey {
 	  val description = "Message shown when user tries to access SubmitIT to send in a new submission."
 	}
-	case object globalEditAllowedForAcceptedBoolean extends ConfigKey(booleanParse) {
+	case object globalEditAllowedForAcceptedBoolean extends ConfigKey {
+    override val parser = booleanParse
 	  val description = "If true allows accepted submissions to be edited."
 	}
 	case object commaSeparatedListOfTagsForNewSubmissions extends ConfigKey {
