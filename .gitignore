@@ -1,9 +1,28 @@
-*.iml
+database/
+*.class
+target
+.classpath
+.project
+.manager
+*~
+build.xml
+manifest.mf
+nbproject
+reports
+catalog.xml
+TAGS
+.settings
 *.iws
 *.ipr
-database/
-lib_managed/
-project/boot
-project/build/target
-target/
+*.iml
+.idea/
 
+.scala_dependencies
+
+# SBT ingores
+project/boot/
+project/build/target/
+project/plugins/target/
+project/plugins/lib_managed/
+project/plugins/src_managed/
+lib_managed/
