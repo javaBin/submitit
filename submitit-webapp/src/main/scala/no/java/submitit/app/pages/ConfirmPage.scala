@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletRequest
 import javax.mail.{Message,Session,Transport}
 import javax.mail.internet.MimeMessage
 import org.apache.wicket.markup.html.form.HiddenField
-import no.java.submitit.app.DefaultConfigValues._
 import no.java.submitit.app.{SubmititApp, State}
+import no.java.submitit.config.Values._
 
 class ConfirmPage(val pres: Presentation) extends LayoutPage with LoggHandling with UpdateSessionHandling {
 

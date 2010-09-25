@@ -20,7 +20,7 @@ import _root_.java.io.Serializable
 import org.apache.wicket.extensions.markup.html.captcha.CaptchaImageResource
 import org.apache.wicket.markup.html.image.Image
 import scala.math._
-import DefaultConfigValues._
+import no.java.submitit.config.Values._
 
 class Captcha extends Serializable {
 

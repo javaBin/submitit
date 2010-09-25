@@ -13,11 +13,6 @@ object Functions extends LoggHandling {
   val supportedImageExtensions: util.matching.Regex = extensionRegex(supportedImages)
   
   def extensionRegex(ext: List[String]) = if(ext != Nil) ("""(?i)\.""" + ext.mkString("(?:", "|", ")") + "$").r else "".r 
-
-	def stringToOption(x: String) = x match {
-  	case s if s != null && s.trim != "" => Some(s.trim) 
-    case _ => None
-  }
  
 	def getFileContents(file: org.apache.wicket.markup.html.form.upload.FileUpload) = {
 	  if(file != null) {

@@ -27,6 +27,7 @@ import _root_.java.io.Serializable
 import no.java.submitit.app.DefaultConfigValues._
 import no.java.submitit.app.SubmititApp
 import scala.collection.JavaConversions._
+import no.java.submitit.config.Values._
 
 class TagsPanel(id: String, presentation: Presentation, checksEnabled: Boolean) extends Panel(id) {
   

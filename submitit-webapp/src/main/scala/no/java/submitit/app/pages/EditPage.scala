@@ -32,9 +32,9 @@ import org.apache.wicket.extensions.ajax.markup.html.modal._
 import org.apache.wicket.markup.html.link._
 import no.java.submitit.app._
 import no.java.submitit.common.Implicits._
-import DefaultConfigValues._
 import org.apache.wicket.{Component, AttributeModifier, PageParameters}
 import org.apache.wicket.behavior.SimpleAttributeModifier
+import no.java.submitit.config.Values._
 
 class EditPage(val pres: Presentation, specialInvite: Boolean) extends LayoutPage with UpdateSessionHandling {
   

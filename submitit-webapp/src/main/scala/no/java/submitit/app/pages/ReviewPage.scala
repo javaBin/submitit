@@ -30,13 +30,13 @@ import no.java.submitit.common.Implicits._
 import org.apache.wicket.markup.html.panel.FeedbackPanel
 import org.apache.wicket.markup.html.form.Form
 import org.apache.wicket.markup.html.panel.FeedbackPanel
-import no.java.submitit.app.DefaultConfigValues._
 import org.apache.wicket.extensions.ajax.markup.html.form.upload.UploadProgressBar
 import org.apache.wicket.util.resource.{IResourceStream, FileResourceStream}
 import no.java.submitit.app.Functions._
 import no.java.submitit.app.{SubmititApp, State}
 import no.java.submitit.common.LoggHandling
 import org.apache.wicket.Page
+import no.java.submitit.config.Values._
 
 class ReviewPage(val pres: Presentation, notAdminView: Boolean) extends LayoutPage with LoggHandling with UpdateSessionHandling {
   

@@ -28,9 +28,11 @@ import _root_.java.io.Serializable
 import collection.mutable.LinkedHashMap
 import no.java.submitit.app.pages.{ReviewPage, LayoutPage}
 import no.java.submitit.app.{SubmititApp, State, DefaultConfigValues}
-import no.java.submitit.app.DefaultConfigValues.ConfigKey
 import no.java.submitit.app.Functions._
 import no.java.submitit.app.pages.borders.ContentBorder
+import no.java.submitit.config.Values.toOption
+import no.java.submitit.config.Values._
+import no.java.submitit.config.ConfigKey
 
 class PropertyModificationPage(it: Boolean) extends LayoutPage {
   
@@ -94,7 +96,7 @@ class PropertyModificationPage(it: Boolean) extends LayoutPage {
         }
       }}
 
-      val parsed: Map[ConfigKey, Option[String]] = list.foldLeft(Map[ConfigKey, Option[String]]())((m, elem) => m + (DefaultConfigValues.key(elem.key) -> stringToOption(elem.value)))
+      val parsed: Map[ConfigKey, Option[String]] = list.foldLeft(Map[ConfigKey, Option[String]]())((m, elem) => m + (DefaultConfigValues.key(elem.key) -> toOption(elem.value)))
 
       val newProps: collection.Map[ConfigKey, Option[String]] = SubmititApp.props ++ parsed
 
