@@ -16,8 +16,8 @@
 package no.java.submitit.app.pages
 
 import org.apache.wicket.markup.html.basic._
-import no.java.submitit.app.DefaultConfigValues._
 import no.java.submitit.app.{State, SubmititApp}
+import no.java.submitit.config.Values._
 
 class StartPage extends LayoutPage {
   

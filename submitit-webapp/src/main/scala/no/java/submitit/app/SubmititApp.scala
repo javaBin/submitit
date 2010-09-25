@@ -29,8 +29,10 @@ import org.apache.wicket.Session
 import _root_.java.util.Properties
 import org.apache.wicket.Application._
 import org.apache.wicket.settings.IExceptionSettings
-import DefaultConfigValues._
 import Functions._
+import no.java.submitit.app.DefaultConfigValues._
+import no.java.submitit.config.Values._
+import no.java.submitit.config.{Values, ConfigKey}
 
 class SubmititApp extends WebApplication with LoggHandling {
 
@@ -40,14 +42,14 @@ class SubmititApp extends WebApplication with LoggHandling {
     val props = utils.PropertyIOUtils.loadRessource(SubmititApp.propertyFileName)
 
     val elems = props.keys
-    var theMap = DefaultConfigValues.configValues
+    var theMap = DefaultConfigValues.values
 
-    DefaultConfigValues.configKeyList.filter(_.mandatoryInFile).foreach(e => if(!props.containsKey(e.toString)) throw new Exception("You must specify " + e + " in property file"))
+    DefaultConfigValues.keys.filter(_.mandatoryInFile).foreach(e => if(!props.containsKey(e.toString)) throw new Exception("You must specify " + e + " in property file"))
 
     for (i <- 0 to props.size() - 1) {
       val e = elems.nextElement.asInstanceOf[String]
       DefaultConfigValues getKey(e) match {
-        case Some(key) if theMap.contains(key) => theMap += (key -> stringToOption(props.getProperty(e).asInstanceOf[String]))
+        case Some(key) if theMap.contains(key) => theMap += (key -> Values.toOption(props.getProperty(e).asInstanceOf[String]))
         case _ => logger.info("Removing property value no longer in use:  " + e)
       }
     }
@@ -120,9 +122,9 @@ object SubmititApp {
     getSetting(officialEmailReplyTo).get
   }
   
-  def intSetting(key: ConfigKey) = DefaultConfigValues.intParse(getSetting(key).get)
+  def intSetting(key: ConfigKey) = intParse(getSetting(key).get)
   
-  def boolSetting(key: ConfigKey) = DefaultConfigValues.booleanParse(getSetting(key).get)
+  def boolSetting(key: ConfigKey) = booleanParse(getSetting(key).get)
   
   def getListSetting(key: ConfigKey, separator: Char) = getSetting(key) match {
     case Some(s) => s.split(separator).toList.map(_.trim)
