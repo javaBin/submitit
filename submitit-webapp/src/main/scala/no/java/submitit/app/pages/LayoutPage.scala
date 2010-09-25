@@ -21,7 +21,7 @@ import org.apache.wicket.markup.html.basic.Label
 import no.java.submitit.app.DefaultConfigValues._
 import no.java.submitit.app.SubmititApp
 import org.apache.wicket.markup.html.link.AbstractLink
-import no.java.submitit.config.Values._
+import no.java.submitit.config.Keys._
 
 abstract class LayoutPage extends WebPage {
 

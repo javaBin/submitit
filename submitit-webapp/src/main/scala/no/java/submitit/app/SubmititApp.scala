@@ -31,8 +31,8 @@ import org.apache.wicket.Application._
 import org.apache.wicket.settings.IExceptionSettings
 import Functions._
 import no.java.submitit.app.DefaultConfigValues._
-import no.java.submitit.config.Values._
-import no.java.submitit.config.{Values, ConfigKey}
+import no.java.submitit.config.Keys._
+import no.java.submitit.config.{Keys, ConfigKey}
 
 class SubmititApp extends WebApplication with LoggHandling {
 
@@ -49,7 +49,7 @@ class SubmititApp extends WebApplication with LoggHandling {
     for (i <- 0 to props.size() - 1) {
       val e = elems.nextElement.asInstanceOf[String]
       DefaultConfigValues getKey(e) match {
-        case Some(key) if theMap.contains(key) => theMap += (key -> Values.toOption(props.getProperty(e).asInstanceOf[String]))
+        case Some(key) if theMap.contains(key) => theMap += (key -> Keys.toOption(props.getProperty(e).asInstanceOf[String]))
         case _ => logger.info("Removing property value no longer in use:  " + e)
       }
     }

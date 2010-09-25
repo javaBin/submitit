@@ -23,7 +23,7 @@ import no.java.submitit.model._
 import DefaultConfigValues._
 import _root_.java.io.File
 import Functions._
-import no.java.submitit.config.Values._
+import no.java.submitit.config.Keys._
 
 class State(request: Request, val backendClient: BackendClient) extends WebSession(request) with LoggHandling {
   

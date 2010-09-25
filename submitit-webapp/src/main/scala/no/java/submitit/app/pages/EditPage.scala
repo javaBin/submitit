@@ -34,7 +34,7 @@ import no.java.submitit.app._
 import no.java.submitit.common.Implicits._
 import org.apache.wicket.{Component, AttributeModifier, PageParameters}
 import org.apache.wicket.behavior.SimpleAttributeModifier
-import no.java.submitit.config.Values._
+import no.java.submitit.config.Keys._
 
 class EditPage(val pres: Presentation, specialInvite: Boolean) extends LayoutPage with UpdateSessionHandling {
   
