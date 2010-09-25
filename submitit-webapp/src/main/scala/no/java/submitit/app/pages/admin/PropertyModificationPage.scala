@@ -30,8 +30,8 @@ import no.java.submitit.app.pages.{ReviewPage, LayoutPage}
 import no.java.submitit.app.{SubmititApp, State, DefaultConfigValues}
 import no.java.submitit.app.Functions._
 import no.java.submitit.app.pages.borders.ContentBorder
-import no.java.submitit.config.Values.toOption
-import no.java.submitit.config.Values._
+import no.java.submitit.config.Keys.toOption
+import no.java.submitit.config.Keys._
 import no.java.submitit.config.ConfigKey
 
 class PropertyModificationPage(it: Boolean) extends LayoutPage {

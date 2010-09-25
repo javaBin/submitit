@@ -17,7 +17,7 @@ package no.java.submitit.config
 
 sealed abstract class ConfigKey {
 
-  val parser: String => Any = Values.defParse
+  val parser: String => Any = Keys.defParse
 
   val description: String
   val editable = true
@@ -32,7 +32,7 @@ sealed abstract class ConfigKey {
 
 }
 
-object Values {
+object Keys {
 
   def toOption(x: String) = x match {
     case s if s != null && s.trim != "" => Some(s.trim)
@@ -185,39 +185,39 @@ trait ConfigValues {
   implicit def stringToSome(v: String) = Some(v)
 
   protected val configValues = collection.mutable.LinkedHashMap[ConfigKey, Option[String]](
-    Values.eventName -> "JavaZone 2010",
-    Values.headerLogoText -> "JavaZone 2010",
-  	Values.headerText -> "Submit your JavaZone 2010 presentation",
-  	Values.submitAllowedBoolean -> "true",
-		Values.showFeedbackBoolean -> "false",
-		Values.showSpecialMessageOnRejectBoolean -> "false",
-		Values.showActualStatusInReviewPageBoolean -> "false",
-		Values.allowIndidualFeedbackOnRejectBoolean -> "false",
-		Values.globalEditAllowedForAcceptedBoolean -> "true",
-		Values.globalEditAllowedBoolean -> "true",
-		Values.showRoomWhenApprovedBoolean -> "false",
-		Values.showTimeslotWhenApprovedBoolean -> "false",
-		Values.allowSlideUploadBoolen -> "false",
-		Values.presentationUploadSizeInMBInt -> "30",
-		Values.presentationUploadPdfSizeInMBInt -> "20",
-		Values.captchaLengthInt -> "1",
-		Values.passPhraseSubmitSpecialURL -> "jz",
-		Values.submitNotAllowedHtml -> "Call for papers is currently not open.",
-		Values.editPageInfoTextHtml -> """<ul><li>Click the "Help", or press the question mark at each field for information about what to enter.</li><li>Before you submit your presentation you have to review it by pressing "Review presentation".</li><li>The session timeout is 2 hours. Wondering what <a style="font-weight:normal;" target="_blank" href="http://www.juniper.net/techpubs/software/management/sdx/sdx50x/sw-sdx-sw-basics/html/web-app-installing4.html" style="font-weight: normal;">session timeout is?</a></li></ul></li></ul>""",
-		Values.reviewPageViewSubmittedChangeAllowedHthml -> """You can still change the contents of your submission. You may edit by pressing the "Edit presentation".<br>If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a><br>""",
-		Values.feedbackRejected -> "The high quality of all the submissions this year has made the selection process very difficult, and unfortunately we cannot accept all talks. We actually had almost 250 submissions, and we only have 90 slots. We regret to inform you that we are unable to accept your proposal. We hope however that you will keep up the good effort and submit proposals next year as well!",
-		Values.userSelectedKeywords -> "alternative languages|concurrency / scalability|enterprise|core / jvm|web / frontend|methodology|testing|experience report",
-		Values.reviewPageViewSubmittedHthml -> """If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a>""",
-		Values.reviewPageBeforeSubmitHtml -> """Your presentation has not yet been submittet. Please review, and press "Submit presentation" when you are ready.""",
-		Values.submititBaseUrl -> "http://localhost:8080",
-		Values.officialEmailReplyTo -> "program@java.no",
-		Values.smtpHost -> None,
-		Values.emailBccCommaSeparatedList -> None,
-		Values.commaSeparatedListOfTagsForNewSubmissions -> "fra_submitit",
-		Values.adminPassPhrase -> "r",
-		Values.emsUrl -> "",
-		Values.emsUser -> "",
-    Values.emsPwd -> ""
+    Keys.eventName -> "JavaZone 2010",
+    Keys.headerLogoText -> "JavaZone 2010",
+  	Keys.headerText -> "Submit your JavaZone 2010 presentation",
+  	Keys.submitAllowedBoolean -> "true",
+		Keys.showFeedbackBoolean -> "false",
+		Keys.showSpecialMessageOnRejectBoolean -> "false",
+		Keys.showActualStatusInReviewPageBoolean -> "false",
+		Keys.allowIndidualFeedbackOnRejectBoolean -> "false",
+		Keys.globalEditAllowedForAcceptedBoolean -> "true",
+		Keys.globalEditAllowedBoolean -> "true",
+		Keys.showRoomWhenApprovedBoolean -> "false",
+		Keys.showTimeslotWhenApprovedBoolean -> "false",
+		Keys.allowSlideUploadBoolen -> "false",
+		Keys.presentationUploadSizeInMBInt -> "30",
+		Keys.presentationUploadPdfSizeInMBInt -> "20",
+		Keys.captchaLengthInt -> "1",
+		Keys.passPhraseSubmitSpecialURL -> "jz",
+		Keys.submitNotAllowedHtml -> "Call for papers is currently not open.",
+		Keys.editPageInfoTextHtml -> """<ul><li>Click the "Help", or press the question mark at each field for information about what to enter.</li><li>Before you submit your presentation you have to review it by pressing "Review presentation".</li><li>The session timeout is 2 hours. Wondering what <a style="font-weight:normal;" target="_blank" href="http://www.juniper.net/techpubs/software/management/sdx/sdx50x/sw-sdx-sw-basics/html/web-app-installing4.html" style="font-weight: normal;">session timeout is?</a></li></ul></li></ul>""",
+		Keys.reviewPageViewSubmittedChangeAllowedHthml -> """You can still change the contents of your submission. You may edit by pressing the "Edit presentation".<br>If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a><br>""",
+		Keys.feedbackRejected -> "The high quality of all the submissions this year has made the selection process very difficult, and unfortunately we cannot accept all talks. We actually had almost 250 submissions, and we only have 90 slots. We regret to inform you that we are unable to accept your proposal. We hope however that you will keep up the good effort and submit proposals next year as well!",
+		Keys.userSelectedKeywords -> "alternative languages|concurrency / scalability|enterprise|core / jvm|web / frontend|methodology|testing|experience report",
+		Keys.reviewPageViewSubmittedHthml -> """If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a>""",
+		Keys.reviewPageBeforeSubmitHtml -> """Your presentation has not yet been submittet. Please review, and press "Submit presentation" when you are ready.""",
+		Keys.submititBaseUrl -> "http://localhost:8080",
+		Keys.officialEmailReplyTo -> "program@java.no",
+		Keys.smtpHost -> None,
+		Keys.emailBccCommaSeparatedList -> None,
+		Keys.commaSeparatedListOfTagsForNewSubmissions -> "fra_submitit",
+		Keys.adminPassPhrase -> "r",
+		Keys.emsUrl -> "",
+		Keys.emsUser -> "",
+    Keys.emsPwd -> ""
   )
 
   protected var configKeyList: List[ConfigKey] = configValues.keys.toList

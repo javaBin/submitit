@@ -36,7 +36,7 @@ import no.java.submitit.app.Functions._
 import no.java.submitit.app.{SubmititApp, State}
 import no.java.submitit.common.LoggHandling
 import org.apache.wicket.Page
-import no.java.submitit.config.Values._
+import no.java.submitit.config.Keys._
 
 class ReviewPage(val pres: Presentation, notAdminView: Boolean) extends LayoutPage with LoggHandling with UpdateSessionHandling {
   
