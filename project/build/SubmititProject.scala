@@ -18,14 +18,9 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
 
   trait OutPutPaths extends BasicScalaProject {
 
-	override def outputPath = "target"
+    override def outputPath = "target"
     override def mainCompilePath = outputPath / "classes"
-	override def testCompilePath = outputPath / "test-classes"
-	override val mainResourcesOutputPath = "target" / "classes"
-    override val testResourcesOutputPath = "target" / "test-classes"
-
-    protected override def copyResourcesAction = copyTask(mainResources, mainResourcesOutputPath) describedAs CopyResourcesDescription
-    protected override def copyTestResourcesAction = copyTask(testResources, testResourcesOutputPath) describedAs CopyTestResourcesDescription
+    override def testCompilePath = outputPath / "test-classes"
 
   }
 
@@ -42,7 +37,12 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
   lazy val ui = project("submitit-webapp", "WebApplication", new DefaultWebProject(_) with OutPutPaths {
     system[File]("submitit.properties")() = "src" / "test" / "resources" / "submitit.properties" asFile
     override def mainResources = super.mainResources +++ descendents( mainSourceRoots, "*" ) --- mainSources
-	
+    override val mainResourcesOutputPath = "target" / "classes"
+    override val testResourcesOutputPath = "target" / "test-classes"
+
+    protected override def copyResourcesAction = copyTask(mainResources, mainResourcesOutputPath) describedAs CopyResourcesDescription
+    protected override def copyTestResourcesAction = copyTask(testResources, testResourcesOutputPath) describedAs CopyTestResourcesDescription
+
     val ems_wiki = "no.java.ems" % "ems-wiki" % ems_version
     val wicket = "org.apache.wicket" % "wicket" % wicket_version
     val wicket_extensions = "org.apache.wicket" % "wicket-extensions" % wicket_version
