@@ -52,8 +52,8 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
   }, common, ems)
   
   lazy val lift = project("subliftit", "Lift webapp", new DefaultWebProject(_) with OutPutPaths {
-    val lift_webkit = "net.liftweb" %% "lift-webkit" % "2.1-RC1"
-    val lift_mapper = "net.liftweb" %% "lift-mapper" % "2.1-RC1"
+    val lift_webkit = "net.liftweb" %% "lift-webkit" % "2.1"
+    val lift_mapper = "net.liftweb" %% "lift-mapper" % "2.1"
     val jetty6 = "org.mortbay.jetty" % "jetty" % "6.1.21" % "test"
     val servlet = "javax.servlet" % "servlet-api" % "2.5" % "provided"
 
