@@ -144,12 +144,12 @@
 	    <dependency>
 	      <groupId>net.liftweb</groupId>
 	      <artifactId>lift-webkit_2.8.0</artifactId>
-         <version>2.1-RC1</version>
+         <version>2.1</version>
 	    </dependency>
 	    <dependency>
 	      <groupId>net.liftweb</groupId>
 	      <artifactId>lift-mapper_2.8.0</artifactId>
-        <version>2.1-RC1</version>
+        <version>2.1</version>
 	    </dependency>
       <dependency>
         <groupId>javax.mail</groupId>
