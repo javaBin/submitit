@@ -89,18 +89,10 @@
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
- 	<dependency>
-        <groupId>org.scala-lang</groupId>
-        <artifactId>scala-library</artifactId>
-        <version>${scala.version}</version>
-    </dependency>
-
-      <!-- Needed for IDEA -->
     <dependency>
-        <groupId>org.scala-lang</groupId>
-        <artifactId>scala-compiler</artifactId>
-        <version>${scala.version}</version>
-        <scope>provided</scope>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala.version}</version>
     </dependency>
   </dependencies>
   <dependencyManagement>
@@ -125,11 +117,23 @@
         <groupId>no.java.ems</groupId>
         <artifactId>ems-client</artifactId>
         <version>${ems.version}</version>
+          <exclusions>
+              <exclusion>
+                  <artifactId>joda-time</artifactId>
+                  <groupId>joda-time</groupId>
+              </exclusion>
+          </exclusions>
       </dependency>
       <dependency>
         <groupId>no.java.ems</groupId>
         <artifactId>ems-wiki</artifactId>
         <version>${ems.version}</version>
+          <exclusions>
+              <exclusion>
+                  <artifactId>joda-time</artifactId>
+                  <groupId>joda-time</groupId>
+              </exclusion>
+          </exclusions>
       </dependency>
       <dependency>
         <groupId>org.apache.wicket</groupId>
