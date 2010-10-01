@@ -42,8 +42,8 @@ class Boot {
     // Build the application SiteMap
     def sitemap = List(
       Menu("Home") / "index",
-      Menu("Submit") / "submit" >> User.loginFirst,
-      Menu("Submissions") / "submissions" >> User.loginFirst) ::: User.menus
+      Menu("Submit") / "submit",
+      Menu("Submissions") / "submissions") ::: User.menus
 
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
     LiftRules.setSiteMapFunc(() => SiteMap(sitemap: _*))
