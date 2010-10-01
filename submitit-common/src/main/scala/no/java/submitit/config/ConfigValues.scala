@@ -209,7 +209,7 @@ trait ConfigValues {
 		Keys.userSelectedKeywords -> "alternative languages|concurrency / scalability|enterprise|core / jvm|web / frontend|methodology|testing|experience report",
 		Keys.reviewPageViewSubmittedHthml -> """If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a>""",
 		Keys.reviewPageBeforeSubmitHtml -> """Your presentation has not yet been submittet. Please review, and press "Submit presentation" when you are ready.""",
-		Keys.submititBaseUrl -> "http://localhost:8080",
+		Keys.submititBaseUrl -> None,
 		Keys.officialEmailReplyTo -> "program@java.no",
 		Keys.smtpHost -> None,
 		Keys.emailBccCommaSeparatedList -> None,
