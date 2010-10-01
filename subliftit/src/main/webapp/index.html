@@ -1,9 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:lift="http://liftweb.net/">
 <lift:surround with="default" at="content">
-  <h2>Welcome to your project!</h2>
-  <div>
-    <lift:hello_world.howdy>
-      <span>Welcome to demo at <b:time/></span>
-    </lift:hello_world.howdy>
-  </div>
-</lift:surround>
 
+    <div class="menu">
+        <ul>
+            <li><a href="#">Review presentation</a></li>
+            <li><a href="#">Reset form</a></li>
+            <li><a href="help" target="_blank">Help</a></li>
+        </ul>
+    </div>
+
+    <div id="wrapper">
+        <div id="btm">
+            <div id="page">
+                <h2>Welcome to your project!</h2>
+
+                <div>
+                    <lift:hello_world.howdy>
+                        <span>Welcome to demo at <b:time/></span>
+                    </lift:hello_world.howdy>
+                </div>
+            </div>
+        </div>
+    </div>
+</lift:surround>
+</html>

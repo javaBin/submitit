@@ -1,15 +1,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:lift="http://liftweb.net/">
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
     <title>Subliftit</title>
     <script id="jquery" src="/classpath/jquery.js" type="text/javascript"></script>
     <link rel="stylesheet" href="css/new_style.css" type="text/css" />
-  </head>
-  <body>
-    <lift:bind name="content" />
-    <lift:Menu.builder />
-    <lift:msgs/>
-  </body>
+</head>
+<body>
+<div id="header">
+    <div id="logo">
+        <h1><a href="#">JavaZone</a></h1>
+
+        <p>Submitit - TODO dynamic header</p>
+    </div>
+</div>
+<lift:bind name="content"/>
+<div id="footer">
+    <p>&copy; JavaZone 2010</p>
+    <p>
+        Design by <a href="http://www.freecsstemplates.org/">Free CSS Templates</a> . Powered by <a
+            href="http://liftweb.net/" target="_blank">Lift</a> and <a href="http://www.scala-lang.org/"
+                                                                       target="_blank">Scala</a> . Developed by
+        <a href="http://scala.java.no/" target="_blank">scalaBin</a>
+    </p>
+</div>
+</body>
 </html>
