@@ -14,11 +14,13 @@ import subliftit.config.Config
  * A class that's instantiated early and run.  It allows the application
  * to modify lift's environment
  */
-class Boot {
+class Boot extends Logger {
   def boot {
 
-    // TODO load location from servletconfig
-    Config.initFromFile("subliftit/src/test/resources/submitit.properties")
+    val configFile = LiftRules.context.initParam("submitit.properties").getOrElse(throw new Exception("Cannot find configuration for " +
+            "submitit.properties in servet context. Cannot start application"))
+    info("Loading properties from '" + configFile + "'")
+    Config.initFromFile(configFile)
 
     // where to search snippet
     LiftRules.addToPackages("subliftit")
