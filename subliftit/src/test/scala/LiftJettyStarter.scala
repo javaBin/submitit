@@ -32,7 +32,7 @@ object LiftJettyStarter {
     val bb = new WebAppContext();
     bb.setServer(server);
     bb.setContextPath("/");
-    bb.setWar("src/main/webapp");
+    bb.setWar("subliftit/src/main/webapp");
 
     // System.setProperty("submitit.properties", "src/main/resources/submitit.properties")
 

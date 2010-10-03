@@ -8,6 +8,7 @@ import _root_.net.liftweb.sitemap._
 import _root_.net.liftweb.sitemap.Loc._
 import net.liftweb.mapper.{DB, DefaultConnectionIdentifier, StandardDBVendor, Schemifier}
 import subliftit.model._
+import subliftit.config.Config
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -15,6 +16,10 @@ import subliftit.model._
  */
 class Boot {
   def boot {
+
+    // TODO load location from servletconfig
+    Config.initFromFile("subliftit/src/test/resources/submitit.properties")
+
     // where to search snippet
     LiftRules.addToPackages("subliftit")
 
