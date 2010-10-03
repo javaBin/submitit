@@ -38,7 +38,7 @@ class SubmititApp extends WebApplication with LoggHandling {
   override def init() {
     SubmititApp.propertyFileName = super.getServletContext.getInitParameter("submitit.properties")
     if (SubmititApp.propertyFileName == null) throw new Exception("""You must specify "submitit.properties" as a init parameter.""")
-    val props = utils.PropertyIOUtils.loadRessource(SubmititApp.propertyFileName)
+    val props = PropertyIOUtils.loadRessource(SubmititApp.propertyFileName)
     
     SubmititApp.properties = DefaultConfigValues.mergeConfig(props)
 
@@ -92,7 +92,7 @@ object SubmititApp {
   
   def props_=(props: collection.Map[ConfigKey, Option[String]]) {
     this.properties = props
-    utils.PropertyIOUtils.writeResource(propertyFileName, props)
+    PropertyIOUtils.writeResource(propertyFileName, props)
   }
   
   def getSetting(key: ConfigKey) = props.get(key).get

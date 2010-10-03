@@ -13,11 +13,10 @@
  *   limitations under the License.
  */
 
-package no.java.submitit.app.utils
+package no.java.submitit.common
 
 import _root_.java.util.Properties
 import _root_.java.io._
-import _root_.no.java.submitit.common.IOUtils
 import no.java.submitit.common.IOUtils._
 import no.java.submitit.config.ConfigKey
 
