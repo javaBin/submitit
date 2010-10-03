@@ -15,6 +15,10 @@
 
 package no.java.submitit.config
 
+import java.util.Properties
+import no.java.submitit.common.LoggHandling
+import collection.mutable.LinkedHashMap
+
 sealed abstract class ConfigKey {
 
   val parser: String => Any = Keys.defParse
@@ -176,7 +180,7 @@ object Keys {
 
 
 
-trait ConfigValues {
+trait ConfigValues extends LoggHandling {
 
   def getKey(key: String) = configKeyList.find(_.toString == key)
 
@@ -221,5 +225,21 @@ trait ConfigValues {
   )
 
   protected var configKeyList: List[ConfigKey] = configValues.keys.toList
+
+  def mergeConfig(props: Properties): collection.mutable.LinkedHashMap[ConfigKey, Option[String]] = {
+    val elems = props.keys
+    var copy = configValues.clone
+
+    copy.keys.filter(_.mandatoryInFile).foreach(e => if(!props.containsKey(e.toString)) throw new Exception("Property " + e + " is mandatory. Could not find it in. You must specify this."))
+
+    for (i <- 0 to props.size() - 1) {
+      val e = elems.nextElement.asInstanceOf[String]
+      getKey(e) match {
+        case Some(key) if copy.contains(key) => copy += (key -> Keys.toOption(props.getProperty(e).asInstanceOf[String]))
+        case _ => logger.info("Removing property value no longer in use:  " + e)
+      }
+    }
+    copy
+  }
 
 }
