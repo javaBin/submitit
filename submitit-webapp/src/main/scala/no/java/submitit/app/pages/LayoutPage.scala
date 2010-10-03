@@ -18,7 +18,6 @@ package no.java.submitit.app.pages
 import borders.ContentBorder
 import org.apache.wicket.markup.html.WebPage
 import org.apache.wicket.markup.html.basic.Label
-import no.java.submitit.app.DefaultConfigValues._
 import no.java.submitit.app.SubmititApp
 import org.apache.wicket.markup.html.link.AbstractLink
 import no.java.submitit.config.Keys._

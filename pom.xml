@@ -24,7 +24,7 @@
   <artifactId>submitit</artifactId>
   <version>1.0.11-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>wicket-submitit</name>
+  <name>submitit</name>
   <inceptionYear>2008</inceptionYear>
 
   <properties>
