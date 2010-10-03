@@ -24,7 +24,6 @@ import org.apache.wicket.markup.html.basic.Label
 import no.java.submitit.common.Implicits._
 import no.java.submitit.model.Presentation
 import _root_.java.io.Serializable
-import no.java.submitit.app.DefaultConfigValues._
 import no.java.submitit.app.SubmititApp
 import scala.collection.JavaConversions._
 import no.java.submitit.config.Keys._

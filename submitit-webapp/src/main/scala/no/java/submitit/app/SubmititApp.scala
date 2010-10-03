@@ -30,7 +30,6 @@ import _root_.java.util.Properties
 import org.apache.wicket.Application._
 import org.apache.wicket.settings.IExceptionSettings
 import Functions._
-import no.java.submitit.app.DefaultConfigValues._
 import no.java.submitit.config.Keys._
 import no.java.submitit.config.{Keys, ConfigKey}
 
