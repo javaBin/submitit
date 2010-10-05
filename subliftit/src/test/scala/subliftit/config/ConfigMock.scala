@@ -7,7 +7,7 @@ import no.java.submitit.config.{Keys, ConfigKey}
 import no.java.submitit.config.Keys.{submititBaseUrl, eventName}
 
 trait ConfigMock extends Config {
-  private var lookupFunc: PartialFunction[ConfigKey, Option[String]] = _
+  private var lookupFunc: PartialFunction[ConfigKey, Option[String]] = {case _ => throw new MatchError("No match function set up")}
 
   def configSetup(func: PartialFunction[ConfigKey, Option[String]]) {
     lookupFunc = func
@@ -25,6 +25,12 @@ class ConfigMockTest extends FunSuite {
      intercept[Exception] {
        new Config{
          configValue(eventName)
+       }
+     }
+
+     intercept[MatchError] {
+       val config = new Config with ConfigMock {
+         configValue(submititBaseUrl)
        }
      }
 
