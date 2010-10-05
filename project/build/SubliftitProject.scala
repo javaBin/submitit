@@ -7,6 +7,7 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
   val javabin_release = "javaBin Smia" at "http://smia.java.no/maven/repo/release"	
   //Necessary for transitive dependencies in ems-client org.restlet. Project won't build without it
   val maven_restlet = "Public online Restlet repository" at "http://maven.restlet.org"
+  val scalaToolsSnapshots = "Scala-Tools Maven2 Snapshots Repository" at "http://scala-tools.org/repo-snapshots"
 
   val ems_version = "1.1"
   val wicket_version = "1.4.10"
@@ -64,6 +65,7 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
     val jetty6 = "org.mortbay.jetty" % "jetty" % "6.1.21" % "test"
     val servlet = "javax.servlet" % "servlet-api" % "2.5" % "provided"
     val ems_client = "no.java.ems" % "ems-client" % ems_version
+    val scala_test = "org.scalatest" % "scalatest" % "1.2-for-scala-2.8.0.final-SNAPSHOT" % "test"
 
     override def scanDirectories = Nil
 
