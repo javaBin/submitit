@@ -7,9 +7,13 @@ import no.java.submitit.config.{Keys, ConfigKey}
 import no.java.submitit.config.Keys.{submititBaseUrl, eventName}
 
 trait ConfigMock extends Config {
-  def setup: PartialFunction[ConfigKey, Option[String]]
+  private var lookupFunc: PartialFunction[ConfigKey, Option[String]] = _
 
-  override def configValue(key: ConfigKey): Option[String] = setup(key)
+  def configSetup(func: PartialFunction[ConfigKey, Option[String]]) {
+    lookupFunc = func
+  }
+
+  override def configValue(key: ConfigKey): Option[String] = lookupFunc(key)
 
 }
 
@@ -26,14 +30,14 @@ class ConfigMockTest extends FunSuite {
 
      intercept[MatchError] {
        val config = new Config with ConfigMock {
-         def setup = {case `eventName` => None}
+         configSetup{case `eventName` => None}
          configValue(submititBaseUrl)
        }
      }
 
      val res = Some("an event")
      val myClass = new Config with ConfigMock {
-       def setup = {case `eventName` => res}
+       configSetup{case `eventName` => res}
        assert(res === configValue(eventName))
      }
    }
