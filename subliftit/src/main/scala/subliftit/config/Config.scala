@@ -16,9 +16,13 @@ object Config {
     appConfig = BaseConfig.mergeConfig(props)
   }
 
-  def value(key: ConfigKey): Option[String] = {
+  private def value(key: ConfigKey): Option[String] = {
     if (appConfig == null) throw new Exception("Application has not been initialised. Make sure to load config before calling the value method")
     appConfig.get(key).getOrElse(None)
   }
 
+}
+
+trait Config {
+  def configValue(key: ConfigKey): Option[String] = Config.value(key)
 }
