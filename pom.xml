@@ -97,6 +97,12 @@
         <version>${scala.version}</version>
         <scope>provided</scope>
     </dependency>
+    <dependency>
+        <groupId>org.scalatest</groupId>
+        <artifactId>scalatest</artifactId>
+        <version>1.2-for-scala-2.8.0.final-SNAPSHOT</version>
+        <scope>test</scope>
+    </dependency>
   </dependencies>
   <dependencyManagement>
     <dependencies>

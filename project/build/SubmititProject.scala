@@ -7,6 +7,7 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
   val javabin_release = "javaBin Smia" at "http://smia.java.no/maven/repo/release"	
   //Necessary for transitive dependencies in ems-client org.restlet. Project won't build without it
   val maven_restlet = "Public online Restlet repository" at "http://maven.restlet.org"
+  val scalaToolsSnapshots = "Scala-Tools Maven2 Snapshots Repository" at "http://scala-tools.org/repo-snapshots"
 
   val ems_version = "1.1"
   val wicket_version = "1.4.14"
@@ -50,4 +51,5 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
     val mail = "javax.mail" % "mail" % "1.4.1"
     val jetty_server = "org.mortbay.jetty" % "jetty" % "6.1.14" % "test"
   }, common, ems)
+
 }
