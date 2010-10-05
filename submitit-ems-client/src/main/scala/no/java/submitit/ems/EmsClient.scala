@@ -63,7 +63,7 @@ class EmsClient(eventName: String, serverUrl: String, username: Option[String], 
       case None => None
     }
   }
-  
+
   private def getSession(id: String): Option[Session] = {
     // Workaround for authorization problems...
     val sessions = emsService.getSessions(event.getId)

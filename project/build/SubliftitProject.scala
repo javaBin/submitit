@@ -52,13 +52,18 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
   }, common, ems)
   
   lazy val lift = project("subliftit", "Lift webapp", new DefaultWebProject(_) with OutPutPaths {
-    val lift_webkit = "net.liftweb" %% "lift-webkit" % "2.1"
-    val lift_mapper = "net.liftweb" %% "lift-mapper" % "2.1"
+
+    def lift(name:String) = "net.liftweb" %% ("lift-"+name) % "2.1" withSources()
+
+    val lift_webkit = lift("webkit")
+    val lift_util = lift("util") // silly ivy not supporting transitivity for source download
+    val lift_record = lift("record")
+    val lift_textile = lift("textile")
+
     val jetty6 = "org.mortbay.jetty" % "jetty" % "6.1.21" % "test"
     val servlet = "javax.servlet" % "servlet-api" % "2.5" % "provided"
 
     override def scanDirectories = Nil
-
     override def jettyWebappPath = webappPath
   }, common, ems)
   

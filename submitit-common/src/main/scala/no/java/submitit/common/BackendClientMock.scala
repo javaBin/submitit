@@ -26,18 +26,19 @@ object BackendClientMock extends BackendClient with Serializable {
   var nextId = 1
   
   val presentations = Map.empty[String, Presentation]
-  
+  val speakers = Map.empty[String, Speaker]
+
   def savePresentation(pres: Presentation): String = {
     if (pres.sessionId == null) {
       pres.sessionId = nextId.toString
       nextId = nextId + 1
     }
+    for(speaker <- pres.speakers){
+      speakers(speaker.email) = speaker
+    }
     presentations(pres.sessionId) = pres
     pres.sessionId
   }
   
-  def loadPresentation(id: String): Option[Presentation] = {
-    presentations.get(id)
-  }
-  
+  def loadPresentation(id: String) = presentations get id
 }

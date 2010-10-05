@@ -1,8 +1,41 @@
 <lift:surround with="default" at="content">
 
-  <lift:submit.talk form="post">
-    <talk:title/>
-    <talk:body/>
-    <talk:submit/>
-  </lift:submit.talk>
+  <lift:submit.create form="post">
+
+    <submit:field>
+      <div class="row">
+        <label>
+          <field:title/>
+          <field:bind/>
+        </label>
+      </div>
+    </submit:field>
+
+    <submit:speakers>
+      <speakers:speaker>
+        <fieldset>
+          <speaker:name/>
+          <speaker:email/>
+          <speaker:bio/>
+          <speaker:picture/>
+          <speaker:remove/>
+        </fieldset>
+      </speakers:speaker>
+      <speakers:add/>
+    </submit:speakers>
+
+    <submit:presentation>
+      <presentation:format/>
+      <presentation:title/>
+      <presentation:abstract/>
+      <presentation:language/>
+      <presentation:level/>
+      <presentation:outline/>
+      <presentation:equipment/>
+      <presentation:expectedAudience/>
+    </submit:presentation>
+
+    <submit:review/>
+  </lift:submit.create>
+
 </lift:surround>
