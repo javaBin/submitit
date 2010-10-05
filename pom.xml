@@ -21,10 +21,10 @@
     <version>4</version>
   </parent>
   <groupId>no.java.submitit</groupId>
-  <artifactId>wicket-submitit</artifactId>
+  <artifactId>submitit</artifactId>
   <version>1.0.11-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>wicket-submitit</name>
+  <name>submitit</name>
   <inceptionYear>2008</inceptionYear>
 
   <properties>
@@ -89,18 +89,16 @@
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
- 	<dependency>
-        <groupId>org.scala-lang</groupId>
-        <artifactId>scala-library</artifactId>
-        <version>${scala.version}</version>
-    </dependency>
-
-      <!-- Needed for IDEA -->
     <dependency>
-        <groupId>org.scala-lang</groupId>
-        <artifactId>scala-compiler</artifactId>
-        <version>${scala.version}</version>
-        <scope>provided</scope>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.scalatest</groupId>
+        <artifactId>scalatest</artifactId>
+        <version>1.2-for-scala-2.8.0.final-SNAPSHOT</version>
+        <scope>test</scope>
     </dependency>
   </dependencies>
   <dependencyManagement>
@@ -125,11 +123,23 @@
         <groupId>no.java.ems</groupId>
         <artifactId>ems-client</artifactId>
         <version>${ems.version}</version>
+          <exclusions>
+              <exclusion>
+                  <artifactId>joda-time</artifactId>
+                  <groupId>joda-time</groupId>
+              </exclusion>
+          </exclusions>
       </dependency>
       <dependency>
         <groupId>no.java.ems</groupId>
         <artifactId>ems-wiki</artifactId>
         <version>${ems.version}</version>
+          <exclusions>
+              <exclusion>
+                  <artifactId>joda-time</artifactId>
+                  <groupId>joda-time</groupId>
+              </exclusion>
+          </exclusions>
       </dependency>
       <dependency>
         <groupId>org.apache.wicket</groupId>
@@ -165,6 +175,11 @@
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
         <version>1.2.14</version>
+      </dependency>
+      <dependency>
+        <groupId>joda-time</groupId>
+        <artifactId>joda-time</artifactId>
+        <version>1.6</version>
       </dependency>
       <dependency>
         <groupId>junit</groupId>

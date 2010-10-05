@@ -30,7 +30,6 @@ import _root_.java.util.Properties
 import org.apache.wicket.Application._
 import org.apache.wicket.settings.IExceptionSettings
 import Functions._
-import no.java.submitit.app.DefaultConfigValues._
 import no.java.submitit.config.Keys._
 import no.java.submitit.config.{Keys, ConfigKey}
 
@@ -39,22 +38,9 @@ class SubmititApp extends WebApplication with LoggHandling {
   override def init() {
     SubmititApp.propertyFileName = super.getServletContext.getInitParameter("submitit.properties")
     if (SubmititApp.propertyFileName == null) throw new Exception("""You must specify "submitit.properties" as a init parameter.""")
-    val props = utils.PropertyIOUtils.loadRessource(SubmititApp.propertyFileName)
-
-    val elems = props.keys
-    var theMap = DefaultConfigValues.values
-
-    DefaultConfigValues.keys.filter(_.mandatoryInFile).foreach(e => if(!props.containsKey(e.toString)) throw new Exception("You must specify " + e + " in property file"))
-
-    for (i <- 0 to props.size() - 1) {
-      val e = elems.nextElement.asInstanceOf[String]
-      DefaultConfigValues getKey(e) match {
-        case Some(key) if theMap.contains(key) => theMap += (key -> Keys.toOption(props.getProperty(e).asInstanceOf[String]))
-        case _ => logger.info("Removing property value no longer in use:  " + e)
-      }
-    }
+    val props = PropertyIOUtils.loadRessource(SubmititApp.propertyFileName)
     
-    SubmititApp.properties = theMap
+    SubmititApp.properties = DefaultConfigValues.mergeConfig(props)
 
     mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
     mountBookmarkablePage("/proposal", classOf[IdResolverPage]);
@@ -106,7 +92,7 @@ object SubmititApp {
   
   def props_=(props: collection.Map[ConfigKey, Option[String]]) {
     this.properties = props
-    utils.PropertyIOUtils.writeResource(propertyFileName, props)
+    PropertyIOUtils.writeResource(propertyFileName, props)
   }
   
   def getSetting(key: ConfigKey) = props.get(key).get

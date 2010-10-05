@@ -7,9 +7,16 @@ import Helpers._
 import http._
 import sitemap._
 import Loc._
+import subliftit.config.Config
 
-class Boot {
+class Boot extends Logger {
   def boot {
+    
+    val configFile = LiftRules.context.initParam("submitit.properties").getOrElse(throw new Exception("Cannot find configuration for " +
+            "submitit.properties in servet context. Cannot start application"))
+    info("Loading properties from '" + configFile + "'")
+    Config.initFromFile(configFile)
+    
     LiftRules.addToPackages("subliftit")
 
     LiftRules.uriNotFound.prepend(NamedPF("404handler") {

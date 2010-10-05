@@ -18,7 +18,7 @@ import org.mortbay.jetty.Server;
 import org.mortbay.jetty.bio.SocketConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
 
-object JettyStarter {
+object LiftJettyStarter {
 
   def main(args: Array[String]) {
     val server = new Server();
@@ -26,23 +26,23 @@ object JettyStarter {
     // Set some timeout options to make debugging easier.
     connector.setMaxIdleTime(1000 * 60 * 60);
     connector.setSoLingerTime(-1);
-    connector.setPort(8081);
+    connector.setPort(8080);
     server.setConnectors(Array(connector));
-  
+
     val bb = new WebAppContext();
     bb.setServer(server);
     bb.setContextPath("/");
-    bb.setWar("src/main/webapp");
-    
-    System.setProperty("submitit.properties", "src/main/resources/submitit.properties")
-	
+    bb.setWar("subliftit/src/main/webapp");
+
+    // System.setProperty("submitit.properties", "src/main/resources/submitit.properties")
+
     server.addHandler(bb);
-    
+
     try {
       System.out.println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
       server.start();
       while (System.in.available() == 0) {
-        Thread.sleep(5000); 
+        Thread.sleep(5000);
       }
       server.stop();
       server.join();
@@ -50,7 +50,7 @@ object JettyStarter {
       case e: Exception => {
         e.printStackTrace();
         System.exit(100);
-      } 
+      }
     }
   }
 }

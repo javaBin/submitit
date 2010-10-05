@@ -5,7 +5,7 @@
 
   <parent>
     <groupId>no.java.submitit</groupId>
-    <artifactId>wicket-submitit</artifactId>
+    <artifactId>submitit</artifactId>
     <version>1.0.11-SNAPSHOT</version>
   </parent>
 

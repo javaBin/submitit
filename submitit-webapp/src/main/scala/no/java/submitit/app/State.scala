@@ -20,7 +20,6 @@ import org.apache.wicket.protocol.http.WebSession
 import org.apache.wicket.Session
 import no.java.submitit.common._
 import no.java.submitit.model._
-import DefaultConfigValues._
 import _root_.java.io.File
 import Functions._
 import no.java.submitit.config.Keys._

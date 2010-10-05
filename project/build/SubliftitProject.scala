@@ -7,6 +7,7 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
   val javabin_release = "javaBin Smia" at "http://smia.java.no/maven/repo/release"	
   //Necessary for transitive dependencies in ems-client org.restlet. Project won't build without it
   val maven_restlet = "Public online Restlet repository" at "http://maven.restlet.org"
+  val scalaToolsSnapshot = ScalaToolsSnapshots
 
   val ems_version = "1.1"
   val wicket_version = "1.4.10"
@@ -52,6 +53,12 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
   }, common, ems)
   
   lazy val lift = project("subliftit", "Lift webapp", new DefaultWebProject(_) with OutPutPaths {
+    override def ivyXML =
+     <dependencies>
+       <dependency org="no.java.ems" name="ems-client" rev="1.1"> 
+         <exclude org="joda-time" name="joda-time"/>
+       </dependency>
+     </dependencies>
 
     def lift(name:String) = "net.liftweb" %% ("lift-"+name) % "2.1" withSources()
 
@@ -59,12 +66,15 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
     val lift_util = lift("util") // silly ivy not supporting transitivity for source download
     val lift_record = lift("record")
     val lift_textile = lift("textile")
-
+    
     val jetty6 = "org.mortbay.jetty" % "jetty" % "6.1.21" % "test"
     val servlet = "javax.servlet" % "servlet-api" % "2.5" % "provided"
+    val ems_client = "no.java.ems" % "ems-client" % ems_version
+    val scala_test = "org.scalatest" % "scalatest" % "1.2-for-scala-2.8.0.final-SNAPSHOT" % "test"
+    val junit = "junit" % "junit" % "4.5" % "test"
 
     override def scanDirectories = Nil
     override def jettyWebappPath = webappPath
-  }, common, ems)
+  }, common)
   
 }
