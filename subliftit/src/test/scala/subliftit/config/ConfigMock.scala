@@ -19,21 +19,23 @@ class ConfigMockTest extends FunSuite {
    test("That configmock works as expected and check what the mock api looks like") {
 
      intercept[Exception] {
-       new Config{}.configValue(eventName)
+       new Config{
+         configValue(eventName)
+       }
      }
 
      intercept[MatchError] {
        val config = new Config with ConfigMock {
          def setup = {case `eventName` => None}
+         configValue(submititBaseUrl)
        }
-       config.configValue(submititBaseUrl)
      }
 
      val res = Some("an event")
-     object myTestClass extends Config with ConfigMock {
+     val myClass = new Config with ConfigMock {
        def setup = {case `eventName` => res}
+       assert(res === configValue(eventName))
      }
-     assert(res === myTestClass.configValue(eventName))
    }
 
 }

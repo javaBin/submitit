@@ -24,5 +24,5 @@ object Config {
 }
 
 trait Config {
-  def configValue(key: ConfigKey): Option[String] = Config.value(key)
+  protected def configValue(key: ConfigKey): Option[String] = Config.value(key)
 }
