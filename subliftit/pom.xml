@@ -49,6 +49,10 @@
       <groupId>net.liftweb</groupId>
       <artifactId>lift-mapper_2.8.0</artifactId>
     </dependency>
+      <dependency>
+      <groupId>net.liftweb</groupId>
+      <artifactId>lift-textile_2.8.0</artifactId>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
