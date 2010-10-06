@@ -32,7 +32,7 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
   
   lazy val ems = project("submitit-ems-client", "Ems Client", new DefaultProject(_) with OutPutPaths {
     val ems_client = "no.java.ems" % "ems-client" % ems_version
-    val junit = "junit" % "junit" % "4.5" % "test"    	
+    val junit = "junit" % "junit" % "4.8.1" % "test"    	
   }, common)
   
   lazy val ui = project("submitit-webapp", "WebApplication", new DefaultWebProject(_) with OutPutPaths {
@@ -71,7 +71,7 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
     val servlet = "javax.servlet" % "servlet-api" % "2.5" % "provided"
     val ems_client = "no.java.ems" % "ems-client" % ems_version
     val scala_test = "org.scalatest" % "scalatest" % "1.2-for-scala-2.8.0.final-SNAPSHOT" % "test"
-    val junit = "junit" % "junit" % "4.5" % "test"
+    val junit = "junit" % "junit" % "4.8.1" % "test"
 
     override def scanDirectories = Nil
     override def jettyWebappPath = webappPath
