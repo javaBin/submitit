@@ -10,9 +10,16 @@
 <body>
 <div id="header">
     <div id="logo">
-        <h1><a href="#">JavaZone</a></h1>
-
-        <p>Submitit - TODO dynamic header</p>
+        <lift:HeaderSnippet.header>
+            <h1>
+                <a href="#">
+                    <txt:logotext />
+                </a>
+            </h1>
+            <p>
+                <txt:headertext />
+            </p>
+        </lift:HeaderSnippet.header>
     </div>
 </div>
 <lift:bind name="content"/>
