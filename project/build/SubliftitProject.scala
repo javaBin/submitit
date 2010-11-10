@@ -60,7 +60,7 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
        </dependency>
      </dependencies>
 
-    def lift(name:String) = "net.liftweb" %% ("lift-"+name) % "2.1" withSources()
+    def lift(name:String) = "net.liftweb" % ("lift-"+name+ "_2.8.0") % "2.1" withSources()
 
     val lift_webkit = lift("webkit")
     val lift_util = lift("util") // silly ivy not supporting transitivity for source download
