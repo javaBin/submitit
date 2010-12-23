@@ -90,14 +90,14 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.scala-lang</groupId>
-      <artifactId>scala-library</artifactId>
-      <version>${scala.version}</version>
+        <groupId>org.scala-lang</groupId>
+        <artifactId>scala-library</artifactId>
+        <version>${scala.version}</version>
     </dependency>
     <dependency>
         <groupId>org.scalatest</groupId>
         <artifactId>scalatest</artifactId>
-        <version>1.2-for-scala-2.8.0.final-SNAPSHOT</version>
+        <version>1.2</version>
         <scope>test</scope>
     </dependency>
   </dependencies>
@@ -144,12 +144,12 @@
       <dependency>
         <groupId>org.apache.wicket</groupId>
         <artifactId>wicket</artifactId>
-        <version>1.4.10</version>
+        <version>1.4.14</version>
       </dependency>
       <dependency>
         <groupId>org.apache.wicket</groupId>
         <artifactId>wicket-extensions</artifactId>
-        <version>1.4.10</version>
+        <version>1.4.14</version>
       </dependency>
 	    <dependency>
 	      <groupId>net.liftweb</groupId>
@@ -189,7 +189,7 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.8.1</version>
+        <version>4.8.2</version>
       </dependency>
       <dependency>
         <groupId>org.mortbay.jetty</groupId>

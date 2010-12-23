@@ -30,6 +30,7 @@ import javax.mail.internet.MimeMessage
 import org.apache.wicket.markup.html.form.HiddenField
 import no.java.submitit.app.{SubmititApp, State}
 import no.java.submitit.config.Keys._
+import no.java.submitit.encrypt.EncryptionUtils
 
 class ConfirmPage(val pres: Presentation) extends LayoutPage with LoggHandling with UpdateSessionHandling {
 
@@ -64,7 +65,12 @@ class ConfirmPage(val pres: Presentation) extends LayoutPage with LoggHandling w
 
   val url = {
     val backendClient = State().backendClient
-    val uniqueId = if(!isTest) backendClient.savePresentation(pres) else Presentation.testPresentationURL
+    val uniqueId = if(!isTest) {
+      val id = backendClient.savePresentation(pres)
+      EncryptionUtils.encrypt(SubmititApp.setting(encryptionKey), id)
+    } else {
+      Presentation.testPresentationURL
+    }
     pres.sessionId = uniqueId
     SubmititApp.getSetting(submititBaseUrl).get + "/proposal?id=" + uniqueId
   }

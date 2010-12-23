@@ -10,9 +10,9 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
   val scalaToolsSnapshot = ScalaToolsSnapshots
 
   val ems_version = "1.1"
-  val wicket_version = "1.4.10"
+  val wicket_version = "1.4.14"
   val junit_version = "4.5"
-
+  
   override def parallelExecution = true
 
   override def disableCrossPaths = true
@@ -28,11 +28,12 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
   lazy val common = project("submitit-common", "Common", new DefaultProject(_) with OutPutPaths {
     val slf4j = "org.slf4j" % "slf4j-log4j12" % "1.4.2"
     val log4j = "log4j" % "log4j" % "1.2.14"
+    val junit = "junit" % "junit" % "4.8.2" % "test"
+    val scala_test = "org.scalatest" % "scalatest" % "1.2" % "test"
   })
   
   lazy val ems = project("submitit-ems-client", "Ems Client", new DefaultProject(_) with OutPutPaths {
     val ems_client = "no.java.ems" % "ems-client" % ems_version
-    val junit = "junit" % "junit" % "4.8.1" % "test"    	
   }, common)
   
   lazy val ui = project("submitit-webapp", "WebApplication", new DefaultWebProject(_) with OutPutPaths {
