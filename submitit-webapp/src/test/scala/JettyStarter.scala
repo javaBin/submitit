@@ -34,7 +34,7 @@ object JettyStarter {
     bb.setContextPath("/");
     bb.setWar("src/main/webapp");
     
-    System.setProperty("submitit.properties", "src/main/resources/submitit.properties")
+    System.setProperty("submitit.properties", "submitit-webapp/src/main/resources/submitit.properties")
 	
     server.addHandler(bb);
     
