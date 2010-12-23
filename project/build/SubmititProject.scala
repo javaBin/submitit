@@ -28,7 +28,7 @@ class SubmititProject(info: ProjectInfo) extends ParentProject(info){
   lazy val common = project("submitit-common", "Common", new DefaultProject(_) with OutPutPaths {
     val slf4j = "org.slf4j" % "slf4j-log4j12" % "1.4.2"
     val log4j = "log4j" % "log4j" % "1.2.14"
-    val junit = "junit" % "junit" % "4.5" % "test"
+    val junit = "junit" % "junit" % "4.8.2" % "test"
     val scala_test = "org.scalatest" % "scalatest" % "1.2-for-scala-2.8.0.final-SNAPSHOT" % "test"
   })
   
