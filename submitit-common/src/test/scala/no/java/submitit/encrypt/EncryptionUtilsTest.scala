@@ -36,13 +36,4 @@ class EncryptionUtilsTest extends FunSuite {
     doAssert("", "1")
   }
 
-  test("How the code behaves with null input") {
-    intercept[NullPointerException] {
-      doAssert("", null)
-    }
-    intercept[NullPointerException] {
-      doAssert(null, "")
-    }
-  }
-
 }
