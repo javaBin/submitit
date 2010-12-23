@@ -22,6 +22,8 @@ import no.java.submitit.common._
 import no.java.submitit.model._
 import org.apache.wicket.markup.html.basic._
 import org.apache.wicket.model.Model
+import no.java.submitit.encrypt.EncryptionUtils
+import no.java.submitit.config.Keys._
 
 class IdResolverPage extends LayoutPage with LoggHandling {
 
@@ -31,7 +33,7 @@ class IdResolverPage extends LayoutPage with LoggHandling {
     try {
       if(id == null || id == "") (None, "Not a valid url. This has been logged.")
       else if (id == Presentation.testPresentationURL) (Some(State().currentPresentation), "")
-      else State().backendClient.loadPresentation(id) match {
+      else fetchPresentation(id) match {
         case Some(pres) => (Some(pres), "")
         case None => (None, "Not a valid key! Attempt to fetch a presentation with this key has been logged.")
       }
@@ -56,6 +58,11 @@ class IdResolverPage extends LayoutPage with LoggHandling {
     case None => {
       contentBorder.add(new Label("identified", new Model(infoMessage)))
     }
+  }
+
+  private def fetchPresentation(id: String) = {
+    val decryptedId = EncryptionUtils.decrypt(SubmititApp.setting(encryptionKey), id)
+    State().backendClient.loadPresentation(decryptedId)
   }
 
 }

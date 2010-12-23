@@ -96,6 +96,8 @@ object SubmititApp {
   }
   
   def getSetting(key: ConfigKey) = props.get(key).get
+
+  def setting(key: ConfigKey) = props.get(key).get.get
   
   def getBccEmailList = {
     getSetting(emailBccCommaSeparatedList) match {
