@@ -175,6 +175,11 @@ object Keys {
     override val visible = false
     override val mandatoryInFile = true
   }
+  case object encryptionKey extends ConfigKey {
+    val description = "The key used to encrypt/decrypt session id's from ems."
+    override val visible = false
+    override val mandatoryInFile = true
+  }
 
 }
 
@@ -221,7 +226,8 @@ trait ConfigValues extends LoggHandling {
 		Keys.adminPassPhrase -> "r",
 		Keys.emsUrl -> "",
 		Keys.emsUser -> "",
-    Keys.emsPwd -> ""
+    Keys.emsPwd -> "",
+    Keys.encryptionKey -> None
   )
 
   protected var configKeyList: List[ConfigKey] = configValues.keys.toList
