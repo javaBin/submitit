@@ -24,6 +24,7 @@ import org.apache.wicket.markup.html.basic._
 import org.apache.wicket.model.Model
 import no.java.submitit.encrypt.EncryptionUtils
 import no.java.submitit.config.Keys._
+import java.security.GeneralSecurityException
 
 class IdResolverPage extends LayoutPage with LoggHandling {
 
@@ -61,8 +62,16 @@ class IdResolverPage extends LayoutPage with LoggHandling {
   }
 
   private def fetchPresentation(id: String) = {
-    val decryptedId = EncryptionUtils.decrypt(SubmititApp.setting(encryptionKey), id)
-    State().backendClient.loadPresentation(decryptedId)
+    try {
+      val decryptedId = EncryptionUtils.decrypt(SubmititApp.setting(encryptionKey), id)
+      State().backendClient.loadPresentation(decryptedId)
+    }
+    catch {
+      case e: GeneralSecurityException =>  {
+        logger.warn("Exception when decrypting key, id tampering? Key: '" + id + "'. Exception message: " + e.getMessage)
+        None
+      }
+    }
   }
 
 }

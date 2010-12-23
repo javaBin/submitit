@@ -19,30 +19,33 @@ import javax.crypto.spec. {PBEKeySpec, PBEParameterSpec}
 import javax.crypto. {SecretKeyFactory, SecretKey, Cipher}
 import sun.misc. {BASE64Decoder, BASE64Encoder}
 import java.net. {URLDecoder, URLEncoder}
+import java.lang.String
 
 object EncryptionUtils {
 
   private val salt = "c6843fc8".getBytes
+  private val encAlg: String = "PBEWithMD5AndTripleDES"
 
   def encrypt(secretKey: String, value: String) = {
     val cipher = initCipher(Cipher.ENCRYPT_MODE, secretKey)
-    urlEncode(cipher.doFinal(value.getBytes))
+    encode(cipher.doFinal(value.getBytes("UTF-8")))
   }
 
   def decrypt(secretKey: String, value: String) = {
     val cipher = initCipher(Cipher.DECRYPT_MODE, secretKey)
-    new String(cipher.doFinal(urlDecode(value)))
+    new String(cipher.doFinal(decode(value)))
   }
 
   private def initCipher(cipherMode: Int, secretKey: String) = {
-    val keyFactory = SecretKeyFactory.getInstance("PBEWithMD5AndDES")
+
+    val keyFactory = SecretKeyFactory.getInstance(encAlg)
     val key = keyFactory.generateSecret(new PBEKeySpec(secretKey.toCharArray))
-    val pbeCipher = Cipher.getInstance("PBEWithMD5AndDES")
+    val pbeCipher = Cipher.getInstance(encAlg)
     pbeCipher.init(cipherMode, key, new PBEParameterSpec(salt, 20))
     pbeCipher
   }
 
-  private def urlEncode(value: Array[Byte]) = URLEncoder.encode(new BASE64Encoder().encode(value), "UTF-8")
-  private def urlDecode(value: String) = new BASE64Decoder().decodeBuffer(URLDecoder.decode(value, "UTF-8"))
+  private def encode(value: Array[Byte]) = new BASE64Encoder().encode(value)
+  private def decode(value: String) = new BASE64Decoder().decodeBuffer(value)
 
 }
