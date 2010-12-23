@@ -31,6 +31,7 @@ import org.apache.wicket.markup.html.form.HiddenField
 import no.java.submitit.app.{SubmititApp, State}
 import no.java.submitit.config.Keys._
 import no.java.submitit.encrypt.EncryptionUtils
+import java.net.URLEncoder
 
 class ConfirmPage(val pres: Presentation) extends LayoutPage with LoggHandling with UpdateSessionHandling {
 
@@ -67,7 +68,8 @@ class ConfirmPage(val pres: Presentation) extends LayoutPage with LoggHandling w
     val backendClient = State().backendClient
     val uniqueId = if(!isTest) {
       val id = backendClient.savePresentation(pres)
-      EncryptionUtils.encrypt(SubmititApp.setting(encryptionKey), id)
+      val encrypteId = EncryptionUtils.encrypt(SubmititApp.setting(encryptionKey), id)
+      URLEncoder.encode(encrypteId, "UTF-8") // Used in URL, must be encoded
     } else {
       Presentation.testPresentationURL
     }
