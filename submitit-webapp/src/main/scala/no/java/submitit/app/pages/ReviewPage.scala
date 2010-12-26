@@ -38,7 +38,7 @@ import no.java.submitit.common.LoggHandling
 import org.apache.wicket.Page
 import no.java.submitit.config.Keys._
 
-class ReviewPage(val pres: Presentation, notAdminView: Boolean) extends LayoutPage with LoggHandling with UpdateSessionHandling {
+class ReviewPage(val pres: Presentation, notAdminView: Boolean, readOnly: Boolean = false) extends LayoutPage with LoggHandling with UpdateSessionHandling {
   
   val editAllowed = SubmititApp.boolSetting(globalEditAllowedBoolean) || (pres.status == Status.Approved && SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))
 
@@ -48,7 +48,7 @@ class ReviewPage(val pres: Presentation, notAdminView: Boolean) extends LayoutPa
     }
   }
 
-  private def show(shouldShow: Boolean) = notAdminView && shouldShow
+  private def show(shouldShow: Boolean) = !readOnly && notAdminView && shouldShow
 
   private def submitLink(name: String) = new PLink(name, new ConfirmPage(pres)) {
     add(new Label("submitLinkMessage", if(pres.isNew) "Submit presentation" else "Submit updated presentation"))
