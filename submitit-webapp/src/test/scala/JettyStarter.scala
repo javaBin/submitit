@@ -32,7 +32,7 @@ object JettyStarter {
     val bb = new WebAppContext();
     bb.setServer(server);
     bb.setContextPath("/");
-    bb.setWar("src/main/webapp");
+    bb.setWar("submitit-webapp/src/main/webapp");
     
     System.setProperty("submitit.properties", "submitit-webapp/src/main/resources/submitit.properties")
 	
