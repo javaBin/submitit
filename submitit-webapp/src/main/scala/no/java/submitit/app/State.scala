@@ -28,6 +28,7 @@ class State(request: Request, val backendClient: BackendClient) extends WebSessi
   
   var captcha: Captcha = _
   var verifiedWithCaptha = false
+  var emsIdAuthorized = false
   
   var invitation = false
   

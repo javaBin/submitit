@@ -180,6 +180,9 @@ object Keys {
     override val visible = false
     override val mandatoryInFile = true
   }
+  case object pwdForEmsIdPage extends ConfigKey {
+    val description = "List of passwords to be able to use id's from EMS directly in submitit"
+  }
 
 }
 
@@ -227,7 +230,8 @@ trait ConfigValues extends LoggHandling {
 		Keys.emsUrl -> "",
 		Keys.emsUser -> "",
     Keys.emsPwd -> "",
-    Keys.encryptionKey -> None
+    Keys.encryptionKey -> None,
+    Keys.pwdForEmsIdPage -> ""
   )
 
   protected var configKeyList: List[ConfigKey] = configValues.keys.toList

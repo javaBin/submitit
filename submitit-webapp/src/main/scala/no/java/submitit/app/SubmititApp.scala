@@ -23,15 +23,14 @@ import org.apache.wicket.protocol.http.WebApplication
 import org.apache.wicket.extensions.ajax.markup.html.form.upload.UploadWebRequest
 import org.apache.wicket.protocol.http.WebRequest
 import javax.servlet.http.HttpServletRequest
-import org.apache.wicket.Request
-import org.apache.wicket.Response
-import org.apache.wicket.Session
 import _root_.java.util.Properties
 import org.apache.wicket.Application._
 import org.apache.wicket.settings.IExceptionSettings
 import Functions._
 import no.java.submitit.config.Keys._
 import no.java.submitit.config.{Keys, ConfigKey}
+import org.apache.wicket._
+import authorization.IUnauthorizedComponentInstantiationListener
 
 class SubmititApp extends WebApplication with LoggHandling {
 
@@ -44,11 +43,21 @@ class SubmititApp extends WebApplication with LoggHandling {
 
     mountBookmarkablePage("/lookupPresentation", classOf[IdResolverPage]);
     mountBookmarkablePage("/proposal", classOf[IdResolverPage]);
+    mountBookmarkablePage("/ems", classOf[EmsIdPage]);
     mountBookmarkablePage("/help", classOf[HelpPage]);
     mountBookmarkablePage("/admin-login", classOf[admin.AdminLogin])
     mountBookmarkablePage("/invitation", classOf[InvitationPage])
     getApplicationSettings.setDefaultMaximumUploadSize(Bytes.kilobytes(500))
+
+    val securitySettings = getSecuritySettings()
+    securitySettings.setAuthorizationStrategy(new PageAuthenticator())
+    securitySettings.setUnauthorizedComponentInstantiationListener(new IUnauthorizedComponentInstantiationListener() {
+      override def onUnauthorizedInstantiation(component: Component) {
+        throw new RestartResponseAtInterceptPageException(new EmsIdLoginPage())
+      }
+    })
   }
+
 
   private def backendClient: BackendClient = {
     if (SubmititApp.getSetting(emsUrl).isDefined) new EmsClient(SubmititApp.getSetting(eventName).get, 
