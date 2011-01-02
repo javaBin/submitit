@@ -28,10 +28,8 @@ import javax.servlet.http.HttpServletRequest
 import javax.mail.{Message,Session,Transport}
 import javax.mail.internet.MimeMessage
 import org.apache.wicket.markup.html.form.HiddenField
-import no.java.submitit.app.{SubmititApp, State}
 import no.java.submitit.config.Keys._
-import no.java.submitit.encrypt.EncryptionUtils
-import java.net.URLEncoder
+import no.java.submitit.app.{Functions, SubmititApp, State}
 
 class ConfirmPage(val pres: Presentation) extends LayoutPage with LoggHandling with UpdateSessionHandling {
 
@@ -66,15 +64,14 @@ class ConfirmPage(val pres: Presentation) extends LayoutPage with LoggHandling w
 
   val url = {
     val backendClient = State().backendClient
-    val uniqueId = if(!isTest) {
-      val id = backendClient.savePresentation(pres)
-      val encrypteId = EncryptionUtils.encrypt(SubmititApp.setting(encryptionKey), id)
-      URLEncoder.encode(encrypteId, "UTF-8") // Used in URL, must be encoded
+    val (uniqueId, encyptedId) = if(!isTest) {
+      val actualId = backendClient.savePresentation(pres)
+      (actualId, Functions.encryptEmsId(actualId))
     } else {
-      Presentation.testPresentationURL
+      (Presentation.testPresentationURL, Presentation.testPresentationURL)
     }
     pres.sessionId = uniqueId
-    SubmititApp.getSetting(submititBaseUrl).get + "/proposal?id=" + uniqueId
+    Functions.sessionLink(encyptedId)
   }
   
   contentBorder.add(new ExternalLink("confirmUrl", url, url))

@@ -35,6 +35,18 @@
 
     <span wicket:id="contentBorder">
 
+    <wicket:enclosure child="editSessionUrl">
+        <div class="row">
+            <div class="titleText">Session edit URL</div>
+            <div class="row-content">
+                <a href="#" wicket:id="editSessionUrl">url</a>
+            </div>
+        </div>
+        <br>
+    </wicket:enclosure>
+
+
+
 	<div class="infoText">
 		<div class="infoHeader">Please read this</div>
 		<div wicket:id="viewMessage" class="infoContent"></div>

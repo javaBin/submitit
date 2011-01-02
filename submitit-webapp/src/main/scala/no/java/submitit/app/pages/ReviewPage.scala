@@ -38,7 +38,7 @@ import no.java.submitit.common.LoggHandling
 import org.apache.wicket.Page
 import no.java.submitit.config.Keys._
 
-class ReviewPage(val pres: Presentation, notAdminView: Boolean, readOnly: Boolean = false) extends LayoutPage with LoggHandling with UpdateSessionHandling {
+class ReviewPage(val pres: Presentation, notAdminView: Boolean, fromEmsLogin: Boolean = false) extends LayoutPage with LoggHandling with UpdateSessionHandling {
   
   val editAllowed = SubmititApp.boolSetting(globalEditAllowedBoolean) || (pres.status == Status.Approved && SubmititApp.boolSetting(globalEditAllowedForAcceptedBoolean))
 
@@ -48,13 +48,15 @@ class ReviewPage(val pres: Presentation, notAdminView: Boolean, readOnly: Boolea
     }
   }
 
-  private def show(shouldShow: Boolean) = !readOnly && notAdminView && shouldShow
+  private def show(shouldShow: Boolean) = !fromEmsLogin && notAdminView && shouldShow
 
   private def submitLink(name: String) = new PLink(name, new ConfirmPage(pres)) {
     add(new Label("submitLinkMessage", if(pres.isNew) "Submit presentation" else "Submit updated presentation"))
   }
 
   private def editLink(name: String) = new PLink(name,new EditPage(pres))
+
+  private val editPageLink = if (pres.sessionId != null) sessionLink(encryptEmsId(pres.sessionId)) else ""
 
   menuLinks = submitLink("submitLinkTop") ::
               submitLink("submitLinkBottom") ::
@@ -76,7 +78,11 @@ class ReviewPage(val pres: Presentation, notAdminView: Boolean, readOnly: Boolea
   })
 
   contentBorder.add(new FeedbackPanel("systemFeedback"))
-  
+
+  contentBorder.add(new ExternalLink("editSessionUrl", editPageLink, editPageLink) {
+    override def isVisible = fromEmsLogin
+  })
+
   contentBorder.add(new HiddenField("showRoom", new Model("")) {
   	override def isVisible = SubmititApp.boolSetting(showRoomWhenApprovedBoolean) && pres.status == Status.Approved && pres.room != null
   })

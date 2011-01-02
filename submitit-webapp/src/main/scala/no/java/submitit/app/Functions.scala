@@ -3,6 +3,9 @@ package no.java.submitit.app
 import _root_.java.io.File
 import no.java.submitit.model.Binary
 import no.java.submitit.common.LoggHandling
+import no.java.submitit.encrypt.EncryptionUtils
+import java.net.URLEncoder
+import no.java.submitit.config.Keys. {submititBaseUrl, encryptionKey}
 
 object Functions extends LoggHandling {
   
@@ -33,5 +36,12 @@ object Functions extends LoggHandling {
   		}
   	}
   }
+
+  def encryptEmsId(id: String) = {
+    val encrypteId = EncryptionUtils.encrypt(SubmititApp.setting(encryptionKey), id)
+    URLEncoder.encode(encrypteId, "UTF-8") // Used in URL, must be encoded
+  }
+
+  def sessionLink(sessionId: String) = SubmititApp.getSetting(submititBaseUrl).get + "/proposal?id=" + sessionId
 
 }
