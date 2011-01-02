@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 javaBin
+ * Copyright 2011 javaBin
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the License at
@@ -181,7 +181,7 @@ object Keys {
     override val mandatoryInFile = true
   }
   case object pwdForEmsIdPage extends ConfigKey {
-    val description = "List of passwords to be able to use id's from EMS directly in submitit"
+    val description = "Password to be able to use id's from EMS directly in submitit"
   }
 
 }
@@ -197,9 +197,9 @@ trait ConfigValues extends LoggHandling {
   implicit def stringToSome(v: String) = Some(v)
 
   protected val configValues = collection.mutable.LinkedHashMap[ConfigKey, Option[String]](
-    Keys.eventName -> "JavaZone 2010",
-    Keys.headerLogoText -> "JavaZone 2010",
-  	Keys.headerText -> "Submit your JavaZone 2010 presentation",
+    Keys.eventName -> "JavaZone 2011",
+    Keys.headerLogoText -> "JavaZone 2011",
+    Keys.headerText -> "Submit your JavaZone 2011 presentation",
   	Keys.submitAllowedBoolean -> "true",
 		Keys.showFeedbackBoolean -> "false",
 		Keys.showSpecialMessageOnRejectBoolean -> "false",
