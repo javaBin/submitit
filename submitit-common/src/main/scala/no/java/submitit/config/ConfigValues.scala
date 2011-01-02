@@ -181,7 +181,7 @@ object Keys {
     override val mandatoryInFile = true
   }
   case object pwdForEmsIdPage extends ConfigKey {
-    val description = "List of passwords to be able to use id's from EMS directly in submitit"
+    val description = "Password to be able to use id's from EMS directly in submitit"
   }
 
 }
