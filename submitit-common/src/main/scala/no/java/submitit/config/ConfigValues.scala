@@ -197,9 +197,9 @@ trait ConfigValues extends LoggHandling {
   implicit def stringToSome(v: String) = Some(v)
 
   protected val configValues = collection.mutable.LinkedHashMap[ConfigKey, Option[String]](
-    Keys.eventName -> "JavaZone 2010",
-    Keys.headerLogoText -> "JavaZone 2010",
-  	Keys.headerText -> "Submit your JavaZone 2010 presentation",
+    Keys.eventName -> "JavaZone 2011",
+    Keys.headerLogoText -> "JavaZone 2011",
+    Keys.headerText -> "Submit your JavaZone 2011 presentation",
   	Keys.submitAllowedBoolean -> "true",
 		Keys.showFeedbackBoolean -> "false",
 		Keys.showSpecialMessageOnRejectBoolean -> "false",
