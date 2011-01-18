@@ -235,6 +235,7 @@
         </dependencies>
         <configuration>
           <arguments>-DskipTests</arguments>
+          <pushChanges>false</pushChanges>
         </configuration>
       </plugin>
     </plugins>
