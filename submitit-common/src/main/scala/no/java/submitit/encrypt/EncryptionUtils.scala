@@ -24,7 +24,7 @@ import java.lang.String
 object EncryptionUtils {
 
   private val salt = "c6843fc8".getBytes
-  private val encAlg: String = "PBEWithMD5AndTripleDES"
+  private val encAlg: String = "PBEWithMD5AndDES"
 
   def encrypt(secretKey: String, value: String) = {
     val cipher = initCipher(Cipher.ENCRYPT_MODE, secretKey)
