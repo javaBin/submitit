@@ -220,7 +220,7 @@ trait ConfigValues extends LoggHandling {
 		Keys.feedbackRejected -> "The high quality of all the submissions this year has made the selection process very difficult, and unfortunately we cannot accept all talks. We actually had almost 250 submissions, and we only have 90 slots. We regret to inform you that we are unable to accept your proposal. We hope however that you will keep up the good effort and submit proposals next year as well!",
 		Keys.userSelectedKeywords -> "alternative languages|concurrency / scalability|enterprise|core / jvm|web / frontend|methodology|testing|experience report",
 		Keys.reviewPageViewSubmittedHthml -> """If you have any questions, please email <a href="mailto:program@java.no">program@java.no</a>""",
-		Keys.reviewPageBeforeSubmitHtml -> """Your presentation has not yet been submittet. Please review, and press "Submit presentation" when you are ready.""",
+		Keys.reviewPageBeforeSubmitHtml -> """Your presentation has not yet been submitted. Please review, and press "Submit presentation" when you are ready.""",
 		Keys.submititBaseUrl -> None,
 		Keys.officialEmailReplyTo -> "program@java.no",
 		Keys.smtpHost -> None,
