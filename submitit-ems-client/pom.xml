@@ -20,7 +20,7 @@
   <parent>
     <artifactId>submitit</artifactId>
     <groupId>no.java.submitit</groupId>
-    <version>1.0.12-SNAPSHOT</version>
+    <version>1.0.12</version>
   </parent>
 
   <artifactId>submitit-ems-client</artifactId>
