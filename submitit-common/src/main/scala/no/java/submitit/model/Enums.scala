@@ -24,6 +24,7 @@ object Level extends Enumeration {
   val Beginner = Value("Beginner")
   val Intermediate = Value("Intermediate")
   val Advanced = Value("Advanced")
+  val Hardcore = Value("Hardcore")
 }
 
 object PresentationFormat extends Enumeration {
@@ -31,10 +32,8 @@ object PresentationFormat extends Enumeration {
   val LightningTalk = Value("Lightning talk")
 }
 
-
 object Status extends Enumeration {
   val Pending = Value("Pending")
   val Approved = Value("Approved")
   val NotApproved = Value("Not approved")
 }
-
