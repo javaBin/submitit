@@ -111,12 +111,15 @@ class EmsConverter extends LoggHandling {
       case "en" => Language.English
       case l => unknownEnumValue(l, Language.Norwegian)
     }
-    pres.level = session.getLevel match {
-      case Session.Level.Introductory => Level.Beginner
-      case Session.Level.Intermediate => Level.Intermediate
-      case Session.Level.Advanced => Level.Advanced
-      case l => unknownEnumValue(l, Level.Intermediate)
-    }
+    
+	pres.level = session.getLevel match {
+     case Session.Level.Introductory => Level.Beginner
+     case Session.Level.Intermediate => Level.Intermediate
+     case Session.Level.Intermediate_Advanced => Level.Advanced
+     case Session.Level.Advanced => Level.Hardcore
+     case l => unknownEnumValue(l, Level.Intermediate)
+   }
+	
     pres.format = session.getFormat match {
       case Session.Format.Presentation => PresentationFormat.Presentation
       case Session.Format.Quickie => PresentationFormat.LightningTalk
