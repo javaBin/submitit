@@ -65,7 +65,8 @@ class EmsConverter extends LoggHandling {
     val level = presentation.level match {
       case Level.Beginner => Session.Level.Introductory
       case Level.Intermediate => Session.Level.Intermediate
-      case Level.Advanced => Session.Level.Advanced
+      case Level.Advanced => Session.Level.Intermediate_Advanced
+      case Level.Hardcore => Session.Level.Advanced
       case l => unknownEnumValue(l, Session.Level.Introductory)
     }
     val format = presentation.format match {
@@ -112,7 +113,8 @@ class EmsConverter extends LoggHandling {
     pres.level = session.getLevel match {
       case Session.Level.Introductory => Level.Beginner
       case Session.Level.Intermediate => Level.Intermediate
-      case Session.Level.Advanced => Level.Advanced
+      case Session.Level.Intermediate_Advanced => Level.Advanced
+      case Session.Level.Advanced => Level.Hardcore
       case l => unknownEnumValue(l, Level.Intermediate)
     }
     pres.format = session.getFormat match {

@@ -24,6 +24,7 @@ object Level extends Enumeration {
   val Beginner = Value("Beginner")
   val Intermediate = Value("Intermediate")
   val Advanced = Value("Advanced")
+  val Hardcore = Value("Hardcore")
 }
 
 object PresentationFormat extends Enumeration {
