@@ -13,7 +13,7 @@
  *   limitations under the License.
  */
 
-import org.mortbay.jetty.Connector;
+import java.io.File
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.bio.SocketConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
@@ -32,9 +32,9 @@ object JettyStarter {
     val bb = new WebAppContext();
     bb.setServer(server);
     bb.setContextPath("/");
-    bb.setWar("submitit-webapp/src/main/webapp");
+    bb.setWar(webappDir.toString);
     
-    System.setProperty("submitit.properties", "submitit-webapp/src/main/resources/submitit.properties")
+    System.setProperty("submitit.properties", new File(getBaseDir(getClass), "src/main/resources/submitit.properties").toString)
 	
     server.addHandler(bb);
     
@@ -51,6 +51,33 @@ object JettyStarter {
         e.printStackTrace();
         System.exit(100);
       } 
+    }
+  }
+
+  private def webappDir : File = {
+    val dir = new File(getBaseDir(getClass), "src/main/webapp")
+    if (!dir.exists()) {
+      throw new RuntimeException("Unable to find web application directory")
+    }
+    dir
+  }
+
+  private def getBaseDir(c: Class[_]): File = {
+    val basedir = System.getProperty("basedir");
+    if (basedir != null) {
+      new File(basedir)
+    } else {
+      var file = new File(c.getProtectionDomain.getCodeSource.getLocation.getPath)
+      if (!file.exists()) {
+        throw new RuntimeException("Unable to find basedir")
+      }
+      while (!new File(file, "pom.xml").exists()) {
+        file = file.getParentFile
+        if (file == null) {
+          throw new RuntimeException("Unable to find basedir")
+        }
+      }
+      file;
     }
   }
 }
