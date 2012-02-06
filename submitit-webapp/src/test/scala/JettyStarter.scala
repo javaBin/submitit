@@ -34,17 +34,15 @@ object JettyStarter {
     bb.setContextPath("/");
     bb.setWar(webappDir.toString);
     
-    System.setProperty("submitit.properties", new File(getBaseDir(getClass), "src/main/resources/submitit.properties").toString)
-	
+    System.setProperty("submitit.properties", new File(getBaseDir(getClass), "src/test/resources/submitit.properties").toString)
+    System.setProperty("wicket.configuration", "development")
+
     server.addHandler(bb);
     
     try {
-      System.out.println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
+      System.out.println(">>> STARTING EMBEDDED JETTY SERVER...");
       server.start();
-      while (System.in.available() == 0) {
-        Thread.sleep(5000); 
-      }
-      server.stop();
+      System.out.println(">>> Jetty Started @ port 8081");
       server.join();
     } catch {
       case e: Exception => {

@@ -35,8 +35,8 @@ import authorization.IUnauthorizedComponentInstantiationListener
 class SubmititApp extends WebApplication with LoggHandling {
 
   override def init() {
-    SubmititApp.propertyFileName = super.getServletContext.getInitParameter("submitit.properties")
-    if (SubmititApp.propertyFileName == null) throw new Exception("""You must specify "submitit.properties" as a init parameter.""")
+    SubmititApp.propertyFileName = System.getProperty("submitit.properties")
+    if (SubmititApp.propertyFileName == null) throw new Exception("""You must specify "submitit.properties" as a system property.""")
     val props = PropertyIOUtils.loadRessource(SubmititApp.propertyFileName)
     
     SubmititApp.properties = DefaultConfigValues.mergeConfig(props)
