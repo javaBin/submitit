@@ -70,8 +70,12 @@ class SpeakerPanel(val pres: Presentation, enclosingForm: Form[_]) extends Panel
       speakersForm.add(new TextField("speakerName", new PropertyModel[Speaker](speaker, "name")))
       
       val email = new TextField("email", new PropertyModel[Speaker](speaker, "email"))
+      val nationality = new TextField("nationality", new PropertyModel[Speaker](speaker, "nationality"))
+      val zipcode = new TextField("zipcode", new PropertyModel[Speaker](speaker, "zipcode"))
       
       speakersForm.add(email)
+      speakersForm.add(nationality)
+      speakersForm.add(zipcode)
       speakersForm.addPropTA("bio", speaker, "bio")
       speakersForm.addHelpLink("speakersProfileHelp", true)
       

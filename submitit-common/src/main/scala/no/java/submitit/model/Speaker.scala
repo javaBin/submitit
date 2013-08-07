@@ -23,6 +23,8 @@ class Speaker extends Serializable {
   var name: String = _
   var email: String = _
   var bio: String = _
+  var nationality: String = _
+  var zipcode: String = _
   var picture: Option[Binary] = None 
   
   def hasNewPicture = picture.map(_.isNew).getOrElse(false)
@@ -31,6 +33,8 @@ class Speaker extends Serializable {
     "Name: " + name +
     "\nE-mail: " + email +
     "\nSpeaker's profile:\n" + bio +
+    "\nSpeaker's nationality:\n" + nationality +
+    "\nSpeaker's zipcode:\n" + zipcode +
     "\n\nPicture name: " + (picture.map(_.name).getOrElse(""))
 
   override def equals(other: Any): Boolean = {
@@ -39,6 +43,8 @@ class Speaker extends Serializable {
         (that canEqual this) && 
           personId == that.personId && 
           name == that.name && 
+          nationality == that.nationality && 
+          zipcode == that.zipcode && 
           bio == that.bio
       case _ => false
     }
@@ -55,11 +61,13 @@ class Speaker extends Serializable {
 
 object Speaker {
   
-  def apply(name: String, email: String, bio: String, picture: Option[Binary]): Speaker = {
+  def apply(name: String, email: String, bio: String, nationality: String, zipcode: String, picture: Option[Binary]): Speaker = {
     val s = new Speaker()
     s.name = name
     s.email = email
     s.bio = bio
+    s.nationality = nationality
+    s.zipcode = zipcode
     s.picture = picture
     s
   }

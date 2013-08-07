@@ -179,6 +179,8 @@ class ReviewPage(val pres: Presentation, notAdminView: Boolean, fromEmsLogin: Bo
       val speaker = item.getModelObject
       item.add(new Label("name", speaker.name))
       item.add(new Label("email", speaker.email))
+      item.add(new Label("nationality", speaker.nationality))
+      item.add(new Label("zipcode", speaker.zipcode))
       item.add(new WikiMarkupText("bio", speaker.bio))
       
       if (speaker.picture.isDefined) {
